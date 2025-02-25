@@ -7,7 +7,11 @@ public class MenuSettings : MonoBehaviour
 {
 
 
-    public void LoadSettings(){
+    public void Start(){
+        LoadExistingSettings();
+    }
+
+    public void LoadExistingSettings(){
         // Loads the existing User settings file, that determines things like:
         // - Audio levels
         // - Displays
@@ -18,8 +22,6 @@ public class MenuSettings : MonoBehaviour
         // - Platform
         // - Difficulty
         // - Dev Settings & Features
-        
-        
     }
 
 }
