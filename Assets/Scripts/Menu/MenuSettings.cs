@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class MenuSettings : MonoBehaviour
 {
 
+    /// <summary>
+    /// Public Variables of Global Settings
+    /// </summary>
 
     public void Start(){
         LoadExistingSettings();
