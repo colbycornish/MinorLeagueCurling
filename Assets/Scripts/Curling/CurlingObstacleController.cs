@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class CurlingSweeperController : MonoBehaviour
+public class CurlingObstacleController : MonoBehaviour
 {
 
     /// <summary>
@@ -14,14 +14,8 @@ public class CurlingSweeperController : MonoBehaviour
     /// </summary>
     /// 
 
-    public string obstacleType = "OBSTACLE_SNOW";
-    public bool isObstacleOil;
-    public bool isObstacleTrash;
-    public bool isObstacleSnow;
-    public bool isObstacleBoost;
-    public bool isObstacleBomb;
-    public bool isObstacleWall;
-    public bool isObstacleStone;
+    private string obstacleType = "OBSTACLE_SNOW";
+
     /// <summary>
     /// Set Game Object
     /// </summary>
@@ -48,7 +42,7 @@ public class CurlingSweeperController : MonoBehaviour
 
 
     void Instatiate(
-        GameObject obj,
+        // GameObject obj,
         // position coordinates
         // scale coordinates
     ){
@@ -78,7 +72,7 @@ public class CurlingSweeperController : MonoBehaviour
         double pz,
         double sx = 1,
         double sy = 1,
-        double sz = 1,
+        double sz = 1
     ){
         positionX = px;
         positionY = py;
