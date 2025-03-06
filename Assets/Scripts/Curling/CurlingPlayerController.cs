@@ -8,6 +8,9 @@ using TMPro;
 public class CurlingPlayerController : MonoBehaviour
 {
     // Rigidbody of the player.
+    public GameObject leftSweeper;
+    public GameObject rightSweeper;
+    public GameObject thrower;
     private Rigidbody leftSweeperRb; 
     private Rigidbody rightSweeperRb;
 
@@ -26,12 +29,14 @@ public class CurlingPlayerController : MonoBehaviour
     // Get and store the Rigidbody component attached to the player.
         leftSweeperRb = transform.GetChild(0).GetComponent<Rigidbody>();
         rightSweeperRb = transform.GetChild(1).GetComponent<Rigidbody>();
-  
     }
  
     // This function is called when a move input is detected.
     void OnMove(InputValue movementValue)
     {
+        
+        // leftSweeper.Move(movementValue);
+        // rightSweeper.Move(movementValue);
         // Convert the input value into a Vector2 for movement.
         Vector2 movementVector = movementValue.Get<Vector2>();
 
@@ -63,12 +68,5 @@ public class CurlingPlayerController : MonoBehaviour
    
    }
 
-//    void SetCountText() 
-//    {
-//        countText.text =  "Count: " + count.ToString();
-//          if (count >= 12)
-//        {
-//            winTextObject.SetActive(true);
-//        }
-//    }
+
 }
