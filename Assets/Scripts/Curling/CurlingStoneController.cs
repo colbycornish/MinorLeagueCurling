@@ -8,7 +8,9 @@ interface ICurlingStone
     Rigidbody stoneRb { get; set; }
     int speed { get; set; }
     int maxSpeed { get; set; }
+
     void AdjustSpeed(int s);
+    
     void ChangeDirection(
         Vector3 targetPosition
     );

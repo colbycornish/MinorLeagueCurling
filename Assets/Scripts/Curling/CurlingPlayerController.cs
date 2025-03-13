@@ -14,10 +14,6 @@ using System.Collections;
 public class CurlingPlayerController : MonoBehaviour
 {
     // Rigidbody of the player.
-    // private CurlingStone stone2 = new CurlingStone();
-    
-
-
     public GameObject leftSweeper;
     public GameObject rightSweeper;
     public GameObject centerPoint;
@@ -71,12 +67,12 @@ public class CurlingPlayerController : MonoBehaviour
             isRightSweeper: true
         );
 
-        stone2.init(
-            gameObject: stone,
-            stoneRb: stone.transform.GetComponent<Rigidbody>(),
-            speed: 1,
-            maxSpeed: 5
-        );
+        // stone2.init(
+        //     gameObject: stone,
+        //     stoneRb: stone.transform.GetComponent<Rigidbody>(),
+        //     speed: 1,
+        //     maxSpeed: 5
+        // );
           
         leftSweeperRb = leftSweeper.GetComponent<Rigidbody>();
         rightSweeperRb = rightSweeper.GetComponent<Rigidbody>();
@@ -89,10 +85,6 @@ public class CurlingPlayerController : MonoBehaviour
     // This function is called when a move input is detected.
     void OnMove(InputValue movementValue)
     {
-        // leftCurlingSweeper.OnMove(
-        //     movementValue: movementValue
-        // );
-        // Convert the input value into a Vector2 for movement.
         Vector2 movementVector = movementValue.Get<Vector2>();
         
         // Store the X and Y components of the movement.
@@ -108,8 +100,8 @@ public class CurlingPlayerController : MonoBehaviour
         Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
 
         // Apply force to the Rigidbody to move the player objects.
-        leftSweeperRb.AddForce(movement * speed); 
-        rightSweeperRb.AddForce(movement * speed); 
+        leftSweeper2.sweeperRb.AddForce(movement * speed); 
+        rightSweeper2.sweeperRb.AddForce(movement * speed); 
         centerPointRb.AddForce(movement * speed); 
 
     }
@@ -117,8 +109,8 @@ public class CurlingPlayerController : MonoBehaviour
 
     // void Update()
     // {
-    //     targetPosition = playerGroup.transform.position;
-    //     stone.ChangeDirection(targetPosition: targetPosition);
+    //     targetPosition = transform.position;
+    //     stone2.ChangeDirection(targetPosition: targetPosition);
     // }
 
 

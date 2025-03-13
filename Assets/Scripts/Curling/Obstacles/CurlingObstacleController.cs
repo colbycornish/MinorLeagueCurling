@@ -8,29 +8,29 @@ using TMPro;
 
 
 // Interface
-interface IObstacle 
-{
-  void animalSound(); // interface method (does not have a body)
-}
+// interface IObstacle 
+// {
+//   void animalSound(); // interface method (does not have a body)
+// }
 
-// Pig "implements" the IAnimal interface
-class ObstacleOil : IObstacle 
-{
-  public void animalSound() 
-  {
-    // The body of animalSound() is provided here
-    // Console.WriteLine("The pig says: wee wee");
-  }
-}
+// // Pig "implements" the IAnimal interface
+// class ObstacleOil : IObstacle 
+// {
+//   public void animalSound() 
+//   {
+//     // The body of animalSound() is provided here
+//     // Console.WriteLine("The pig says: wee wee");
+//   }
+// }
 
-class Program 
-{
-  static void Main(string[] args) 
-  {
-    ObstacleOil obstacle1 = new ObstacleOil();  // Create a Pig object
-    obstacle1.animalSound();
-  }
-}
+// class Program 
+// {
+//   static void Main(string[] args) 
+//   {
+//     ObstacleOil obstacle1 = new ObstacleOil();  // Create a Pig object
+//     obstacle1.animalSound();
+//   }
+// }
 
 
 
