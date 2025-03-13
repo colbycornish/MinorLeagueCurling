@@ -5,6 +5,36 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+
+
+// Interface
+interface IObstacle 
+{
+  void animalSound(); // interface method (does not have a body)
+}
+
+// Pig "implements" the IAnimal interface
+class ObstacleOil : IObstacle 
+{
+  public void animalSound() 
+  {
+    // The body of animalSound() is provided here
+    // Console.WriteLine("The pig says: wee wee");
+  }
+}
+
+class Program 
+{
+  static void Main(string[] args) 
+  {
+    ObstacleOil obstacle1 = new ObstacleOil();  // Create a Pig object
+    obstacle1.animalSound();
+  }
+}
+
+
+
+
 public class CurlingObstacleController : MonoBehaviour
 {
 
@@ -15,6 +45,15 @@ public class CurlingObstacleController : MonoBehaviour
     /// 
 
     private string obstacleType = "OBSTACLE_SNOW";
+    // "OBSTACLE_OIL";
+    // "OBSTACLE_MAGNET";
+    // "OBSTACLE_MAGNET_BOMB";
+    // "OBSTACLE_TRASH";
+    // "OBSTACLE_SPEED_BOOST";
+    // "OBSTACLE_SPEED_BUMP";
+    // "OBSTACLE_CONE";
+    // "OBSTACLE_BARRIOR";
+    // "OBSTACLE_HOLE";
 
     /// <summary>
     /// Set Game Object
@@ -34,6 +73,7 @@ public class CurlingObstacleController : MonoBehaviour
     /// <summary>
     /// Obstacle Type Definitions
     /// </summary>
+    
 
     void Start()
     {
@@ -90,6 +130,10 @@ public class CurlingObstacleController : MonoBehaviour
 
 
     }
+
+
+    
+
 
 
 
