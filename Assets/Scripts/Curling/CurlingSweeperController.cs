@@ -17,6 +17,8 @@ interface ICurlingSweeper
 
     void AdjustSpeed(int s);
     void SetLinearDamping(int ld);
+
+    void triggerSweep();
     
 } 
 
@@ -29,7 +31,7 @@ class CurlingSweeper : ICurlingSweeper
     public float speed { get; set; }
     public float maxSpeed { get; set; }
     public int strength { get; set; }
-    public bool isLeftSweeper {get; set;}
+    public bool isLeftSweeper  {get; set;}
     public bool isRightSweeper {get; set;}
     public int linearDamping { get; set; }
     
@@ -60,6 +62,17 @@ class CurlingSweeper : ICurlingSweeper
         sweeperRb.linearDamping = ld;
     }
 
+
+    public void triggerSweep(){
+        // get the settings
+        Color newColor = new Color(1.0f, 1.0f, 0.0f);
+        Color oldColor = gameObject.GetComponent<Renderer>().material.color;
+        Color highLightMat = Color.Lerp(oldColor, newColor, Mathf.PingPong(Time.time, 1.0f));
+
+        // gameObject.GetComponent<Renderer>().material.color = newColor;
+        gameObject.GetComponent<Renderer>().material.color = highLightMat;
+    }
+
 } 
 
 
@@ -70,7 +83,14 @@ public class CurlingSweeperController : MonoBehaviour
 }
 
 
+// private Color startColor = new Color(255f,255f,255f);
+//     private Color endColor = new Color(255f, 0f, 0f);
+//     public float duration = 1.0f;
 
+//     void Update()
+//     {
+//         highLightMat.color = Color.Lerp(endColor, startColor, Mathf.PingPong(Time.time, duration));
+//     }
 
 
 //     void OnTriggerEnter(

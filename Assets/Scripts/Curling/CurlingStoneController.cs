@@ -62,29 +62,29 @@ public class CurlingStone : ICurlingStone
 public class CurlingStoneController : MonoBehaviour
 {
 
-    private CurlingStone stone = new CurlingStone();
-    public GameObject playerGroup; 
+    // private CurlingStone stone = new CurlingStone();
+    // public GameObject playerGroup; 
         
-    //Set this value in the inspector
-    public Vector3 targetPosition;
+    // //Set this value in the inspector
+    // public Vector3 targetPosition;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        stone.init(
-            gameObject: gameObject,
-            stoneRb: transform.GetComponent<Rigidbody>(),
-            speed: 1,
-            maxSpeed: 5
-        );
-    }
+    // // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // void Start()
+    // {
+    //     stone.init(
+    //         gameObject: gameObject,
+    //         stoneRb: transform.GetComponent<Rigidbody>(),
+    //         speed: 1,
+    //         maxSpeed: 5
+    //     );
+    // }
 
 
-    void Update()
-    {
-        targetPosition = playerGroup.transform.position;
-        stone.ChangeDirection(targetPosition: targetPosition);
-    }
+    // void Update()
+    // {
+    //     targetPosition = playerGroup.transform.position;
+    //     stone.ChangeDirection(targetPosition: targetPosition);
+    // }
 }
 
 

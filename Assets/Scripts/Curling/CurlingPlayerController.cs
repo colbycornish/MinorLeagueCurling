@@ -7,10 +7,6 @@ using TMPro;
 using System.Collections;
 
 
-
-
-
-
 public class CurlingPlayerController : MonoBehaviour
 {
     // Rigidbody of the player.
@@ -20,13 +16,7 @@ public class CurlingPlayerController : MonoBehaviour
     public GameObject stone;
     public GameObject thrower;
 
-    private Rigidbody leftSweeperRb; 
-    private Rigidbody rightSweeperRb;
     private Rigidbody centerPointRb;
-
-    private CurlingSweeperController leftCurlingSweeper;
-    // private CurlingSweeperController RightCurlingSweeper;
-
     // Movement along X and Y axes.
     public float movementX;
     public float movementY;
@@ -36,9 +26,8 @@ public class CurlingPlayerController : MonoBehaviour
     public float maxSpeed = 0; 
 
     private CurlingStone stone2 = new CurlingStone();
-    private CurlingSweeper leftSweeper2 = new CurlingSweeper();
-    private CurlingSweeper rightSweeper2 = new CurlingSweeper();
-    public GameObject playerGroup; 
+    private CurlingSweeper leftSweeperCS = new CurlingSweeper();
+    private CurlingSweeper rightSweeperCS = new CurlingSweeper();
         
     //Set this value in the inspector
     public Vector3 targetPosition;
@@ -47,7 +36,7 @@ public class CurlingPlayerController : MonoBehaviour
     void Start()
     {
 
-        leftSweeper2.init(
+        leftSweeperCS.init(
             gameObject: leftSweeper,
             sweeperRb: leftSweeper.GetComponent<Rigidbody>(),
             speed: 1,
@@ -56,8 +45,10 @@ public class CurlingPlayerController : MonoBehaviour
             isLeftSweeper: true,
             isRightSweeper: false
         );
+        leftSweeperCS.SetLinearDamping(1);
 
-        rightSweeper2.init(
+
+        rightSweeperCS.init(
             gameObject: rightSweeper,
             sweeperRb: rightSweeper.GetComponent<Rigidbody>(),
             speed: 1,
@@ -66,16 +57,15 @@ public class CurlingPlayerController : MonoBehaviour
             isLeftSweeper: false,
             isRightSweeper: true
         );
+        rightSweeperCS.SetLinearDamping(1);
 
-        // stone2.init(
-        //     gameObject: stone,
-        //     stoneRb: stone.transform.GetComponent<Rigidbody>(),
-        //     speed: 1,
-        //     maxSpeed: 5
-        // );
+        stone2.init(
+            gameObject: stone,
+            stoneRb: stone.transform.GetComponent<Rigidbody>(),
+            speed: 1,
+            maxSpeed: 5
+        );
           
-        leftSweeperRb = leftSweeper.GetComponent<Rigidbody>();
-        rightSweeperRb = rightSweeper.GetComponent<Rigidbody>();
         centerPointRb = centerPoint.GetComponent<Rigidbody>();
 
         Debug.Log("SetPlayerName:: name = " + "1");
@@ -91,6 +81,9 @@ public class CurlingPlayerController : MonoBehaviour
         speed = maxSpeed;
         movementX = movementVector.x; 
         movementY = movementVector.y; 
+
+        leftSweeperCS.triggerSweep();
+
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
@@ -100,28 +93,15 @@ public class CurlingPlayerController : MonoBehaviour
         Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
 
         // Apply force to the Rigidbody to move the player objects.
-        leftSweeper2.sweeperRb.AddForce(movement * speed); 
-        rightSweeper2.sweeperRb.AddForce(movement * speed); 
+        leftSweeperCS.sweeperRb.AddForce(movement * speed); 
+        rightSweeperCS.sweeperRb.AddForce(movement * speed); 
         centerPointRb.AddForce(movement * speed); 
 
+        // force the stone to change it's direction
+        targetPosition = centerPointRb.transform.position;
+        stone2.ChangeDirection(targetPosition: targetPosition);
+
     }
-
-
-    // void Update()
-    // {
-    //     targetPosition = transform.position;
-    //     stone2.ChangeDirection(targetPosition: targetPosition);
-    // }
-
-
-
-
-
-
-
-
-
-
 
 }
 
