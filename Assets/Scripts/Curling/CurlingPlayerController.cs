@@ -62,7 +62,7 @@ public class CurlingPlayerController : MonoBehaviour
         stone2.init(
             gameObject: stone,
             stoneRb: stone.transform.GetComponent<Rigidbody>(),
-            speed: 1,
+            speed: 5,
             maxSpeed: 5
         );
           
@@ -99,7 +99,9 @@ public class CurlingPlayerController : MonoBehaviour
 
         // force the stone to change it's direction
         targetPosition = centerPointRb.transform.position;
-        stone2.ChangeDirection(targetPosition: targetPosition);
+        stone2.ChangeDirection(
+            targetPosition: targetPosition
+        );
 
     }
 
