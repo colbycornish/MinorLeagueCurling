@@ -13,7 +13,8 @@ namespace CurlingGameDataNamespace {
 
         public int currentGameNumber = 0;
         public int maxGameNumber = 3;
-
+        public string team1;
+        public string team2;
 
         private void Awake()
         {
