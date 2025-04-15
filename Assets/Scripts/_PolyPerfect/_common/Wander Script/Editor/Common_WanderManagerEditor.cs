@@ -34,10 +34,10 @@ namespace Polyperfect.Common
 
             GUILayout.Space(5);
 
-			if (GUILayout.Button("Kill 'Em All"))
-            {
-                Manager.Nuke();
-            }
+			// if (GUILayout.Button("Kill 'Em All"))
+            // {
+            //     Manager.Nuke();
+            // }
         }
     }
 }

@@ -65,12 +65,12 @@ namespace Polyperfect.Common
       }
     }
 
-    public void Nuke()
-    {
-			foreach (Common_WanderScript animal in Common_WanderScript.AllAnimals)
-      {
-        animal.Die();
-      }
-    }
+    // public void Nuke()
+    // {
+		// 	foreach (Common_WanderScript animal in Common_WanderScript.AllAnimals)
+    //   {
+    //     animal.Die();
+    //   }
+    // }
   }
 }
