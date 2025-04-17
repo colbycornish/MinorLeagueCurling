@@ -39,9 +39,9 @@ namespace Polyperfect.Common
             return finalPosition;
         }
 
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.DrawWireSphere(transform.position, spawnSize);
-        }
+        // private void OnDrawGizmosSelected()
+        // {
+        //     Gizmos.DrawWireSphere(transform.position, spawnSize);
+        // }
     }
 }

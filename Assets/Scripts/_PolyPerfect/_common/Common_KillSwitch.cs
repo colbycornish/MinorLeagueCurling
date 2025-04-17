@@ -20,8 +20,8 @@ namespace Polyperfect.Common
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                anim.SetBool("isDead", true);
+            // if (Input.GetKeyDown(KeyCode.Alpha1))
+            //     anim.SetBool("isDead", true);
 
         }
     }
