@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SimpleStoneLauncher : MonoBehaviour
+public class StoneThrowController : MonoBehaviour
 {
     public Rigidbody stoneRb;                      // Assign in Inspector
     public Transform directionPivot;               // Assign the same pivot you're rotating
