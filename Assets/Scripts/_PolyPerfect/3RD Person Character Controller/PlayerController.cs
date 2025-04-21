@@ -30,7 +30,7 @@ namespace Polyperfect.People
         // Update is called once per frame
         void Update()
         {
-            isGrounded = Grounded();
+            
 
             //Allow the player to move left and right
             float horizontalMove = Input.GetAxisRaw("Horizontal");
@@ -52,11 +52,14 @@ namespace Polyperfect.People
             translation *= speed;
             translation = rigidbody.position + translation;
 
+            isGrounded = Grounded();
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             {
+                // Jump
                 rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
 
+            // Rotate the player with the mouse
             float horizontal = Input.GetAxis("Mouse X") * Time.deltaTime;
             Quaternion rotation = transform.rotation * Quaternion.Euler(0, horizontal * rotateSpeed, 0);
 
@@ -69,9 +72,17 @@ namespace Polyperfect.People
             rigidbody.MoveRotation(rotation);
         }
 
+        void Jump()
+        {
+            isGrounded = Grounded();
+            rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
         bool Grounded()
         {
             return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
         }
+
+        
     }
 }

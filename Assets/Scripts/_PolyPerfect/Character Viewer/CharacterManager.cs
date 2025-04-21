@@ -22,7 +22,7 @@ namespace Polyperfect.People
         SkinnedMeshRenderer[] skinnedMeshRenderers;
         public GameObject rig;
         SkinnedMeshRenderer previousCharacter;
-        List<Sprite> sprites = new List<Sprite>();
+        // List<Sprite> sprites = new List<Sprite>();
 
         [Header("Animation Bindings")]
         public Animator rigAnimator;
@@ -43,9 +43,9 @@ namespace Polyperfect.People
         public Gradient colorGradient;
         public TextMesh characterNameText;
 
-        [Header("Environments")]
-        public List<GameObject> environments = new List<GameObject>();
-        public Icons[] environmentIcons;
+        // [Header("Environments")]
+        // public List<GameObject> environments = new List<GameObject>();
+        // public Icons[] environmentIcons;
 
         public string pathToCurrentFolder;
 
@@ -72,7 +72,7 @@ namespace Polyperfect.People
             skinnedMeshRenderers = rig.GetComponentsInChildren<SkinnedMeshRenderer>(true);
 
             //Generate some pictures of the faces of each skinned mesh renderer
-            StartCoroutine(TakePictures(skinnedMeshRenderers));
+            // StartCoroutine(TakePictures(skinnedMeshRenderers));
         }
 
         IEnumerator SlideAway(AnimationCurve curve, RectTransform objectToMove, float duration, bool isForward)
@@ -133,61 +133,61 @@ namespace Polyperfect.People
             text.enabled = true;
         }
 
-        IEnumerator TakePictures(SkinnedMeshRenderer[] skinnedMeshRenderers)
-        {
-            //Choose a random character that will be enabled at the start
-            var RandomStartCharacter = skinnedMeshRenderers[Random.Range(0, skinnedMeshRenderers.Length)];
+        // IEnumerator TakePictures(SkinnedMeshRenderer[] skinnedMeshRenderers)
+        // {
+        //     //Choose a random character that will be enabled at the start
+        //     var RandomStartCharacter = skinnedMeshRenderers[Random.Range(0, skinnedMeshRenderers.Length)];
 
-            //We need to turn all the meshes off so we can get some pictures of the faces
-            foreach (var mesh in skinnedMeshRenderers)
-            {
-                mesh.gameObject.SetActive(false);
-            }
+        //     //We need to turn all the meshes off so we can get some pictures of the faces
+        //     foreach (var mesh in skinnedMeshRenderers)
+        //     {
+        //         mesh.gameObject.SetActive(false);
+        //     }
 
-            //Loop through all skinned Mesh Renderers
-            foreach (var skinnedMesh in skinnedMeshRenderers)
-            {
-                //An extra wait to ensure we don't accidently take a picture of two characters
-                yield return new WaitForEndOfFrame();
-                //Turn on the face
-                skinnedMesh.gameObject.SetActive(true);
+        //     //Loop through all skinned Mesh Renderers
+        //     foreach (var skinnedMesh in skinnedMeshRenderers)
+        //     {
+        //         //An extra wait to ensure we don't accidently take a picture of two characters
+        //         yield return new WaitForEndOfFrame();
+        //         //Turn on the face
+        //         skinnedMesh.gameObject.SetActive(true);
 
-                //Wait until the end of the frame to do the rendering
-                yield return new WaitForEndOfFrame();
+        //         //Wait until the end of the frame to do the rendering
+        //         yield return new WaitForEndOfFrame();
 
-                //Create a render texture from the face camera
-                RenderTexture.active = faceCamera.targetTexture;
-                //Store the texture so that it does not change mid way through this function
-                var faceRenderTexture = faceCamera.targetTexture;
+        //         //Create a render texture from the face camera
+        //         RenderTexture.active = faceCamera.targetTexture;
+        //         //Store the texture so that it does not change mid way through this function
+        //         var faceRenderTexture = faceCamera.targetTexture;
 
-                //All done rendering so we can turn off the skinned Mesh now
-                skinnedMesh.gameObject.SetActive(false);
+        //         //All done rendering so we can turn off the skinned Mesh now
+        //         skinnedMesh.gameObject.SetActive(false);
 
-                //Create a new texture2D
-                var newTexture = new Texture2D(faceRenderTexture.width, faceRenderTexture.height);
-                newTexture.ReadPixels(new Rect(0, 0, faceRenderTexture.width, faceRenderTexture.height), 0, 0);
-                newTexture.Apply();
+        //         //Create a new texture2D
+        //         var newTexture = new Texture2D(faceRenderTexture.width, faceRenderTexture.height);
+        //         newTexture.ReadPixels(new Rect(0, 0, faceRenderTexture.width, faceRenderTexture.height), 0, 0);
+        //         newTexture.Apply();
 
-                //Create a sprite out of the texture2D
-                Rect rec = new Rect(0, 0, newTexture.width, newTexture.height);
-                var newSprite = Sprite.Create(newTexture, rec, new Vector2(0, 0), 1);
-                newSprite.name = skinnedMesh.name;
-                sprites.Add(newSprite);
+        //         //Create a sprite out of the texture2D
+        //         Rect rec = new Rect(0, 0, newTexture.width, newTexture.height);
+        //         var newSprite = Sprite.Create(newTexture, rec, new Vector2(0, 0), 1);
+        //         newSprite.name = skinnedMesh.name;
+        //         sprites.Add(newSprite);
 
-                //Spawn some tiles for the faces and assign them with textures and the name of the character
-                var newTile = Instantiate(contentTile, meshTileContentParent.transform);
-                newTile.GetComponentsInChildren<Image>().First(x => x.name == "Face Sprite").sprite = newSprite;
-                newTile.GetComponentInChildren<Text>().text = skinnedMesh.transform.name;
-                newTile.GetComponent<Button>().onClick.AddListener(() => SelectTile(skinnedMesh));
-            }
+        //         //Spawn some tiles for the faces and assign them with textures and the name of the character
+        //         var newTile = Instantiate(contentTile, meshTileContentParent.transform);
+        //         newTile.GetComponentsInChildren<Image>().First(x => x.name == "Face Sprite").sprite = newSprite;
+        //         newTile.GetComponentInChildren<Text>().text = skinnedMesh.transform.name;
+        //         newTile.GetComponent<Button>().onClick.AddListener(() => SelectTile(skinnedMesh));
+        //     }
 
-            //Manually set a character to start on
-            previousCharacter = RandomStartCharacter;
-            RandomStartCharacter.gameObject.SetActive(true);
+        //     //Manually set a character to start on
+        //     previousCharacter = RandomStartCharacter;
+        //     RandomStartCharacter.gameObject.SetActive(true);
 
-            GetAnimations();
-            SetEnvironments();
-        }
+        //     GetAnimations();
+        //     SetEnvironments();
+        // }
 
         Coroutine previous;
         Material textMaterial;
@@ -234,62 +234,62 @@ namespace Polyperfect.People
             rigAnimator.enabled = true;
         }
 
-        void SetEnvironments()
-        {
-            var randomStartEnvironment = environments[Random.Range(0, environments.Count)];
+        // void SetEnvironments()
+        // {
+        //     var randomStartEnvironment = environments[Random.Range(0, environments.Count)];
 
-            foreach (var environment in environments)
-            {
-                environment.SetActive(false);
+        //     foreach (var environment in environments)
+        //     {
+        //         environment.SetActive(false);
 
-                //Spawn some tiles for the faces and assign them with textures and the name of the character
-                var newTile = Instantiate(contentTile, environmentTileContentParent.transform);
-                newTile.GetComponentInChildren<Text>().text = environment.name;
-                newTile.GetComponent<Button>().onClick.AddListener(() =>
-                {
-                    foreach (var item in environments)
-                    {
-                        item.SetActive(false);
-                    }
+        //         //Spawn some tiles for the faces and assign them with textures and the name of the character
+        //         var newTile = Instantiate(contentTile, environmentTileContentParent.transform);
+        //         newTile.GetComponentInChildren<Text>().text = environment.name;
+        //         newTile.GetComponent<Button>().onClick.AddListener(() =>
+        //         {
+        //             foreach (var item in environments)
+        //             {
+        //                 item.SetActive(false);
+        //             }
 
-                    environment.SetActive(!environment.activeSelf);
-                });
+        //             environment.SetActive(!environment.activeSelf);
+        //         });
 
 
-                foreach (var icon in environmentIcons)
-                {
-                    if (environment.name.Contains(icon.animationNameIdentfier))
-                    {
-                        newTile.GetComponentsInChildren<Image>().First(x => x.name == "Face Sprite").sprite = icon.iconTexture;
-                    }
-                }
-            }
+        //         foreach (var icon in environmentIcons)
+        //         {
+        //             if (environment.name.Contains(icon.animationNameIdentfier))
+        //             {
+        //                 newTile.GetComponentsInChildren<Image>().First(x => x.name == "Face Sprite").sprite = icon.iconTexture;
+        //             }
+        //         }
+        //     }
 
-            randomStartEnvironment.SetActive(true);
-        }
+        //     randomStartEnvironment.SetActive(true);
+        // }
 
         void SelectAnimation(string name)
         {
             rigAnimator.CrossFade(name, animationBlendSpeed);
         }
 
-#if UNITY_EDITOR
-        [ContextMenu("Save Sprites")]
-        void SaveSprites()
-        {
-            foreach (var sprite in sprites)
-            {
-                EditorExtensions.SaveTexture(sprite, pathToCurrentFolder, sprite.name);
-            }
-        }
-        /*
-        [ContextMenu("Get Path")]
-        void GetPath()
-        {
-            pathToCurrentFolder = EditorExtensions.GetPath();
-        }
-        */
+// #if UNITY_EDITOR
+//         [ContextMenu("Save Sprites")]
+//         void SaveSprites()
+//         {
+//             foreach (var sprite in sprites)
+//             {
+//                 EditorExtensions.SaveTexture(sprite, pathToCurrentFolder, sprite.name);
+//             }
+//         }
+//         /*
+//         [ContextMenu("Get Path")]
+//         void GetPath()
+//         {
+//             pathToCurrentFolder = EditorExtensions.GetPath();
+//         }
+//         */
 
-#endif
+// #endif
     }
 }
