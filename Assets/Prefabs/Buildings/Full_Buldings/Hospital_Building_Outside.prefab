@@ -6475,12 +6475,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2572981281947991173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.74, y: 28.1, z: 12.23}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: 29.119995, y: 42.2, z: -11.860046}
+  m_LocalScale: {x: 1.5000001, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5702363072961159572}
+  m_Father: {fileID: 3289738547509820127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &2256615597850913178
 MeshFilter:
@@ -10675,6 +10675,51 @@ MonoBehaviour:
     Probability: 1
     Scale: 1.5
     NormalOffset: 0.1
+--- !u!1 &4370461928117896928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 50131322050316933}
+  - component: {fileID: 7633842914005501106}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &50131322050316933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4370461928117896928}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 46.71, y: 3.8815985, z: 40.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5636831509830666408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7633842914005501106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4370461928117896928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262be34871e414b638641a27d93307ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnID: Town_Hospital_Exit_Front
 --- !u!1 &4384514616047830058
 GameObject:
   m_ObjectHideFlags: 0
@@ -11428,6 +11473,75 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4787169160511700200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2738117047685707459}
+  - component: {fileID: 4996840620006991873}
+  - component: {fileID: 8518315168702168911}
+  m_Layer: 0
+  m_Name: EntryFront
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2738117047685707459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4787169160511700200}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 48.3, y: 3.8815985, z: 26.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5636831509830666408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4996840620006991873
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4787169160511700200}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 8, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8518315168702168911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4787169160511700200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe7b9d25af7b4226842a3d859a0772c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: Hospital_Interior
+  targetSpawnID: Hospital_Interior_Entry_Front
+  interactKey: 101
 --- !u!1 &4792078771305164756
 GameObject:
   m_ObjectHideFlags: 0
@@ -12820,6 +12934,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7208347093241963597}
+  - {fileID: 7016148483413375449}
+  - {fileID: 6571992891705071203}
+  - {fileID: 2954010041835677247}
   - {fileID: 5702363072961159572}
   - {fileID: 3722835023112045013}
   - {fileID: 8100021932162624749}
@@ -13589,12 +13707,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5800557273508564185}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -7.59, y: 28.1, z: 12.23}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: 51.78, y: 42.2, z: -11.860046}
+  m_LocalScale: {x: 1.5000001, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5702363072961159572}
+  m_Father: {fileID: 3289738547509820127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &7826045737547209158
 MeshFilter:
@@ -18792,6 +18910,8 @@ Transform:
   - {fileID: 5829738762782112645}
   - {fileID: 5708522611834741519}
   - {fileID: 138107521878984636}
+  - {fileID: 50131322050316933}
+  - {fileID: 2738117047685707459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &7644171470940119907
@@ -18820,12 +18940,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7644171470940119907}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -7.59, y: 28.1, z: 0.05}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: 51.78, y: 42.2, z: 12.5}
+  m_LocalScale: {x: 1.5000001, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5702363072961159572}
+  m_Father: {fileID: 3289738547509820127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &6264936209490966140
 MeshFilter:
@@ -20152,12 +20272,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8017218578679365367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.74, y: 28.1, z: 0.05}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: 29.119995, y: 42.2, z: 12.5}
+  m_LocalScale: {x: 1.5000001, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5702363072961159572}
+  m_Father: {fileID: 3289738547509820127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &6027763433978932200
 MeshFilter:
@@ -22925,19 +23045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13b6bc0b5c1ae45dfb8ba2251503d5ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7208347093241963597}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13b6bc0b5c1ae45dfb8ba2251503d5ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7016148483413375449}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13b6bc0b5c1ae45dfb8ba2251503d5ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6571992891705071203}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13b6bc0b5c1ae45dfb8ba2251503d5ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2954010041835677247}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b6bc0b5c1ae45dfb8ba2251503d5ff, type: 3}
 --- !u!4 &5702363072961159572 stripped

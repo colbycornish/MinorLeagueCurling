@@ -1,37 +1,34 @@
 using UnityEngine;
-
 public class DoorwayTeleport : MonoBehaviour
 {
-    public Transform teleportDestination;
+    public string targetScene;
+    public string targetSpawnID;
     public KeyCode interactKey = KeyCode.E;
     private bool playerInRange = false;
-    private Transform player;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            player = other.transform;
+            UI_Prompt.Instance.ShowPrompt(true);
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            player = null;
+            UI_Prompt.Instance.ShowPrompt(false);
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (playerInRange && Input.GetKeyDown(interactKey))
         {
-            FadeManager.Instance.FadeOutThenIn(() => {
-                player.position = teleportDestination.position;
-            });
+            GameManager.Instance.TeleportToScene(targetScene, targetSpawnID);
         }
     }
 }
