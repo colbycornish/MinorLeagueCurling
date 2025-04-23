@@ -43,19 +43,28 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadSceneWithFade(string sceneName)
     {
+        // Find the player before loading
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            player.SetActive(false);  // Disable the player BEFORE loading
+
         yield return FadeManager.Instance.FadeOut();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+
         yield return FadeManager.Instance.FadeIn();
 
+        // Scene has loaded — find spawn point
         GameObject spawnPoint = FindSpawnPointByID(playerSpawnID);
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
+
         if (player != null && spawnPoint != null)
         {
             player.transform.position = spawnPoint.transform.position;
+            player.SetActive(true);  // Enable the player AFTER positioning
         }
     }
 

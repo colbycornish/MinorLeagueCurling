@@ -3896,43 +3896,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7f57f4119dbfd46e1be0b74f0ebe0eac, type: 3}
   m_PrefabInstance: {fileID: 421061309}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &424951122
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 6
-  m_Width: 617
-  m_Height: 360
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_UseDynamicScaleExplicit: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 0
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1001 &427648972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9786,9 +9749,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe7b9d25af7b4226842a3d859a0772c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: Town_Outside_002
+  targetScene: Town_Outside
   targetSpawnID: Town_Restaurant_Exit_Front
+  spawnDatabase: {fileID: 11400000, guid: da2af9fadfbf84bb8b2f77ac89b796e6, type: 2}
   interactKey: 101
+  sceneDatabase: {fileID: 11400000, guid: 01d4bf5cd34e14cd2ba831622724869a, type: 2}
 --- !u!1001 &1000806263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11113,6 +11078,43 @@ Transform:
   - {fileID: 1801753480}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1130616884
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 6
+  m_Width: 617
+  m_Height: 360
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 4
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_UseDynamicScaleExplicit: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &1131545926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16878,7 +16880,7 @@ PrefabInstance:
     - target: {fileID: 9205371885998440386, guid: e96cffa9d00b6b545adfeb26165952cc, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 424951122}
+      objectReference: {fileID: 1130616884}
     - target: {fileID: 9205371885998440386, guid: e96cffa9d00b6b545adfeb26165952cc, type: 3}
       propertyPath: orthographic size
       value: 10
