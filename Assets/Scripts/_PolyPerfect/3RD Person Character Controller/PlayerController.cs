@@ -83,6 +83,15 @@ namespace Polyperfect.People
             return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
         }
 
+
+
+        // CharacterController controller = player.GetComponent<CharacterController>();
+        // if (controller != null)
+        // {
+        //     controller.enabled = false;
+        //     player.transform.position = spawnPoint.transform.position;
+        //     controller.enabled = true;
+        // }
         
     }
 }
