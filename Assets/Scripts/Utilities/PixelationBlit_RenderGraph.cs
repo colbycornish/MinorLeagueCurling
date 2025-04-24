@@ -40,7 +40,7 @@
 //         public Material pixelationMaterial;
 //         [Range(64, 1920)] public int pixelWidth = 320;
 //         public bool lockAspectRatio = true;
-//         public RenderPassEvent renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing; // ⬅️ Corrected timing
+//         public RenderPassEvent renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
 //     }
 
 //     public PixelationSettings settings = new PixelationSettings();
@@ -77,32 +77,31 @@
 //             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
 //             var cameraData = frameData.Get<UniversalCameraData>();
 
-//             // ✅ HARD SKIP for Scene View or any non-Game cameras:
+//             // 🔥 Skip Scene View and non-Game cameras
 //             if (cameraData.camera.cameraType != CameraType.Game)
 //                 return;
 
 //             if (cameraData.renderType != CameraRenderType.Base)
 //                 return;
 
-//             TextureHandle colorTarget = resourceData.activeColorTexture;
+//             TextureHandle inputTexture = resourceData.activeColorTexture;
 
-//             // ✅ Defensive check: If the color target isn't initialized, skip the pass:
-//             if (!colorTarget.IsValid())
-//                 return;
-
-//             // ✅ Create the safe copy:
-//             TextureDesc copyDesc = new TextureDesc(cameraData.cameraTargetDescriptor)
+//             // ✅ Create output target:
+//             TextureDesc outputDesc = new TextureDesc(cameraData.cameraTargetDescriptor)
 //             {
 //                 colorFormat = cameraData.cameraTargetDescriptor.graphicsFormat,
 //                 enableRandomWrite = true,
-//                 name = "Pixelation Input Copy"
+//                 name = "Pixelation Output"
 //             };
-//             TextureHandle inputCopy = renderGraph.CreateTexture(copyDesc);
+//             TextureHandle outputTarget = renderGraph.CreateTexture(outputDesc);
 
-//             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Pixelation Pass (Buffer Copy)", out var passData))
+//             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Pixelation Pass (Safe Output)", out var passData))
 //             {
-//                 builder.UseTexture(colorTarget, AccessFlags.ReadWrite);
-//                 builder.UseTexture(inputCopy, AccessFlags.Write);
+//                 builder.UseTexture(inputTexture, AccessFlags.Read);
+//                 builder.UseTexture(outputTarget, AccessFlags.Write);
+
+//                 // ✅ Correct output target binding:
+//                 builder.SetRenderAttachment(outputTarget, 0);
 
 //                 passData.pixelationMaterial = settings.pixelationMaterial;
 //                 passData.pixelWidth = settings.pixelWidth;
@@ -110,8 +109,6 @@
 
 //                 builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
 //                 {
-//                     ctx.cmd.CopyTexture(colorTarget, inputCopy); // Safe copy!
-
 //                     var descriptor = cameraData.cameraTargetDescriptor;
 //                     float aspect = (float)descriptor.height / descriptor.width;
 //                     Vector4 resolution = data.lockAspect
@@ -119,7 +116,7 @@
 //                         : new Vector4(data.pixelWidth, data.pixelWidth, 0, 0);
 
 //                     data.pixelationMaterial.SetVector("_PixelResolution", resolution);
-//                     data.pixelationMaterial.SetTexture("_MainTex", inputCopy);
+//                     data.pixelationMaterial.SetTexture("_MainTex", inputTexture);
 
 //                     ctx.cmd.DrawMesh(GetFullscreenQuadMesh(), Matrix4x4.identity, data.pixelationMaterial, 0, 0);
 //                 });
