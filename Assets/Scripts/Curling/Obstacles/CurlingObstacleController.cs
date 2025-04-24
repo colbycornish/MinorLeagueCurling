@@ -44,7 +44,7 @@ public class CurlingObstacleController : MonoBehaviour
     /// </summary>
     /// 
 
-    private string obstacleType = "OBSTACLE_SNOW";
+    // private string obstacleType = "OBSTACLE_SNOW";
     // "OBSTACLE_OIL";
     // "OBSTACLE_MAGNET";
     // "OBSTACLE_MAGNET_BOMB";
