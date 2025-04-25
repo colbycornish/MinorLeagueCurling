@@ -43,34 +43,54 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadSceneWithFade(string sceneName)
     {
-        // Find the player before loading
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-            player.SetActive(false);  // Disable the player BEFORE loading
-
         yield return FadeManager.Instance.FadeOut();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-
         yield return FadeManager.Instance.FadeIn();
 
-        // Scene has loaded — find spawn point
         GameObject spawnPoint = FindSpawnPointByID(playerSpawnID);
-        player = GameObject.FindGameObjectWithTag("Player");
-
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null && spawnPoint != null)
         {
             player.transform.position = spawnPoint.transform.position;
-            player.SetActive(true);  // Enable the player AFTER positioning
         }
     }
 
+    // private IEnumerator LoadSceneWithFade(string sceneName)
+    // {
+    //     // Find the player before loading
+    //     GameObject player = GameObject.FindGameObjectWithTag("Player");
+    //     if (player != null)
+    //         player.SetActive(false);  // Disable the player BEFORE loading
+
+    //     yield return FadeManager.Instance.FadeOut();
+    //     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+    //     while (!asyncLoad.isDone)
+    //     {
+    //         yield return null;
+    //     }
+
+    //     yield return FadeManager.Instance.FadeIn();
+
+    //     // Scene has loaded — find spawn point
+    //     GameObject spawnPoint = FindSpawnPointByID(playerSpawnID);
+    //     player = GameObject.FindGameObjectWithTag("Player");
+
+    //     if (player != null && spawnPoint != null)
+    //     {
+    //         player.transform.position = spawnPoint.transform.position;
+    //         player.SetActive(true);  // Enable the player AFTER positioning
+    //     }
+    // }
+
     private GameObject FindSpawnPointByID(string id)
-    {
-        SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
+    {   
+        
+        SpawnPoint[] spawnPoints = FindObjectsByType(typeof(SpawnPoint), FindObjectsSortMode.None) as SpawnPoint[];
+        //SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
         foreach (var sp in spawnPoints)
         {
             if (sp.spawnID == id)
@@ -79,4 +99,5 @@ public class GameManager : MonoBehaviour
         Debug.LogWarning("Spawn point with ID '" + id + "' not found.");
         return null;
     }
+
 }
