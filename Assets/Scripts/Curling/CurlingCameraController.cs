@@ -7,10 +7,10 @@ public class CurlingCameraController : MonoBehaviour
     public GameObject player;
     private Vector3 offset;
 
-    private string currentPositionType = "STARTING_CAMERA_POSITION";
-    private string nextPositionType = "STARTING_CAMERA_POSITION";
+    // private string currentPositionType = "STARTING_CAMERA_POSITION";
+    // private string nextPositionType = "STARTING_CAMERA_POSITION";
 
-    private bool isChangingPosition = false;
+    // private bool isChangingPosition = false;
 
     
     /// <summary>

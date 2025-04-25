@@ -43,12 +43,12 @@ public class CurlingThrowerController : MonoBehaviour
 
     private CurlingThrower thrower = new CurlingThrower();
     private Rigidbody throwerRb;
-    private double currentThrowPower = 0;
-    private double currentThrowAngle = 0;
+    // private double currentThrowPower = 0;
+    // private double currentThrowAngle = 0;
 
-    private bool canThrowStone = false;
-    private bool hasThrownStone = false;
-    private int numStonesThrown = 0;
+    // private bool canThrowStone = false;
+    // private bool hasThrownStone = false;
+    // private int numStonesThrown = 0;
 
     // private double currentThrowAngle = 0;
 
@@ -96,16 +96,16 @@ public class CurlingThrowerController : MonoBehaviour
 
     public void LaunchRock(){
         // initiate animation
-        hasThrownStone = true;
-        numStonesThrown = numStonesThrown + 1;
+        // hasThrownStone = true;
+        // numStonesThrown = numStonesThrown + 1;
     }
 
     public void Reset(){
         // initiate animation
-        canThrowStone = false;
-        hasThrownStone = false;
-        currentThrowPower = 0;
-        currentThrowAngle = 0;
+        // canThrowStone = false;
+        // hasThrownStone = false;
+        // currentThrowPower = 0;
+        // currentThrowAngle = 0;
 
     }
 
