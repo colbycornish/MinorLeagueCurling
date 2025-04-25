@@ -2,7 +2,7 @@ Shader "Custom/Pixelation"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {} // This must exist!
+        _MainTex ("Texture", 2D) = "white" {}
         _PixelResolution ("Pixel Resolution", Vector) = (320, 180, 0, 0)
     }
 

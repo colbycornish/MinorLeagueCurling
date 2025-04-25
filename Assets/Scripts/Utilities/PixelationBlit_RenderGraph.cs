@@ -3,37 +3,8 @@
 // using UnityEngine.Rendering.RenderGraphModule;
 // using UnityEngine.Rendering.Universal;
 
-// public class PixelationBlit : ScriptableRendererFeature
+// public class PixelationRendererFeature : ScriptableRendererFeature
 // {
-//     private static Mesh fullscreenQuadMesh;
-
-//     private static Mesh GetFullscreenQuadMesh()
-//     {
-//         if (fullscreenQuadMesh != null)
-//             return fullscreenQuadMesh;
-
-//         fullscreenQuadMesh = new Mesh
-//         {
-//             vertices = new Vector3[]
-//             {
-//                 new Vector3(-1, -1, 0),
-//                 new Vector3(1, -1, 0),
-//                 new Vector3(1, 1, 0),
-//                 new Vector3(-1, 1, 0)
-//             },
-//             uv = new Vector2[]
-//             {
-//                 new Vector2(0, 0),
-//                 new Vector2(1, 0),
-//                 new Vector2(1, 1),
-//                 new Vector2(0, 1)
-//             },
-//             triangles = new int[] { 0, 1, 2, 0, 2, 3 }
-//         };
-//         fullscreenQuadMesh.RecalculateNormals();
-//         return fullscreenQuadMesh;
-//     }
-
 //     [System.Serializable]
 //     public class PixelationSettings
 //     {
@@ -77,7 +48,7 @@
 //             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
 //             var cameraData = frameData.Get<UniversalCameraData>();
 
-//             // 🔥 Skip Scene View and non-Game cameras
+//             // Skip Scene View and other non-Game cameras
 //             if (cameraData.camera.cameraType != CameraType.Game)
 //                 return;
 
@@ -86,7 +57,7 @@
 
 //             TextureHandle inputTexture = resourceData.activeColorTexture;
 
-//             // ✅ Create output target:
+//             // Create the output target for the pixelation result
 //             TextureDesc outputDesc = new TextureDesc(cameraData.cameraTargetDescriptor)
 //             {
 //                 colorFormat = cameraData.cameraTargetDescriptor.graphicsFormat,
@@ -95,12 +66,11 @@
 //             };
 //             TextureHandle outputTarget = renderGraph.CreateTexture(outputDesc);
 
-//             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Pixelation Pass (Safe Output)", out var passData))
+//             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Pixelation Pass", out var passData))
 //             {
 //                 builder.UseTexture(inputTexture, AccessFlags.Read);
 //                 builder.UseTexture(outputTarget, AccessFlags.Write);
 
-//                 // ✅ Correct output target binding:
 //                 builder.SetRenderAttachment(outputTarget, 0);
 
 //                 passData.pixelationMaterial = settings.pixelationMaterial;
@@ -118,7 +88,8 @@
 //                     data.pixelationMaterial.SetVector("_PixelResolution", resolution);
 //                     data.pixelationMaterial.SetTexture("_MainTex", inputTexture);
 
-//                     ctx.cmd.DrawMesh(GetFullscreenQuadMesh(), Matrix4x4.identity, data.pixelationMaterial, 0, 0);
+//                     // Blitter.BlitTexture(ctx.cmd, inputTexture, outputTarget, data.pixelationMaterial, 0);
+//                     // ctx.cmd.DrawMesh(fullscreenQuad, Matrix4x4.identity, material, 0, 0);
 //                 });
 //             }
 //         }
