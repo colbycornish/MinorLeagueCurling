@@ -19,7 +19,7 @@ public class DoorwayTeleport : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            UI_Prompt.Instance.ShowPrompt(true);
+            // UI_Prompt.Instance.ShowPrompt(true);
         }
     }
 
@@ -28,7 +28,7 @@ public class DoorwayTeleport : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            UI_Prompt.Instance.ShowPrompt(false);
+            // UI_Prompt.Instance.ShowPrompt(false);
         }
     }
 
