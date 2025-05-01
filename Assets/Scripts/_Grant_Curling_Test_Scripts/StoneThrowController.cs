@@ -2,17 +2,25 @@ using UnityEngine;
 
 public class StoneThrowController : MonoBehaviour
 {
+    [Header("References")]
     public Rigidbody stoneRb;                // Assign your stone's Rigidbody
     public Transform directionPivot;         // The pivot (arrow) showing throw direction
-    public float launchForce = 4000f;        // Base launch force (tweak as needed)
     public PowerMeterUI powerMeter;          // Assign PowerMeterUI script in Inspector
 
-    private bool isCharging = false;
-    private bool hasLaunched = false;
+    [Header("Launch Settings")]
+    public float launchForce = 4000f;        // Base launch force (tweak as needed; adjust for distance)
+    public float curlStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
+
+    [Header("Reset Settings")]
+    public KeyCode resetKey = KeyCode.R;
     private Vector3 initialStonePosition; // used for resetting throw
     private Quaternion initialStoneRotation; // used for resetting throw
+
+    // State
+    private bool isCharging = false;
+    private bool hasLaunched = false;
+    private bool isSliding = false;
     public float curlAmount = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
-    public float curlStrength = 5f;     // Tweak for how much spin affects trajectory
 
     void Start() // I think this tracks the starting location of the stone, to be used when resetting throw?
     {
@@ -22,14 +30,16 @@ public class StoneThrowController : MonoBehaviour
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.R)) // reset the throw at any time by pressing 'R'
+        // Always allow manual reset; reset the throw at any time by pressing 'R'
+        if (Input.GetKeyDown(resetKey)) 
         {
             ResetThrow();
+            return;
         }
 
         if (hasLaunched) return;
 
+        // Handle spin input before charging
         if (!hasLaunched && !isCharging)
         {   
             if (Input.GetKeyDown(KeyCode.Q)) 
@@ -60,15 +70,38 @@ public class StoneThrowController : MonoBehaviour
             float power = powerMeter.GetPower();  // get selected power
             LaunchStone(power);
             hasLaunched = true;
+            isSliding = true;
         }
 
+    }
+
+    void FixedUpdate()
+    {
+        if (isSliding && Mathf.Abs(curlAmount) > 0.01f)
+        {
+            // Only apply curl if stone is still moving
+            if (stoneRb.linearVelocity.magnitude < 0.05f) // Note the default here is 0.2f; tweaking just for testing purposes
+            {
+                isSliding = false;
+                return;
+            }
+
+            Vector3 forward = stoneRb.linearVelocity.normalized;
+            Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
+            stoneRb.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
+
+            // 🧪 Debug: draw movement and curl direction
+            Debug.DrawRay(stoneRb.position, forward * 2f, Color.green);  // forward
+            Debug.DrawRay(stoneRb.position, side * 2f, Color.red);       // curl direction
+            Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
+        }
     }
 
     void LaunchStone(float power)
     {
         Vector3 launchDirection = directionPivot.forward;
         stoneRb.AddForce(launchDirection * launchForce * power, ForceMode.Impulse);
-        stoneRb.angularVelocity = Vector3.up * curlAmount * curlStrength; // Add angular velocity for curling effect
+        stoneRb.angularVelocity = Vector3.up * curlAmount * curlStrength; // Add angular velocity for curling effect (purely visual spin)
         Debug.Log($"🌀 Curl applied: angularVelocity = {stoneRb.angularVelocity}");
         Debug.Log("🚀 Stone launched with power: " + power);
     }
@@ -85,6 +118,7 @@ public class StoneThrowController : MonoBehaviour
 
         isCharging = false;
         hasLaunched = false;
+        isSliding = false;
         curlAmount = 0f;
 
     Debug.Log("🔁 Stone reset and ready to throw again!");

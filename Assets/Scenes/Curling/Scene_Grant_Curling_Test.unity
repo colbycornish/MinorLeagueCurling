@@ -147,7 +147,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219199068}
   serializedVersion: 4
-  m_Mass: 20
+  m_Mass: 10
   m_Drag: 0.5
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -228,8 +228,8 @@ Transform:
   m_GameObject: {fileID: 219199068}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -220}
-  m_LocalScale: {x: 5, y: 2, z: 5}
+  m_LocalPosition: {x: 0, y: 1.5, z: -220}
+  m_LocalScale: {x: 5, y: 1.5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -423,7 +423,7 @@ Transform:
   m_GameObject: {fileID: 294938277}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2897841, y: -0.0000030527028, z: 0.00000092428377, w: 0.9570921}
-  m_LocalPosition: {x: 0, y: 22, z: -250}
+  m_LocalPosition: {x: 0, y: 21.5, z: -250}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2298,7 +2298,7 @@ Transform:
   m_GameObject: {fileID: 1731800186}
   serializedVersion: 2
   m_LocalRotation: {x: 0.28978413, y: -0.0000030527035, z: 0.0000009242841, w: 0.95709205}
-  m_LocalPosition: {x: 0, y: 22, z: -250}
+  m_LocalPosition: {x: 0, y: 21.5, z: -250}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2609,10 +2609,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stoneRb: {fileID: 219199069}
   directionPivot: {fileID: 1470364440}
-  launchForce: 3000
   powerMeter: {fileID: 710219041}
-  curlAmount: 0
+  launchForce: 1000
   curlStrength: 5
+  resetKey: 114
+  curlAmount: 0
 --- !u!1 &1883344974
 GameObject:
   m_ObjectHideFlags: 0
