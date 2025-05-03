@@ -9,6 +9,7 @@ public class DoorwayTeleportEditor : Editor
     {
         DoorwayTeleport teleport = (DoorwayTeleport)target;
 
+        teleport.promptUI = (GameObject)EditorGUILayout.ObjectField("Prompt UI", teleport.promptUI, typeof(GameObject), true);
         teleport.sceneDatabase = (SceneDatabase)EditorGUILayout.ObjectField("Scene Database", teleport.sceneDatabase, typeof(SceneDatabase), false);
         teleport.spawnDatabase = (SpawnPointDatabase)EditorGUILayout.ObjectField("Spawn Database", teleport.spawnDatabase, typeof(SpawnPointDatabase), false);
 

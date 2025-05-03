@@ -12,14 +12,22 @@ public class DoorwayTeleport : MonoBehaviour
     private bool playerInRange = false;
 
     public SceneDatabase sceneDatabase;
+    public GameObject promptUI;
 
+    // void Start()
+    // {
+    //     if (promptUI != null)
+    //         promptUI.SetActive(false);
+    // }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            // UI_Prompt.Instance.ShowPrompt(true);
+            if (promptUI != null){
+                promptUI.SetActive(true);
+            }
         }
     }
 
@@ -28,7 +36,9 @@ public class DoorwayTeleport : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            // UI_Prompt.Instance.ShowPrompt(false);
+            if (promptUI != null){
+                promptUI.SetActive(false);
+            }
         }
     }
 
