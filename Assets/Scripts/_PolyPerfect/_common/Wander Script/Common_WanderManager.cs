@@ -17,7 +17,6 @@ namespace Polyperfect.Common
       set
       {
         peaceTime = true;
-        // SwitchPeaceTime(value);
       }
     }
 
@@ -46,32 +45,7 @@ namespace Polyperfect.Common
       if (peaceTime)
       {
         Debug.Log("AnimalManager: Peacetime is enabled, all animals are non-agressive.");
-        // SwitchPeaceTime(true);
       }
     }
-
-    // public void SwitchPeaceTime(bool enabled)
-    // {
-    //   if (enabled == peaceTime)
-    //   {
-    //     return;
-    //   }
-
-    //   peaceTime = enabled;
-
-    //   Debug.Log(string.Format("AnimalManager: Peace time is now {0}.", enabled ? "On" : "Off"));
-		// 	foreach (Common_WanderScript animal in Common_WanderScript.AllAnimals)
-    //   {
-    //     // animal.SetPeaceTime(enabled);
-    //   }
-    // }
-
-    // public void Nuke()
-    // {
-		// 	foreach (Common_WanderScript animal in Common_WanderScript.AllAnimals)
-    //   {
-    //     animal.Die();
-    //   }
-    // }
   }
 }

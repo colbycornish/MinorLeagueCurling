@@ -6,6 +6,7 @@ public class StoneThrowController : MonoBehaviour
     public Rigidbody stoneRb;                // Assign your stone's Rigidbody
     public Transform directionPivot;         // The pivot (arrow) showing throw direction
     public PowerMeterUI powerMeter;          // Assign PowerMeterUI script in Inspector
+    public GameObject powerMeterPromptUI;
 
     [Header("Launch Settings")]
     public float launchForce = 4000f;        // Base launch force (tweak as needed; adjust for distance)
@@ -15,6 +16,7 @@ public class StoneThrowController : MonoBehaviour
     public KeyCode resetKey = KeyCode.R;
     private Vector3 initialStonePosition; // used for resetting throw
     private Quaternion initialStoneRotation; // used for resetting throw
+
 
     // State
     private bool isCharging = false;
@@ -37,7 +39,9 @@ public class StoneThrowController : MonoBehaviour
             return;
         }
 
-        if (hasLaunched) return;
+        if (hasLaunched){
+            return;
+        } 
 
         // Handle spin input before charging
         if (!hasLaunched && !isCharging)
@@ -58,19 +62,13 @@ public class StoneThrowController : MonoBehaviour
         // Step 1: Press Space to activate power meter
         if (!isCharging && Input.GetKeyDown(KeyCode.Space))
         {
-            powerMeter.Activate();
-            isCharging = true;
-            Debug.Log("Power meter activated");
+            ActivatePowerMeter();
         }
 
         // Step 2: Press Space again to select power and launch
         else if (isCharging && Input.GetKeyDown(KeyCode.Space))
         {
-            powerMeter.SelectPower();  // locks the power level
-            float power = powerMeter.GetPower();  // get selected power
-            LaunchStone(power);
-            hasLaunched = true;
-            isSliding = true;
+            LaunchPowerSelected();
         }
 
     }
@@ -97,6 +95,25 @@ public class StoneThrowController : MonoBehaviour
         }
     }
 
+    void ActivatePowerMeter(){
+        powerMeter.Activate();
+        isCharging = true;
+        Debug.Log("Power meter activated");
+    }
+
+    
+    void LaunchPowerSelected(){
+        powerMeter.SelectPower();  // locks the power level
+        float power = powerMeter.GetPower();  // get selected power
+        LaunchStone(power);
+        hasLaunched = true;
+        isSliding = true;
+
+        if (powerMeterPromptUI != null){
+            powerMeterPromptUI.SetActive(false);
+        }
+    }
+
     void LaunchStone(float power)
     {
         Vector3 launchDirection = directionPivot.forward;
@@ -105,6 +122,8 @@ public class StoneThrowController : MonoBehaviour
         Debug.Log($"🌀 Curl applied: angularVelocity = {stoneRb.angularVelocity}");
         Debug.Log("🚀 Stone launched with power: " + power);
     }
+
+
 
     void ResetThrow()
     {
@@ -121,6 +140,10 @@ public class StoneThrowController : MonoBehaviour
         isSliding = false;
         curlAmount = 0f;
 
-    Debug.Log("🔁 Stone reset and ready to throw again!");
+        if (powerMeterPromptUI != null){
+            powerMeterPromptUI.SetActive(true);
+        }
+
+        Debug.Log("🔁 Stone reset and ready to throw again!");
     }
 }

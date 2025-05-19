@@ -11,13 +11,8 @@ namespace Polyperfect.Common
     {
         public override void OnInspectorGUI()
         {
-            //Load a Texture (Assets/Resources/Textures/texture01.png)
-            // var mainTexture = Resources.Load<Texture2D>("ManagerLogo");
             GUILayout.BeginHorizontal();
-            // if (GUILayout.Button(mainTexture))
-            // {
-            //     Application.OpenURL("https://assetstore.unity.com/?q=Polyperfect&orderBy=0");
-            // }
+  
             GUILayout.EndHorizontal();
 
             Common_WanderManager Manager = (Common_WanderManager)target;
@@ -28,16 +23,7 @@ namespace Polyperfect.Common
                 return;
             }
 
-            GUILayout.Space(10);
 
-            // Manager.PeaceTime = EditorGUILayout.Toggle("Peace Time", Manager.PeaceTime);
-
-            GUILayout.Space(5);
-
-			// if (GUILayout.Button("Kill 'Em All"))
-            // {
-            //     Manager.Nuke();
-            // }
         }
     }
 }

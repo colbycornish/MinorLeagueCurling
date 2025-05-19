@@ -96,10 +96,7 @@ namespace Polyperfect.Common
 
             //Main Image    
             GUILayout.BeginHorizontal();
-            // if (GUILayout.Button(mainTexture))
-            // {
-            //     Application.OpenURL("https://assetstore.unity.com/?q=Polyperfect&orderBy=0");
-            // }
+            
             GUILayout.EndHorizontal();
 
 
