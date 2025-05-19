@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4659410577303207357
+--- !u!114 &-583101581539395056
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,12 +22,12 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Metal
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 504ad1e6358184d4c896ef52c927aff5, type: 2}
+  m_Parent: {fileID: 2100000, guid: 4ba394515829af7468d71400f809fd46, type: 2}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _METALLICSPECGLOSSMAP
   m_InvalidKeywords:
-  - _CLOUDSENABLED
-  - _OUTLINESENABLED
+  - _METALLICGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -42,38 +42,36 @@ Material:
     m_TexEnvs:
     - _BaseMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 28e045bc465de2e4391dd15fb67ca2f6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ae7bb595415c9744cababbe58b79344a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
-    - _Metallic: 0
-    - _Parallax: 0.005
-    - _Smoothness: 0.5
+    - _GlossMapScale: 1
+    - _Glossiness: 0.44
+    - _Metallic: 1
+    - _Smoothness: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.47058815, g: 0.47058815, b: 0.47058815, a: 1}
+    - _Color: {r: 0.4705881, g: 0.4705881, b: 0.4705881, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
