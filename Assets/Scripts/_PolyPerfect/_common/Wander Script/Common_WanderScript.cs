@@ -48,8 +48,8 @@ namespace Polyperfect.Common
         private int dominance = 1;
         private int originalDominance = 0;
 
-        [SerializeField, Tooltip("How far this animal can sense a predator.")]
-        private float awareness = 30f;
+        // [SerializeField, Tooltip("How far this animal can sense a predator.")]
+        // private float awareness = 30f;
 
         [SerializeField, Tooltip("How far this animal can sense it's prey.")]
         private float scent = 30f;
@@ -60,7 +60,7 @@ namespace Polyperfect.Common
         private float stamina = 10f;
 
         // [SerializeField, Tooltip("How much this damage this animal does to another animal.")]
-        private float power = 10f;
+        // private float power = 10f;
 
         // [SerializeField, Tooltip("How much health this animal has.")]
         private float toughness = 5f;
@@ -105,16 +105,16 @@ namespace Polyperfect.Common
         [SerializeField, Tooltip("If true, AI changes to this animal will be logged in the console.")]
         private bool logChanges = false;
 
-        [SerializeField, Tooltip("If true, gizmos will be drawn in the editor.")]
-        private bool showGizmos = false;
+        // [SerializeField, Tooltip("If true, gizmos will be drawn in the editor.")]
+        // private bool showGizmos = false;
 
-        [SerializeField] private bool drawWanderRange = true;
-        [SerializeField] private bool drawScentRange = true;
-        [SerializeField] private bool drawAwarenessRange = true;
+        // [SerializeField] private bool drawWanderRange = true;
+        // [SerializeField] private bool drawScentRange = true;
+        // [SerializeField] private bool drawAwarenessRange = true;
 
         public UnityEngine.Events.UnityEvent deathEvent;
         public UnityEngine.Events.UnityEvent attackingEvent;
-        public UnityEngine.Events.UnityEvent idleEvent;
+        public UnityEngine.Events.UnityEvent idleEvent; 
         public UnityEngine.Events.UnityEvent movementEvent;
 
 
@@ -143,7 +143,7 @@ namespace Polyperfect.Common
             Dead
         }
 
-        float attackTimer = 0;
+        // float attackTimer = 0;
         float MinimumStaminaForAggression
         {
             get { return stats.stamina * .9f; }
@@ -155,11 +155,11 @@ namespace Polyperfect.Common
         }
 
         public WanderState CurrentState;
-        Common_WanderScript primaryPrey;
+        // Common_WanderScript primaryPrey;
         Common_WanderScript primaryPursuer;
         Common_WanderScript attackTarget;
         float moveSpeed = 0f;
-        float attackReach =2f;
+        // float attackReach =2f;
         bool forceUpdate = false;
         float idleStateDuration;
         Vector3 startPosition;
@@ -485,7 +485,7 @@ namespace Polyperfect.Common
             //         UpdateAI();
             // }
 
-            var position = transform.position;
+            var position = transform.position; 
             var targetPosition = position;
             switch (CurrentState)
             {
@@ -890,7 +890,7 @@ namespace Polyperfect.Common
         }
         void HandleBeginIdle()
         {
-            primaryPrey = null;
+            // primaryPrey = null;
             var targetWeight = Random.Range(0, totalIdleStateWeight);
             var curWeight = 0;
             foreach (var idleState in idleStates)
@@ -908,7 +908,7 @@ namespace Polyperfect.Common
         }
         void HandleBeginWander()
         {
-            primaryPrey = null;
+            // primaryPrey = null;
             var rand = Random.insideUnitSphere * wanderZone;
             var targetPos = startPosition + rand;
             ValidatePosition(ref targetPos);
