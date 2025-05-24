@@ -14,6 +14,8 @@ namespace CurlingGameDataNamespace {
         public string currentTurnPhase = "";
         
         public double turnCount = 0;
+        private int roundCount = 1;
+        private int maxRounds = 10;
         public string startingTeamName = "";
 
 

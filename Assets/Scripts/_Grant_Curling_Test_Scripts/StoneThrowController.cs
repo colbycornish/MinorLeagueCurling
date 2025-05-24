@@ -14,6 +14,9 @@ public class StoneThrowController : MonoBehaviour
 
     [Header("Reset Settings")]
     public KeyCode resetKey = KeyCode.R;
+    public KeyCode rightCurlKey = KeyCode.E;
+    public KeyCode leftCurlKey = KeyCode.Q;
+    public KeyCode actionKey = KeyCode.Space; // This is the key used to activate the power meter and launch the stone
     private Vector3 initialStonePosition; // used for resetting throw
     private Quaternion initialStoneRotation; // used for resetting throw
 
@@ -46,13 +49,13 @@ public class StoneThrowController : MonoBehaviour
         // Handle spin input before charging
         if (!hasLaunched && !isCharging)
         {   
-            if (Input.GetKeyDown(KeyCode.Q)) 
+            if (Input.GetKeyDown(leftCurlKey)) 
             {   
                 curlAmount = -0.5f;
                 Debug.Log("⤵️ Left curl selected");
             }
 
-            if (Input.GetKeyDown(KeyCode.E)) 
+            if (Input.GetKeyDown(rightCurlKey)) 
             {
                 curlAmount = 1f;
                 Debug.Log("⤴️ Right curl selected");
@@ -60,13 +63,13 @@ public class StoneThrowController : MonoBehaviour
         }
 
         // Step 1: Press Space to activate power meter
-        if (!isCharging && Input.GetKeyDown(KeyCode.Space))
+        if (!isCharging && Input.GetKeyDown(actionKey))
         {
             ActivatePowerMeter();
         }
 
         // Step 2: Press Space again to select power and launch
-        else if (isCharging && Input.GetKeyDown(KeyCode.Space))
+        else if (isCharging && Input.GetKeyDown(actionKey))
         {
             LaunchPowerSelected();
         }
