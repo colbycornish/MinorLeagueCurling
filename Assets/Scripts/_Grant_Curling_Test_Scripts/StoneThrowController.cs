@@ -9,7 +9,7 @@ public class StoneThrowController : MonoBehaviour
     public GameObject powerMeterPromptUI;
 
     [Header("Launch Settings")]
-    public float launchForce = 4000f;        // Base launch force (tweak as needed; adjust for distance)
+    public float launchForce = 110f;        // Base launch force (tweak as needed; adjust for distance)
     public float curlStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
 
     [Header("Reset Settings")]
@@ -48,7 +48,7 @@ public class StoneThrowController : MonoBehaviour
         {   
             if (Input.GetKeyDown(KeyCode.Q)) 
             {   
-                curlAmount = -1f;
+                curlAmount = -0.5f;
                 Debug.Log("⤵️ Left curl selected");
             }
 
@@ -78,15 +78,18 @@ public class StoneThrowController : MonoBehaviour
         if (isSliding && Mathf.Abs(curlAmount) > 0.01f)
         {
             // Only apply curl if stone is still moving
-            if (stoneRb.linearVelocity.magnitude < 0.05f) // Note the default here is 0.2f; tweaking just for testing purposes
-            {
-                isSliding = false;
-                return;
-            }
+            //if (stoneRb.linearVelocity.magnitude < 0.05f) // Note the default here is 0.2f; tweaking just for testing purposes
+            //{
+            //    isSliding = false;
+            //    return;
+            //}
 
             Vector3 forward = stoneRb.linearVelocity.normalized;
             Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
             stoneRb.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
+            Debug.Log("Side Force = " + side);
+            Debug.Log("Curl Amount = " + curlAmount);
+            Debug.Log("Curl Strength = " + curlStrength);
 
             // 🧪 Debug: draw movement and curl direction
             Debug.DrawRay(stoneRb.position, forward * 2f, Color.green);  // forward
