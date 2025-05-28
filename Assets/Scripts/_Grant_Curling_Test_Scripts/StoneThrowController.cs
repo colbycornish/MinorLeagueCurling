@@ -1,9 +1,20 @@
 using UnityEngine;
+using System.Collections.Generic; // Loops in generic collections in C#; I need it for the "List" bit below
 
 public class StoneThrowController : MonoBehaviour
 {
-    [Header("References")]
-    public Rigidbody stoneRb;                // Assign your stone's Rigidbody
+
+    [Header("Launch Setup")]
+    public Transform launchPoint;
+    
+    [Header("Stone References")] // Manual list of stones for now - the Unity Inspector is weird with lists
+    public Rigidbody stone1;
+    public Rigidbody stone2;
+    public Rigidbody stone3;
+    public Rigidbody stone4;
+    public Rigidbody stone5;
+
+    [Header("Other References")]
     public Transform directionPivot;         // The pivot (arrow) showing throw direction
     public PowerMeterUI powerMeter;          // Assign PowerMeterUI script in Inspector
     public GameObject powerMeterPromptUI;
@@ -17,20 +28,39 @@ public class StoneThrowController : MonoBehaviour
     public KeyCode rightCurlKey = KeyCode.E;
     public KeyCode leftCurlKey = KeyCode.Q;
     public KeyCode actionKey = KeyCode.Space; // This is the key used to activate the power meter and launch the stone
-    private Vector3 initialStonePosition; // used for resetting throw
-    private Quaternion initialStoneRotation; // used for resetting throw
+    // private Vector3 initialStonePosition; // used for resetting throw NOTE NOW THAT WE ARE THROWING MULTIPLE STONES I DON'T THINK I NEED THIS
+    // private Quaternion initialStoneRotation; // used for resetting throw NOTE NOW THAT WE ARE THROWING MULTIPLE STONES I DON'T THINK I NEED THIS
 
 
     // State
+    private int currentStoneIndex = 0;
+    private Rigidbody currentStone;
     private bool isCharging = false;
     private bool hasLaunched = false;
     private bool isSliding = false;
     public float curlAmount = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
 
+    private List<Rigidbody> stones = new List<Rigidbody>(); // Empty list for stones
     void Start() // I think this tracks the starting location of the stone, to be used when resetting throw?
     {
-        initialStonePosition = stoneRb.transform.position;
-        initialStoneRotation = stoneRb.transform.rotation;
+        
+        // Manually add stones to the list in order
+        stones.Add(stone1);
+        stones.Add(stone2);
+        stones.Add(stone3);
+        stones.Add(stone4);
+        stones.Add(stone5);
+
+        if (stones.Count > 0)
+        {
+            currentStone = stones[currentStoneIndex];
+            PrepareCurrentStone(); // move stone to launch position at start (I'm using the same exact launch position, at least for now)
+        }
+
+        else
+        {
+            Debug.LogError("No stones assigned to the Throw Controller!");
+        }
     }
 
     void Update()
@@ -78,7 +108,7 @@ public class StoneThrowController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isSliding && Mathf.Abs(curlAmount) > 0.01f)
+        if (isSliding && currentStone != null && Mathf.Abs(curlAmount) > 0.01f)
         {
             // Only apply curl if stone is still moving
             //if (stoneRb.linearVelocity.magnitude < 0.05f) // Note the default here is 0.2f; tweaking just for testing purposes
@@ -87,16 +117,16 @@ public class StoneThrowController : MonoBehaviour
             //    return;
             //}
 
-            Vector3 forward = stoneRb.linearVelocity.normalized;
+            Vector3 forward = currentStone.linearVelocity.normalized;
             Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
-            stoneRb.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
+            currentStone.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
             Debug.Log("Side Force = " + side);
             Debug.Log("Curl Amount = " + curlAmount);
             Debug.Log("Curl Strength = " + curlStrength);
 
             // 🧪 Debug: draw movement and curl direction
-            Debug.DrawRay(stoneRb.position, forward * 2f, Color.green);  // forward
-            Debug.DrawRay(stoneRb.position, side * 2f, Color.red);       // curl direction
+            Debug.DrawRay(currentStone.position, forward * 2f, Color.green);  // forward
+            Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
             Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
         }
     }
@@ -123,9 +153,9 @@ public class StoneThrowController : MonoBehaviour
     void LaunchStone(float power)
     {
         Vector3 launchDirection = directionPivot.forward;
-        stoneRb.AddForce(launchDirection * launchForce * power, ForceMode.Impulse);
-        stoneRb.angularVelocity = Vector3.up * curlAmount * curlStrength; // Add angular velocity for curling effect (purely visual spin)
-        Debug.Log($"🌀 Curl applied: angularVelocity = {stoneRb.angularVelocity}");
+        currentStone.AddForce(launchDirection * launchForce * power, ForceMode.Impulse);
+        currentStone.angularVelocity = Vector3.up * curlAmount * curlStrength; // Add angular velocity for curling effect (purely visual spin)
+        Debug.Log($"🌀 Curl applied: angularVelocity = {currentStone.angularVelocity}");
         Debug.Log("🚀 Stone launched with power: " + power);
     }
 
@@ -133,23 +163,50 @@ public class StoneThrowController : MonoBehaviour
 
     void ResetThrow()
     {
-        stoneRb.linearVelocity = Vector3.zero;
-        stoneRb.angularVelocity = Vector3.zero;
-
-        stoneRb.transform.position = initialStonePosition;
-        stoneRb.transform.rotation = initialStoneRotation;
-
-        powerMeter.ResetMeter();
+        if (currentStone != null)
+        {
+            currentStone.linearVelocity = Vector3.zero;
+            currentStone.angularVelocity = Vector3.zero;
+        }
 
         isCharging = false;
         hasLaunched = false;
         isSliding = false;
         curlAmount = 0f;
 
-        if (powerMeterPromptUI != null){
-            powerMeterPromptUI.SetActive(true);
+        powerMeter.ResetMeter();
+
+        currentStoneIndex++;
+
+        if (currentStoneIndex < stones.Count)
+        {
+            currentStone = stones[currentStoneIndex];
+            PrepareCurrentStone();
+            Debug.Log("🔁 Next stone ready: " + currentStone.name);
+
+            if (powerMeterPromptUI != null)
+            {
+                powerMeterPromptUI.SetActive(true);
+            }
+        } 
+
+        else
+        {
+            Debug.Log("✅ All stones thrown!");
+            currentStone = null;
         }
 
-        Debug.Log("🔁 Stone reset and ready to throw again!");
     }
+
+    void PrepareCurrentStone()
+    {
+        if (launchPoint == null || currentStone == null) return;
+
+        currentStone.transform.position = launchPoint.position;
+        currentStone.transform.rotation = launchPoint.rotation;
+        currentStone.linearVelocity = Vector3.zero;
+        currentStone.angularVelocity = Vector3.zero;
+    }
+        
 }
+
