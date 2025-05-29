@@ -134,7 +134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5624586563259971744}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -29.190002, y: 0, z: 1.8599854}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
@@ -194,9 +194,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: a6ce640a2c29f46e98652662fe068938, type: 2}
+      objectReference: {fileID: 2100000, guid: b33861c83b3074db8ae3feed6b1cc5b2, type: 2}
     - target: {fileID: 919132149155446097, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: m_Name
       value: fence_simpleCenter (1)
@@ -292,7 +296,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: e67abe122346d4853b484b4ddf0da97c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a6ce640a2c29f46e98652662fe068938, type: 2}
+      objectReference: {fileID: 2100000, guid: b33861c83b3074db8ae3feed6b1cc5b2, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e67abe122346d4853b484b4ddf0da97c, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 919132149155446097, guid: e67abe122346d4853b484b4ddf0da97c, type: 3}
       propertyPath: m_Name
       value: fence_bendCenter
@@ -389,6 +397,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 75a4411267a0644139bdf4bdd52182c6, type: 2}
     - target: {fileID: 919132149155446097, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
       propertyPath: m_Name
       value: path_tilesShort
@@ -396,13 +408,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4632506926634962160}
   m_SourcePrefab: {fileID: 100100000, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
 --- !u!4 &1697697025879964260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
   m_PrefabInstance: {fileID: 1154565335650835855}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2072991597133275358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+  m_PrefabInstance: {fileID: 1154565335650835855}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4632506926634962160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072991597133275358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1001 &1502380928657983337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -452,9 +504,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: a6ce640a2c29f46e98652662fe068938, type: 2}
+      objectReference: {fileID: 2100000, guid: b33861c83b3074db8ae3feed6b1cc5b2, type: 2}
     - target: {fileID: 919132149155446097, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: m_Name
       value: fence_simpleCenter
@@ -827,6 +883,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 75a4411267a0644139bdf4bdd52182c6, type: 2}
     - target: {fileID: 919132149155446097, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
       propertyPath: m_Name
       value: path_tilesShort (1)
@@ -834,8 +894,48 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5968504945662405905}
   m_SourcePrefab: {fileID: 100100000, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+--- !u!1 &3918410887338133988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
+  m_PrefabInstance: {fileID: 4224820795372549301}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5968504945662405905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3918410887338133988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!4 &4407666535173215070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 50105477e7e8d490e90973e8aa9fdebe, type: 3}
@@ -890,9 +990,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: a6ce640a2c29f46e98652662fe068938, type: 2}
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 919132149155446097, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: m_Name
       value: fence_simpleCenter (3)
@@ -986,9 +1090,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: a6ce640a2c29f46e98652662fe068938, type: 2}
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 919132149155446097, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: m_Name
       value: fence_simpleCenter (2)
@@ -1147,6 +1255,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 75a4411267a0644139bdf4bdd52182c6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
       propertyPath: m_Name
       value: path_tilesLong
@@ -1154,13 +1266,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6275804074850431697}
   m_SourcePrefab: {fileID: 100100000, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
 --- !u!4 &5768038236587904465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
   m_PrefabInstance: {fileID: 6306879280174082618}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6577472739873986411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+  m_PrefabInstance: {fileID: 6306879280174082618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6275804074850431697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6577472739873986411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1001 &7181031000087365867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1210,9 +1362,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: a6ce640a2c29f46e98652662fe068938, type: 2}
+      objectReference: {fileID: 2100000, guid: b33861c83b3074db8ae3feed6b1cc5b2, type: 2}
     - target: {fileID: 919132149155446097, guid: 374b37fac858e499d85a46637958fdd0, type: 3}
       propertyPath: m_Name
       value: fence_simpleCenter (4)
@@ -1371,6 +1527,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 75a4411267a0644139bdf4bdd52182c6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
       propertyPath: m_Name
       value: path_tilesLong (1)
@@ -1378,8 +1538,48 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6140228164691830261}
   m_SourcePrefab: {fileID: 100100000, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+--- !u!1 &7083531243379472322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
+  m_PrefabInstance: {fileID: 7965930902571092627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6140228164691830261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7083531243379472322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!4 &7567756625603456376 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5dcde4e1f491549e78de4080c5fcc212, type: 3}
