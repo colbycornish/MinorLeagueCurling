@@ -20,7 +20,7 @@ public class StoneThrowController : MonoBehaviour
     public GameObject powerMeterPromptUI;
 
     [Header("Launch Settings")]
-    public float launchForce = 110f;        // Base launch force (tweak as needed; adjust for distance)
+    public float launchForce = 75f;        // Base launch force (tweak as needed; adjust for distance)
     public float curlStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
 
     [Header("Sweeper Settings")]
