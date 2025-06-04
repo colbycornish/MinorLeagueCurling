@@ -50,9 +50,9 @@ public class PowerMeterUI : MonoBehaviour
         float x = cursor.anchoredPosition.x;
 
         if (x < -150f || x > 150f)
-            currentPower = 0.25f;
-        else if ((x >= -150f && x < -75f) || (x > 75f && x <= 150f))
             currentPower = 0.6f;
+        else if ((x >= -150f && x < -75f) || (x > 75f && x <= 150f))
+            currentPower = 0.8f;
         else
             currentPower = 1f;
 
