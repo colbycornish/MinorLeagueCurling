@@ -26,12 +26,12 @@ public class SweeperExhaustionBar : MonoBehaviour
     private float displaybarIncreaseRate = 6.0f;
     private float displaybarDecreaseRate = 0.05f; // (mathed by time)
     
-    private bool isSweeping = false; // The current state of the Sweeper
+    // private bool isSweeping = false; // The current state of the Sweeper
     private float exhaustionLevel = 0.0f; // The current exhaustion level
     private float exhaustionWarningThreshold = 75.0f; // The threshold at which the Sweeper will start to show warning signs
 
     // these variables can be adjusted on a per-character basis.
-    private bool isExhausted = false; // The current state of the Sweeper
+    // private bool isExhausted = false; // The current state of the Sweeper
     private float maxExhaustionLevel = 100.0f; // The maximum exhaustion level
     private float minExhaustionLevel = 0.0f;  // The minimum exhaustion level
     private float exhaustionRate = 6.0f; // The rate at which the exhaustion level increases
@@ -119,6 +119,7 @@ public class SweeperExhaustionBar : MonoBehaviour
             if (exhaustionLevel > maxExhaustionLevel){
                 exhaustionLevel = maxExhaustionLevel;
             }
+            
         }
         else{
             exhaustionLevel = maxExhaustionLevel;

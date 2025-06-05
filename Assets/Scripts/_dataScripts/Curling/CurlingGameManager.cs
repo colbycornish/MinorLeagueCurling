@@ -4,19 +4,24 @@ using CurlingGameDataNamespace;
 namespace CurlingGameDataNamespace {
     public class CurlingGameManager : MonoBehaviour
     {
+        public CurlingMatchCanvasController curlingMatchCanvasController;
+        public StoneThrowController stoneThrowController;
         // Start() and Update() methods deleted - we don't need them right now
 
         public static CurlingGameManager Instance;
         /// <summary>
         /// defines markers for the current turn
         /// </summary>
-        public string currentTurnTeamName = "";
-        public string currentTurnPhase = "";
+        /// 
         
-        public double turnCount = 0;
+        private string currentTurnTeamName = "";
+        private string currentTurnPhase = "";
+        private string startingTeamName = "";
+        
+        private int turnCount = 0;
         private int roundCount = 1;
         private int maxRounds = 10;
-        public string startingTeamName = "";
+        
 
 
         // public ARRAY Teams; 
@@ -28,16 +33,16 @@ namespace CurlingGameDataNamespace {
         /// Array of current stone placements (logged after throw)
         /// </summary>
 
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        // private void Awake()
+        // {
+        //     if (Instance != null)
+        //     {
+        //         Destroy(gameObject);
+        //         return;
+        //     }
+        //     Instance = this;
+        //     DontDestroyOnLoad(gameObject);
+        // }
 
         void SetTeams () {
 
