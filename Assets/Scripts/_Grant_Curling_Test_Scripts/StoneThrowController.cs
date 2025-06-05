@@ -142,32 +142,13 @@ public class StoneThrowController : MonoBehaviour
             //    return;
             //}
 
-            Vector3 forward = currentStone.linearVelocity.normalized;
-            Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
-            currentStone.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
+            ApplySpinForceToStone();
 
             // ** Apply sweeping boost ** NEW SWEEPER CODE
             bool sweeping = isSweepingLeft || isSweepingRight;
             if (sweeping)
             {
-                sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor + Time.fixedDeltaTime * sweepDecayRate);
-                currentStone.AddForce(forward * sweepBoostFactor * sweepBoostAmount, ForceMode.Acceleration);
-
-                // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
-                if (isSweepingLeft && !isSweepingRight)
-                {
-                    currentStone.AddForce(-side * curlStrength * 0.2f, ForceMode.Acceleration);
-                }
-
-                else if (isSweepingRight && !isSweepingLeft)
-                {
-                    currentStone.AddForce(side * curlStrength * 0.2f, ForceMode.Acceleration);
-                }
-
-                else
-                {
-                    sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor - Time.fixedDeltaTime * sweepDecayRate);
-                }
+                ApplySweepingImpactToStone();
             }
 
             // Debug lines to track that sweeping is working correctly
@@ -179,21 +160,17 @@ public class StoneThrowController : MonoBehaviour
             //Debug.Log("Curl Amount = " + curlAmount); // Commenting out for now
             //Debug.Log("Curl Strength = " + curlStrength); // Commenting out for now
 
-            // 🧪 Debug: draw movement and curl direction
-            Debug.DrawRay(currentStone.position, forward * 2f, Color.green);  // forward
-            Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
-            Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
         }
     }
 
-    void ActivatePowerMeter(){
+    public void ActivatePowerMeter(){
         powerMeter.Activate();
         isCharging = true;
         Debug.Log("Power meter activated");
     }
 
     
-    void LaunchPowerSelected(){
+    public void LaunchPowerSelected(){
         powerMeter.SelectPower();  // locks the power level
         float power = powerMeter.GetPower();  // get selected power
         LaunchStone(power);
@@ -205,7 +182,7 @@ public class StoneThrowController : MonoBehaviour
         }
     }
 
-    void LaunchStone(float power)
+    public void LaunchStone(float power)
     {
         Vector3 launchDirection = directionPivot.forward;
         currentStone.AddForce(launchDirection * launchForce * power, ForceMode.Impulse);
@@ -214,9 +191,43 @@ public class StoneThrowController : MonoBehaviour
         Debug.Log("🚀 Stone launched with power: " + power);
     }
 
+    public void ApplySpinForceToStone()
+    {
+        Vector3 forward = currentStone.linearVelocity.normalized;
+        Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
+        currentStone.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
+        // 🧪 Debug: draw movement and curl direction
+        Debug.DrawRay(currentStone.position, forward * 2f, Color.green);  // forward
+        Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
+        Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
+    }
 
+    public void ApplySweepingImpactToStone()
+    {
+        Vector3 forward = currentStone.linearVelocity.normalized;
+        Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
+        sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor + Time.fixedDeltaTime * sweepDecayRate);
+        currentStone.AddForce(forward * sweepBoostFactor * sweepBoostAmount, ForceMode.Acceleration);
 
-    void ResetThrow()
+        // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
+        if (isSweepingLeft && !isSweepingRight)
+        {
+            currentStone.AddForce(-side * curlStrength * 0.2f, ForceMode.Acceleration);
+        }
+
+        else if (isSweepingRight && !isSweepingLeft)
+        {
+            currentStone.AddForce(side * curlStrength * 0.2f, ForceMode.Acceleration);
+        }
+
+        else
+        {
+            sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor - Time.fixedDeltaTime * sweepDecayRate);
+        }
+    }
+  
+
+    public void ResetThrow()
     {
         if (currentStone != null)
         {
@@ -253,7 +264,7 @@ public class StoneThrowController : MonoBehaviour
 
     }
 
-    void PrepareCurrentStone()
+   public void PrepareCurrentStone()
     {
         if (launchPoint == null || currentStone == null) return;
 
