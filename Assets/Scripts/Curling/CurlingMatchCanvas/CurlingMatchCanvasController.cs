@@ -35,7 +35,6 @@ public class CurlingMatchCanvasController : MonoBehaviour
     private List<KeyValuePair<string, GameObject>> canvasListById = new List<KeyValuePair<string, GameObject>>();
     private string activeCanvas = "CANVAS_SPLASH_ROUND";
 
-
     /// <summary>
     /// Phase 1: Show Round Number
     /// Phase 2: Show which team's turn it is
@@ -101,6 +100,10 @@ public class CurlingMatchCanvasController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             GoToPreviousCanvas();
+        }
+        if (activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" && Input.GetKeyDown(KeyCode.Space))
+        {
+            GoToNextCanvas();
         }
         
 
@@ -243,10 +246,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
             );
         } else {
             Debug.LogError("Invalid phaseId: " + phaseId);
-        }
-       
-        
-        
+        } 
     }
 
 
