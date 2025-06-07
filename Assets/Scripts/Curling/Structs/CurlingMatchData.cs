@@ -44,6 +44,7 @@ public struct CurlingMatchData {
     }
     public int currentGameNumber;
     public List<CurlingGameData> games; // List of games in the match
+    public CurlingGameData currentGame;
     public List<CurlingTeamData> teams; // List of teams in the match
     public CurlingMatchSettings matchSettings;
     

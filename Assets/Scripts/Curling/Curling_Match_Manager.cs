@@ -31,6 +31,11 @@ namespace CurlingGameDataNamespace {
             DontDestroyOnLoad(gameObject);
         }
 
+        // private void Start()
+        // {
+        //     InitiateDemo();
+        // }
+
         void SetMatchSettings (
             int curGameNum,
             int maxGameNum
@@ -80,7 +85,7 @@ namespace CurlingGameDataNamespace {
 
         }
 
-        public void InitiateDemoMatch()
+        public void InitiateDemo()
         {
             initiateDemoMatch();
             initiateDemoTeams();
@@ -141,6 +146,7 @@ namespace CurlingGameDataNamespace {
                 timeLimit: matchData.matchSettings.timeLimit 
             );
             matchData.AddGame(game);
+            matchData.currentGame = game;
         }
 
     }

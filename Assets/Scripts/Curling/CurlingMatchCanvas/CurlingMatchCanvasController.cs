@@ -33,7 +33,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
     };
 
     private List<KeyValuePair<string, GameObject>> canvasListById = new List<KeyValuePair<string, GameObject>>();
-    private string activeCanvas = "CANVAS_SPLASH_ROUND";
+    public string activeCanvas = "CANVAS_SPLASH_ROUND";
 
     /// <summary>
     /// Phase 1: Show Round Number
@@ -89,25 +89,25 @@ public class CurlingMatchCanvasController : MonoBehaviour
         curlingInGameCanvas.SetActive(false);
     }
 
-    void Update()
-    {
-        // Check for user input to switch between canvases
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            GoToNextCanvas();
-        }
+    // void Update()
+    // {
+    //     // Check for user input to switch between canvases
+    //     if (Input.GetKeyDown(KeyCode.N))
+    //     {
+    //         GoToNextCanvas();
+    //     }
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            GoToPreviousCanvas();
-        }
-        if (activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" && Input.GetKeyDown(KeyCode.Space))
-        {
-            GoToNextCanvas();
-        }
+    //     if (Input.GetKeyDown(KeyCode.B))
+    //     {
+    //         GoToPreviousCanvas();
+    //     }
+    //     if (activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" && Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         GoToNextCanvas();
+    //     }
         
 
-    }
+    // }
 
     public void GoToNextCanvas(){
         int currentIndex = canvasOrderByIds.IndexOf(activeCanvas);
@@ -169,51 +169,59 @@ public class CurlingMatchCanvasController : MonoBehaviour
 
     public void ActivateSplashRoundCanvas()
     {
+        activeCanvas = "CANVAS_SPLASH_ROUND";
         // Disable Other Canvases
-        splashTeamCanvas.SetActive(false);
-        stoneSelectionCanvas.SetActive(false);
-        curlingInGameCanvas.SetActive(false);
-        postThrowResultCanvas.SetActive(false);
+        // splashTeamCanvas.SetActive(false);
+        // stoneSelectionCanvas.SetActive(false);
+        // curlingInGameCanvas.SetActive(false);
+        // postThrowResultCanvas.SetActive(false);
+        DisableNonActiveCanvases();
         
         // Enable Splash Round Canvas
         splashRoundCanvas.SetActive(true);
-        activeCanvas = "CANVAS_SPLASH_ROUND";
+        
         splashRoundCanvasController.ShowSplashRound();
     }
     public void ActivateSplashTeamCanvas()
     {
+        activeCanvas = "CANVAS_SPLASH_TEAM";
         // Disable Other Canvases
-        splashRoundCanvas.SetActive(false);
-        stoneSelectionCanvas.SetActive(false);
-        curlingInGameCanvas.SetActive(false);
-        postThrowResultCanvas.SetActive(false);
+        // splashRoundCanvas.SetActive(false);
+        // stoneSelectionCanvas.SetActive(false);
+        // curlingInGameCanvas.SetActive(false);
+        // postThrowResultCanvas.SetActive(false);
+        DisableNonActiveCanvases();
         
         // Enable Splash Team Canvas
         splashTeamCanvas.SetActive(true);
         splashTeamCanvasController.ShowSplashTeam();        
-        activeCanvas = "CANVAS_SPLASH_TEAM";
+        
     }
     public void ActivateStoneSelectionCanvas()
     {
+        activeCanvas = "CANVAS_STONE_SELECTION";
+        DisableNonActiveCanvases();
         // Disable Other Canvases
-        splashRoundCanvas.SetActive(false);
-        splashTeamCanvas.SetActive(false);
-        curlingInGameCanvas.SetActive(false);
-        postThrowResultCanvas.SetActive(false);
+        // splashRoundCanvas.SetActive(false);
+        // splashTeamCanvas.SetActive(false);
+        // curlingInGameCanvas.SetActive(false);
+        // postThrowResultCanvas.SetActive(false);
 
         // Enable Stone Selection Canvas
         stoneSelectionCanvasController.ShowStoneSelection();
         stoneSelectionCanvas.SetActive(true);
-        activeCanvas = "CANVAS_STONE_SELECTION";
+        
     }
 
     public void ActivateCurlingInGameCanvas(string phaseId)
     {
         // Disable Other Canvases
-        splashRoundCanvas.SetActive(false);
-        splashTeamCanvas.SetActive(false);
-        stoneSelectionCanvas.SetActive(false);
-        postThrowResultCanvas.SetActive(false);
+        // splashRoundCanvas.SetActive(false);
+        // splashTeamCanvas.SetActive(false);
+        // stoneSelectionCanvas.SetActive(false);
+        // postThrowResultCanvas.SetActive(false);
+        activeCanvas = "CANVAS_CURLING_IN_GAME_" + phaseId;
+        DisableNonActiveCanvases();
 
         // Enable Curling In Game Canvas
         curlingInGameCanvas.SetActive(true);
@@ -252,11 +260,13 @@ public class CurlingMatchCanvasController : MonoBehaviour
 
     public void ActivatePostThrowResultCanvas()
     {
+        activeCanvas = "CANVAS_POST_THROW_RESULT";
         // Disable Other Canvases
-        splashRoundCanvas.SetActive(false);
-        splashTeamCanvas.SetActive(false);
-        stoneSelectionCanvas.SetActive(false);
-        curlingInGameCanvas.SetActive(false);
+        DisableNonActiveCanvases();
+        // splashRoundCanvas.SetActive(false);
+        // splashTeamCanvas.SetActive(false);
+        // stoneSelectionCanvas.SetActive(false);
+        // curlingInGameCanvas.SetActive(false);
 
         // Enable Post Throw Result Canvas
         // postThrowResultCanvas.SetActive(true);
@@ -269,8 +279,39 @@ public class CurlingMatchCanvasController : MonoBehaviour
             "Oh No!",
             "Out of Bounds"
         );
-        curlingInGameCanvasController.enableResultText();
-        activeCanvas = "CANVAS_POST_THROW_RESULT";
+        curlingInGameCanvasController.enableResultText();   
+    }
+
+    public void DisableNonActiveCanvases()
+    {
+        // Disable all canvases except the active one
+        if (activeCanvas != "CANVAS_SPLASH_ROUND")
+        {
+            splashRoundCanvas.SetActive(false);
+        }
+        
+        if (activeCanvas != "CANVAS_SPLASH_TEAM")
+        {
+            splashTeamCanvas.SetActive(false);
+        }
+        
+        if (activeCanvas != "CANVAS_STONE_SELECTION")
+        {
+            stoneSelectionCanvas.SetActive(false);
+        }
+        
+        if (activeCanvas != "CANVAS_CURLING_IN_GAME_AIM" &&
+                 activeCanvas != "CANVAS_CURLING_IN_GAME_POWER" &&
+                 activeCanvas != "CANVAS_CURLING_IN_GAME_SWEEP")
+        {
+            curlingInGameCanvas.SetActive(false);
+        }
+        
+        if (activeCanvas != "CANVAS_POST_THROW_RESULT")
+        {
+            postThrowResultCanvas.SetActive(false);
+        }
+        
     }
 
 
