@@ -1,24 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!64 &5961486362735333621
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5581914468874646646}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1474310294510287581, guid: beac7f62bbe3463438d1c31459e2b3ee, type: 2}
 --- !u!1001 &5581914468874678998
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 100000, guid: b2e0402e5bb7f3f48a2c575ca6a56495, type: 3}
@@ -70,14 +57,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: b2e0402e5bb7f3f48a2c575ca6a56495, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8add9a57c84e13a438f97199d305fe06, type: 2}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: b2e0402e5bb7f3f48a2c575ca6a56495, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3499966460702024007}
   m_SourcePrefab: {fileID: 100100000, guid: b2e0402e5bb7f3f48a2c575ca6a56495, type: 3}
 --- !u!1 &5581914468874646646 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: b2e0402e5bb7f3f48a2c575ca6a56495,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 100000, guid: b2e0402e5bb7f3f48a2c575ca6a56495, type: 3}
   m_PrefabInstance: {fileID: 5581914468874678998}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &3499966460702024007
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581914468874646646}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: 0.000000001862646, y: 0.000000007450581, z: 0.000003814697}

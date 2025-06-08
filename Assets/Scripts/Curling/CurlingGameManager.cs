@@ -68,6 +68,11 @@ namespace CurlingGameDataNamespace {
         /// <summary>
         /// Array of current stone placements (logged after throw)
         /// </summary>
+        /// 
+        // private void Start()
+        // {
+        //     InitiateDemo();
+        // }
 
         void Update()
         {
