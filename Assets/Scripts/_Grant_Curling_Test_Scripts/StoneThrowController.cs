@@ -20,7 +20,7 @@ public class StoneThrowController : MonoBehaviour
     public GameObject powerMeterPromptUI;
 
     [Header("Launch Settings")]
-    public float launchForce = 75f;        // Base launch force (tweak as needed; adjust for distance)
+    public float launchForce = 100f;        // Base launch force (tweak as needed; adjust for distance--may want to bring force down if we shorten the distance)
     public float curlStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
 
     [Header("Sweeper Settings")]
@@ -106,7 +106,7 @@ public class StoneThrowController : MonoBehaviour
         {   
             if (Input.GetKeyDown(leftCurlKey)) 
             {   
-                curlAmount = -0.5f;
+                curlAmount = -1f;
                 Debug.Log("⤵️ Left curl selected");
             }
 
@@ -195,7 +195,7 @@ public class StoneThrowController : MonoBehaviour
     {
         Vector3 forward = currentStone.linearVelocity.normalized;
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
-        currentStone.AddForce(side * curlAmount * curlStrength, ForceMode.Acceleration);
+        currentStone.AddForce(side * curlAmount * 0.33f * curlStrength, ForceMode.Acceleration); // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
         // 🧪 Debug: draw movement and curl direction
         Debug.DrawRay(currentStone.position, forward * 2f, Color.green);  // forward
         Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
@@ -212,12 +212,12 @@ public class StoneThrowController : MonoBehaviour
         // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
         if (isSweepingLeft && !isSweepingRight)
         {
-            currentStone.AddForce(-side * curlStrength * 0.2f, ForceMode.Acceleration);
+            currentStone.AddForce(-side * curlStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else if (isSweepingRight && !isSweepingLeft)
         {
-            currentStone.AddForce(side * curlStrength * 0.2f, ForceMode.Acceleration);
+            currentStone.AddForce(side * curlStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else
