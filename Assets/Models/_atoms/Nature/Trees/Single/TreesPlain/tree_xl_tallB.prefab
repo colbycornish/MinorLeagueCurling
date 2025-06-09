@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8119857794740896827}
   - component: {fileID: 7914723326634093418}
   - component: {fileID: 8582683422119024093}
-  - component: {fileID: 3166088386947204147}
   m_Layer: 0
   m_Name: tree_xl_tallB
   m_TagString: Untagged
@@ -27,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722657405263414563}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.219997, y: 0.038, z: 44.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -65,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bae45eea3a5914300a72d86618caef24, type: 2}
+  - {fileID: 2100000, guid: a43cf31488ab3448297cd6f3b646d9f1, type: 2}
   - {fileID: 2100000, guid: 669b1bc48c1bc8c4cbba4d86cb8a68f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -88,24 +87,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3166088386947204147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722657405263414563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bbf9cbec60ae704f8a1d639d413e8e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseSubMesh: 1
-  SubMeshIndex: 0
-  Density: 0.4
-  InstancingSettings:
-  - Mesh: {fileID: 2065297463509329499, guid: ac7e1da50dbeb60439433bf8bf24153d, type: 3}
-    Material: {fileID: 2100000, guid: 328d5bfcd74f749b3b9c201c21b77a98, type: 2}
-    Probability: 1
-    Scale: 1.5
-    NormalOffset: 0.1
