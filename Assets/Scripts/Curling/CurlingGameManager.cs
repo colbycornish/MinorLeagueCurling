@@ -1,5 +1,5 @@
 using UnityEngine;
-using CurlingGameDataNamespace;
+// using CurlingGameDataNamespace;
 
 /// <summary>
 /// Phase 1: Show Round Number
@@ -43,95 +43,126 @@ using CurlingGameDataNamespace;
 // "CANVAS_POST_THROW_RESULT"
 /// </summary>
 
-namespace CurlingGameDataNamespace {
-    public class CurlingGameManager : MonoBehaviour
+
+public class CurlingGameManager : MonoBehaviour
+{
+    public CurlingMatchCanvasController curlingMatchCanvasController;
+    public StoneThrowController stoneThrowController;
+    public CurlingGameData gameData = new CurlingGameData();
+    private bool hasGameEnded = false;
+    private bool hasGameStarted = false;
+    private bool hasGamePaused = false;
+    private string phaseID = "START";
+    private float gameTime = 0f;
+    private float canvasDisplayTimeMarker = 0f;
+    private bool canvasDisplayTimeMarkerIsActive = false;
+
+    /// <summary>
+    /// Array of current stone placements (logged after throw)
+    /// </summary>
+    /// 
+    private void Start()
     {
-        // Start() and Update() methods deleted - we don't need them right now
+        // InitiateDemo();
+    }
 
-        public static CurlingGameManager Instance;
-       
-        //
-        public CurlingMatchCanvasController curlingMatchCanvasController;
-        public StoneThrowController stoneThrowController;
-        /// <summary>
-        /// defines markers for the current turn
-        /// </summary>
-        
-        private int turnCount = 0;
-        // private int roundCount = 1;
-        // private int maxRounds = 3;
-
-        private bool hasGameEnded = false;
-        private bool hasGameStarted = false;
-        private bool hasGamePaused = false;
-        
-        /// <summary>
-        /// Array of current stone placements (logged after throw)
-        /// </summary>
-        /// 
-        // private void Start()
-        // {
-        //     InitiateDemo();
-        // }
-
-        void Update()
+    void Update()
+    {
+        // Time management
+        if (canvasDisplayTimeMarkerIsActive)
         {
-            // Check for user input to switch between canvases
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                curlingMatchCanvasController.GoToNextCanvas();
-            }
-
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                curlingMatchCanvasController.GoToPreviousCanvas();
-            }
-            if (curlingMatchCanvasController.activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" && 
-                Input.GetKeyDown(KeyCode.Space)
-            )
-            {
-                curlingMatchCanvasController.GoToNextCanvas();
-            }
+            canvasDisplayTimeMarker += Time.deltaTime;
             
-
+        }
+        // Check for user input to switch between canvases
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            ResetCanvasTimer();
+            canvasDisplayTimeMarkerIsActive = true;
+            curlingMatchCanvasController.GoToNextCanvas();
         }
 
-        void SetTeams () {
-
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ResetCanvasTimer();
+            canvasDisplayTimeMarkerIsActive = true;
+            curlingMatchCanvasController.GoToPreviousCanvas();
         }
-
-        void SaveStonePositions () {
-
+        if (curlingMatchCanvasController.activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" &&
+            Input.GetKeyDown(KeyCode.Space)
+        )
+        {
+            ResetCanvasTimer();
+            canvasDisplayTimeMarkerIsActive = true;
+            curlingMatchCanvasController.GoToNextCanvas();
         }
- 
-        void AdvanceTurn () {
-            turnCount =+ 1;
-        }
-
-        public void StartGame(){
-            hasGameStarted = true;
-        }
-
-        public void EndGame(){
-            hasGameEnded = true;
-        }
-
-        public bool getHasGameStarted(){
-            return hasGameStarted;
-        }
-
-        public bool getHasGameEnded(){
-            return hasGameEnded;
-        }
-
-        void Reset() {
-            turnCount = 0;
-            hasGameEnded = false;
-            hasGameStarted = false;
-            hasGamePaused = false;
-        }
-        
 
 
     }
+
+    void SetTeams()
+    {
+
+    }
+
+    void SaveStonePositions()
+    {
+
+    }
+
+    void AdvanceTurn()
+    {
+        gameData.turnCurrent += 1;
+    }
+
+    public void StartGame()
+    {
+        hasGameStarted = true;
+        gameData.hasStarted = true;
+    }
+
+    public void EndGame()
+    {
+        hasGameEnded = true;
+        gameData.hasEnded = true;
+    }
+    public bool getHasGameStarted() { return hasGameStarted; }
+    public bool getHasGameEnded() { return hasGameEnded; }
+    public bool ShouldEndMatch()
+    {
+        if (gameData.turnCurrent > gameData.gameSettings.totalTurnsPerGame)
+        {
+            EndGame();
+            gameData.hasEnded = true;
+            return true;
+        }
+        return false;
+    }
+
+    void Reset()
+    {
+        gameData.turnCurrent = 0;
+        
+        hasGameEnded = false;
+        hasGameStarted = false;
+        hasGamePaused = false;
+    }
+
+    void ResetCanvasTimer()
+    {
+        canvasDisplayTimeMarker = 0f;
+    }
+
+    public void DisplaySplashRound()
+    {
+        hasGamePaused = true;
+        curlingMatchCanvasController.SetActiveCanvasById("CANVAS_SPLASH_ROUND");
+    }
+    // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_SPLASH_TEAM");
+    // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_STONE_SELECTION");
+    // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_CURLING_IN_GAME_AIM");
+    // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_CURLING_IN_GAME_POWER");
+    // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_CURLING_IN_GAME_SWEEP");
+    // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_POST_THROW_RESULT");
+    
 }

@@ -52,6 +52,7 @@ public class StoneThrowController : MonoBehaviour
     private float sweepBoostFactor = 0f; // ** NEW SWEEPER CODE **
 
     private List<Rigidbody> stones = new List<Rigidbody>(); // Empty list for stones
+
     void Start() // I think this tracks the starting location of the stone, to be used when resetting throw?
     {
         

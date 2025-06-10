@@ -1,14 +1,14 @@
 using UnityEngine;
-using CurlingGameDataNamespace;
+// using CurlingGameDataNamespace;
 
 
-namespace CurlingGameDataNamespace {
+
     public class CurlingMatchManager : MonoBehaviour
     {
         // Start() and Update() methods deleted - we don't need them right now
 
-        public static CurlingMatchManager Instance;
-        public static CurlingGameManager GameInstance;
+        // public static CurlingMatchManager Instance;
+        public CurlingGameManager GameInstance;
 
         public CurlingMatchData matchData = new CurlingMatchData();
     
@@ -20,21 +20,21 @@ namespace CurlingGameDataNamespace {
         public bool hasMatchStarted = false;
         public bool hasMatchEnded = false;
 
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-
-        // private void Start()
+        // private void Awake()
         // {
-        //     InitiateDemo();
+        //     if (Instance != null)
+        //     {
+        //         Destroy(gameObject);
+        //         return;
+        //     }
+        //     Instance = this;
+        //     DontDestroyOnLoad(gameObject);
         // }
+
+        private void Start()
+        {
+            InitiateDemo();
+        }
 
         void SetMatchSettings (
             int curGameNum,
@@ -76,7 +76,7 @@ namespace CurlingGameDataNamespace {
         }
 
         void EndMatch() {
-            Instance.matchData.hasMatchEnded = true;
+            matchData.hasMatchEnded = true;
 
 
         }
@@ -87,15 +87,15 @@ namespace CurlingGameDataNamespace {
 
         public void InitiateDemo()
         {
-            initiateDemoMatch();
-            initiateDemoTeams();
-            initiateDemoGame();
+            // initiateDemoMatch();
+            // initiateDemoTeams();
+            // initiateDemoGame();
             // GameInstance = CurlingGameManager.Instance;
             // GameInstance.SetMatchData(matchData);
             // GameInstance.StartGame();
         }
 
-        public void initiateDemoMatch(){
+        public void InitiateDemoMatch(){
             matchData.SetMatchData(
                 matchId: "demo_match_001",
                 matchName: "Demo Match",
@@ -112,12 +112,12 @@ namespace CurlingGameDataNamespace {
             matchData.hasMatchPaused = false;
         }
 
-        public void initiateDemoTeams(){
+        public void InitiateDemoTeams(){
             CurlingTeamData team1 = new CurlingTeamData();
-            team1.SetTeamInfo("Blue Team", "team_red");
+            team1.SetTeamInfo("Blue Team", "team_blue");
 
             CurlingTeamData team2 = new CurlingTeamData();
-            team2.SetTeamInfo("Red Team", "team_blue");
+            team2.SetTeamInfo("Red Team", "team_red");
 
             matchData.AddTeam(team1);
             matchData.AddTeam(team2);
@@ -127,7 +127,7 @@ namespace CurlingGameDataNamespace {
 
         }
 
-        public void initiateDemoGame(){
+        public void InitiateDemoGame(){
             CurlingGameData game = new CurlingGameData();
             game.SetGameData(
                 gameId: "demo_game_001",
@@ -150,4 +150,3 @@ namespace CurlingGameDataNamespace {
         }
 
     }
-}

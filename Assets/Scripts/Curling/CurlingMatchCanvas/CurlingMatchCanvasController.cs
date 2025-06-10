@@ -21,6 +21,19 @@ public class CurlingMatchCanvasController : MonoBehaviour
     public GameObject curlingInGameCanvas; // ID = CANVAS_CURLING_IN_GAME
     public GameObject postThrowResultCanvas; // ID = CANVAS_POST_THROW_RESULT
 
+    // public enum CanvasState
+    // {
+    //     SplashRound,
+    //     SplashTeam,
+    //     StoneSelection,
+    //     CurlingInGameAim,
+    //     CurlingInGamePower,
+    //     CurlingInGameSweep,
+    //     PostThrowResult
+    // }
+
+    // public GameState currentState = CanvasState.SplashRound;
+
     private List<string> canvasOrderByIds = new List<string>
     {
         "CANVAS_SPLASH_ROUND",
@@ -89,25 +102,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
         curlingInGameCanvas.SetActive(false);
     }
 
-    // void Update()
-    // {
-    //     // Check for user input to switch between canvases
-    //     if (Input.GetKeyDown(KeyCode.N))
-    //     {
-    //         GoToNextCanvas();
-    //     }
 
-    //     if (Input.GetKeyDown(KeyCode.B))
-    //     {
-    //         GoToPreviousCanvas();
-    //     }
-    //     if (activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" && Input.GetKeyDown(KeyCode.Space))
-    //     {
-    //         GoToNextCanvas();
-    //     }
-        
-
-    // }
 
     public void GoToNextCanvas(){
         int currentIndex = canvasOrderByIds.IndexOf(activeCanvas);
@@ -185,6 +180,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
     public void ActivateSplashTeamCanvas()
     {
         activeCanvas = "CANVAS_SPLASH_TEAM";
+        
         // Disable Other Canvases
         // splashRoundCanvas.SetActive(false);
         // stoneSelectionCanvas.SetActive(false);
