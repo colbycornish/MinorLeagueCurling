@@ -6,7 +6,9 @@ public class MainManager : MonoBehaviour
     public static MainManager _instance;
     // public static AudioManager audio;
     // public static CanvasManager canvas;
-    // public static UIManager uiManager;
+    // public statis CameraManager camera;
+    // public static GameManager game;
+    // public static UIManager ui;
     // public static CurlingMatchManager curlingMatch;
 
 
@@ -53,13 +55,21 @@ public class MainManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void Play()
+    {
+        currentState = GameState.Playing;
+        Time.timeScale = 1f; 
+    }
+
     // Example: Pause functionality
-    public void PauseGame() {
+    public void PauseGame()
+    {
         currentState = GameState.Paused;
         Time.timeScale = 0f; // Freeze time
     }
 
-    public void ResumeGame() {
+    public void ResumeGame()
+    {
         currentState = GameState.Playing;
         Time.timeScale = 1f; // Resume time
     }
