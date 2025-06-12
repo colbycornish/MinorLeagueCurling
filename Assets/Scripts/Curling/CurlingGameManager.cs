@@ -69,33 +69,33 @@ public class CurlingGameManager : MonoBehaviour
     void Update()
     {
         // Time management
-        if (canvasDisplayTimeMarkerIsActive)
-        {
-            canvasDisplayTimeMarker += Time.deltaTime;
+        // if (canvasDisplayTimeMarkerIsActive)
+        // {
+        //     canvasDisplayTimeMarker += Time.deltaTime;
             
-        }
-        // Check for user input to switch between canvases
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            ResetCanvasTimer();
-            canvasDisplayTimeMarkerIsActive = true;
-            curlingMatchCanvasController.GoToNextCanvas();
-        }
+        // }
+        // // Check for user input to switch between canvases
+        // if (Input.GetKeyDown(KeyCode.N))
+        // {
+        //     ResetCanvasTimer();
+        //     canvasDisplayTimeMarkerIsActive = true;
+        //     curlingMatchCanvasController.GoToNextCanvas();
+        // }
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ResetCanvasTimer();
-            canvasDisplayTimeMarkerIsActive = true;
-            curlingMatchCanvasController.GoToPreviousCanvas();
-        }
-        if (curlingMatchCanvasController.activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" &&
-            Input.GetKeyDown(KeyCode.Space)
-        )
-        {
-            ResetCanvasTimer();
-            canvasDisplayTimeMarkerIsActive = true;
-            curlingMatchCanvasController.GoToNextCanvas();
-        }
+        // if (Input.GetKeyDown(KeyCode.B))
+        // {
+        //     ResetCanvasTimer();
+        //     canvasDisplayTimeMarkerIsActive = true;
+        //     curlingMatchCanvasController.GoToPreviousCanvas();
+        // }
+        // if (curlingMatchCanvasController.activeCanvas == "CANVAS_CURLING_IN_GAME_POWER" &&
+        //     Input.GetKeyDown(KeyCode.Space)
+        // )
+        // {
+        //     ResetCanvasTimer();
+        //     canvasDisplayTimeMarkerIsActive = true;
+        //     curlingMatchCanvasController.GoToNextCanvas();
+        // }
 
 
     }
@@ -156,7 +156,7 @@ public class CurlingGameManager : MonoBehaviour
     public void DisplaySplashRound()
     {
         hasGamePaused = true;
-        curlingMatchCanvasController.SetActiveCanvasById("CANVAS_SPLASH_ROUND");
+        // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_SPLASH_ROUND");
     }
     // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_SPLASH_TEAM");
     // curlingMatchCanvasController.SetActiveCanvasById("CANVAS_STONE_SELECTION");

@@ -7,11 +7,6 @@ using UnityEngine.SceneManagement;
 // Change to Throw Canvas Controller
 public class CurlingInGameCanvasController : MonoBehaviour
 {
-
-    /// <summary>
-    /// Public Variables of Global Settings
-    /// </summary>
-    private string canvasId = "CANVAS_CURLING_IN_GAME";
     // General
     public GameObject content;
     public GameObject shadow;
@@ -29,7 +24,6 @@ public class CurlingInGameCanvasController : MonoBehaviour
     public GameObject contentResultText;
     public GameObject contentResultSubtitle;
     
-    
     // Bottom Content
     public GameObject controlView;
     public GameObject controlAim;
@@ -45,17 +39,10 @@ public class CurlingInGameCanvasController : MonoBehaviour
         LoadExistingSettings();
     }
 
-    
 
     public void LoadExistingSettings(){
     }
 
-    public string GetCanvasId() {
-        return canvasId;
-    }
-    public void SetCanvasId(string id) {
-        canvasId = id;
-    }
 
 
     //
