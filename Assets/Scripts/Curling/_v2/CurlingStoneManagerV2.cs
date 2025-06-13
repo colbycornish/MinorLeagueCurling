@@ -3,7 +3,6 @@ using UnityEngine;
 
 
 /// <summary>
-/// 
 /// Manages the curling stones for both teams in a curling game.
 /// This class handles:
 //  - Initial setup of the stones 

@@ -42,13 +42,6 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode leftSweeperKey = KeyCode.K; // Action button for left sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode actionKey = KeyCode.Space; // This is the key used to activate the power meter and launch the stone
-    // private Vector3 initialStonePosition; // used for resetting throw NOTE NOW THAT WE ARE THROWING MULTIPLE STONES I DON'T THINK I NEED THIS
-    // private Quaternion initialStoneRotation; // used for resetting throw NOTE NOW THAT WE ARE THROWING MULTIPLE STONES I DON'T THINK I NEED THIS
-
-
-    // private List<Rigidbody> stones = new List<Rigidbody>(); // Empt
-
-
 
 
     private void Awake()

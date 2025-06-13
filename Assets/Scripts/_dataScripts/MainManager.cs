@@ -58,7 +58,7 @@ public class MainManager : MonoBehaviour
     public void Play()
     {
         currentState = GameState.Playing;
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
 
     // Example: Pause functionality
@@ -79,8 +79,4 @@ public class MainManager : MonoBehaviour
     {
         Application.Quit();
     }
-
-    
-
-
 }
