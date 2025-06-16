@@ -196,7 +196,7 @@ public class StoneThrowController : MonoBehaviour
         Vector3 forward = currentStone.linearVelocity.normalized;
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
         currentStone.AddForce(side * curlAmount * 0.33f * curlStrength, ForceMode.Acceleration); // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
-        // 🧪 Debug: draw movement and curl direction
+        // 🧪 Debug: draw movement and curl direction // Note in reference to the above: Maybe change to ForceMode.Impulse to avoid the initial spin effect stacking upon itself each frame
         Debug.DrawRay(currentStone.position, forward * 2f, Color.green);  // forward
         Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
         Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
