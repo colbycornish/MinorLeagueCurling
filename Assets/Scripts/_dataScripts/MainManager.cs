@@ -2,22 +2,81 @@ using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
-    // Start() and Update() methods deleted - we don't need them right now
+    // a static private variable to hold the reference to this Manager instance
+    public static MainManager _instance;
+    // public static AudioManager audio;
+    // public static CanvasManager canvas;
+    // public statis CameraManager camera;
+    // public static GameManager game;
+    // public static UIManager ui;
+    // public static CurlingMatchManager curlingMatch;
 
-    public static MainManager Instance;
-    public Color TeamColor; 
-    public string TeamName; 
 
+    public enum GameState
+    {
+        MainMenu,
+        Playing,
+        Paused,
+        GameOver
+    }
+
+    public GameState currentState = GameState.MainMenu;
+
+    // A public stat propert to allow other classes to get the reference, but not set it.
+    // public static MainManager Instance
+    // {
+    //     get
+    //     {
+    //         if (_instance == null)
+    //         {
+    //             _instance = FindObjectOfType<MainManager>();
+    //             if (_instance == null)
+    //             {
+    //                 GameObject obj = new GameObject("MainManager");
+    //                 _instance = obj.AddComponent<MainManager>();
+    //             }
+    //         }
+    //         return _instance;
+    //     }
+    // }
+
+    // Set the Instance reference at the soonest opportunity
+    // This is a singleton pattern to ensure only one instance of MainManager exists
     private void Awake()
     {
-        if (Instance != null)
+        if (_instance != null)
         {
             Destroy(gameObject);
             return;
         }
         // end of new code
 
-        Instance = this;
+        _instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void Play()
+    {
+        currentState = GameState.Playing;
+        Time.timeScale = 1f;
+    }
+
+    // Example: Pause functionality
+    public void PauseGame()
+    {
+        currentState = GameState.Paused;
+        Time.timeScale = 0f; // Freeze time
+    }
+
+    public void ResumeGame()
+    {
+        currentState = GameState.Playing;
+        Time.timeScale = 1f; // Resume time
+    }
+
+    // Example: Quit functionality
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class LayoutGameobjectInGrid : MonoBehaviour
+{
+    public Vector2 scale;
+    public int columns;
+    public bool subChildren;
+
+    [ContextMenu("Layout Grid")]
+    void Start()
+    {
+        int index = 0;
+        if(subChildren)
+        {
+
+        }
+        else
+        {
+            foreach (Transform item in transform)
+            {
+                int row = index / columns;
+                int column = index % columns;
+
+                Vector3 position = new Vector3(scale.x * column, 0, row * -scale.y);
+                item.transform.localPosition = position;
+                index++;
+            }
+        }
+    }
+}
+
