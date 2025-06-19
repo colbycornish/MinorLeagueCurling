@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 631
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6030374
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 187.71
+      value: 6.73999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalRotation.y
@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -59,6 +59,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6188692629127533903}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4321166738843391221}
   m_SourcePrefab: {fileID: 100100000, guid: bacbae8c254f0483f826f9097464dfb3, type: 3}
 --- !u!1 &4744096505668722396 stripped
 GameObject:
@@ -86,3 +89,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.5000005, y: 1.312, z: 1.2300003}
   m_Center: {x: 1.2500002, y: 0.656, z: 0.6150001}
+--- !u!208 &4321166738843391221
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744096505668722396}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.25, y: 0.656, z: 0.615}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1.25, y: 0.656, z: 0.615}
+  m_TimeToStationary: 0.5
