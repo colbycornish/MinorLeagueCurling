@@ -64,6 +64,7 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     public void PrepareNextStone()
     {
         stonesInPlay++;
+        stonesThrown++;
         // This method is called when a stone has been thrown, and prepares the next stone for the current team.
         if (stonesThrown < stonesSpawned)
         {
@@ -80,8 +81,6 @@ public class CurlingStoneManagerV2 : MonoBehaviour
         }
     }
 
-
-
     private CurlingStone GetNextStone()
     {
         // This method returns the next stone to be thrown based on the current team and stone index.
@@ -92,10 +91,12 @@ public class CurlingStoneManagerV2 : MonoBehaviour
 
             if (currentTeam == 0 && stoneIndex < stonesTeamA.Count)
             {
+                Debug.Log("Current Stone Retrieved -> Team A");
                 return stonesTeamA[stoneIndex];
             }
             else if (currentTeam == 1 && stoneIndex < stonesTeamB.Count)
             {
+                Debug.Log("Current Stone Retrieved -> Team B");
                 return stonesTeamB[stoneIndex];
             }
         }

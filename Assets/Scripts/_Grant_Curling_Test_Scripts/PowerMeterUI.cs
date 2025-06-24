@@ -8,15 +8,69 @@ public class PowerMeterUI : MonoBehaviour
 
     public float speed = 300f;
     private bool goingRight = true;
-    private bool isActive = false;
+    public bool isActive = false;
 
     private float currentPower = 0f;
     private bool powerSelected = false;
 
+    // private void Awake()
+    // {
+    //     if (Instance != null)
+    //     {
+    //         Destroy(gameObject);
+    //         return;
+    //     }
+    //     Instance = this;
+    // }
+
+    private void OnEnable()
+    {
+        if (CurlingMatchPhaseManager.Instance == null) return;
+        CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
+    }
+
+    private void OnDisable()
+    {
+        if (CurlingMatchPhaseManager.Instance == null) return;
+        CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
+    }
+
+    public void HandlePhase(CurlingMatchPhase phase)
+    {
+        CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
+
+        if (currentPhase == CurlingMatchPhase.AimControls)
+        {
+            ResetMeter();
+        }
+        if (currentPhase == CurlingMatchPhase.PowerMeter)
+        {
+            Activate();
+        }
+        
+        
+        
+    }
+
     void Update()
     {
-        if (!isActive || powerSelected) return;
+        CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
+        if (currentPhase == CurlingMatchPhase.PowerMeter)
+        {
+            if (!isActive || powerSelected) return;
+            MoveCursor();
+        }
+        // if (currentPhase == CurlingMatchPhase.CurlingControls)
+        // {
+        //     if (!isActive || powerSelected) return;
+        //     MoveCursor();
+        // }
 
+        
+    }
+
+    public void MoveCursor()
+    {
         float maxX = meterBackground.rect.width / 2f;
         float minX = -maxX;
         float move = speed * Time.deltaTime * (goingRight ? 1 : -1);
@@ -59,6 +113,8 @@ public class PowerMeterUI : MonoBehaviour
         powerSelected = true;
         isActive = false;
     }
+
+    
 
     // 🔧 Added methods to match what other scripts are expecting
 

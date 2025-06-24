@@ -19,11 +19,11 @@ public class CurlingMatchPhaseManager : MonoBehaviour
 
     public void SetPhase(CurlingMatchPhase newPhase)
     {
-        Debug.Log($"[MatchPhase] → {newPhase}");
+        Debug.Log($"[MatchPhase] {CurrentPhase} → {newPhase}");
         if (CurrentPhase == newPhase) return;
 
         CurrentPhase = newPhase;
-        Debug.Log($"[MatchPhase] → {newPhase}");
+        Debug.Log($"[MatchPhase] {CurrentPhase} → {newPhase}");
         OnPhaseChanged?.Invoke(newPhase);
     }
 }

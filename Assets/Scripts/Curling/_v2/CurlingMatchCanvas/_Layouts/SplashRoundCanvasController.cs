@@ -11,37 +11,20 @@ public class SplashRoundCanvasController : MonoBehaviour
     /// <summary>
     /// Public Variables of Global Settings
     /// </summary>
-    private string canvasId = "CANVAS_SPLASH_ROUND";
     public GameObject content;
     public GameObject shadow;
+    public GameObject turnDisplayText;
 
 
-    public void Start(){
-        LoadExistingSettings();
+    public void Start()
+    {
+        // LoadExistingSettings();
     }
 
-    public void LoadExistingSettings(){
-        // Loads the existing User settings file, that determines things like:
-        // - Audio levels
-        // - Displays
-        //  - Brightness
-        //  - Gamma
-        // - Controls
-        //  - Controller
-        // - Platform
-        // - Difficulty
-        // - Dev Settings & Features
-    }
-
-    public string GetCanvasId() {
-        return canvasId;
-    }
-    public void SetCanvasId(string id) {
-        canvasId = id;
-    }
     public void OnEnable() {
         // This method is called when the canvas is enabled
         Debug.Log("Splash Round Canvas Enabled");
+        UpdateTurnDisplay();
         ShowSplashRound();
     }
     public void OnDisable() {
@@ -49,9 +32,20 @@ public class SplashRoundCanvasController : MonoBehaviour
         Debug.Log("Splash Round Canvas Disabled");
         HideSplashRound();
     }
+    
+    public void UpdateTurnDisplay()
+    {
+        
+        int turnCount = CurlingGameManagerV2.Instance.turnCount;
+        string turnDisplay = "Turn " + turnCount;
+
+        turnDisplayText.GetComponent<TMPro.TextMeshProUGUI>().text = turnDisplay;
+        
+    }
 
     
-    public void ShowSplashRound() {
+    public void ShowSplashRound()
+    {
         // Display the splash round on the canvas
         content.SetActive(true);
         shadow.SetActive(true);

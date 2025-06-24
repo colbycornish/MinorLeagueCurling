@@ -11,7 +11,6 @@ public class StoneSelectionCanvasController : MonoBehaviour
     /// <summary>
     /// Public Variables of Global Settings
     /// </summary>
-    private string canvasId = "CANVAS_STONE_SELECTION";
     public GameObject content;
     public GameObject shadow;
 
@@ -30,13 +29,6 @@ public class StoneSelectionCanvasController : MonoBehaviour
         // - Platform
         // - Difficulty
         // - Dev Settings & Features
-    }
-
-    public string GetCanvasId() {
-        return canvasId;
-    }
-    public void SetCanvasId(string id) {
-        canvasId = id;
     }
 
     public void OnEnable() {
