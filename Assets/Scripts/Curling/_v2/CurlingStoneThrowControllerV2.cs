@@ -198,12 +198,17 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     public void LaunchStone(float power)
     {
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingControls);
+        CurlingGameManagerV2.Instance.stoneManager.currentStone.isThrown = true;
+        CurlingGameManagerV2.Instance.stoneManager.currentStone.isInPlay = true;
+
         Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
         Vector3 launchDirection = directionPivot.forward;
         cs.AddForce(launchDirection * launchForce * power, ForceMode.Impulse);
         cs.angularVelocity = Vector3.up * curlAmount * curlStrength; // Add angular velocity for curling effect (purely visual spin)
         Debug.Log($"🌀 Curl applied: angularVelocity = {cs.angularVelocity}");
         Debug.Log("🚀 Stone launched with power: " + power);
+        
+        CurlingGameManagerV2.Instance.stoneManager.currentStone.isSliding = true;
     }
 
     public void ApplySpinForceToStone()

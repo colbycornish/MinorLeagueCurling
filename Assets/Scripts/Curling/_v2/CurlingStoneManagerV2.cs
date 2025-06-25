@@ -5,13 +5,14 @@ using UnityEngine;
 /// <summary>
 /// Manages the curling stones for both teams in a curling game.
 /// This class handles:
-//  - Initial setup of the stones 
-//  - Spawning of stones various locations
-//  - Preparing the next stone for play
+//  - Initial setup of the stones (building the variables and elements to be used by other functions)
+//  - Spawning of stones various locations (launch location, team display areas)
+//  - Preparing the next stone for play (switching teams)
 /// </summary>
 
 public class CurlingStoneManagerV2 : MonoBehaviour
 {
+    // base skin used for each team
     public GameObject stonePrefab_TeamA;
     public GameObject stonePrefab_TeamB;
 
@@ -21,6 +22,8 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     public List<Transform> stonesSpawnLocationsTeamB = new List<Transform>();
 
     public Transform launchPoint;
+    // This is one of the most important bits, and will be referenced by 
+    // the stone throw controller, sweeping controller, etc.
     public CurlingStone currentStone;
 
     private int stonesSpawned = 0;
@@ -42,6 +45,8 @@ public class CurlingStoneManagerV2 : MonoBehaviour
             // Instantiate Team A stones
             GameObject stoneA = Instantiate(stonePrefab_TeamA, spawnPointA.position, Quaternion.identity);
             CurlingStone curlingStoneA = stoneA.GetComponent<CurlingStone>();
+
+            // toDo: change id to a string
             curlingStoneA.teamId = 0; // Team A
             curlingStoneA.stoneIndex = i;
             curlingStoneA.rb = stoneA.GetComponent<Rigidbody>();
@@ -51,6 +56,8 @@ public class CurlingStoneManagerV2 : MonoBehaviour
             // Instantiate Team B stones
             GameObject stoneB = Instantiate(stonePrefab_TeamB, spawnPointB.position, Quaternion.identity);
             CurlingStone curlingStoneB = stoneB.GetComponent<CurlingStone>();
+
+            // toDo: change id to a string
             curlingStoneB.teamId = 1; // Team B
             curlingStoneB.stoneIndex = i;
             curlingStoneB.rb = stoneB.GetComponent<Rigidbody>();

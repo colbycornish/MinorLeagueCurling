@@ -103,13 +103,13 @@ public class CurlingMatchCanvasController : MonoBehaviour
                 ActivateStoneSelectionCanvas(phase);
                 break;
             case CurlingMatchPhase.AimControls:
-                ActivateCurlingInGameCanvas("AIM", phase);
+                ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.PowerMeter:
-                ActivateCurlingInGameCanvas("POWER", phase);
+                ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.CurlingControls:
-                ActivateCurlingInGameCanvas("SWEEP", phase);
+                ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.PostThrowResult:
                 ActivatePostThrowResultCanvas(phase);
@@ -158,7 +158,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
 
     }
 
-    public void ActivateCurlingInGameCanvas(string phaseId, CurlingMatchPhase phase)
+    public void ActivateCurlingInGameCanvas(CurlingMatchPhase phase)
     {
         // DisableNonActiveCanvases(); // Disable Other Canvases
 
@@ -198,7 +198,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Invalid phaseId: " + phaseId);
+            Debug.LogError("Invalid phaseId");
         }
     }
 

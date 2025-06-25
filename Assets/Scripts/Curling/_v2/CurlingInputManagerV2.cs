@@ -112,8 +112,11 @@ public class CurlingInputManagerV2 : MonoBehaviour
         }
         // Handle inputs specific to the Aim Controls phase
     }
+
+    // ❌ Handled by Stone Throw Controller
     private void HandlePowerMeterInput()
     {
+        // Handled by Stone Throw Controller
         // if (Input.GetMouseButtonDown(0))
         // {
         //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingControls);
@@ -148,16 +151,16 @@ public class CurlingInputManagerV2 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (CurlingGameManagerV2.Instance.playerManager.totalStonesPerEnd == CurlingGameManagerV2.Instance.playerManager.currentStoneIndex)
-            {
-                CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
-                return;
-            }
-            else
-            {
+            // if (CurlingGameManagerV2.Instance.playerManager.totalStonesPerEnd == CurlingGameManagerV2.Instance.playerManager.currentStoneIndex)
+            // {
+                // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
+                // return;
+            // }
+            // else
+            // {
                 CurlingGameManagerV2.Instance.NextTurn();
                 CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
-            }
+            // }
             
             
         }

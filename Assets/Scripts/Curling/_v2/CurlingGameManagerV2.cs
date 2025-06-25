@@ -14,6 +14,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public CurlingEndGameManagerV2 endManager;
     public CurlingPlayerManagerV2 playerManager;
     public CurlingStoneManagerV2 stoneManager;
+    public CurlingGameData gameData;
     public Camera camera;
 
     public int currentEnd = 1;
@@ -81,17 +82,17 @@ public class CurlingGameManagerV2 : MonoBehaviour
     // Called when a stone finishes moving, and is now resting in the target zone.
     public void OnStoneRested(GameObject stone)
     {
-        endManager.AddStone(stone);
+        // endManager.AddStone(stone);
 
-        if (playerManager.AllStonesThrown())
-        {
-            EndCurrentCurlingGame();
-        }
-        else
-        {
-            playerManager.NextPlayer();
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.TeamSplash);
-        }
+        // if (playerManager.AllStonesThrown())
+        // {
+        //     EndCurrentCurlingGame();
+        // }
+        // else
+        // {
+        //     playerManager.NextPlayer();
+        //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.TeamSplash);
+        // }
     }
 
     public void EndCurrentCurlingGame()

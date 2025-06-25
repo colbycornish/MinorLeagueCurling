@@ -42,7 +42,7 @@ public class PostThrowResultCanvasController : MonoBehaviour
         HidePostThrowResult();
     }
 
-
+    
 
 
     public void ShowPostThrowResult(string resultMessage) {

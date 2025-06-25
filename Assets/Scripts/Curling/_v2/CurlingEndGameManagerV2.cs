@@ -12,6 +12,9 @@ using UnityEngine;
 public class CurlingEndGameManagerV2 : MonoBehaviour
 {
     public GameObject targetZone;
+
+    // TODO: This might not be necessary. We might be able to pull the objects from the 
+    // list of stones, instead of adding to / creating a new list. 
     private List<GameObject> stonesThisEnd = new List<GameObject>();
     private int[] endScore = new int[2];
 
@@ -27,6 +30,9 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
 
     public void CalculateScore()
     {
+
+        
+
         stonesThisEnd.Sort((a, b) =>
             Vector3.Distance(Vector3.zero, a.transform.position)
             .CompareTo(Vector3.Distance(Vector3.zero, b.transform.position)));

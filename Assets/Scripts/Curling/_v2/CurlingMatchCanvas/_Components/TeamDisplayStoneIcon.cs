@@ -17,7 +17,9 @@ public class TeamDisplayStoneIcon : MonoBehaviour
     public bool isUsed = false;
     public bool isDefault = true;
 
-    public GameObject stoneIconParent;
+    public GameObject stoneIcon;
+    public GameObject closeIcon;
+    public GameObject checkIcon;
 
 
     public void Start()
@@ -32,12 +34,34 @@ public class TeamDisplayStoneIcon : MonoBehaviour
 
     }
 
+    public void ApplyClose()
+    {
+        stoneIcon.SetActive(true);
+        closeIcon.SetActive(true);
+        checkIcon.SetActive(false);
+    }
+
+    public void ApplyCheck()
+    {
+        stoneIcon.SetActive(true);
+        closeIcon.SetActive(false);
+        checkIcon.SetActive(true);
+    }
+
     public void Reset()
     {
+        ApplyDefault();
         isOutOfPlay = false;
         isThrown = false;
         isUsed = false;
         isDefault = true;
+    }
+
+    public void ApplyDefault()
+    {
+        stoneIcon.SetActive(true);
+        closeIcon.SetActive(false);
+        checkIcon.SetActive(false);
     }
 
 }

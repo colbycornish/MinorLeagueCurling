@@ -45,9 +45,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
 
 
 
-    //
     // Team Display Functions
-    //
     public void enableTeamDisplays() {
         // Enable the aim display UI
         teamDisplay001.SetActive(true);
@@ -70,9 +68,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
     }
 
 
-    //
     // Aim Display
-    //
     public void enableAimDisplay() {
         // Enable the aim display UI
         // contentAim.SetActive(true);
@@ -91,25 +87,8 @@ public class CurlingInGameCanvasController : MonoBehaviour
         controlConfirm.SetActive(false);
         Debug.Log("Aim Display Enabled");
     }
-
-    // //
-    // // Curling Display
-    // //
-    // public void enableCurlingDisplay() {
-    //     // Enable the aim display UI
-    //     contentAim.SetActive(true);
-    //     Debug.Log("Aim Display Enabled");
-    // }
-    // public void disableAimDisplay() {
-    //     // Enable the aim display UI
-    //     contentAim.SetActive(true);
-    //     Debug.Log("Aim Display Enabled");
-    // }
-
     
-    //
     // power meter
-    //
     public void enablePowerMeter() {
         // Enable the power meter UI
         powerMeter.SetActive(true);
@@ -123,9 +102,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
         Debug.Log("Power Meter Disabled");
     }
 
-    //
     // exhaustion meters
-    //
     public void enableExhaustionBars() {
         // Enable the left exhaustion bar UI
         exhaustionBarLeft.SetActive(true);
@@ -139,9 +116,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
         Debug.Log("Exhaustion Bar Left Disabled");
     }
 
-    //
     // Result Text
-    //
     public void enableResultText() {
         // Enable the result text UI
         contentResultText.SetActive(true);

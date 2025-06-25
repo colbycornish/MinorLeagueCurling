@@ -9,7 +9,8 @@ public class CurlingStone : MonoBehaviour
 
     [HideInInspector] public bool isThrown = false;
     [HideInInspector] public bool isInPlay = false;
-
+    [HideInInspector] public bool isSliding = false;
+    
     [Header("References")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 

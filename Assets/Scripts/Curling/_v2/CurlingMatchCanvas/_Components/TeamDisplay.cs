@@ -15,7 +15,6 @@ public class TeamDisplay : MonoBehaviour
     public bool controlsTeamOne = false;
     public bool controlsTeamTwo = false;
 
-
     public GameObject teamNameText;
     public GameObject parentStoneDisplay;
 
@@ -29,6 +28,7 @@ public class TeamDisplay : MonoBehaviour
         if (CurlingGameManagerV2.Instance != null)
         {
             UpdateTeamName();
+            UpdateStoneDisplay();
         }
     }
 
@@ -58,20 +58,39 @@ public class TeamDisplay : MonoBehaviour
 
     public void UpdateStoneDisplay()
     {
+        // get the stones that are used by each team
         List<CurlingStone> stones = CurlingGameManagerV2.Instance.stoneManager.stonesTeamA;
         if (controlsTeamTwo)
         {
             stones = CurlingGameManagerV2.Instance.stoneManager.stonesTeamB;
         }
 
-        int numStonesThrown = 0;
-        foreach (CurlingStone stone in stones)
+        
+
+        TeamDisplayStoneIcon[] stoneIcons = parentStoneDisplay.GetComponentsInChildren<TeamDisplayStoneIcon>();
+
+        for (int i = 0; i < stoneIcons.Length; i++)
         {
-            if (stone.isThrown)
+            CurlingStone matchingStone = stones[i];
+            TeamDisplayStoneIcon stoneIcon = stoneIcons[i];
+
+            if (stoneIcon != null && matchingStone != null)
             {
-                numStonesThrown++;
+                if (matchingStone.isThrown == true && matchingStone.isInPlay == true)
+                {
+                    stoneIcon.ApplyCheck();
+                }
+                else if (matchingStone.isThrown == true && matchingStone.isInPlay == false && matchingStone.isSliding == false)
+                {
+                    stoneIcon.ApplyClose();
+                }
+                else
+                {
+                    stoneIcon.ApplyDefault();
+                }
             }
         }
+
     }
 
 
