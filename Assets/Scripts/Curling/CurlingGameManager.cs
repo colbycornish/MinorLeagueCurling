@@ -52,7 +52,7 @@ public class CurlingGameManager : MonoBehaviour
     private bool hasGameEnded = false;
     private bool hasGameStarted = false;
     private bool hasGamePaused = false;
-    private string phaseID = "START";
+    // private string phaseID = "START";
     private float gameTime = 0f;
     private float canvasDisplayTimeMarker = 0f;
     private bool canvasDisplayTimeMarkerIsActive = false;

@@ -11,11 +11,16 @@ public class StoneSelectionCanvasController : MonoBehaviour
     /// <summary>
     /// Public Variables of Global Settings
     /// </summary>
-    private string canvasId = "CANVAS_STONE_SELECTION";
     public GameObject content;
     public GameObject shadow;
+    public GameObject teamTitle;
+    public GameObject stonesRow;
+    public GameObject genericItem;
+    public GameObject stoneDetail;
+    public GameObject buttonConfirm;
 
-    public void Start(){
+    public void Start()
+    {
         LoadExistingSettings();
     }
 
@@ -32,16 +37,10 @@ public class StoneSelectionCanvasController : MonoBehaviour
         // - Dev Settings & Features
     }
 
-    public string GetCanvasId() {
-        return canvasId;
-    }
-    public void SetCanvasId(string id) {
-        canvasId = id;
-    }
-
     public void OnEnable() {
         // This method is called when the canvas is enabled
         Debug.Log("Stone Selection Canvas Enabled");
+        UpdateTitle();
         ShowStoneSelection();
     }
     public void OnDisable() {
@@ -50,9 +49,29 @@ public class StoneSelectionCanvasController : MonoBehaviour
         HideStoneSelection();
     }
 
+    public void UpdateTitle()
+    {
+        if (CurlingGameManagerV2.Instance.playerManager.teams.Count < 2)
+        {
+            Debug.LogError("[TeamDisplay] Not enough teams available. Cannot update team names.");
+            return;
+        }
+        CurlingTeamData currentTeamData = CurlingGameManagerV2.Instance.playerManager.GetCurrentTeam();
+        // CurlingTeamData currentTeamData = CurlingGameManagerV2.Instance.playerManager.teams[currentTeamIndex];
+
+        string currentTeamName = currentTeamData.teamName;
+
+        if (currentTeamName != null)
+        {
+            teamTitle.GetComponent<TMPro.TextMeshProUGUI>().text = currentTeamName;
+        }
+        
+    }
 
 
-    public void ShowStoneSelection() {
+
+    public void ShowStoneSelection()
+    {
         // Display the stone selection on the canvas
         content.SetActive(true);
         shadow.SetActive(true);
@@ -64,8 +83,6 @@ public class StoneSelectionCanvasController : MonoBehaviour
         shadow.SetActive(false);
         Debug.Log("Stone Selection Hidden");
     }
-
-
 
     public void SelectStone(int stoneIndex) {
         // Logic to handle stone selection

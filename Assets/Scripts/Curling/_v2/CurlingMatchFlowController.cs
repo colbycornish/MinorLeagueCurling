@@ -19,9 +19,10 @@ using UnityEngine;
 
 public class CurlingMatchFlowController : MonoBehaviour
 {
-    public CurlingGameManagerV2 gameManager;
-    public CurlingPlayerManagerV2 playerManager;
+    // public CurlingGameManagerV2 gameManager;
+    // public CurlingPlayerManagerV2 playerManager;
 
+    
     private void OnEnable()
     {
         if (CurlingMatchPhaseManager.Instance == null) return;
@@ -36,6 +37,7 @@ public class CurlingMatchFlowController : MonoBehaviour
 
     private void Start()
     {
+        CurlingGameManagerV2.Instance.InitSetup();
         // Kick off the match
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
     }
@@ -43,32 +45,32 @@ public class CurlingMatchFlowController : MonoBehaviour
     private void HandlePhase(CurlingMatchPhase phase)
     {
         Debug.Log($"Handling phase: {phase}");
-        switch (phase)
-        {
-            case CurlingMatchPhase.RoundSplash:
-                Invoke(nameof(ShowTeamSplash), 2f); // Simulate delay
-                break;
+        // switch (phase)
+        // {
+        //     case CurlingMatchPhase.RoundSplash:
+        //         Invoke(nameof(ShowTeamSplash), 2f); // Simulate delay
+        //         break;
 
-            case CurlingMatchPhase.TeamSplash:
-                Invoke(nameof(BeginStoneSelection), 2f);
-                break;
+        //     case CurlingMatchPhase.TeamSplash:
+        //         Invoke(nameof(BeginStoneSelection), 2f);
+        //         break;
 
-            case CurlingMatchPhase.StoneSelectionConfirm:
-                StartThrowSequence();
-                break;
+        //     case CurlingMatchPhase.StoneSelectionConfirm:
+        //         StartThrowSequence();
+        //         break;
 
-            case CurlingMatchPhase.PostThrowResult:
-                HandlePostThrow();
-                break;
+        //     case CurlingMatchPhase.PostThrowResult:
+        //         HandlePostThrow();
+        //         break;
 
-            case CurlingMatchPhase.ObstaclePlacement:
-                FinalizeTurn();
-                break;
+        //     case CurlingMatchPhase.ObstaclePlacement:
+        //         FinalizeTurn();
+        //         break;
 
-            case CurlingMatchPhase.FinalResults:
-                Debug.Log("Match complete.");
-                break;
-        }
+        //     case CurlingMatchPhase.FinalResults:
+        //         Debug.Log("Match complete.");
+        //         break;
+        // }
     }
 
     private void ShowTeamSplash()
@@ -84,26 +86,26 @@ public class CurlingMatchFlowController : MonoBehaviour
     public void ConfirmStoneSelection()
     {
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
-        gameManager.stoneManager.PrepareNextStone();
+        // gameManager.stoneManager.PrepareNextStone();
     }
 
     private void StartThrowSequence()
     {
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.AimControls);
-        CurlingStone currentStone = gameManager.stoneManager.currentStone;
+        // CurlingStone currentStone = gameManager.stoneManager.currentStone;
     }
 
     private void HandlePostThrow()
     {
         // You could branch here based on game rules
-        if (playerManager.GetCurrentTeam() == 0) // Example condition
-        {
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
-        }
-        else
-        {
-            FinalizeTurn();
-        }
+        // if (playerManager.GetCurrentTeam() == 0) // Example condition
+        // {
+        //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
+        // }
+        // else
+        // {
+        //     FinalizeTurn();
+        // }
     }
 
     public void ConfirmObstaclePlacement()
@@ -113,15 +115,15 @@ public class CurlingMatchFlowController : MonoBehaviour
 
     private void FinalizeTurn()
     {
-        playerManager.NextPlayer();
+        // playerManager.NextPlayer();
 
-        if (playerManager.AllStonesThrown())
-        {
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
-        }
-        else
-        {
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.TeamSplash);
-        }
+        // if (playerManager.AllStonesThrown())
+        // {
+        //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
+        // }
+        // else
+        // {
+        //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.TeamSplash);
+        // }
     }
 }

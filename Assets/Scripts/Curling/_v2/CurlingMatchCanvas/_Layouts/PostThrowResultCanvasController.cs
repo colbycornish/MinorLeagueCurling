@@ -11,7 +11,6 @@ public class PostThrowResultCanvasController : MonoBehaviour
     /// <summary>
     /// Public Variables of Global Settings
     /// </summary>
-    private string canvasId = "CANVAS_POST_THROW_RESULT";
     public GameObject content;
     public GameObject shadow;
 
@@ -32,12 +31,6 @@ public class PostThrowResultCanvasController : MonoBehaviour
         // - Dev Settings & Features
     }
 
-    public string GetCanvasId() {
-        return canvasId;
-    }
-    public void SetCanvasId(string id) {
-        canvasId = id;
-    }  
     public void OnEnable() {
         // This method is called when the canvas is enabled
         Debug.Log("Post Throw Result Canvas Enabled");
@@ -49,7 +42,7 @@ public class PostThrowResultCanvasController : MonoBehaviour
         HidePostThrowResult();
     }
 
-
+    
 
 
     public void ShowPostThrowResult(string resultMessage) {

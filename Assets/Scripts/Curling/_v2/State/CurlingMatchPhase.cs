@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public enum CurlingMatchPhase
 {
+    Loading,
     RoundSplash,
     TeamSplash,
     StoneSelection,
@@ -11,6 +12,8 @@ public enum CurlingMatchPhase
     AimControls,
     PowerMeter,
     CurlingControls,
+    // CurlingStoneSweeping,
+    CurlingNoSweepZone,
     PostThrowResult,
     ObstacleSelection,
     ObstaclePlacement,

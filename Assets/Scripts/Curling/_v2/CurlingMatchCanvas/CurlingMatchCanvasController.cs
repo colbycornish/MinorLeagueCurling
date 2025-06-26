@@ -50,7 +50,10 @@ public class CurlingMatchCanvasController : MonoBehaviour
     public GameObject splashTeamCanvas; // ID = CANVAS_SPLASH_TEAM
     public GameObject stoneSelectionCanvas; // ID = CANVAS_STONE_SELECTION
     public GameObject curlingInGameCanvas; // ID = CANVAS_CURLING_IN_GAME
-    public GameObject postThrowResultCanvas; // ID = CANVAS_POST_THROW_RESULT
+    public GameObject postThrowResultCanvas;
+    public GameObject obstacleSelectionCanvas;
+    public GameObject obstaclePlacementCanvas;
+    public GameObject finalResultsCanvas;
 
     public void Start()
     {
@@ -61,6 +64,10 @@ public class CurlingMatchCanvasController : MonoBehaviour
         postThrowResultCanvasController = postThrowResultCanvas.GetComponent<PostThrowResultCanvasController>();
     }
 
+    /// <summary>
+    /// Subscribes to the phase change event from the CurlingMatchPhaseManager,
+    /// which tells us which canvas should be displayed and active.
+    /// </summary>
     private void OnEnable()
     {
         if (CurlingMatchPhaseManager.Instance == null) return;
@@ -76,6 +83,8 @@ public class CurlingMatchCanvasController : MonoBehaviour
     // CurlingMatchPhase phase
     public void ActivateCanvasesByPhase(CurlingMatchPhase phase)
     {
+
+        DisableNonActiveCanvases(); 
         switch (phase)
         {
             case CurlingMatchPhase.RoundSplash:
@@ -94,62 +103,64 @@ public class CurlingMatchCanvasController : MonoBehaviour
                 ActivateStoneSelectionCanvas(phase);
                 break;
             case CurlingMatchPhase.AimControls:
-                ActivateCurlingInGameCanvas("AIM", phase);
+                ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.PowerMeter:
-                ActivateCurlingInGameCanvas("POWER", phase);
+                ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.CurlingControls:
-                ActivateCurlingInGameCanvas("SWEEP", phase);
+                ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.PostThrowResult:
                 ActivatePostThrowResultCanvas(phase);
                 break;
             case CurlingMatchPhase.ObstacleSelection:
-                ActivatePostThrowResultCanvas(phase);
+                ActivateObstacleSelectionCanvas(phase);
                 break;
             case CurlingMatchPhase.ObstaclePlacement:
-                ActivatePostThrowResultCanvas(phase);
+                ActivateObstaclePlacementCanvas(phase);
                 break;
             case CurlingMatchPhase.FinalResults:
-                ActivatePostThrowResultCanvas(phase);
+                ActivateFinalResultsCanvas(phase);
                 break;
             default:
                 Debug.Log("Invalid canvas name");
                 ActivateSplashRoundCanvas(phase);
                 break;
         }
+
+        // DisableNonActiveCanvases(); 
         return;
         
     }
 
     public void ActivateSplashRoundCanvas(CurlingMatchPhase phase)
     {
-        DisableNonActiveCanvases(); // Disable Other Canvases
+        // DisableNonActiveCanvases(); // Disable Other Canvases
         // Enable Splash Round Canvas
         splashRoundCanvas.SetActive(true);
-        splashRoundCanvasController.ShowSplashRound();
+        // splashRoundCanvasController.ShowSplashRound();
     }
     public void ActivateSplashTeamCanvas(CurlingMatchPhase phase)
     {
-        DisableNonActiveCanvases(); // Disable Other Canvases
+        // DisableNonActiveCanvases(); // Disable Other Canvases
         // Enable Splash Team Canvas
         splashTeamCanvas.SetActive(true);
-        splashTeamCanvasController.ShowSplashTeam();
+        // splashTeamCanvasController.ShowSplashTeam();
 
     }
     public void ActivateStoneSelectionCanvas(CurlingMatchPhase phase)
     {
-        DisableNonActiveCanvases(); // Disable Other Canvases
+        // DisableNonActiveCanvases(); // Disable Other Canvases
         // Enable Stone Selection Canvas
         stoneSelectionCanvasController.ShowStoneSelection();
         stoneSelectionCanvas.SetActive(true);
 
     }
 
-    public void ActivateCurlingInGameCanvas(string phaseId, CurlingMatchPhase phase)
+    public void ActivateCurlingInGameCanvas(CurlingMatchPhase phase)
     {
-        DisableNonActiveCanvases(); // Disable Other Canvases
+        // DisableNonActiveCanvases(); // Disable Other Canvases
 
         // Enable Curling In Game Canvas
         curlingInGameCanvas.SetActive(true);
@@ -187,14 +198,14 @@ public class CurlingMatchCanvasController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Invalid phaseId: " + phaseId);
+            Debug.LogError("Invalid phaseId");
         }
     }
 
 
     public void ActivatePostThrowResultCanvas(CurlingMatchPhase phase)
     {
-        DisableNonActiveCanvases(); // Disable Other Canvases
+        // DisableNonActiveCanvases(); // Disable Other Canvases
 
         // Enable Post Throw Result Canvas
         curlingInGameCanvas.SetActive(true);
@@ -207,6 +218,29 @@ public class CurlingMatchCanvasController : MonoBehaviour
             "Out of Bounds"
         );
         curlingInGameCanvasController.enableResultText();
+    }
+
+    
+    public void ActivateObstacleSelectionCanvas(CurlingMatchPhase phase)
+    {
+        // DisableNonActiveCanvases(); // Disable Other Canvases
+        // Enable Post Throw Result Canvas
+        obstacleSelectionCanvas.SetActive(true);
+    }
+
+    public void ActivateObstaclePlacementCanvas(CurlingMatchPhase phase)
+    {
+        // DisableNonActiveCanvases(); // Disable Other Canvases
+        // Enable Post Throw Result Canvas
+        obstaclePlacementCanvas.SetActive(true);
+    }
+
+
+    public void ActivateFinalResultsCanvas(CurlingMatchPhase phase)
+    {
+        // DisableNonActiveCanvases(); // Disable Other Canvases
+        // Enable Post Throw Result Canvas
+        finalResultsCanvas.SetActive(true);
     }
 
     public void DisableNonActiveCanvases()
@@ -228,123 +262,10 @@ public class CurlingMatchCanvasController : MonoBehaviour
         {
             curlingInGameCanvas.SetActive(false);
         }
-        if (currentPhase != CurlingMatchPhase.PostThrowResult){ postThrowResultCanvas.SetActive(false); }
-        if (currentPhase != CurlingMatchPhase.ObstacleSelection){ postThrowResultCanvas.SetActive(false);}
-        if (currentPhase != CurlingMatchPhase.ObstaclePlacement){ postThrowResultCanvas.SetActive(false); }
-        if (currentPhase != CurlingMatchPhase.FinalResults){ postThrowResultCanvas.SetActive(false); }
-        
+        if (currentPhase != CurlingMatchPhase.PostThrowResult) { postThrowResultCanvas.SetActive(false); }
+        if (currentPhase != CurlingMatchPhase.ObstacleSelection) { obstacleSelectionCanvas.SetActive(false); }
+        if (currentPhase != CurlingMatchPhase.ObstaclePlacement) { obstaclePlacementCanvas.SetActive(false); }
+        if (currentPhase != CurlingMatchPhase.FinalResults) { finalResultsCanvas.SetActive(false); }
+
     }
 }
-
-    // private List<string> canvasOrderByIds = new List<string>
-    // {
-    //     "CANVAS_SPLASH_ROUND",
-    //     "CANVAS_SPLASH_TEAM",
-    //     "CANVAS_STONE_SELECTION",
-    //     "CANVAS_CURLING_IN_GAME_AIM",
-    //     "CANVAS_CURLING_IN_GAME_POWER",
-    //     "CANVAS_CURLING_IN_GAME_SWEEP",
-    //     "CANVAS_POST_THROW_RESULT"
-    // };
-
-    // private List<KeyValuePair<string, GameObject>> canvasListById = new List<KeyValuePair<string, GameObject>>();
-    // public string activeCanvas = "CANVAS_SPLASH_ROUND";
-
-        // if (activeCanvas != "CANVAS_SPLASH_ROUND")
-        // {
-        //     splashRoundCanvas.SetActive(false);
-        // }
-
-        // if (activeCanvas != "CANVAS_SPLASH_TEAM")
-        // {
-        //     splashTeamCanvas.SetActive(false);
-        // }
-
-        // if (activeCanvas != "CANVAS_STONE_SELECTION")
-        // {
-        //     stoneSelectionCanvas.SetActive(false);
-        // }
-
-        // if (activeCanvas != "CANVAS_CURLING_IN_GAME_AIM" &&
-        //          activeCanvas != "CANVAS_CURLING_IN_GAME_POWER" &&
-        //          activeCanvas != "CANVAS_CURLING_IN_GAME_SWEEP")
-        // {
-        //     curlingInGameCanvas.SetActive(false);
-        // }
-
-        // if (activeCanvas != "CANVAS_POST_THROW_RESULT")
-        // {
-        //     postThrowResultCanvas.SetActive(false);
-        // }
-
-    // public enum CanvasState
-    // {
-    //     SplashRound,
-    //     SplashTeam,
-    //     StoneSelection,
-    //     CurlingInGameAim,
-    //     CurlingInGamePower,
-    //     CurlingInGameSweep,
-    //     PostThrowResult
-    // }
-
-    // public MatchState currentState = CanvasState.SplashRound;
-
-    // public void GoToNextCanvas()
-    // {
-    //     int currentIndex = canvasOrderByIds.IndexOf(activeCanvas);
-    //     int nextIndex = (currentIndex + 1) % canvasOrderByIds.Count;
-    //     activeCanvas = canvasOrderByIds[nextIndex];
-    //     ActivateCanvas();
-    // }
-
-    // public void GoToPreviousCanvas()
-    // {
-    //     int currentIndex = canvasOrderByIds.IndexOf(activeCanvas);
-    //     int prevIndex = (currentIndex - 1 + canvasOrderByIds.Count) % canvasOrderByIds.Count;
-    //     activeCanvas = canvasOrderByIds[prevIndex];
-    //     ActivateCanvas();
-    // }
-
-    // public void SetActiveCanvasById(string canvasName)
-    // {
-    //     // Set the active canvas based on the provided name
-    //     activeCanvas = canvasName;
-    //     ActivateCanvas();
-    // }
-    
-
-
-    // public void ActivateCanvas()
-    // {
-    //     // Set the active canvas based on the current active canvas
-    //     switch (activeCanvas)
-    //     {
-    //         case "CANVAS_SPLASH_ROUND":
-    //             ActivateSplashRoundCanvas();
-    //             break;
-    //         case "CANVAS_SPLASH_TEAM":
-    //             ActivateSplashTeamCanvas();
-    //             break;
-    //         case "CANVAS_STONE_SELECTION":
-    //             ActivateStoneSelectionCanvas();
-    //             break;
-    //         case "CANVAS_CURLING_IN_GAME_AIM":
-    //             ActivateCurlingInGameCanvas("AIM");
-    //             break;
-    //         case "CANVAS_CURLING_IN_GAME_POWER":
-    //             ActivateCurlingInGameCanvas("POWER");
-    //             break;
-    //         case "CANVAS_CURLING_IN_GAME_SWEEP":
-    //             ActivateCurlingInGameCanvas("SWEEP");
-    //             break;
-    //         case "CANVAS_POST_THROW_RESULT":
-    //             ActivatePostThrowResultCanvas();
-    //             break;
-    //         default:
-    //             Debug.Log("Invalid canvas name");
-    //             splashRoundCanvas.SetActive(true);
-    //             break;
-    //     }
-    //     return;
-    // }

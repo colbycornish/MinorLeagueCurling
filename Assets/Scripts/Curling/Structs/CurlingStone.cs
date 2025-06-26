@@ -9,7 +9,10 @@ public class CurlingStone : MonoBehaviour
 
     [HideInInspector] public bool isThrown = false;
     [HideInInspector] public bool isInPlay = false;
+    [HideInInspector] public bool isSliding = false;
+    [HideInInspector] public float curlAmountCurrent = 0f;
 
+    
     [Header("References")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 
@@ -30,5 +33,5 @@ public class CurlingStone : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public bool IsStationary => rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
+    public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
 }

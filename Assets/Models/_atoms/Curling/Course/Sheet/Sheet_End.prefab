@@ -255,6 +255,59 @@ Transform:
   - {fileID: 1461091706726120773}
   m_Father: {fileID: 5363501921251840283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5668213458569019847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2073439850857571184}
+  - component: {fileID: 5039455339402307253}
+  m_Layer: 0
+  m_Name: RedLine_Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2073439850857571184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5668213458569019847}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 41.1, y: 2.2178955, z: -1.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 240893278698827653}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5039455339402307253
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5668213458569019847}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 80, y: 10, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5731968535128781365
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +348,7 @@ Transform:
   - {fileID: 2727207761793671798}
   - {fileID: 6943211020483891865}
   - {fileID: 6425848490042920475}
+  - {fileID: 2073439850857571184}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8254818704642979651
@@ -542,6 +596,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 240893278698827653}
     m_Modifications:
+    - target: {fileID: 352460790734541717, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 352460790734541717, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 713823369067709423, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 713823369067709423, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 2053344444269240406, guid: 29aaab427fa9741958a992b340906e84, type: 3}
       propertyPath: m_LocalPosition.x
       value: 39.799988
@@ -644,6 +714,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 930847336612097588, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 1353461559802203488, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 2315911773241862420, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 2810958248700534067, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 3637052288202546165, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 5920625639016539012, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 6266715651377668887, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 6476013639374205330, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 8810797562376094067, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
       propertyPath: m_Name
       value: Sheet_Wall_Straight_Wood (2)
@@ -736,6 +838,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 240893278698827653}
     m_Modifications:
+    - target: {fileID: 352460790734541717, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 352460790734541717, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 713823369067709423, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 713823369067709423, guid: 29aaab427fa9741958a992b340906e84, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 2053344444269240406, guid: 29aaab427fa9741958a992b340906e84, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.8500366
@@ -838,6 +956,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 930847336612097588, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 1353461559802203488, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 2315911773241862420, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 2810958248700534067, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 3637052288202546165, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 5920625639016539012, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 6266715651377668887, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
+    - target: {fileID: 6476013639374205330, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 17838d63f0e0b423cbee394f1786e055, type: 2}
     - target: {fileID: 8810797562376094067, guid: 8919f14ae32424c14b21ef98ffae2979, type: 3}
       propertyPath: m_Name
       value: Sheet_Wall_Straight_Wood (3)

@@ -198,7 +198,7 @@ public struct CurlingPlayerStats {
     }
 
     // Sweeper State Functions
-    public void SetIsSweeperState(
+    public void SetIsSweepingState(
         bool isSweeping = false
     ) {
         this.isSweeping = isSweeping; // Default sweeping state
