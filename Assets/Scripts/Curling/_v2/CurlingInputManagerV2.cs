@@ -123,6 +123,8 @@ public class CurlingInputManagerV2 : MonoBehaviour
         // }
         // Handle inputs specific to the Power Meter phase
     }
+
+    // ❌ Handled by Stone Sweep Controller
     private void HandleCurlingControlsInput()
     {
         if (Input.GetMouseButtonDown(0))

@@ -12,6 +12,8 @@ public enum CurlingMatchPhase
     AimControls,
     PowerMeter,
     CurlingControls,
+    // CurlingStoneSweeping,
+    CurlingNoSweepZone,
     PostThrowResult,
     ObstacleSelection,
     ObstaclePlacement,

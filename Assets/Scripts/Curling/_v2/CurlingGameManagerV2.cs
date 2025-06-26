@@ -15,7 +15,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public CurlingPlayerManagerV2 playerManager;
     public CurlingStoneManagerV2 stoneManager;
     public CurlingGameData gameData;
-    public Camera camera;
+    public Camera stoneCamera;
 
     public int currentEnd = 1;
     public int maxEnds = 8;
@@ -70,7 +70,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public void OnStoneSelectionConfirmed()
     {
         stoneManager.PrepareNextStone();
-        camera.GetComponent<CinemachineCamera>().Follow = stoneManager.currentStone.transform;
+        stoneCamera.GetComponent<CinemachineCamera>().Follow = stoneManager.currentStone.transform;
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.AimControls);
     }
 

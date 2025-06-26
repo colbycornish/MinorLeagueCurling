@@ -22,6 +22,7 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     public List<Transform> stonesSpawnLocationsTeamB = new List<Transform>();
 
     public Transform launchPoint;
+
     // This is one of the most important bits, and will be referenced by 
     // the stone throw controller, sweeping controller, etc.
     public CurlingStone currentStone;
@@ -30,12 +31,12 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     private int stonesThrown = 0;
     private int stonesInPlay = 0;
 
+
+    // This method will takes the exiting stone prefab, and instantiate 5 stones for each team at 
+    // the specified spawn locations in the scene. 
     public void SetupStones()
     {
         ClearExistingStones();
-        // This method will takes the exiting stone prefab, and instantiate 5 stones for each team at 
-        // the specified spawn locations in the scene. 
-
         for (int i = 0; i < stonesSpawnLocationsTeamA.Count; i++)
         {
             // find the spawn points for each team's stones
@@ -68,6 +69,11 @@ public class CurlingStoneManagerV2 : MonoBehaviour
         stonesSpawned = 10;
     }
 
+    // TODO: Adjust to look for a selection from the canvas. 
+    // These functions would then be a fallback state for if the selecting player
+    // times out before selecting a stone.
+
+    // Needs to account for the initial state, with a null starting stone.
     public void PrepareNextStone()
     {
         stonesInPlay++;
@@ -88,9 +94,11 @@ public class CurlingStoneManagerV2 : MonoBehaviour
         }
     }
 
+    
+    // Returns the next stone to be thrown based on the current team and stone index.
     private CurlingStone GetNextStone()
     {
-        // This method returns the next stone to be thrown based on the current team and stone index.
+
         if (stonesThrown < stonesSpawned)
         {
             int currentTeam = stonesThrown % 2; // 0 for Team A, 1 for Team B
