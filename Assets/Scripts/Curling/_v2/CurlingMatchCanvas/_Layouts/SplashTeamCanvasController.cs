@@ -29,7 +29,7 @@ public class SplashTeamCanvasController : MonoBehaviour
     private void OnEnable()
     {
         UpdateTeamNames();
-        UpdateOrder();
+        // UpdateOrder();
         ShowSplashTeam();
     }
 
@@ -65,22 +65,8 @@ public class SplashTeamCanvasController : MonoBehaviour
         
     }
 
-    public void UpdateOrder()
-    {
-
-    }
     public void LoadExistingSettings()
     {
-        // Loads the existing User settings file, that determines things like:
-        // - Audio levels
-        // - Displays
-        //  - Brightness
-        //  - Gamma
-        // - Controls
-        //  - Controller
-        // - Platform
-        // - Difficulty
-        // - Dev Settings & Features
     }
 
     
@@ -98,11 +84,6 @@ public class SplashTeamCanvasController : MonoBehaviour
         shadow.SetActive(false);
         Debug.Log("Splash Team Hidden");
     }
-    // public void SetTeamNames(string team1, string team2)
-    // {
-    //     teamName_1 = team1;
-    //     teamName_2 = team2;
-    //     Debug.Log("Teams set: " + teamName_1 + " vs " + teamName_2);
-    // }
+
 
 }

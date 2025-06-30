@@ -91,7 +91,7 @@ public class CurlingMatchFlowController : MonoBehaviour
 
     private void StartThrowSequence()
     {
-        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.AimControls);
+        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
         // CurlingStone currentStone = gameManager.stoneManager.currentStone;
     }
 

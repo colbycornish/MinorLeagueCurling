@@ -71,7 +71,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     {
         stoneManager.PrepareNextStone();
         stoneCamera.GetComponent<CinemachineCamera>().Follow = stoneManager.currentStone.transform;
-        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.AimControls);
+        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
     }
 
 
