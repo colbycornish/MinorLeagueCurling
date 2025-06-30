@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Currently not used. Could be deleted.
+/// </summary>
 public class CurlingCanvasPhaseController : MonoBehaviour
 {
     [System.Serializable]
@@ -38,7 +41,7 @@ public class CurlingCanvasPhaseController : MonoBehaviour
 
     private void UpdateCanvases(CurlingMatchPhase phase)
     {
-        
+
         // foreach (var kvp in canvasMap)
         // {
 

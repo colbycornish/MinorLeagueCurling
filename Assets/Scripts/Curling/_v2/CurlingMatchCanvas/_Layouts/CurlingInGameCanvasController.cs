@@ -35,7 +35,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
         LoadExistingSettings();
     }
 
-    public void init(){
+    public void Init(){
         LoadExistingSettings();
     }
 
@@ -46,21 +46,21 @@ public class CurlingInGameCanvasController : MonoBehaviour
 
 
     // Team Display Functions
-    public void enableTeamDisplays() {
+    public void EnableTeamDisplays() {
         // Enable the aim display UI
         teamDisplay001.SetActive(true);
         teamDisplay002.SetActive(true);
         Debug.Log("Aim Display Enabled");
     }
 
-    public void disableTeamDisplays() {
+    public void DisableTeamDisplays() {
         // Enable the aim display UI
         teamDisplay001.SetActive(false);
         teamDisplay002.SetActive(false);
         Debug.Log("Aim Display Disabled");
     }
 
-    public void setTeamDisplays() {
+    public void SetTeamDisplays() {
         // Enable the aim display UI
         teamDisplay001.GetComponentsInChildren<UnityEngine.UI.Text>()[0].text = "BLUE TEAM";
         teamDisplay002.GetComponentsInChildren<UnityEngine.UI.Text>()[0].text = "GREEN TEAM";
@@ -69,7 +69,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
 
 
     // Aim Display
-    public void enableAimDisplay() {
+    public void EnableAimDisplay() {
         // Enable the aim display UI
         // contentAim.SetActive(true);
         controlView.SetActive(true);
@@ -79,7 +79,7 @@ public class CurlingInGameCanvasController : MonoBehaviour
         Debug.Log("Aim Display Enabled");
     }
 
-    public void disableAimDisplay() {
+    public void DisableAimDisplay() {
         // Enable the aim display UI
         controlView.SetActive(false);
         controlAim.SetActive(false);
@@ -89,13 +89,13 @@ public class CurlingInGameCanvasController : MonoBehaviour
     }
     
     // power meter
-    public void enablePowerMeter() {
+    public void EnablePowerMeter() {
         // Enable the power meter UI
         powerMeter.SetActive(true);
         controlConfirm.SetActive(true);
         Debug.Log("Power Meter Enabled");
     }
-    public void disablePowerMeter() {
+    public void DisablePowerMeter() {
         // Disable the power meter UI
         powerMeter.SetActive(false);
         controlConfirm.SetActive(false);
@@ -103,13 +103,13 @@ public class CurlingInGameCanvasController : MonoBehaviour
     }
 
     // exhaustion meters
-    public void enableExhaustionBars() {
+    public void EnableExhaustionBars() {
         // Enable the left exhaustion bar UI
         exhaustionBarLeft.SetActive(true);
         exhaustionBarRight.SetActive(true);
         Debug.Log("Exhaustion Bar Left Enabled");
     }
-    public void disableExhaustionBars() {
+    public void DisableExhaustionBars() {
         // Disable the left exhaustion bar UI
         exhaustionBarLeft.SetActive(false);
         exhaustionBarRight.SetActive(false);
@@ -117,19 +117,19 @@ public class CurlingInGameCanvasController : MonoBehaviour
     }
 
     // Result Text
-    public void enableResultText() {
+    public void EnableResultText() {
         // Enable the result text UI
         contentResultText.SetActive(true);
         contentResultSubtitle.SetActive(true);
         Debug.Log("Result Text Enabled");
     }
-    public void disableResultText() {
+    public void DisableResultText() {
         // Disable the result text UI
         contentResultText.SetActive(false);
         contentResultSubtitle.SetActive(false);
         Debug.Log("Result Text Disabled");
     }
-    public void setResultText(
+    public void SetResultText(
         string titleText,
         string subtitleText
     ) {

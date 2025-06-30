@@ -47,9 +47,32 @@ public class SweeperExhaustionBar : MonoBehaviour
     /// Start is called before the first frame update
     /// </summary>
     public void Start(){
-        errorCheck();
-        initializeDisplay();
-        setWarning(false);
+        ErrorCheck();
+        InitializeDisplay();
+        SetWarning(false);
+    }
+
+
+    private void OnEnable()
+    {
+        if (CurlingMatchPhaseManager.Instance == null) return;
+        CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
+    }
+
+    private void OnDisable()
+    {
+        if (CurlingMatchPhaseManager.Instance == null) return;
+        CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
+    }
+
+    public void HandlePhase(CurlingMatchPhase phase)
+    {
+        CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
+
+        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
+        {
+            Reset();
+        }
     }
 
     /// <summary>
@@ -58,20 +81,20 @@ public class SweeperExhaustionBar : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(rightSweepKey) & controlsRightSweeper){
-            increaseExhaustionLevel();
+            IncreaseExhaustionLevel();
         }
         if (Input.GetKeyDown(leftSweepKey) & controlsLeftSweeper){
-            increaseExhaustionLevel();
+            IncreaseExhaustionLevel();
         }
 
-        decreaseExhaustionLevel();
+        DecreaseExhaustionLevel();
         
     }
 
     /// <summary>
     /// Sets or resets variables and meters. 
     /// </summary>
-    public void setExhaustionLevelsFromCharacter(
+    public void SetExhaustionLevelsFromCharacter(
         int exhaustionLevel, 
         int maxExhaustionLevel, 
         int minExhaustionLevel,
@@ -93,11 +116,8 @@ public class SweeperExhaustionBar : MonoBehaviour
         this.exhaustionWarningThreshold = (exhaustionRange * 0.75f) + minExhaustionLevel;
     }
 
-    public void reset(){
 
-    }
-
-    public void initializeDisplay(){
+    public void InitializeDisplay(){
         displayBarLayoutElement = displayBar.GetComponentsInChildren<LayoutElement>()[0];
         displaybarMaxHeight = displayBarLayoutElement.preferredHeight;
         displaybarCurHeight = 0.0f;
@@ -111,11 +131,11 @@ public class SweeperExhaustionBar : MonoBehaviour
     /// This includes helper functions that manipulate the display
     /// </summary>
 
-    public void increaseExhaustionLevel(){
+    public void IncreaseExhaustionLevel(){
         // Increase the exhaustion level
         if (exhaustionLevel < maxExhaustionLevel){
             exhaustionLevel += exhaustionRate;
-            increaseExhaustionDisplay();
+            IncreaseExhaustionDisplay();
             if (exhaustionLevel > maxExhaustionLevel){
                 exhaustionLevel = maxExhaustionLevel;
             }
@@ -127,13 +147,13 @@ public class SweeperExhaustionBar : MonoBehaviour
 
         // Show warning signs
         if (exhaustionLevel >= exhaustionWarningThreshold){
-            setWarning(true);
+            SetWarning(true);
         }
     }
 
     // TODO: This uses the preferred height element to set a height, but this isn't really
     // sustainable for different screen sizes. 
-    private void increaseExhaustionDisplay(){
+    private void IncreaseExhaustionDisplay(){
         // Increase the height of the Sweeper Exhaustion Bar
         displayBarLayoutElement.preferredHeight = displaybarCurHeight + displaybarIncreaseRate;
         if (displayBarLayoutElement.preferredHeight > displaybarMaxHeight){
@@ -143,12 +163,12 @@ public class SweeperExhaustionBar : MonoBehaviour
 
     }
 
-    public void decreaseExhaustionLevel(){
+    public void DecreaseExhaustionLevel(){
         // Debug.Log("decreasing Exhaustion!");
         // Decrease the exhaustion level
         if (exhaustionLevel > minExhaustionLevel){
             exhaustionLevel -= recoveryRate;
-            decreaseExhaustionDisplay();
+            DecreaseExhaustionDisplay();
             if (exhaustionLevel < 0.0f){
                 exhaustionLevel = 0.0f;
             }
@@ -159,11 +179,11 @@ public class SweeperExhaustionBar : MonoBehaviour
         // Hide warning signs
         // This could be a visual effect, sound effect, or some other indication that the Sweeper is recovering
         if (exhaustionLevel < exhaustionWarningThreshold){
-            setWarning(false);
+            SetWarning(false);
         }
     }
 
-    private void decreaseExhaustionDisplay(){
+    private void DecreaseExhaustionDisplay(){
         // Decrease the height of the Sweeper Exhaustion Bar
         displayBarLayoutElement.preferredHeight = displaybarCurHeight - displaybarDecreaseRate;
         
@@ -174,7 +194,7 @@ public class SweeperExhaustionBar : MonoBehaviour
 
     }
 
-    public void setWarning(bool wl){
+    public void SetWarning(bool wl){
         if (isWarningVisible != wl){
             isWarningVisible = wl;
             warningIcon.SetActive(wl);
@@ -184,42 +204,50 @@ public class SweeperExhaustionBar : MonoBehaviour
     /// <summary>
     /// Transitional helpers for showing and hiding the Sweeper Exhaustion Bar
     /// </summary>
-    public void transitionIn(){
+    public void TransitionIn(){
         // Transition in the Sweeper Exhaustion Bar
         // This will be called when the player is in the Sweeping phase
     }
-    public void transitionOut(){
+    public void TransitionOut(){
         // Transition out the Sweeper Exhaustion Bar
         // This will be called when the player is in the Sweeping phase
     }
-    public void updateBar(){
+    public void UpdateBar(){
         // Update the Sweeper Exhaustion Bar
         // This will be called when the player is in the Sweeping phase
     }
 
 
+    public void Reset()
+    {
+        InitializeDisplay();
+    }
 
 
-    
+
     /// <summary>
     /// Error Checking and Debugging
     /// </summary>
 
-    public void errorCheck(){
-        if (controlsLeftSweeper == false && controlsRightSweeper == false){
+    public void ErrorCheck()
+    {
+        if (controlsLeftSweeper == false && controlsRightSweeper == false)
+        {
             Debug.Log("Error: No Sweeper Controls Assigned");
         }
-        else if (controlsLeftSweeper == true && controlsRightSweeper == true){
+        else if (controlsLeftSweeper == true && controlsRightSweeper == true)
+        {
             Debug.Log("Error: Both Sweeper Controls Assigned to One button");
         }
-        else{
+        else
+        {
             Debug.Log("Sweeper Bar Staus: ✅");
         }
 
-        if (displayBar == null){
+        if (displayBar == null)
+        {
             Debug.Log("Error: Sweeper Bar Display is not assigned");
         }
-        
     }
 
 }

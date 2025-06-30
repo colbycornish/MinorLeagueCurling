@@ -1,17 +1,22 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 
 public class CurlingStone : MonoBehaviour
 {
-    public int teamId;
-    public int stoneIndex;
+    public string title = "Basic Stone";
+    public string description = "Just your basic curling stone.";
+    public Image avatarImage;
 
+    [HideInInspector] public int teamId;
+    [HideInInspector] public int stoneIndex;
     [HideInInspector] public bool isThrown = false;
     [HideInInspector] public bool isInPlay = false;
     [HideInInspector] public bool isSliding = false;
     [HideInInspector] public float curlAmountCurrent = 0f;
-
+    [HideInInspector] public float launchForce = 0f;
+    // [HideInInspector] public float primaryColor = 0f;
     
     [Header("References")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /*
 Team Structure
@@ -27,29 +28,35 @@ Team Structure
                 - Vector3: currentRotation
 */
 
-public struct CurlingTeamData {
+public struct CurlingTeamData
+{
     //Variable declaration
     public string teamName;
     public string teamId;
+    public Image avatarImage;
     public CurlingPlayer thrower;
     public CurlingPlayer sweeperLeft;
     public CurlingPlayer sweeperRight;
     public List<GameObject> stones; // List of stones for the team
-   
+
     //Constructor (not necessary, but helpful)
     public void SetTeamInfo(
         string teamName = "Team A",
         string teamId = "team_a"
-    ) {
+    )
+    {
         this.teamName = teamName;
         this.teamId = teamId;
     }
+    
+    
 }
 
 
 public struct CurlingPlayer {
     public string name;
     public string characterId;
+    public Image avatarImage;
     public GameObject characterBody;
     public CurlingPlayerStats stats;
     public bool isThrower;

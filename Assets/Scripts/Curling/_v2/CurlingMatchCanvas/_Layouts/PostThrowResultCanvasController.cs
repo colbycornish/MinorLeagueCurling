@@ -15,20 +15,9 @@ public class PostThrowResultCanvasController : MonoBehaviour
     public GameObject shadow;
 
     public void Start(){
-        
     }
 
     public void LoadExistingSettings(){
-        // Loads the existing User settings file, that determines things like:
-        // - Audio levels
-        // - Displays
-        //  - Brightness
-        //  - Gamma
-        // - Controls
-        //  - Controller
-        // - Platform
-        // - Difficulty
-        // - Dev Settings & Features
     }
 
     public void OnEnable() {
@@ -41,8 +30,6 @@ public class PostThrowResultCanvasController : MonoBehaviour
         Debug.Log("Post Throw Result Canvas Disabled");
         HidePostThrowResult();
     }
-
-    
 
 
     public void ShowPostThrowResult(string resultMessage) {

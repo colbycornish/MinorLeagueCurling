@@ -25,16 +25,7 @@ public class StoneSelectionCanvasController : MonoBehaviour
     }
 
     public void LoadExistingSettings(){
-        // Loads the existing User settings file, that determines things like:
-        // - Audio levels
-        // - Displays
-        //  - Brightness
-        //  - Gamma
-        // - Controls
-        //  - Controller
-        // - Platform
-        // - Difficulty
-        // - Dev Settings & Features
+
     }
 
     public void OnEnable() {
@@ -51,7 +42,8 @@ public class StoneSelectionCanvasController : MonoBehaviour
 
     public void UpdateTitle()
     {
-        if (CurlingGameManagerV2.Instance.playerManager.teams.Count < 2)
+
+        if (CurlingGameManagerV2.Instance == null || CurlingGameManagerV2.Instance.playerManager.teams.Count < 2)
         {
             Debug.LogError("[TeamDisplay] Not enough teams available. Cannot update team names.");
             return;

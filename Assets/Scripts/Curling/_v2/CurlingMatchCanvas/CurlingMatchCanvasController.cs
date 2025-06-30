@@ -102,13 +102,13 @@ public class CurlingMatchCanvasController : MonoBehaviour
             case CurlingMatchPhase.StoneSelectionConfirm:
                 ActivateStoneSelectionCanvas(phase);
                 break;
-            case CurlingMatchPhase.AimControls:
+            case CurlingMatchPhase.CurlingAimControlsPhase:
                 ActivateCurlingInGameCanvas(phase);
                 break;
-            case CurlingMatchPhase.PowerMeter:
+            case CurlingMatchPhase.CurlingPowerMeterPhase:
                 ActivateCurlingInGameCanvas(phase);
                 break;
-            case CurlingMatchPhase.CurlingControls:
+            case CurlingMatchPhase.CurlingStoneSweepingPhase:
                 ActivateCurlingInGameCanvas(phase);
                 break;
             case CurlingMatchPhase.PostThrowResult:
@@ -164,34 +164,34 @@ public class CurlingMatchCanvasController : MonoBehaviour
 
         // Enable Curling In Game Canvas
         curlingInGameCanvas.SetActive(true);
-        curlingInGameCanvasController.enableTeamDisplays();
+        curlingInGameCanvasController.EnableTeamDisplays();
         
-        if (phase == CurlingMatchPhase.AimControls)
+        if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
-            curlingInGameCanvasController.disableExhaustionBars();
-            curlingInGameCanvasController.disablePowerMeter();
-            curlingInGameCanvasController.enableAimDisplay();
-            curlingInGameCanvasController.setResultText(
+            curlingInGameCanvasController.DisableExhaustionBars();
+            curlingInGameCanvasController.DisablePowerMeter();
+            curlingInGameCanvasController.EnableAimDisplay();
+            curlingInGameCanvasController.SetResultText(
                 "Aiming",
                 "Select the direction to throw the stone"
             );
         }
-        else if (phase == CurlingMatchPhase.PowerMeter)
+        else if (phase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
-            curlingInGameCanvasController.disableAimDisplay();
-            curlingInGameCanvasController.enablePowerMeter();
-            curlingInGameCanvasController.enableExhaustionBars();
-            curlingInGameCanvasController.setResultText(
+            curlingInGameCanvasController.DisableAimDisplay();
+            curlingInGameCanvasController.EnablePowerMeter();
+            curlingInGameCanvasController.EnableExhaustionBars();
+            curlingInGameCanvasController.SetResultText(
                 "Power",
                 "Select the power to throw the stone"
             );
         }
-        else if (phase == CurlingMatchPhase.CurlingControls)
+        else if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
-            curlingInGameCanvasController.disableAimDisplay();
-            curlingInGameCanvasController.disablePowerMeter();
-            curlingInGameCanvasController.enableExhaustionBars();
-            curlingInGameCanvasController.setResultText(
+            curlingInGameCanvasController.DisableAimDisplay();
+            curlingInGameCanvasController.DisablePowerMeter();
+            curlingInGameCanvasController.EnableExhaustionBars();
+            curlingInGameCanvasController.SetResultText(
                 "Sweeping",
                 "Sweep to influence the stone's path"
             );
@@ -209,15 +209,15 @@ public class CurlingMatchCanvasController : MonoBehaviour
 
         // Enable Post Throw Result Canvas
         curlingInGameCanvas.SetActive(true);
-        curlingInGameCanvasController.disableAimDisplay();
-        curlingInGameCanvasController.disableExhaustionBars();
+        curlingInGameCanvasController.DisableAimDisplay();
+        curlingInGameCanvasController.DisableExhaustionBars();
 
-        curlingInGameCanvasController.enableTeamDisplays();
-        curlingInGameCanvasController.setResultText(
+        curlingInGameCanvasController.EnableTeamDisplays();
+        curlingInGameCanvasController.SetResultText(
             "Oh No!",
             "Out of Bounds"
         );
-        curlingInGameCanvasController.enableResultText();
+        curlingInGameCanvasController.EnableResultText();
     }
 
     
@@ -256,9 +256,9 @@ public class CurlingMatchCanvasController : MonoBehaviour
         {
             stoneSelectionCanvas.SetActive(false);
         }
-        if (currentPhase != CurlingMatchPhase.AimControls &&
-            currentPhase != CurlingMatchPhase.PowerMeter &&
-            currentPhase != CurlingMatchPhase.CurlingControls)
+        if (currentPhase != CurlingMatchPhase.CurlingAimControlsPhase &&
+            currentPhase != CurlingMatchPhase.CurlingPowerMeterPhase &&
+            currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
             curlingInGameCanvas.SetActive(false);
         }
