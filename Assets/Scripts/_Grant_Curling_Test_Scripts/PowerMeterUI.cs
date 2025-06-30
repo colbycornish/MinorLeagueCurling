@@ -1,6 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Governs the UI power meter used to launch a curling stone.
+/// Much like a madden kickoff, the user will select the power level, 
+/// which can then be referenced elsewhere. 
+/// </summary>
+
+
 public class PowerMeterUI : MonoBehaviour
 {
     public RectTransform cursor;
@@ -12,16 +19,6 @@ public class PowerMeterUI : MonoBehaviour
 
     private float currentPower = 0f;
     private bool powerSelected = false;
-
-    // private void Awake()
-    // {
-    //     if (Instance != null)
-    //     {
-    //         Destroy(gameObject);
-    //         return;
-    //     }
-    //     Instance = this;
-    // }
 
     private void OnEnable()
     {
@@ -39,34 +36,24 @@ public class PowerMeterUI : MonoBehaviour
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
-        if (currentPhase == CurlingMatchPhase.AimControls)
+        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             ResetMeter();
         }
-        if (currentPhase == CurlingMatchPhase.PowerMeter)
+        if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
             Activate();
         }
-        
-        
-        
     }
 
     void Update()
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-        if (currentPhase == CurlingMatchPhase.PowerMeter)
+        if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
             if (!isActive || powerSelected) return;
             MoveCursor();
         }
-        // if (currentPhase == CurlingMatchPhase.CurlingControls)
-        // {
-        //     if (!isActive || powerSelected) return;
-        //     MoveCursor();
-        // }
-
-        
     }
 
     public void MoveCursor()
@@ -114,7 +101,7 @@ public class PowerMeterUI : MonoBehaviour
         isActive = false;
     }
 
-    
+
 
     // 🔧 Added methods to match what other scripts are expecting
 

@@ -36,6 +36,7 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
         Debug.Log($"Match Score: Team A: {matchScore[0]}, Team B: {matchScore[1]}");
     }
 
+    // assigns the teams.
     public void SetTeams(CurlingTeamData team01, CurlingTeamData team02)
     {
         teams.Clear();
@@ -45,24 +46,62 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
         OnTeamDataChanged?.Invoke(teams);
     }
 
+    // Creates Demo Teams.
+    // This should be moved to a Demo script.
     public void SetDemoTeams()
     {
         CurlingTeamData teamA = new CurlingTeamData
         {
             teamName = "Team Blue",
             teamId = "team_blue",
-            thrower = new CurlingPlayer { name = "Thrower A", characterId = "char_a", isThrower = true, isSweeper = false },
-            sweeperLeft = new CurlingPlayer { name = "Sweeper Left A", characterId = "sweeper_left_a", isThrower = false, isSweeper = true },
-            sweeperRight = new CurlingPlayer { name = "Sweeper Right A", characterId = "sweeper_right_a", isThrower = false, isSweeper = true }
+            thrower = new CurlingPlayer
+            {
+                name = "Thrower A",
+                characterId = "char_a",
+                isThrower = true,
+                isSweeper = false
+            },
+            sweeperLeft = new CurlingPlayer
+            {
+                name = "Sweeper Left A",
+                characterId = "sweeper_left_a",
+                isThrower = false,
+                isSweeper = true
+            },
+            sweeperRight = new CurlingPlayer
+            {
+                name = "Sweeper Right A",
+                characterId = "sweeper_right_a",
+                isThrower = false,
+                isSweeper = true
+            }
         };
 
         CurlingTeamData teamB = new CurlingTeamData
         {
             teamName = "Team Red",
             teamId = "team_red",
-            thrower = new CurlingPlayer { name = "Thrower B", characterId = "char_b", isThrower = true, isSweeper = false },
-            sweeperLeft = new CurlingPlayer { name = "Sweeper Left B", characterId = "sweeper_left_b", isThrower = false, isSweeper = true },
-            sweeperRight = new CurlingPlayer { name = "Sweeper Right B", characterId = "sweeper_right_b", isThrower = false, isSweeper = true }
+            thrower = new CurlingPlayer
+            {
+                name = "Thrower B",
+                characterId = "char_b",
+                isThrower = true,
+                isSweeper = false
+            },
+            sweeperLeft = new CurlingPlayer
+            {
+                name = "Sweeper Left B",
+                characterId = "sweeper_left_b",
+                isThrower = false,
+                isSweeper = true
+            },
+            sweeperRight = new CurlingPlayer
+            {
+                name = "Sweeper Right B",
+                characterId = "sweeper_right_b",
+                isThrower = false,
+                isSweeper = true
+            }
         };
 
         SetTeams(teamA, teamB);

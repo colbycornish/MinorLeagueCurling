@@ -1,6 +1,10 @@
 using UnityEngine;
 using System;
 
+/// <summary>
+/// The central resource for updating and referencing the current phase of a curling match.
+/// </summary>
+
 public class CurlingMatchPhaseManager : MonoBehaviour
 {
     public static CurlingMatchPhaseManager Instance { get; private set; }

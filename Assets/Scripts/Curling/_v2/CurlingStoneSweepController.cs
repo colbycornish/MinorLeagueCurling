@@ -58,22 +58,22 @@ public class CurlingStoneSweepController : MonoBehaviour
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
-        if (currentPhase == CurlingMatchPhase.AimControls)
+        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             Reset();
         }
 
-        if (currentPhase == CurlingMatchPhase.PowerMeter)
+        if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
 
         }
 
-        if (currentPhase == CurlingMatchPhase.CurlingControls)
+        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
             // hasLaunched = true;
             // isSliding = true;
         }
-        if (currentPhase != CurlingMatchPhase.CurlingControls)
+        if (currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
             // hasLaunched = false;
             // isSliding = false;
@@ -87,7 +87,7 @@ public class CurlingStoneSweepController : MonoBehaviour
     void Update()
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-        if (currentPhase == CurlingMatchPhase.CurlingControls)
+        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
             // Track sweeping input ** NEW SWEEPER CODE **
             isSweepingLeft = Input.GetKey(leftSweeperKey); // ** NEW SWEEPER CODE **
@@ -106,7 +106,7 @@ public class CurlingStoneSweepController : MonoBehaviour
         }
 
         // Handle spin input before charging
-        if (currentPhase == CurlingMatchPhase.AimControls)
+        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             if (Input.GetKeyDown(leftCurlKey))
             {

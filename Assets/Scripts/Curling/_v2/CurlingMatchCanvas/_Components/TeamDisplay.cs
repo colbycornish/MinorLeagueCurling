@@ -20,7 +20,7 @@ public class TeamDisplay : MonoBehaviour
 
     public void Start()
     {
-        errorCheck();
+        ErrorCheck();
     }
 
     private void OnEnable()
@@ -94,7 +94,7 @@ public class TeamDisplay : MonoBehaviour
     }
 
 
-    public void errorCheck()
+    public void ErrorCheck()
     {
 
 
