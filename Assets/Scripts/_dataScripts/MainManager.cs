@@ -8,19 +8,21 @@ public class MainManager : MonoBehaviour
     // public static CanvasManager canvas;
     // public statis CameraManager camera;
     // public static GameManager game;
-    // public static UIManager ui;
+    public static UIManager ui;
     // public static CurlingMatchManager curlingMatch;
 
 
-    public enum GameState
+    public enum MainState
     {
+        Loading,
         MainMenu,
         Playing,
         Paused,
         GameOver
+        
     }
 
-    public GameState currentState = GameState.MainMenu;
+    public MainState currentState = MainState.MainMenu;
 
     // A public stat propert to allow other classes to get the reference, but not set it.
     // public static MainManager Instance
@@ -57,20 +59,20 @@ public class MainManager : MonoBehaviour
 
     public void Play()
     {
-        currentState = GameState.Playing;
+        currentState = MainState.Playing;
         Time.timeScale = 1f;
     }
 
     // Example: Pause functionality
     public void PauseGame()
     {
-        currentState = GameState.Paused;
+        currentState = MainState.Paused;
         Time.timeScale = 0f; // Freeze time
     }
 
     public void ResumeGame()
     {
-        currentState = GameState.Playing;
+        currentState = MainState.Playing;
         Time.timeScale = 1f; // Resume time
     }
 
