@@ -13,7 +13,7 @@ public class DoorwayTeleport : MonoBehaviour
     private bool playerInRange = false;
 
     public SceneDatabase sceneDatabase;
-    public GameObject promptUI;
+    // public GameObject promptUI;
 
     // void Start()
     // {
@@ -37,14 +37,17 @@ public class DoorwayTeleport : MonoBehaviour
                     txt = "exit to town";
                 }
             }
-            
 
-            NotificationManager._instance.NewNotification(txt, "X");
-            NotificationManager._instance.ExpandNotification();
-            if (promptUI != null)
+            if (NotificationManager._instance != null)
             {
-                promptUI.SetActive(true);
+                NotificationManager._instance.NewNotification(txt, "X");
+                NotificationManager._instance.ExpandNotification();
             }
+            
+            // if (promptUI != null)
+            // {
+            //     promptUI.SetActive(true);
+            // }
         }
     }
 
@@ -52,11 +55,14 @@ public class DoorwayTeleport : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            NotificationManager._instance.MinimizeNotification();
-            playerInRange = false;
-            if (promptUI != null){
-                promptUI.SetActive(false);
+            if (NotificationManager._instance != null)
+            {
+                NotificationManager._instance.MinimizeNotification();
             }
+            playerInRange = false;
+            // if (promptUI != null){
+            //     promptUI.SetActive(false);
+            // }
         }
     }
 

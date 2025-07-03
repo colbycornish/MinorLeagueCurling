@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6544911055135370261}
+  - component: {fileID: 6954931367257274021}
+  - component: {fileID: 8326065755013219681}
   m_Layer: 0
   m_Name: Easter_Display_002
   m_TagString: Untagged
@@ -38,6 +40,43 @@ Transform:
   - {fileID: 7544438710604951391}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6954931367257274021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5647412014657349976}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15.08, y: 8.15, z: 12.39}
+  m_Center: {x: 0.03, y: 0, z: -1.69}
+--- !u!114 &8326065755013219681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5647412014657349976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff568d1ce8d1f4e32b45d985b4881853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notficationText: 
+  interactKey: 120
+  itemDatabase: {fileID: 11400000, guid: d9590f5f25c0e43818932220b6cfb089, type: 2}
+  selectedItemId: statue_easter_face
 --- !u!1001 &950303519613675405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,7 +337,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8541749048852948606, guid: b5fae6b5787c4fc49a2b8c4f60192cdb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2055398705118452582}
+      addedObject: {fileID: 5071989933245595624}
   m_SourcePrefab: {fileID: 100100000, guid: b5fae6b5787c4fc49a2b8c4f60192cdb, type: 3}
 --- !u!4 &378856820231624954 stripped
 Transform:
@@ -310,8 +349,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8541749048852948606, guid: b5fae6b5787c4fc49a2b8c4f60192cdb, type: 3}
   m_PrefabInstance: {fileID: 4658354508201520869}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2055398705118452582
-MeshCollider:
+--- !u!65 &5071989933245595624
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -328,10 +367,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7139939948469044710, guid: f4889bdb29e6aa64ba28248f2ad58df0, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.79999995, z: 2.0000007}
+  m_Center: {x: 0, y: 0.39999998, z: 0.00000035762787}
 --- !u!1001 &5003893656827801064
 PrefabInstance:
   m_ObjectHideFlags: 0

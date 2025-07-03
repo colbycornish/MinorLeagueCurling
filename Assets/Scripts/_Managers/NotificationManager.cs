@@ -15,10 +15,10 @@ public class NotificationManager : MonoBehaviour
     // Resources
     [SerializeField] private GameObject notificationArea;
     [SerializeField] private GameObject notificationItem;
+    [SerializeField] private NotificationItem notificationItemController;
     [SerializeField] private Animator itemAnimator;
     [SerializeField] private Image itemIcon;
-    [SerializeField] private TextMeshProUGUI itemControlText;
-    [SerializeField] private TextMeshProUGUI itemText;
+    public bool isNotificationActive = false;
 
     // Settings
     [Range(0, 10)] public float minimizeAfter = 3;
@@ -49,8 +49,9 @@ public class NotificationManager : MonoBehaviour
         string controlKey
     )
     {
-        itemText.GetComponent<TMPro.TextMeshProUGUI>().text = text;
-        itemControlText.GetComponent<TMPro.TextMeshProUGUI>().text = controlKey;
+        notificationItemController = notificationItem.GetComponent<NotificationItem>();
+        notificationItemController.UpdateText(text, controlKey);
+        isNotificationActive = true;
         notificationItem.SetActive(true);
     }
 
@@ -71,7 +72,8 @@ public class NotificationManager : MonoBehaviour
 
     public void MinimizeNotification()
     {
-       notificationItem.SetActive(false);
+        isNotificationActive = false;
+        notificationItem.SetActive(false);
     }
 
     public void DestroyNotification()
