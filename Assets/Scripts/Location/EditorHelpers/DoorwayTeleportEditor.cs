@@ -9,9 +9,10 @@ public class DoorwayTeleportEditor : Editor
     {
         DoorwayTeleport teleport = (DoorwayTeleport)target;
 
-        teleport.promptUI = (GameObject)EditorGUILayout.ObjectField("Prompt UI", teleport.promptUI, typeof(GameObject), true);
+        // teleport.promptUI = (GameObject)EditorGUILayout.ObjectField("Prompt UI", teleport.promptUI, typeof(GameObject), true);
         teleport.sceneDatabase = (SceneDatabase)EditorGUILayout.ObjectField("Scene Database", teleport.sceneDatabase, typeof(SceneDatabase), false);
         teleport.spawnDatabase = (SpawnPointDatabase)EditorGUILayout.ObjectField("Spawn Database", teleport.spawnDatabase, typeof(SpawnPointDatabase), false);
+
 
         // Scene selection dropdown
         if (teleport.sceneDatabase != null && teleport.sceneDatabase.sceneNames.Count > 0)
@@ -44,6 +45,8 @@ public class DoorwayTeleportEditor : Editor
             else if (teleport.spawnDatabase.spawnPointIDs.Count == 0)
                 EditorGUILayout.HelpBox("No spawn IDs found in the database. Add some spawn IDs.", MessageType.Warning);
         }
+
+        teleport.notficationText = EditorGUILayout.TextField("Notification Text", teleport.notficationText);
 
         if (GUI.changed)
         {
