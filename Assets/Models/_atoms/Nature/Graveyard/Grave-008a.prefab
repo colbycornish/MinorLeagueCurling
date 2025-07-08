@@ -77,6 +77,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8090921924025241926}
+  - component: {fileID: 2334048127528192681}
+  - component: {fileID: 351797071084346504}
   m_Layer: 0
   m_Name: Grave-008a
   m_TagString: Untagged
@@ -105,6 +107,43 @@ Transform:
   - {fileID: 8150423582399727992}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2334048127528192681
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579235034933876025}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.84, y: 1, z: 9.3}
+  m_Center: {x: -3.93, y: 0, z: -1.15}
+--- !u!114 &351797071084346504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579235034933876025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff568d1ce8d1f4e32b45d985b4881853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notficationText: 
+  interactKey: 120
+  itemDatabase: {fileID: 11400000, guid: 99857943bbec74335b77f2a2bf03487c, type: 2}
+  selectedItemId: gravestone_002_stone_cold_stan
 --- !u!1 &3136708767132421205
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +624,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b3ac22daf7df344fdb39427e3287f720, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 476e73228fcd94ced9bf1c371cf7193b, type: 2}
+      objectReference: {fileID: 2100000, guid: 2cd5603ef5db04b7c835ecae14ab9110, type: 2}
     - target: {fileID: 919132149155446097, guid: b3ac22daf7df344fdb39427e3287f720, type: 3}
       propertyPath: m_Name
       value: gravestone-wide

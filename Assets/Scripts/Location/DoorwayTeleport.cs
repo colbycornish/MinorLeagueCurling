@@ -7,12 +7,13 @@ public class DoorwayTeleport : MonoBehaviour
 {
     public string targetScene;
     public string targetSpawnID;
+    public string notficationText;
     public SpawnPointDatabase spawnDatabase;
-    public KeyCode interactKey = KeyCode.E;
+    public KeyCode interactKey = KeyCode.X;
     private bool playerInRange = false;
 
     public SceneDatabase sceneDatabase;
-    public GameObject promptUI;
+    // public GameObject promptUI;
 
     // void Start()
     // {
@@ -22,12 +23,31 @@ public class DoorwayTeleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            if (promptUI != null){
-                promptUI.SetActive(true);
+
+            string txt = notficationText;
+            if (txt == null || txt == "")
+            {
+                txt = "enter " + targetScene;
+                if (targetScene.Contains("Town"))
+                {
+                    txt = "exit to town";
+                }
             }
+
+            if (NotificationManager._instance != null)
+            {
+                NotificationManager._instance.NewNotification(txt, "X");
+                NotificationManager._instance.ExpandNotification();
+            }
+            
+            // if (promptUI != null)
+            // {
+            //     promptUI.SetActive(true);
+            // }
         }
     }
 
@@ -35,10 +55,14 @@ public class DoorwayTeleport : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
-            if (promptUI != null){
-                promptUI.SetActive(false);
+            if (NotificationManager._instance != null)
+            {
+                NotificationManager._instance.MinimizeNotification();
             }
+            playerInRange = false;
+            // if (promptUI != null){
+            //     promptUI.SetActive(false);
+            // }
         }
     }
 

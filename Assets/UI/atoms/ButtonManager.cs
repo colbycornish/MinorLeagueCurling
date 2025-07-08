@@ -44,6 +44,8 @@ public class ButtonManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public bool enableIcon = false;
     public bool enableText = true;
     public bool checkForDoubleClick = true;
+
+    /// 
     public bool useUINavigation = false;
     public Navigation.Mode navigationMode = Navigation.Mode.Automatic;
     public GameObject selectOnUp;
