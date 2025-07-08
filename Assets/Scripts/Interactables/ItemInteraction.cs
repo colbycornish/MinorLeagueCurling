@@ -18,6 +18,7 @@ public class ItemInteraction : MonoBehaviour
     {
         if (playerInRange)
         {
+            
             bool isDialogueActive = DialogueManager._instance.isDialogueActive;
             bool isNotificationActive = NotificationManager._instance.isNotificationActive;
 
@@ -26,7 +27,7 @@ public class ItemInteraction : MonoBehaviour
                 CloseDialogue();
                 OpenNotification();
             }
-            else if (Input.GetKeyDown(interactKey))
+            if (Input.GetKeyDown(interactKey))
             {
                 if (isDialogueActive == true)
                 {
@@ -38,6 +39,7 @@ public class ItemInteraction : MonoBehaviour
                 {
                     Debug.LogWarning("💻 Update Open Dialogue");
                     OpenDialogue();
+                    CloseNotification();
                 }
             }
         }
@@ -91,7 +93,7 @@ public class ItemInteraction : MonoBehaviour
     {
         Debug.LogWarning("💻 Close Notification");
         NotificationManager._instance.MinimizeNotification();
-        DialogueManager._instance.MinimizeDialogue();
+        // DialogueManager._instance.MinimizeDialogue();
     }
     
     /// Dialogue Controls

@@ -95,6 +95,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3733522209652696605}
+  - component: {fileID: 6363370674958145691}
+  - component: {fileID: 9154195071005254446}
   m_Layer: 0
   m_Name: Grave-005a
   m_TagString: Untagged
@@ -122,6 +124,43 @@ Transform:
   - {fileID: 4030012138029682910}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6363370674958145691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9142537992485004905}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.29, y: 1, z: 9.72}
+  m_Center: {x: -2.31, y: 0, z: -1.18}
+--- !u!114 &9154195071005254446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9142537992485004905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff568d1ce8d1f4e32b45d985b4881853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notficationText: 
+  interactKey: 120
+  itemDatabase: {fileID: 11400000, guid: 99857943bbec74335b77f2a2bf03487c, type: 2}
+  selectedItemId: gravestone_003_thru_derrock
 --- !u!1001 &881313898201960262
 PrefabInstance:
   m_ObjectHideFlags: 0
