@@ -12,7 +12,7 @@ namespace AkiDevCat.MicroAVL.Editor
     {
         private enum BlendMode { Additive, Premultiply }
         
-        private const string AssetStoreURL = "https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/analytical-volumetric-lighting-urp-performant-raytraced-volumetr-266586";
+        // private const string AssetStoreURL = "https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/analytical-volumetric-lighting-urp-performant-raytraced-volumetr-266586";
         
         private MaterialProperty _colorProperty;
         private MaterialProperty _intensityProperty;
@@ -126,23 +126,23 @@ namespace AkiDevCat.MicroAVL.Editor
             
             EditorGUILayout.Space(5.0f);
             
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (EditorGUILayout.LinkButton("Check out our full Analytical Volumetric"))
-            {
-                Application.OpenURL(AssetStoreURL);
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
+            // EditorGUILayout.BeginHorizontal();
+            // GUILayout.FlexibleSpace();
+            // if (EditorGUILayout.LinkButton("Check out our full Analytical Volumetric"))
+            // {
+            //     Application.OpenURL(AssetStoreURL);
+            // }
+            // GUILayout.FlexibleSpace();
+            // EditorGUILayout.EndHorizontal();
             
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (EditorGUILayout.LinkButton("Lighting package on the Asset Store"))
-            {
-                Application.OpenURL(AssetStoreURL);
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
+            // EditorGUILayout.BeginHorizontal();
+            // GUILayout.FlexibleSpace();
+            // if (EditorGUILayout.LinkButton("Lighting package on the Asset Store"))
+            // {
+            //     Application.OpenURL(AssetStoreURL);
+            // }
+            // GUILayout.FlexibleSpace();
+            // EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.Space(5.0f);
         }

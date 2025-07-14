@@ -53,9 +53,9 @@ namespace AkiDevCat.MicroAVL.Editor
 
     public class WelcomeWindow : EditorWindow
     {
-        private const string AssetStoreURL = "https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/analytical-volumetric-lighting-urp-performant-raytraced-volumetr-266586";
+        // private const string AssetStoreURL = "https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/analytical-volumetric-lighting-urp-performant-raytraced-volumetr-266586";
         
-        private static Texture _icon = null;
+        // private static Texture _icon = null;
         
         [MenuItem("Help/About MicroAVL", priority=-1)]
         public static void ShowWindow()
@@ -67,41 +67,41 @@ namespace AkiDevCat.MicroAVL.Editor
 
         private void OnGUI()
         {
-            if (_icon == null)
-            {
-                _icon = AssetDatabase.LoadAssetAtPath<Texture>("Assets/AkiDevCat/MicroAVL/Resources/MicroAVL/AVLogo.png");
-            }
+            // if (_icon == null)
+            // {
+            //     _icon = AssetDatabase.LoadAssetAtPath<Texture>("Assets/AkiDevCat/MicroAVL/Resources/MicroAVL/AVLogo.png");
+            // }
             
-            Rect rect;
+            // Rect rect;
             
             EditorGUILayout.Space(15.0f);
             EditorGUILayout.LabelField("  MicroAVL", new GUIStyle("AM MixerHeader"));
             EditorGUILayout.Space(30.0f);
             EditorGUILayout.LabelField("Thank you for using MicroAVL!", new GUIStyle("WhiteLargeCenterLabel"));
 
-            if (_icon)
-            {
-                rect = EditorGUILayout.GetControlRect(false, 100);
-                GUI.DrawTexture(rect, _icon, ScaleMode.ScaleToFit);
-            }
+            // if (_icon)
+            // {
+            //     rect = EditorGUILayout.GetControlRect(false, 100);
+            //     GUI.DrawTexture(rect, _icon, ScaleMode.ScaleToFit);
+            // }
 
             // EditorGUILayout.Space(5.0f);
             
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (EditorGUILayout.LinkButton("Check out our full Analytical Volumetric"))
-            {
-                Application.OpenURL(AssetStoreURL);
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
+            // EditorGUILayout.BeginHorizontal();
+            // GUILayout.FlexibleSpace();
+            // if (EditorGUILayout.LinkButton("Check out our full Analytical Volumetric"))
+            // {
+            //     Application.OpenURL(AssetStoreURL);
+            // }
+            // GUILayout.FlexibleSpace();
+            // EditorGUILayout.EndHorizontal();
             
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (EditorGUILayout.LinkButton("Lighting package on the Asset Store"))
-            {
-                Application.OpenURL(AssetStoreURL);
-            }
+            // EditorGUILayout.BeginHorizontal();
+            // GUILayout.FlexibleSpace();
+            // if (EditorGUILayout.LinkButton("Lighting package on the Asset Store"))
+            // {
+            //     Application.OpenURL(AssetStoreURL);
+            // }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
 
@@ -129,10 +129,10 @@ namespace AkiDevCat.MicroAVL.Editor
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.Space();
-            if (GUILayout.Button("Open Example Scene", new GUIStyle("LargeButton")))
-            {
-                EditorSceneManager.OpenScene("Assets/AkiDevCat/MicroAVL/Examples/MicroAVL Example.unity");
-            }
+            // if (GUILayout.Button("Open Example Scene", new GUIStyle("LargeButton")))
+            // {
+            //     EditorSceneManager.OpenScene("Assets/AkiDevCat/MicroAVL/Examples/MicroAVL Example.unity");
+            // }
             if (GUILayout.Button("Close", new GUIStyle("LargeButton")))
             {
                 Close();
