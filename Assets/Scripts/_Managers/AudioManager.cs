@@ -10,8 +10,30 @@ using System.Collections;
 // namespace XXX {
 //  public class People_AudioManager : Common_AudioManager { }
 // }
+
+
+
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager _instance;
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        // end of new code
+
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void PlaySound()
+    {
+        
+    }
 
 }
 

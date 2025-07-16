@@ -11,7 +11,7 @@ public class PlayerSpawnHelper : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            player.transform.position = GameManager.Instance.playerSpawnPosition;
+            player.transform.position = GameManager._instance.playerSpawnPosition;
         }
     }
 }

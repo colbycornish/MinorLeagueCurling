@@ -1,27 +1,21 @@
 using UnityEngine;
+using System;
+
+public enum MainState
+{
+    Loading,
+    MainMenu,
+    Playing,
+    Paused,
+    Saving,
+    GameOver,
+    Quiting
+}
 
 public class MainManager : MonoBehaviour
 {
-    // a static private variable to hold the reference to this Manager instance
     public static MainManager _instance;
-    // public static AudioManager audio;
-    // public static CanvasManager canvas;
-    // public statis CameraManager camera;
-    // public static GameManager game;
-    public static UIManager ui;
-    // public static CurlingMatchManager curlingMatch;
-
-
-    public enum MainState
-    {
-        Loading,
-        MainMenu,
-        Playing,
-        Paused,
-        GameOver
-        
-    }
-
+    public event Action<MainState> OnStateChanged;
     public MainState currentState = MainState.MainMenu;
 
     // A public stat propert to allow other classes to get the reference, but not set it.
@@ -57,28 +51,44 @@ public class MainManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // Sets the state for thie Main Manager.
+    // This should be used for high level states only (like paused, main menu, loading, )
+    public void SetState(MainState newState)
+    {
+        Debug.Log($"[MatchPhase] {currentState} → {newState}");
+        if (currentState == newState) return;
+
+        currentState = newState;
+        Debug.Log($"[MatchPhase] {currentState} → {newState}");
+        OnStateChanged?.Invoke(newState);
+    }
+
     public void Play()
     {
-        currentState = MainState.Playing;
+        // currentState = MainState.Playing;
+        SetState(MainState.Playing);
         Time.timeScale = 1f;
     }
 
     // Example: Pause functionality
     public void PauseGame()
     {
-        currentState = MainState.Paused;
+        // currentState = MainState.Paused;
+        SetState(MainState.Paused);
         Time.timeScale = 0f; // Freeze time
     }
 
     public void ResumeGame()
     {
-        currentState = MainState.Playing;
+        // currentState = MainState.Playing;
+        SetState(MainState.Playing);
         Time.timeScale = 1f; // Resume time
     }
 
     // Example: Quit functionality
     public void QuitGame()
     {
+        SetState(MainState.Quiting);
         Application.Quit();
     }
 }

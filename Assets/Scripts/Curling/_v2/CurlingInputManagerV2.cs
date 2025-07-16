@@ -22,6 +22,8 @@ public class CurlingInputManagerV2 : MonoBehaviour
 
         switch (currentPhase)
         {
+            case CurlingMatchPhase.Loading:
+                break;
             case CurlingMatchPhase.RoundSplash:
                 HandleRoundSplashInput();
                 break;

@@ -20,7 +20,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public int currentEnd = 1;
     public int maxEnds = 8;
     public int turnCount = 0;
-    
+
     private void Awake()
     {
         if (Instance != null)
@@ -31,17 +31,33 @@ public class CurlingGameManagerV2 : MonoBehaviour
         Instance = this;
     }
 
-    public void InitSetup()
+    public void InitSetupFromDemo(
+        CurlingCourseData courseData,
+        CurlingTeam teamHome,
+        CurlingTeam teamAway
+    )
     {
-        Debug.Log("Initializing Curling Game Setup");
-        playerManager.SetDemoTeams();
-        StartCurlingGame();
+        playerManager.Setup(
+            courseData,
+            teamHome,
+            teamAway
+        );
 
+        endManager.SetTargetZone(courseData.targetZone);
+
+        stoneManager.Setup(
+            courseData,
+            teamHome,
+            teamAway
+        );
+
+        StartCurlingGame();
     }
 
     // Starts the curling game.
     private void StartCurlingGame()
     {
+        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.Loading);
         Debug.Log($"Starting End {currentEnd}");
         turnCount = 0;
         // Resets the current game layout, and removes the existing stones
@@ -98,7 +114,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public void EndCurrentCurlingGame()
     {
         endManager.CalculateScore();
-        playerManager.UpdateScore(endManager.GetScore());
+        // playerManager.UpdateScore(endManager.GetScore());
 
         if (currentEnd < maxEnds)
         {
@@ -111,3 +127,13 @@ public class CurlingGameManagerV2 : MonoBehaviour
         }
     }
 }
+
+
+
+// public void InitSetup()
+//     {
+//         Debug.Log("Initializing Curling Game Setup");
+        
+//         StartCurlingGame();
+//         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
+//     }
