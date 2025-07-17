@@ -48,7 +48,7 @@ public class TeamDisplay : MonoBehaviour
             return;
         }
 
-        CurlingTeamData teamData = CurlingGameManagerV2.Instance.playerManager.teams[teamIndex];
+        CurlingTeam teamData = CurlingGameManagerV2.Instance.playerManager.teams[teamIndex];
         string teamName = teamData.teamName;
         if (teamName != null)
         {
@@ -59,10 +59,10 @@ public class TeamDisplay : MonoBehaviour
     public void UpdateStoneDisplay()
     {
         // get the stones that are used by each team
-        List<CurlingStone> stones = CurlingGameManagerV2.Instance.stoneManager.stonesTeamA;
+        List<CurlingStone> stones = CurlingGameManagerV2.Instance.stoneManager.stonesTeamHome;
         if (controlsTeamTwo)
         {
-            stones = CurlingGameManagerV2.Instance.stoneManager.stonesTeamB;
+            stones = CurlingGameManagerV2.Instance.stoneManager.stonesTeamAway;
         }
 
         

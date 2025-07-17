@@ -9,32 +9,6 @@ public class CorkboardInteraction : MonoBehaviour
     public KeyCode interactKey = KeyCode.X;
     private bool playerInRange = false;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-
-            string txt = notficationText;
-            if (txt == null || txt == "")
-            {
-                txt = "view bulletin board ";
-            }
-            
-            NotificationManager._instance.NewNotification(txt, "X");
-            NotificationManager._instance.ExpandNotification();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            NotificationManager._instance.MinimizeNotification();
-            playerInRange = false;
-        }
-    }
 
     private void Update()
     {
@@ -45,4 +19,42 @@ public class CorkboardInteraction : MonoBehaviour
             // Assuming you have a method to toggle the corkboard menu
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+            OpenNotification();
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CloseNotification();
+        }
+    }
+
+    private void OpenNotification()
+    {
+        string txt = notficationText;
+        if (txt == null || txt == "")
+        {
+            txt = "view bulletin board ";
+        }
+
+        NotificationManager._instance.NewNotification(txt, "X");
+        NotificationManager._instance.ExpandNotification();
+    }
+    private void CloseNotification()
+    {
+        NotificationManager._instance.MinimizeNotification();
+        playerInRange = false;
+    }
+
+    
 }

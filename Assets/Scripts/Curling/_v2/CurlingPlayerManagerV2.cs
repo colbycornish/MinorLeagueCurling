@@ -2,22 +2,124 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+
+
 public class CurlingPlayerManagerV2 : MonoBehaviour
 {
-    public int totalStonesPerEnd = 10;
-    public List<CurlingTeamData> teams = new List<CurlingTeamData>();
-    public event Action<List<CurlingTeamData>> OnTeamDataChanged;
+    // public int totalStonesPerEnd = 10;
+    // public List<CurlingTeamData> teams = new List<CurlingTeamData>();
+    public List<CurlingTeam> teams = new List<CurlingTeam>();
+    public event Action<List<CurlingTeam>> OnTeamDataChanged;
+    public CurlingTeam currentTeam;
+
     private int currentStoneIndex = 0;
     private int currentTeamIndex = 0;
-    private int[] matchScore = new int[2];
 
+    public Transform throwerStartLocation;
+    public Transform sweeperLStartLocation;
+    public Transform sweeperRStartLocation;
+    public List<Transform> idleLocationsTeamHome;
+    public List<Transform> idleLocationsTeamAway;
+    private GameObject teamHomeThrower;
+    private GameObject teamHomeSweeperL;
+    private GameObject teamHomeSweeperR;
+    private GameObject teamAwayThrower;
+    private GameObject teamAwaySweeperL;
+    private GameObject teamAwaySweeperR;
+
+    /// <summary>
+    /// Ingesting and setting up all the initial data
+    /// </summary>
+    public void Setup(
+        CurlingCourseData curlingCourse,
+        CurlingTeam teamHome,
+        CurlingTeam teamAway
+    )
+    {
+        SetLocations(curlingCourse);
+        SetPlayers(teamHome, teamAway, curlingCourse);
+        SetTeams(teamHome, teamAway);
+    }
+
+    // assigns the teams.
+    public void SetTeams(CurlingTeam teamHome, CurlingTeam teamAway)
+    {
+        teams.Clear();
+        teams.Add(teamHome);
+        teams.Add(teamAway);
+        Debug.Log($"Teams set: {teamHome.teamName} vs {teamAway.teamName}");
+        OnTeamDataChanged?.Invoke(teams);
+    }
+
+    public void SetLocations(CurlingCourseData curlingCourse)
+    {
+        idleLocationsTeamHome = curlingCourse.idleLocationsTeamHome;
+        idleLocationsTeamAway = curlingCourse.idleLocationsTeamAway;
+        throwerStartLocation = curlingCourse.throwerStartLocation;
+        sweeperLStartLocation = curlingCourse.sweeperLStartLocation;
+        sweeperRStartLocation = curlingCourse.sweeperRStartLocation;
+    }
+
+
+    // TODO: Establish the Curling Player Data structure first.
+    // We cannot just bring in one of the NPC as a base (since their nav agent and 
+    // action controls conflict with the basis here)
+    public void SetPlayers(CurlingTeam teamHome, CurlingTeam teamAway, CurlingCourseData curlingCourse)
+    {
+        teamHomeThrower = Instantiate(teamHome.thrower, idleLocationsTeamHome[0].position, Quaternion.identity);
+        teamHome.thrower = teamHomeThrower;
+
+        teamHomeSweeperL = Instantiate(teamHome.sweeperLeft,idleLocationsTeamHome[1].position,Quaternion.identity);
+        teamHome.sweeperLeft = teamHomeSweeperL;
+
+        teamHomeSweeperR = Instantiate(teamHome.sweeperRight,idleLocationsTeamHome[2].position,Quaternion.identity);
+        teamHome.sweeperRight = teamHomeSweeperR;
+        /// away team
+        teamAwayThrower = Instantiate(teamAway.thrower,idleLocationsTeamAway[0].position,Quaternion.identity);
+        teamAway.thrower = teamAwayThrower;
+
+        teamAwaySweeperL = Instantiate(teamAway.sweeperLeft,idleLocationsTeamAway[1].position,Quaternion.identity);
+        teamAway.sweeperLeft = teamAwaySweeperL;
+
+        teamAwaySweeperR = Instantiate(teamAway.sweeperRight,idleLocationsTeamAway[2].position,Quaternion.identity);
+        teamAway.sweeperRight = teamAwaySweeperR;
+    }
+
+    // Ready?
+    public bool IsReady()
+    {
+        return teams.Count == 2;
+    }
+
+    /// <summary>
+    /// Resetting all data
+    /// </summary>
+
+    // Reset
+    public void Reset()
+    {
+        teams.Clear();
+        idleLocationsTeamHome.Clear();
+        idleLocationsTeamAway.Clear();
+        throwerStartLocation = null;
+        sweeperLStartLocation = null;
+        sweeperRStartLocation = null;
+        currentStoneIndex = 0;
+        currentTeamIndex = 0;
+    }
+
+
+
+
+    /// <summary>
+    /// Changing Turns
+    /// </summary>
     public void PreparePlayers()
     {
         currentStoneIndex = 0;
         currentTeamIndex = 0;
     }
-
-    // public bool AllStonesThrown() => currentStoneIndex >= totalStonesPerEnd;
 
     public void NextPlayer()
     {
@@ -26,84 +128,29 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
     }
 
     public int GetCurrentTeamIndex() => currentTeamIndex;
-    public CurlingTeamData GetCurrentTeam() => teams[currentTeamIndex];
+    public CurlingTeam GetCurrentTeam() => teams[currentTeamIndex];
 
 
-    public void UpdateScore(int[] endScore)
+    /// <summary>
+    /// Updating character positions 
+    /// - Moving players into  playing locations or to the bench
+    /// - Activing the movement controls for active players
+    /// - Deactivating movement controls for non-active players
+    /// </summary>
+
+
+    public void RepositionCharacters()
     {
-        matchScore[0] += endScore[0];
-        matchScore[1] += endScore[1];
-        Debug.Log($"Match Score: Team A: {matchScore[0]}, Team B: {matchScore[1]}");
-    }
-
-    // assigns the teams.
-    public void SetTeams(CurlingTeamData team01, CurlingTeamData team02)
-    {
-        teams.Clear();
-        teams.Add(team01);
-        teams.Add(team02);
-        Debug.Log($"Teams set: {team01.teamName} vs {team02.teamName}");
-        OnTeamDataChanged?.Invoke(teams);
-    }
-
-    // Creates Demo Teams.
-    // This should be moved to a Demo script.
-    public void SetDemoTeams()
-    {
-        CurlingTeamData teamA = new CurlingTeamData
-        {
-            teamName = "Team Blue",
-            teamId = "team_blue",
-            thrower = new CurlingPlayer
-            {
-                name = "Thrower A",
-                characterId = "char_a",
-                isThrower = true,
-                isSweeper = false
-            },
-            sweeperLeft = new CurlingPlayer
-            {
-                name = "Sweeper Left A",
-                characterId = "sweeper_left_a",
-                isThrower = false,
-                isSweeper = true
-            },
-            sweeperRight = new CurlingPlayer
-            {
-                name = "Sweeper Right A",
-                characterId = "sweeper_right_a",
-                isThrower = false,
-                isSweeper = true
-            }
-        };
-
-        CurlingTeamData teamB = new CurlingTeamData
-        {
-            teamName = "Team Red",
-            teamId = "team_red",
-            thrower = new CurlingPlayer
-            {
-                name = "Thrower B",
-                characterId = "char_b",
-                isThrower = true,
-                isSweeper = false
-            },
-            sweeperLeft = new CurlingPlayer
-            {
-                name = "Sweeper Left B",
-                characterId = "sweeper_left_b",
-                isThrower = false,
-                isSweeper = true
-            },
-            sweeperRight = new CurlingPlayer
-            {
-                name = "Sweeper Right B",
-                characterId = "sweeper_right_b",
-                isThrower = false,
-                isSweeper = true
-            }
-        };
-
-        SetTeams(teamA, teamB);
+        /// if turn == Home
+        /// - Move Away players to bench
+        /// - deactivate Away players
+        /// - Move Home players into position
+        /// - activate Home players
+        /// 
+        /// if turn == Away
+        /// - Move Home players to bench
+        /// - deactivate Home players
+        /// - Move Away players into position
+        /// - activate Away players
     }
 }

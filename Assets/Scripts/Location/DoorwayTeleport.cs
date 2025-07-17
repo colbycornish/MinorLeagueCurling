@@ -70,7 +70,7 @@ public class DoorwayTeleport : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(interactKey))
         {
-            GameManager.Instance.TeleportToScene(targetScene, targetSpawnID);
+            GameManager._instance.TeleportToScene(targetScene, targetSpawnID);
         }
     }
 }

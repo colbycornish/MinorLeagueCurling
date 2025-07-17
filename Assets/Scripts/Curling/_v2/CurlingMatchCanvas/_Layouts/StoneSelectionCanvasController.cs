@@ -48,10 +48,10 @@ public class StoneSelectionCanvasController : MonoBehaviour
             Debug.LogError("[TeamDisplay] Not enough teams available. Cannot update team names.");
             return;
         }
-        CurlingTeamData currentTeamData = CurlingGameManagerV2.Instance.playerManager.GetCurrentTeam();
+        CurlingTeam currentTeam = CurlingGameManagerV2.Instance.playerManager.GetCurrentTeam();
         // CurlingTeamData currentTeamData = CurlingGameManagerV2.Instance.playerManager.teams[currentTeamIndex];
 
-        string currentTeamName = currentTeamData.teamName;
+        string currentTeamName = currentTeam.teamName;
 
         if (currentTeamName != null)
         {

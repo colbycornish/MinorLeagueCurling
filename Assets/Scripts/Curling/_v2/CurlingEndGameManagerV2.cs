@@ -18,6 +18,13 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
     private List<GameObject> stonesThisEnd = new List<GameObject>();
     private int[] endScore = new int[2];
 
+    public void SetTargetZone(
+        GameObject zone
+    )
+    {
+        targetZone = zone;
+    }
+
     public void ResetCurlingGame()
     {
         stonesThisEnd.Clear();
@@ -30,9 +37,6 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
 
     public void CalculateScore()
     {
-
-        
-
         stonesThisEnd.Sort((a, b) =>
             Vector3.Distance(Vector3.zero, a.transform.position)
             .CompareTo(Vector3.Distance(Vector3.zero, b.transform.position)));
@@ -41,7 +45,7 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
         if (stonesThisEnd.Count > 0)
         {
             CurlingStone stone = stonesThisEnd[0].GetComponent<CurlingStone>();
-            endScore[stone.teamId]++;
+            endScore[stone.teamId_i]++;
         }
 
         Debug.Log($"Scoring End: Team A: {endScore[0]}, Team B: {endScore[1]}");

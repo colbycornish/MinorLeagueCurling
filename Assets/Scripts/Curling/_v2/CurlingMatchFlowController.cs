@@ -37,9 +37,8 @@ public class CurlingMatchFlowController : MonoBehaviour
 
     private void Start()
     {
-        CurlingGameManagerV2.Instance.InitSetup();
         // Kick off the match
-        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
+        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.Loading);
     }
 
     private void HandlePhase(CurlingMatchPhase phase)

@@ -9,25 +9,16 @@ public class NotificationManager : MonoBehaviour
 {
     // Content
     public static NotificationManager _instance;
-    public Sprite icon;
-    [TextArea] public string notificationText = "Quest text here";
 
     // Resources
     [SerializeField] private GameObject notificationArea;
     [SerializeField] private GameObject notificationItem;
-    [SerializeField] private NotificationItem notificationItemController;
-    [SerializeField] private Animator itemAnimator;
-    [SerializeField] private Image itemIcon;
+    private NotificationItem notificationItemController;
     public bool isNotificationActive = false;
-
-    // Settings
-    [Range(0, 10)] public float minimizeAfter = 3;
+    // public bool isReady = false;
 
     // Events
     public UnityEvent onDestroy;
-
-    // Helpers
-    bool isOn;
 
     public enum DefaultState { Minimized, Expanded }
     public enum AfterMinimize { Disable, Destroy }
@@ -41,6 +32,7 @@ public class NotificationManager : MonoBehaviour
             return;
         }
         _instance = this;
+        MinimizeNotification();
         // DontDestroyOnLoad(gameObject);
     }
     
@@ -51,8 +43,7 @@ public class NotificationManager : MonoBehaviour
     {
         notificationItemController = notificationItem.GetComponent<NotificationItem>();
         notificationItemController.UpdateText(text, controlKey);
-        isNotificationActive = true;
-        notificationItem.SetActive(true);
+        ExpandNotification();
     }
 
     public void UpdateUI()
@@ -67,7 +58,8 @@ public class NotificationManager : MonoBehaviour
 
     public void ExpandNotification()
     {
-        
+        isNotificationActive = true;
+        notificationItem.SetActive(true);
     }
 
     public void MinimizeNotification()
@@ -80,19 +72,4 @@ public class NotificationManager : MonoBehaviour
     {
         
     }
-
-    // IEnumerator DisableAnimator()
-    // {
-        
-    // }
-
-    // IEnumerator DisableItem()
-    // {
-        
-    // }
-
-    // IEnumerator MinimizeItem()
-    // {
-        
-    // }
 }
