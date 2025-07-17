@@ -16,6 +16,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public CurlingStoneManagerV2 stoneManager;
     public CurlingGameData gameData;
     public Camera stoneCamera;
+    CurlingCourseData courseData_tmp; // temporary for storage
+    CurlingTeam teamHome_tmp; // temporary for storage
+    CurlingTeam teamAway_tmp; // temporary for storage
 
     public int currentEnd = 1;
     public int maxEnds = 8;
@@ -37,6 +40,10 @@ public class CurlingGameManagerV2 : MonoBehaviour
         CurlingTeam teamAway
     )
     {
+        courseData_tmp = courseData;
+        teamHome_tmp = teamHome;
+        teamAway_tmp = teamAway;
+
         playerManager.Setup(
             courseData,
             teamHome,

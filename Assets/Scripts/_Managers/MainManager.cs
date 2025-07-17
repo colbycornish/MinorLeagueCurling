@@ -8,7 +8,7 @@ public enum MainState
     Playing,
     Paused,
     Saving,
-    GameOver,
+    // GameOver,
     Quiting
 }
 
@@ -55,11 +55,10 @@ public class MainManager : MonoBehaviour
     // This should be used for high level states only (like paused, main menu, loading, )
     public void SetState(MainState newState)
     {
-        Debug.Log($"[MatchPhase] {currentState} → {newState}");
+        Debug.Log($"[MainState] {currentState} → {newState}");
         if (currentState == newState) return;
-
         currentState = newState;
-        Debug.Log($"[MatchPhase] {currentState} → {newState}");
+        Debug.Log($"[MainState] {currentState} → {newState}");
         OnStateChanged?.Invoke(newState);
     }
 

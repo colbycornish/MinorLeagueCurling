@@ -167,30 +167,30 @@ public class CurlingMatchCanvasController : MonoBehaviour
             curlingInGameCanvasController.DisableExhaustionBars();
             curlingInGameCanvasController.DisablePowerMeter();
             curlingInGameCanvasController.EnableAimDisplay();
-            curlingInGameCanvasController.SetResultText(
-                "Aiming",
-                "Select the direction to throw the stone"
-            );
+            // curlingInGameCanvasController.SetResultText(
+            //     "Aiming",
+            //     "Select the direction to throw the stone"
+            // );
         }
         else if (phase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
             curlingInGameCanvasController.DisableAimDisplay();
             curlingInGameCanvasController.EnablePowerMeter();
             curlingInGameCanvasController.EnableExhaustionBars();
-            curlingInGameCanvasController.SetResultText(
-                "Power",
-                "Select the power to throw the stone"
-            );
+            // curlingInGameCanvasController.SetResultText(
+            //     "Power",
+            //     "Select the power to throw the stone"
+            // );
         }
         else if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
             curlingInGameCanvasController.DisableAimDisplay();
             curlingInGameCanvasController.DisablePowerMeter();
             curlingInGameCanvasController.EnableExhaustionBars();
-            curlingInGameCanvasController.SetResultText(
-                "Sweeping",
-                "Sweep to influence the stone's path"
-            );
+            // curlingInGameCanvasController.SetResultText(
+            //     "Sweeping",
+            //     "Sweep to influence the stone's path"
+            // );
         }
         else
         {

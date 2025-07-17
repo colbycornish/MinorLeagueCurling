@@ -67,46 +67,22 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
     // action controls conflict with the basis here)
     public void SetPlayers(CurlingTeam teamHome, CurlingTeam teamAway, CurlingCourseData curlingCourse)
     {
-        teamHomeThrower = Instantiate(
-            teamHome.thrower,
-            idleLocationsTeamHome[0].position,
-            Quaternion.identity
-        );
+        teamHomeThrower = Instantiate(teamHome.thrower, idleLocationsTeamHome[0].position, Quaternion.identity);
         teamHome.thrower = teamHomeThrower;
 
-        teamHomeSweeperL = Instantiate(
-            teamHome.sweeperLeft,
-            idleLocationsTeamHome[1].position,
-            Quaternion.identity
-        );
+        teamHomeSweeperL = Instantiate(teamHome.sweeperLeft,idleLocationsTeamHome[1].position,Quaternion.identity);
         teamHome.sweeperLeft = teamHomeSweeperL;
 
-        teamHomeSweeperR = Instantiate(
-            teamHome.sweeperRight,
-            idleLocationsTeamHome[2].position,
-            Quaternion.identity
-        );
+        teamHomeSweeperR = Instantiate(teamHome.sweeperRight,idleLocationsTeamHome[2].position,Quaternion.identity);
         teamHome.sweeperRight = teamHomeSweeperR;
         /// away team
-        teamAwayThrower = Instantiate(
-            teamAway.thrower,
-            idleLocationsTeamAway[0].position,
-            Quaternion.identity
-        );
+        teamAwayThrower = Instantiate(teamAway.thrower,idleLocationsTeamAway[0].position,Quaternion.identity);
         teamAway.thrower = teamAwayThrower;
 
-        teamAwaySweeperL = Instantiate(
-            teamAway.sweeperLeft,
-            idleLocationsTeamAway[1].position,
-            Quaternion.identity
-        );
+        teamAwaySweeperL = Instantiate(teamAway.sweeperLeft,idleLocationsTeamAway[1].position,Quaternion.identity);
         teamAway.sweeperLeft = teamAwaySweeperL;
 
-        teamAwaySweeperR = Instantiate(
-            teamAway.sweeperRight,
-            idleLocationsTeamAway[2].position,
-            Quaternion.identity
-        );
+        teamAwaySweeperR = Instantiate(teamAway.sweeperRight,idleLocationsTeamAway[2].position,Quaternion.identity);
         teamAway.sweeperRight = teamAwaySweeperR;
     }
 
