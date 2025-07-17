@@ -9,27 +9,13 @@ public class DialogueManager : MonoBehaviour
 {
     // Content
     public static DialogueManager _instance;
-    public Sprite icon;
-
+    
     // Resources
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private GameObject dialogueItem;
-    [SerializeField] private DialogueItem dialogueItemController;
+    private DialogueItem dialogueItemController;
     public bool isDialogueActive = false;
-    public KeyCode interactKey = KeyCode.X;
-    // [SerializeField] private Animator itemAnimator;
-    // [SerializeField] private Image itemIcon;
-    // [SerializeField] private TextMeshProUGUI itemControlText;
-    // [SerializeField] private TextMeshProUGUI itemText;
-
-    // Settings
-    [Range(0, 10)] public float minimizeAfter = 3;
-
-    // Events
-    public UnityEvent onDestroy;
-
-    // Helpers
-    bool isOn;
+    // public KeyCode interactKey = KeyCode.X;
 
     public enum DefaultState { Minimized, Expanded }
     public enum AfterMinimize { Disable, Destroy }
@@ -43,7 +29,8 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         _instance = this;
-        // DontDestroyOnLoad(gameObject);
+        MinimizeDialogue();
+        
     }
 
     private void Update()
@@ -60,10 +47,10 @@ public class DialogueManager : MonoBehaviour
         string controlKey
     )
     {
-        isDialogueActive = true;
+        
         dialogueItemController = dialogueItem.GetComponent<DialogueItem>();
         dialogueItemController.UpdateText(speakerName, text, controlKey);
-        dialogueItem.SetActive(true);
+        ExpandNotification();
     }
 
     public void UpdateUI()
@@ -80,7 +67,8 @@ public class DialogueManager : MonoBehaviour
 
     public void ExpandNotification()
     {
-        
+        isDialogueActive = true;
+        dialogueItem.SetActive(true);
     }
 
     public void MinimizeDialogue()
@@ -95,18 +83,4 @@ public class DialogueManager : MonoBehaviour
         
     }
 
-    // IEnumerator DisableAnimator()
-    // {
-        
-    // }
-
-    // IEnumerator DisableItem()
-    // {
-        
-    // }
-
-    // IEnumerator MinimizeItem()
-    // {
-        
-    // }
 }

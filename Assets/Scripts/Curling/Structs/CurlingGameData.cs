@@ -49,9 +49,7 @@ public struct CurlingGameData {
         this.hasEnded = hasEnded;
         this.isPaused = isPaused;
         this.roundCurrent = roundCurrent;
-        this.turnCurrent = turnCurrent;
-
-        
+        this.turnCurrent = turnCurrent;        
     }
 
     // Round & Turn Management
@@ -94,70 +92,3 @@ public struct CurlingGameData {
     }    
 }
 
-public struct CurlingGameScore {
-    //Variable declaration
-    //Note: I'm explicitly declaring them as public, but they are public by default. You can use private if you choose.
-    public int team01Score;
-    public string team01Id;
-    public int team02Score;
-    public string team02Id;
-    public bool isFinal;
-    
-    //Constructor (not necessary, but helpful)
-    public void setScore(
-        int team01Score = 0,
-        int team02Score = 0,
-        bool isFinal = false
-    ) {
-        this.team01Score = team01Score;
-        this.team02Score = team02Score;
-        this.isFinal = isFinal;
-    }
-    public void SetTeam01Score(int score) {
-        this.team01Score = score;
-    }
-    public void SetTeam02Score(int score) {
-        this.team02Score = score;
-    }
-    public void SetIsFinal(bool isFinal) {
-        this.isFinal = isFinal;
-    }
-    public void ResetScore() {
-        this.team01Score = 0;
-        this.team02Score = 0;
-        this.isFinal = false;
-    }
-}
-
-public struct CurlingGameSettings {
-    //Variable declaration
-    public int roundsPerGame; // A round is composed of one throw per team
-    public int turnsPerTeamPerRound;
-    public int totalTurnsPerGame;// There are two teams, so the max is 1
-    public int maxStonesPerTeam;
-    public bool isPracticeMode;
-    public bool isTimedMode;
-    public float timeLimit; // in seconds if timed mode
-
-    //Constructor (not necessary, but helpful)
-    public void SetSettings(
-        int roundsPerGame = 5,
-        int turnsPerTeamPerRound = 1,
-        int maxStonesPerTeam = 5,
-        bool isPracticeMode = false,
-        bool isTimedMode = false,
-        float timeLimit = 0.0f // 0 means no time limit
-    )
-    {
-        this.roundsPerGame = roundsPerGame;
-        this.turnsPerTeamPerRound = turnsPerTeamPerRound;
-        this.maxStonesPerTeam = maxStonesPerTeam;
-        this.isPracticeMode = isPracticeMode;
-        this.isTimedMode = isTimedMode;
-        this.timeLimit = timeLimit;
-
-        // set the total turns per game based on the rounds and turns per team
-        int totalTurnsPerRound = turnsPerTeamPerRound * 2;
-        this.totalTurnsPerGame = roundsPerGame * totalTurnsPerRound;
-    }
-}

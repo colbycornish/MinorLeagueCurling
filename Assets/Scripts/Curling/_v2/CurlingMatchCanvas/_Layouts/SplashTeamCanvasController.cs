@@ -47,8 +47,8 @@ public class SplashTeamCanvasController : MonoBehaviour
             Debug.LogError("[TeamDisplay] Not enough teams available. Cannot update team names.");
             return;
         }
-        CurlingTeamData teamData_01 = CurlingGameManagerV2.Instance.playerManager.teams[0];
-        CurlingTeamData teamData_02 = CurlingGameManagerV2.Instance.playerManager.teams[1];
+        CurlingTeam teamData_01 = CurlingGameManagerV2.Instance.playerManager.teams[0];
+        CurlingTeam teamData_02 = CurlingGameManagerV2.Instance.playerManager.teams[1];
 
         string teamName_1 = teamData_01.teamName;
         string teamName_2 = teamData_02.teamName;

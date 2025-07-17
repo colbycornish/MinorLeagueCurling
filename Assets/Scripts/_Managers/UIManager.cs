@@ -9,10 +9,10 @@ using System.Collections;
 public class UIManager : MonoBehaviour
 {
 
-    private static UIManager instance;
+    private static UIManager _instance;
     public static CanvasManager canvas;
     // public static NotificationManager notifications;
-    
+
     // public static UIManager Instance
     // {
     //     get
@@ -29,15 +29,17 @@ public class UIManager : MonoBehaviour
     //         return instance;
     //     }
     // }
+    
+
     private void Awake()
     {
         // Ensure only one instance of UIManager exists
-        if (instance != null && instance != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        instance = this;
+        _instance = this;
         DontDestroyOnLoad(gameObject);
     }
 }

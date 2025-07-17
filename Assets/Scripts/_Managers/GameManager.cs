@@ -2,27 +2,56 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 /// <summary>
 /// Singleton GameManager that handles scene transitions, player spawn positioning, and persistent data.
 /// </summary>
+
+public enum GameState
+{
+    Loading,
+    Roaming,
+    Cinematic,
+    Dialogue,
+    Curling
+}
+
+
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager _instance;
     public Vector3 playerSpawnPosition;
     public string playerSpawnID;
+    public bool isReady = false;
+    public event Action<GameState> OnStateChanged;
+    // public static CurlingMatchManager curlingMatch;
+    // public MainState CurrentState { get; private set; }
+
+    public GameState currentState = GameState.Loading;
 
     void Awake()
     {
-        if (Instance == null)
+        if (_instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            Instance = this;
+            _instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
+        isReady = true;
+    }
+    
+    public void SetState(GameState newState)
+    {
+        Debug.Log($"[MatchPhase] {currentState} → {newState}");
+        if (currentState == newState) return;
+
+        currentState = newState;
+        Debug.Log($"[MatchPhase] {currentState} → {newState}");
+        OnStateChanged?.Invoke(newState);
     }
 
     /// <summary>
@@ -33,7 +62,9 @@ public class GameManager : MonoBehaviour
     //     playerSpawnPosition = spawnPosition;
     //     StartCoroutine(LoadSceneWithFade(sceneName));
     // }
-    
+
+
+
 
     public void TeleportToScene(string sceneName, string spawnID)
     {
@@ -87,8 +118,8 @@ public class GameManager : MonoBehaviour
     // }
 
     private GameObject FindSpawnPointByID(string id)
-    {   
-        
+    {
+
         SpawnPoint[] spawnPoints = FindObjectsByType(typeof(SpawnPoint), FindObjectsSortMode.None) as SpawnPoint[];
         //SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
         foreach (var sp in spawnPoints)

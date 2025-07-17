@@ -13,13 +13,13 @@ using UnityEngine;
 public class CurlingStoneManagerV2 : MonoBehaviour
 {
     // base skin used for each team
-    public GameObject stonePrefab_TeamA;
-    public GameObject stonePrefab_TeamB;
+    public GameObject stonePrefab_TeamHome;
+    public GameObject stonePrefab_TeamAway;
 
-    public List<CurlingStone> stonesTeamA = new List<CurlingStone>();
-    public List<CurlingStone> stonesTeamB = new List<CurlingStone>();
-    public List<Transform> stonesSpawnLocationsTeamA = new List<Transform>();
-    public List<Transform> stonesSpawnLocationsTeamB = new List<Transform>();
+    public List<CurlingStone> stonesTeamHome = new List<CurlingStone>();
+    public List<CurlingStone> stonesTeamAway = new List<CurlingStone>();
+    public List<Transform> stonesSpawnLocationsTeamHome = new List<Transform>();
+    public List<Transform> stonesSpawnLocationsTeamAway = new List<Transform>();
 
     public Transform launchPoint;
 
@@ -32,43 +32,121 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     private int stonesInPlay = 0;
 
 
+
+    /// <summary>
+    /// Setup the initial values
+    /// </summary>
+
+    public void Setup(
+        CurlingCourseData courseData,
+        CurlingTeam teamHome,
+        CurlingTeam teamAway
+    )
+    {
+        SetLaunchPoint(courseData.launchPoint);
+        SetStoneSpawnLocations(courseData.stonesSpawnLocationsTeamHome, 0);
+        SetStoneSpawnLocations(courseData.stonesSpawnLocationsTeamAway, 1);
+        SetDefaultTeamStones(
+            teamHome.defaultStone,
+            teamAway.defaultStone
+        );
+        
+
+    }
+
+    public void SetLaunchPoint(Transform location)
+    {
+        launchPoint = location;
+    }
+
+    public void SetStoneSpawnLocations(
+        List<Transform> stoneSpawnLocations,
+        int teamId_i
+    )
+    {
+        // if (teamId_i == null) { Debug.log("No Team Id!"); return; }
+        if (teamId_i == 0){ stonesSpawnLocationsTeamHome = stoneSpawnLocations;  }
+        else { stonesSpawnLocationsTeamAway = stoneSpawnLocations; }   
+    }
+
+    public void SetDefaultTeamStones(
+        GameObject homeTeamDefaultStone,
+        GameObject awayTeamDefaultStone
+    )
+    {
+        stonePrefab_TeamHome = homeTeamDefaultStone;
+        stonePrefab_TeamAway = awayTeamDefaultStone;
+    }
     // This method will takes the exiting stone prefab, and instantiate 5 stones for each team at 
     // the specified spawn locations in the scene. 
     public void SetupStones()
     {
         ClearExistingStones();
-        for (int i = 0; i < stonesSpawnLocationsTeamA.Count; i++)
+        stonesSpawned = 0;
+        for (int i = 0; i < stonesSpawnLocationsTeamHome.Count; i++)
         {
             // find the spawn points for each team's stones
-            Transform spawnPointA = stonesSpawnLocationsTeamA[i];
-            Transform spawnPointB = stonesSpawnLocationsTeamB[i];
+            Transform spawnPointA = stonesSpawnLocationsTeamHome[i];
+            Transform spawnPointB = stonesSpawnLocationsTeamAway[i];
 
-            // Instantiate Team A stones
-            GameObject stoneA = Instantiate(stonePrefab_TeamA, spawnPointA.position, Quaternion.identity);
-            CurlingStone curlingStoneA = stoneA.GetComponent<CurlingStone>();
+            SetupStone(stonePrefab_TeamHome, spawnPointA, 0, i);
+            SetupStone(stonePrefab_TeamAway, spawnPointB, 1, i);
 
-            // toDo: change id to a string
-            curlingStoneA.teamId = 0; // Team A
-            curlingStoneA.stoneIndex = i;
-            curlingStoneA.rb = stoneA.GetComponent<Rigidbody>();
-            curlingStoneA.visual = stoneA;
-            stonesTeamA.Add(curlingStoneA);
-
-            // Instantiate Team B stones
-            GameObject stoneB = Instantiate(stonePrefab_TeamB, spawnPointB.position, Quaternion.identity);
-            CurlingStone curlingStoneB = stoneB.GetComponent<CurlingStone>();
-
-            // toDo: change id to a string
-            curlingStoneB.teamId = 1; // Team B
-            curlingStoneB.stoneIndex = i;
-            curlingStoneB.rb = stoneB.GetComponent<Rigidbody>();
-            curlingStoneB.visual = stoneB; // Assuming the visual is the same as the stone GameObject
-            stonesTeamB.Add(curlingStoneB);
+            stonesSpawned += 2;
         }
-
-        stonesSpawned = 10;
     }
 
+    /// Setup a single stone on the ice
+    public void SetupStone(
+        GameObject stonePrefab,
+        Transform location,
+        int teamId,
+        int stoneIndex
+    )
+    {
+        // Instantiate Team A stones
+        GameObject stoneInstance = Instantiate(stonePrefab, location.position, Quaternion.identity);
+        CurlingStone curlingStone = stoneInstance.GetComponent<CurlingStone>();
+
+        // toDo: change id to a string
+        curlingStone.teamId_i = teamId; // Team A
+        curlingStone.stoneIndex = stoneIndex;
+        curlingStone.rb = stoneInstance.GetComponent<Rigidbody>();
+        curlingStone.visual = stoneInstance;
+
+        if (teamId == 0){ stonesTeamHome.Add(curlingStone);  }
+        else { stonesTeamAway.Add(curlingStone); }
+
+    }
+
+    /// <summary>
+    /// Rest all initial values
+    /// </summary>
+
+    public void Reset()
+    {
+        stonePrefab_TeamHome = null;
+        stonePrefab_TeamAway = null;
+        stonesTeamHome.Clear();
+        stonesTeamAway.Clear();
+        stonesSpawnLocationsTeamHome.Clear();
+        stonesSpawnLocationsTeamAway.Clear();
+        ClearExistingStones();
+    }
+
+    /// clear the stones
+    public void ClearExistingStones()
+    {
+        foreach (CurlingStone stone in FindObjectsByType<CurlingStone>(FindObjectsSortMode.None))
+        {
+            Destroy(stone.gameObject);
+        }   
+    }
+
+
+    /// <summary>
+    /// Prepare for Next Turn
+    /// </summary>
     // TODO: Adjust to look for a selection from the canvas. 
     // These functions would then be a fallback state for if the selecting player
     // times out before selecting a stone.
@@ -104,26 +182,51 @@ public class CurlingStoneManagerV2 : MonoBehaviour
             int currentTeam = stonesThrown % 2; // 0 for Team A, 1 for Team B
             int stoneIndex = stonesThrown / 2; // Each team has 5 stones
 
-            if (currentTeam == 0 && stoneIndex < stonesTeamA.Count)
+            if (currentTeam == 0 && stoneIndex < stonesTeamHome.Count)
             {
                 Debug.Log("Current Stone Retrieved -> Team A");
-                return stonesTeamA[stoneIndex];
+                return stonesTeamHome[stoneIndex];
             }
-            else if (currentTeam == 1 && stoneIndex < stonesTeamB.Count)
+            else if (currentTeam == 1 && stoneIndex < stonesTeamAway.Count)
             {
                 Debug.Log("Current Stone Retrieved -> Team B");
-                return stonesTeamB[stoneIndex];
+                return stonesTeamAway[stoneIndex];
             }
         }
         return null;
     }
 
 
-    public void ClearExistingStones()
-    {
-        foreach (CurlingStone stone in FindObjectsByType<CurlingStone>(FindObjectsSortMode.None))
-        {
-            Destroy(stone.gameObject);
-        }
-    }
+    
 }
+
+
+
+
+
+
+
+            // // Instantiate Team A stones
+            // GameObject stoneA = Instantiate(stonePrefab_TeamA, spawnPointA.position, Quaternion.identity);
+            // CurlingStone curlingStoneA = stoneA.GetComponent<CurlingStone>();
+
+            // // toDo: change id to a string
+            // curlingStoneA.teamId = 0; // Team A
+            // curlingStoneA.stoneIndex = i;
+            // curlingStoneA.rb = stoneA.GetComponent<Rigidbody>();
+            // curlingStoneA.visual = stoneA;
+            // stonesTeamA.Add(curlingStoneA);
+            
+
+            // // Instantiate Team B stones
+            // GameObject stoneB = Instantiate(stonePrefab_TeamB, spawnPointB.position, Quaternion.identity);
+            // CurlingStone curlingStoneB = stoneB.GetComponent<CurlingStone>();
+
+            // // toDo: change id to a string
+            // curlingStoneB.teamId = 1; // Team B
+            // curlingStoneB.stoneIndex = i;
+            // curlingStoneB.rb = stoneB.GetComponent<Rigidbody>();
+            // curlingStoneB.visual = stoneB; // Assuming the visual is the same as the stone GameObject
+            // stonesTeamB.Add(curlingStoneB);
+
+            

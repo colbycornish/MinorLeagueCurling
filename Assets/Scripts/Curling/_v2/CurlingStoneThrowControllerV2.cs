@@ -51,10 +51,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
-        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
-        {
-            Reset();
-        }
+        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase){ Reset(); }
 
         if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
@@ -62,10 +59,10 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
             powerMeter.Activate();
         }
         
-        // if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
-        // {
+        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
+        {
 
-        // }
+        }
         
     }
 

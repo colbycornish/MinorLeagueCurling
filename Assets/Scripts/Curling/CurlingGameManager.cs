@@ -96,8 +96,6 @@ public class CurlingGameManager : MonoBehaviour
         //     canvasDisplayTimeMarkerIsActive = true;
         //     curlingMatchCanvasController.GoToNextCanvas();
         // }
-
-
     }
 
     void SetTeams()

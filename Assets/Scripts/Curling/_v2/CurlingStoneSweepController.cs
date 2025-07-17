@@ -58,29 +58,17 @@ public class CurlingStoneSweepController : MonoBehaviour
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
-        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
-        {
-            Reset();
-        }
+        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase){ Reset(); }
+        if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase){ }
 
-        if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase)
-        {
-
-        }
-
-        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
-        {
+        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase){
             // hasLaunched = true;
             // isSliding = true;
         }
-        if (currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
-        {
+        if (currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase){
             // hasLaunched = false;
             // isSliding = false;
         }
-        
-        
-        
     }
 
 
@@ -137,7 +125,7 @@ public class CurlingStoneSweepController : MonoBehaviour
             if (currentStone.rb != null && currentStone.rb.linearVelocity.sqrMagnitude < 0.01f && currentStone.rb.angularVelocity.sqrMagnitude < 0.01f)
             {
                 currentStone.isSliding = false;
-                CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
+                // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
             }
             // Only apply curl if stone is still moving
             //if (stoneRb.linearVelocity.magnitude < 0.05f) // Note the default here is 0.2f; tweaking just for testing purposes

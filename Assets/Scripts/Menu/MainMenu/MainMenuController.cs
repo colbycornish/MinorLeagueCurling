@@ -3,11 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenuController : UIController
 {
     /// <summary>
     /// These are the scripts used for the Main Menu Screen that starts the game
     /// </summary>
+    /// 
+    private void Update()
+    {
+        MainState currentState = MainManager._instance.currentState;
+
+        switch (currentState)
+        {
+            case MainState.MainMenu:
+                // make things visible
+                Show();
+                break;
+            default:
+                Hide();
+                // hide this canvas
+                break;
+        }
+    }
 
     public void LaunchContinueGame(){
         // Opens up the 'ContinueGame' experience
@@ -34,12 +51,10 @@ public class MainMenu : MonoBehaviour
     }
 
     public void LaunchNewGame(){
-        // Opens up the 'start new game' experience
-        SceneManager.LoadScene(sceneName: "Scene_Menu_NewGame");
+        
     }
 
     public void LaunchMainMenu(){
-        // Opens up the 'start new game' experience
-        SceneManager.LoadScene(sceneName: "Scene_Menu_Main");
+        
     }
 }
