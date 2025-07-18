@@ -10,16 +10,24 @@ using UnityEngine;
 
 public class CurlingGameManagerV2 : MonoBehaviour
 {
+
+    // [HideInInspector] 
     public static CurlingGameManagerV2 Instance { get; private set; }
     public CurlingEndGameManagerV2 endManager;
     public CurlingPlayerManagerV2 playerManager;
     public CurlingStoneManagerV2 stoneManager;
+    public CurlingStoneAimController aimController;
     public CurlingGameData gameData;
+
+    [Header("Course")]
     public Camera stoneCamera;
     CurlingCourseData courseData_tmp; // temporary for storage
+
+    [Header("Player")]
     CurlingTeam teamHome_tmp; // temporary for storage
     CurlingTeam teamAway_tmp; // temporary for storage
 
+    [Header("Settings")]
     public int currentEnd = 1;
     public int maxEnds = 8;
     public int turnCount = 0;
@@ -34,12 +42,18 @@ public class CurlingGameManagerV2 : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary>
+    /// Setup data
+    /// </summary>
+
     public void InitSetupFromDemo(
         CurlingCourseData courseData,
         CurlingTeam teamHome,
         CurlingTeam teamAway
     )
     {
+
+        aimController.Setup(courseData);
         courseData_tmp = courseData;
         teamHome_tmp = teamHome;
         teamAway_tmp = teamAway;
@@ -60,6 +74,10 @@ public class CurlingGameManagerV2 : MonoBehaviour
 
         StartCurlingGame();
     }
+
+    /// <summary>
+    /// Start Game
+    /// </summary>
 
     // Starts the curling game.
     private void StartCurlingGame()
@@ -82,6 +100,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Next Turn
+    /// </summary>
     public void NextTurn()
     {
         playerManager.NextPlayer();
@@ -118,6 +139,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
         // }
     }
 
+    /// <summary>
+    /// End Game
+    /// </summary>
     public void EndCurrentCurlingGame()
     {
         endManager.CalculateScore();

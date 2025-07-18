@@ -30,8 +30,6 @@ public class CurlingStoneSweepController : MonoBehaviour
 
     [Header("Input Keys")]
     public KeyCode resetKey = KeyCode.R;
-    public KeyCode rightCurlKey = KeyCode.E;
-    public KeyCode leftCurlKey = KeyCode.Q;
     public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode leftSweeperKey = KeyCode.K; // Action button for left sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode actionKey = KeyCode.Space; // This is the key used to activate the power meter and launch the stone
@@ -41,6 +39,10 @@ public class CurlingStoneSweepController : MonoBehaviour
     {
         // rb = GetComponent<Rigidbody>();
     }
+
+    /// <summary>
+    /// Listen for curling phase changes
+    /// </summary>
 
     private void OnEnable()
     {
@@ -59,19 +61,15 @@ public class CurlingStoneSweepController : MonoBehaviour
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
         if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase){ Reset(); }
-        if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase){ }
-
         if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase){
             // hasLaunched = true;
             // isSliding = true;
         }
-        if (currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase){
-            // hasLaunched = false;
-            // isSliding = false;
-        }
     }
 
-
+    /// <summary>
+    /// Update!
+    /// </summary>
     void Update()
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
@@ -92,25 +90,6 @@ public class CurlingStoneSweepController : MonoBehaviour
             }
             return;
         }
-
-        // Handle spin input before charging
-        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
-        {
-            if (Input.GetKeyDown(leftCurlKey))
-            {
-                curlAmount = -1f;
-                Debug.Log("⤵️ Left curl selected");
-            }
-
-            if (Input.GetKeyDown(rightCurlKey))
-            {
-                curlAmount = 1f;
-                Debug.Log("⤴️ Right curl selected");
-            }
-        }
-        
-
-
 
     }
 
@@ -149,6 +128,10 @@ public class CurlingStoneSweepController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Apply Spin
+    /// </summary>
+
 
     public void ApplySpinForceToStone()
     {
@@ -161,6 +144,10 @@ public class CurlingStoneSweepController : MonoBehaviour
         // Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
         // Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
     }
+
+    /// <summary>
+    /// Sweeping Impact
+    /// </summary>
 
     public void ApplySweepingImpactToStone()
     {
@@ -186,6 +173,10 @@ public class CurlingStoneSweepController : MonoBehaviour
             sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor - Time.fixedDeltaTime * sweepDecayRate);
         }
     }
+
+    /// <summary>
+    /// Helpers
+    /// </summary>
     
     public void SetCurrentStone(CurlingStone stone)
     {
@@ -197,7 +188,9 @@ public class CurlingStoneSweepController : MonoBehaviour
         currentStone = stone.rb;
     }
   
-
+    /// <summary>
+    /// Reset
+    /// </summary>
     public void Reset()
     {
         // hasLaunched = false;

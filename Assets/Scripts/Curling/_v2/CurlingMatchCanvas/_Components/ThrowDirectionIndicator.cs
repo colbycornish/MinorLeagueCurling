@@ -13,6 +13,7 @@ public class ThrowDirectionIndicator : MonoBehaviour
     public GameObject ArrowContainer;
     public Transform pivotPoint;
     public GameObject CurveIndicator;
+    private bool isCurveActive = false;
 
     private void OnEnable()
     {
@@ -42,6 +43,12 @@ public class ThrowDirectionIndicator : MonoBehaviour
             // Disable
         }
 
+    }
+
+
+    public void SetCurlAmount(int amount)
+    {
+        
     }
 
 }
