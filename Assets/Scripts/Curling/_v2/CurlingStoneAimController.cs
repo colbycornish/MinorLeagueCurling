@@ -84,10 +84,10 @@ public class CurlingStoneAimController : MonoBehaviour
         }
     }
     
-    void FixedUpdate()
-    {
-        CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
-    }
+    // void FixedUpdate()
+    // {
+    //     CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+    // }
 
     /// <summary>
     /// Curl amount (Spin Amount): This governs how much initial spin is applied to the stone

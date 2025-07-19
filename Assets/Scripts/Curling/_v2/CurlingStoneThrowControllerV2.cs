@@ -18,7 +18,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
 
     // State
     // private Rigidbody currentStone;
-    private bool hasLaunched = false;
+    // private bool hasLaunched = false;
     // public float curlAmount = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
 
     [Header("Input Keys")]
@@ -101,7 +101,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
         powerMeter.SelectPower();  // locks the power level
         float power = powerMeter.GetPower();  // get selected power
         LaunchStone(power);
-        hasLaunched = true;
+        // hasLaunched = true;
         // isSliding = true;
         if (powerMeterPromptUI != null){
             powerMeterPromptUI.SetActive(false);
@@ -152,7 +152,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
         // }
 
         // isCharging = false;
-        hasLaunched = false;
+        // hasLaunched = false;
         // isSliding = false;
         
         powerMeter.ResetMeter();
