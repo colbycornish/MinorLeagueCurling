@@ -10,9 +10,11 @@ using UnityEngine.UI;
 
 public class ThrowDirectionIndicator : MonoBehaviour
 {
-    public GameObject ArrowContainer;
+    public GameObject arrowContainer;
     public Transform pivotPoint;
-    public GameObject CurveIndicator;
+    public GameObject curveIndicator;
+    private bool isCurveActive = false;
+    private bool isActive = false;
 
     private void OnEnable()
     {
@@ -32,16 +34,49 @@ public class ThrowDirectionIndicator : MonoBehaviour
         if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             // Set Active
+            isActive = true;
         }
-        else if (phase == CurlingMatchPhase.CurlingPowerMeterPhase)
+        if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
-            // do nothing
+            // Set Active
+            isActive = false;
         }
-        else
+    }
+
+    void Update()
+    {
+
+        if (isActive == true)
         {
-            // Disable
+            Debug.Log("Setting Curl amount");
+            SetCurlAmount(CurlingGameManagerV2.Instance.aimController.curlAmountInitial);
+            Spin();
         }
 
+    }
+
+
+    public void SetCurlAmount(float amount)
+    {
+        ThrowCurveIndicator tci = curveIndicator.GetComponent<ThrowCurveIndicator>();
+        if (amount == 0f)
+        {
+            tci.Hide();
+            curveIndicator.SetActive(false);
+        }
+        if (amount < 0f)
+        {
+            tci.Show();
+        }
+        if (amount < 0f)
+        {
+            tci.Show();
+        }
+    }
+    
+    public void Spin()
+    {
+        curveIndicator.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
     }
 
 }

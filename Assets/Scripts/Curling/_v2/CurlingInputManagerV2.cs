@@ -19,7 +19,7 @@ public class CurlingInputManagerV2 : MonoBehaviour
     public KeyCode leftCurlKey = KeyCode.Q;
     public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode leftSweeperKey = KeyCode.K; // Action button for left sweeper sweeping ** NEW SWEEPER CODE **
-    public KeyCode actionKey = KeyCode.Space; 
+    public KeyCode actionKey = KeyCode.Space;
     public KeyCode beginKey = KeyCode.T;
     public KeyCode resetAllKey = KeyCode.R;
 
@@ -67,6 +67,10 @@ public class CurlingInputManagerV2 : MonoBehaviour
                 break;
             case CurlingMatchPhase.FinalResults:
                 HandleFinalResultsInput();
+                break;
+
+            case CurlingMatchPhase.ExitCurlingGame:
+                HandleExitCurlingGameInput();
                 break;
             default:
                 Debug.LogWarning($"Unhandled phase: {currentPhase}");
@@ -169,13 +173,13 @@ public class CurlingInputManagerV2 : MonoBehaviour
         {
             // if (CurlingGameManagerV2.Instance.playerManager.totalStonesPerEnd == CurlingGameManagerV2.Instance.playerManager.currentStoneIndex)
             // {
-                // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
-                // return;
+            // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
+            // return;
             // }
             // else
             // {
-                CurlingGameManagerV2.Instance.NextTurn();
-                CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
+            CurlingGameManagerV2.Instance.NextTurn();
+            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
             // }
         }
         // Handle inputs specific to the Obstacle Placement phase
@@ -189,8 +193,13 @@ public class CurlingInputManagerV2 : MonoBehaviour
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
         }
+
+    }
+
+    private void HandleExitCurlingGameInput()
+    {
         
-    }       
+    }
     // public void SetCurrentThrower(CurlingStoneThrowControllerV2 thrower)
     // {
     //     // currentThrower = thrower;

@@ -17,7 +17,7 @@ public class ThrowCurveIndicator : MonoBehaviour
     public GameObject ArrowRight2;
 
     public float rotationSpeed = 300f;
-    public float rotationDirection = 1;
+    public float rotationDirection = 1f;
     public bool isActive = true;
 
 
@@ -36,14 +36,16 @@ public class ThrowCurveIndicator : MonoBehaviour
     {
         if (isActive == true)
         {
-            Spin();
+            // Spin();
         }
     }
 
-    public void Spin()
+    public void SetRotationDirection(float direction)
     {
-        SpinContainer.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
+        rotationDirection = direction;
     }
+
+    
     
 
 

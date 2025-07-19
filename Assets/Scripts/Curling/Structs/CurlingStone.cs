@@ -22,6 +22,7 @@ public class CurlingStone : MonoBehaviour
 
     [Header("Stats")]
     [HideInInspector] public float curlAmountCurrent = 0f;
+    [HideInInspector] public float curlAmountInitial = 0f;
     [HideInInspector] public float launchForce = 0f;
     // [HideInInspector] public float primaryColor = 0f;
     
