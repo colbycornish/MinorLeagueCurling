@@ -14,7 +14,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
 
     [Header("Launch Settings")]
     public float launchForce = 100f;        // Base launch force (tweak as needed; adjust for distance--may want to bring force down if we shorten the distance)
-    public float curlStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
+    public float spinStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
 
     // State
     // private Rigidbody currentStone;
@@ -128,7 +128,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
 
 
         // Add initial spin to the stone
-        cs.angularVelocity = Vector3.up * curlAmountInitial * curlStrength; // Add angular velocity for curling effect (purely visual spin)
+        cs.angularVelocity = Vector3.up * curlAmountInitial * spinStrength; // Add angular velocity for curling effect (purely visual spin)
         Debug.Log($"[Stone Throw] 🌀 Curl applied: angularVelocity = {cs.angularVelocity}");
         
 
@@ -159,14 +159,3 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     }
 }
 
-
-
-// public void SetCurrentStone(CurlingStone stone)
-// {
-//     // RigidBody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
-//     if (currentStone != null)
-//     {
-//         currentStone.isKinematic = true; // Disable physics on the previous stone
-//     }
-//     currentStone = stone.rb;
-// }

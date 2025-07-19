@@ -18,9 +18,7 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
     private List<GameObject> stonesThisEnd = new List<GameObject>();
     private int[] endScore = new int[2];
 
-    public void SetTargetZone(
-        GameObject zone
-    )
+    public void SetTargetZone(GameObject zone)
     {
         targetZone = zone;
     }

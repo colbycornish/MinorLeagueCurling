@@ -52,12 +52,25 @@ public class CurlingGameManagerV2 : MonoBehaviour
         CurlingTeam teamAway
     )
     {
-
-        aimController.Setup(courseData);
         courseData_tmp = courseData;
         teamHome_tmp = teamHome;
         teamAway_tmp = teamAway;
+        LoadInitialData();
+    }
 
+
+    public void LoadInitialData()
+    {
+        // TODO: Adjust to grab information from a singlular storage spot
+        // CurlingCourseData courseData = dataManager._instance.curlingGame.courseData;
+        // CurlingTeam teamHome = dataManager._instance.curlingGame.teamHome;
+        // CurlingTeam teamAway = dataManager._instance.curlingGame.teamAway;
+
+        CurlingCourseData courseData = courseData_tmp;
+        CurlingTeam teamHome = teamHome_tmp;
+        CurlingTeam teamAway = teamAway_tmp;
+
+        aimController.Setup(courseData);
         playerManager.Setup(
             courseData,
             teamHome,
@@ -117,10 +130,6 @@ public class CurlingGameManagerV2 : MonoBehaviour
         stoneCamera.GetComponent<CinemachineCamera>().Follow = stoneManager.currentStone.transform;
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
     }
-
-
-
-
 
 
     // Called when a stone finishes moving, and is now resting in the target zone.

@@ -13,8 +13,8 @@ public class CurlingStoneAimController : MonoBehaviour
     public GameObject directionPivotObject;
     public Transform directionPivot; // assign this in Inspector
     public float rotationSpeed = 100f;
-    public bool isActive = false;
     public float directionalLimit = 30f;
+    public bool isActive = false;
 
     [Header("Input Keys")]
     public KeyCode resetKey = KeyCode.R;
@@ -121,16 +121,16 @@ public class CurlingStoneAimController : MonoBehaviour
 
         if (input != 0)
         {
-            Debug.Log($"Direction Rotation {input}");
+            // Debug.Log($"Direction Rotation {input}");
             float rotationAmount = input * rotationSpeed * Time.deltaTime;
 
-            Debug.Log($"rotation amount {rotationAmount}");
+            // Debug.Log($"rotation amount {rotationAmount}");
             bool canRotate = CanUpdateDirection(rotationAmount);
             if (canRotate)
             {
                 directionPivot.Rotate(0f, rotationAmount, 0f);
             }
-            CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+            // CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
         }
     }
 
