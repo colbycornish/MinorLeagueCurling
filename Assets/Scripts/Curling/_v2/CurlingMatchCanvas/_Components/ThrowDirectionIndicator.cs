@@ -13,34 +13,45 @@ public class ThrowDirectionIndicator : MonoBehaviour
     public GameObject arrowContainer;
     public Transform pivotPoint;
     public GameObject curveIndicator;
-    private bool isCurveActive = false;
+    // private bool isCurveActive = false;
     private bool isActive = false;
 
-    private void OnEnable()
+
+
+    // private void OnEnable()
+    // {
+    //     if (CurlingMatchPhaseManager.Instance == null) return;
+    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
+    // }
+
+    // private void OnDisable()
+    // {
+    //     if (CurlingMatchPhaseManager.Instance == null) return;
+    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
+    // }
+
+
+    // public void HandlePhase(CurlingMatchPhase phase)
+    // {
+    //     if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
+    //     {
+    //         // Set Active
+    //         isActive = true;
+    //     }
+    //     if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
+    //     {
+    //         // Set Active
+    //         isActive = false;
+    //     }
+    // }
+    public void ActivateSpin()
     {
-        if (CurlingMatchPhaseManager.Instance == null) return;
-        CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
+        isActive = true;
     }
 
-    private void OnDisable()
+    public void DeactivateSpin()
     {
-        if (CurlingMatchPhaseManager.Instance == null) return;
-        CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
-    }
-
-
-    public void HandlePhase(CurlingMatchPhase phase)
-    {
-        if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
-        {
-            // Set Active
-            isActive = true;
-        }
-        if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
-        {
-            // Set Active
-            isActive = false;
-        }
+        isActive = false;
     }
 
     void Update()
@@ -76,7 +87,7 @@ public class ThrowDirectionIndicator : MonoBehaviour
     
     public void Spin()
     {
-        curveIndicator.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
+        // curveIndicator.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
     }
 
 }
