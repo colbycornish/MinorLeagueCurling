@@ -117,6 +117,9 @@ public class CurlingMatchCanvasController : MonoBehaviour
             case CurlingMatchPhase.CurlingStoneSweepingPhase:
                 ActivateCurlingInGameCanvas(phase);
                 break;
+            case CurlingMatchPhase.CurlingNoSweepZone:
+                ActivateCurlingInGameCanvas(phase);
+                break;
             case CurlingMatchPhase.PostThrowResult:
                 ActivatePostThrowResultCanvas(phase);
                 break;
@@ -197,6 +200,19 @@ public class CurlingMatchCanvasController : MonoBehaviour
             //     "Sweep to influence the stone's path"
             // );
         }
+        else if (phase == CurlingMatchPhase.CurlingNoSweepZone)
+        {
+            curlingInGameCanvasController.DisableAimDisplay();
+            curlingInGameCanvasController.DisableResultText();
+            curlingInGameCanvasController.DisablePowerMeter();
+            curlingInGameCanvasController.EnableExhaustionBars();
+            // curlingInGameCanvasController.SetResultText(
+            //     "Sweeping",
+            //     "Sweep to influence the stone's path"
+            // );
+        }
+
+        
         else
         {
             Debug.LogError("Invalid phaseId");
@@ -253,7 +269,8 @@ public class CurlingMatchCanvasController : MonoBehaviour
         }
         if (currentPhase != CurlingMatchPhase.CurlingAimControlsPhase &&
             currentPhase != CurlingMatchPhase.CurlingPowerMeterPhase &&
-            currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
+            currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase && 
+            currentPhase != CurlingMatchPhase.CurlingNoSweepZone)
         {
             curlingInGameCanvas.SetActive(false);
         }

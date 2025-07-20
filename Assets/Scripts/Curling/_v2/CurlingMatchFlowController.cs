@@ -43,7 +43,7 @@ public class CurlingMatchFlowController : MonoBehaviour
 
     private void HandlePhase(CurlingMatchPhase phase)
     {
-        Debug.Log($"Handling phase: {phase}");
+        // Debug.Log($"Handling phase: {phase}");
         // switch (phase)
         // {
         //     case CurlingMatchPhase.RoundSplash:

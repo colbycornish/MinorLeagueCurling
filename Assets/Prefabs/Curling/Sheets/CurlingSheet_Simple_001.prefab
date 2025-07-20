@@ -186,6 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8173954025565865141}
+  - component: {fileID: 8129247637560179043}
   m_Layer: 0
   m_Name: CurlingSheet_Simple_001
   m_TagString: Untagged
@@ -216,6 +217,48 @@ Transform:
   - {fileID: 3557731190116007404}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8129247637560179043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530511155876154921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc8ad0853db3469b91b51d4d12a6f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: A Simple Course
+  description: Straight and Narrow
+  launchPoint: {fileID: 7967356589105865649}
+  targetZone: {fileID: 6003457266055338956}
+  directionalPivot: {fileID: 0}
+  throwerStartLocation: {fileID: 75060658565105854}
+  sweeperLStartLocation: {fileID: 1102314467448895685}
+  sweeperRStartLocation: {fileID: 8962204675084676210}
+  idleLocationsTeamHome:
+  - {fileID: 7670708329873982825}
+  - {fileID: 1110481917265402466}
+  - {fileID: 4208934590824953040}
+  idleLocationsTeamAway:
+  - {fileID: 8199427523248508621}
+  - {fileID: 3440846177453824973}
+  - {fileID: 3035020316133462872}
+  stonesSpawnLocationsTeamHome:
+  - {fileID: 8687949780049894577}
+  - {fileID: 5949085323203100768}
+  - {fileID: 6445046297099677179}
+  - {fileID: 6782856541808758620}
+  - {fileID: 6681917570310904964}
+  stonesSpawnLocationsTeamAway:
+  - {fileID: 1673695636929503834}
+  - {fileID: 4872820293120481574}
+  - {fileID: 1419133461489067748}
+  - {fileID: 8398649916359589354}
+  - {fileID: 2035348612810205639}
+  objectsToHideIfCurling: {fileID: 4396272236766337185}
+  afterGameSpawnLocation: {fileID: 0}
 --- !u!1 &846115129020509164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,6 +1550,7 @@ GameObject:
   - component: {fileID: 5195147363616421965}
   - component: {fileID: 1159626555761061822}
   - component: {fileID: 7985265210379807329}
+  - component: {fileID: 3642676630635512779}
   m_Layer: 0
   m_Name: BlueLine_NoCollider
   m_TagString: Untagged
@@ -1560,7 +1604,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2603f3bb021584edebcf9ab02d427117, type: 2}
+  - {fileID: 2100000, guid: e8c9cf42b0af84af58f6d9c41f024d8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1597,12 +1641,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 6.55, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3642676630635512779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388255141975909125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d5c6dc26b9e424797a39905edfbe74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7633479269176646752
 GameObject:
   m_ObjectHideFlags: 0
@@ -6563,6 +6619,11 @@ PrefabInstance:
 --- !u!4 &3009144490348939041 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124510903560660147, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
+  m_PrefabInstance: {fileID: 6296708110337434514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6003457266055338956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 302574851230316638, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
   m_PrefabInstance: {fileID: 6296708110337434514}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6462665772128108957

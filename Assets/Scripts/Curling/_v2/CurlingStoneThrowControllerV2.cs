@@ -8,7 +8,6 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     public Action<GameObject> onRestCallback;
 
     [Header("Other References")]
-    public Transform directionPivot;         // The pivot (arrow) showing throw direction
     public PowerMeterUI powerMeter;          // Assign PowerMeterUI script in Inspector
     public GameObject powerMeterPromptUI;
 
@@ -52,7 +51,6 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     public void HandlePhase(CurlingMatchPhase phase)
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-
         if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             Reset();
@@ -60,8 +58,8 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
 
         if (currentPhase == CurlingMatchPhase.CurlingPowerMeterPhase)
         {
-            powerMeter.ResetMeter();
-            powerMeter.Activate();
+            ResetPowerMeter();
+            ActivatePowerMeter();
         }
         
         if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
@@ -89,11 +87,14 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     /// <summary>
     /// Power Meter Accessors
     /// </summary>
+    public void ResetPowerMeter()
+    {
+        powerMeter.ResetMeter();
+    }
 
     public void ActivatePowerMeter()
     {
         powerMeter.Activate();
-        Debug.Log("[Stone Throw] Power meter activated");
     }
 
     
@@ -111,7 +112,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     /// <summary>
     /// Launch Stone
     /// </summary>
-    
+
     public void LaunchStone(float power)
     {
         // Get relevant game objects;
@@ -130,11 +131,13 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
         // Add initial spin to the stone
         cs.angularVelocity = Vector3.up * curlAmountInitial * spinStrength; // Add angular velocity for curling effect (purely visual spin)
         Debug.Log($"[Stone Throw] 🌀 Curl applied: angularVelocity = {cs.angularVelocity}");
-        
+
 
         // Tell relevant parties that stone has been launched
         CurlingGameManagerV2.Instance.stoneManager.currentStone.isSliding = true;
-        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+        
+        // The trigger for moving onto the sweeping phase has been moved to a yellow line collider
+        // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
     }  
 
 
@@ -145,17 +148,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     
     public void Reset()
     {
-        // if (currentStone != null)
-        // {
-        //     currentStone.linearVelocity = Vector3.zero;
-        //     currentStone.angularVelocity = Vector3.zero;
-        // }
-
-        // isCharging = false;
-        // hasLaunched = false;
-        // isSliding = false;
-        
-        powerMeter.ResetMeter();
+        ResetPowerMeter();
     }
 }
 

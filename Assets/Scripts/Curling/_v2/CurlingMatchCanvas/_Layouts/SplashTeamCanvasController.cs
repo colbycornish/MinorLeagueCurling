@@ -11,8 +11,8 @@ public class SplashTeamCanvasController : MonoBehaviour
     /// <summary>
     /// Public Variables of Global Settings
     /// </summary>
-    private string teamName_1 = "BLUE TEAM";
-    private string teamName_2 = "RED TEAM";
+    // private string teamName_1 = "BLUE TEAM";
+    // private string teamName_2 = "RED TEAM";
     public GameObject content;
     public GameObject shadow;
 
@@ -75,14 +75,14 @@ public class SplashTeamCanvasController : MonoBehaviour
         // Display the splash team on the canvas
         content.SetActive(true);
         shadow.SetActive(true);
-        Debug.Log("Splash Team Displayed: " + teamName_1 + " vs " + teamName_2);
+        // Debug.Log("Splash Team Displayed: " + teamName_1 + " vs " + teamName_2);
     }
     public void HideSplashTeam()
     {
         // Hide the splash team on the canvas
         content.SetActive(false);
         shadow.SetActive(false);
-        Debug.Log("Splash Team Hidden");
+        // Debug.Log("Splash Team Hidden");
     }
 
 

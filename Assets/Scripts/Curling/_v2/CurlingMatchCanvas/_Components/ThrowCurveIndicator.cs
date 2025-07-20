@@ -32,6 +32,22 @@ public class ThrowCurveIndicator : MonoBehaviour
         isActive = true;
     }
 
+    public void CurlRight()
+    {
+        ArrowLeft.SetActive(false);
+        ArrowLeft2.SetActive(false);
+        ArrowRight.SetActive(true);
+        ArrowRight2.SetActive(true);
+    }
+
+    public void CurlLeft()
+    {
+        ArrowLeft.SetActive(true);
+        ArrowLeft2.SetActive(true);
+        ArrowRight.SetActive(false);
+        ArrowRight2.SetActive(false);
+    }
+
     public void Update()
     {
         if (isActive == true)
@@ -43,6 +59,14 @@ public class ThrowCurveIndicator : MonoBehaviour
     public void SetRotationDirection(float direction)
     {
         rotationDirection = direction;
+        if (direction > 0)
+        {
+            CurlLeft();
+        }
+        if (direction < 0)
+        {
+            CurlRight();
+        }
     }
 
     

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(Rigidbody))]
 public class CurlingStoneSweepController : MonoBehaviour
 {
     [Header("Launch Settings")]
@@ -75,14 +74,14 @@ public class CurlingStoneSweepController : MonoBehaviour
             isSweepingRight = Input.GetKey(rightSweeperKey); // ** NEW SWEEPER CODE **
 
             // 🔍 Debug logs: Is Unity registering these keys?
-            if (Input.GetKeyDown(leftSweeperKey))
-            {
-                Debug.Log("✔️ K key pressed");
-            }
-            if (Input.GetKeyDown(rightSweeperKey))
-            {
-                Debug.Log("✔️ L key pressed");
-            }
+            // if (Input.GetKeyDown(leftSweeperKey))
+            // {
+            //     Debug.Log("✔️ K key pressed");
+            // }
+            // if (Input.GetKeyDown(rightSweeperKey))
+            // {
+            //     Debug.Log("✔️ L key pressed");
+            // }
             return;
         }
 
@@ -93,7 +92,7 @@ public class CurlingStoneSweepController : MonoBehaviour
         CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
 
         // TODO: Move to the match flow
-        if (currentStone.isSliding && currentStone.rb != null) // The following line used to be in immediately after != null and I think it was throwing things off: && Mathf.Abs(curlAmount) > 0.01f
+        if (currentStone != null && currentStone.isSliding && currentStone.rb != null) // The following line used to be in immediately after != null and I think it was throwing things off: && Mathf.Abs(curlAmount) > 0.01f
         {
             // todo: move to match flow
             if (currentStone.rb != null && currentStone.rb.linearVelocity.sqrMagnitude < 0.01f && currentStone.rb.angularVelocity.sqrMagnitude < 0.01f)
@@ -101,13 +100,6 @@ public class CurlingStoneSweepController : MonoBehaviour
                 currentStone.isSliding = false;
                 // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
             }
-            // Only apply curl if stone is still moving
-            //if (stoneRb.linearVelocity.magnitude < 0.05f) // Note the default here is 0.2f; tweaking just for testing purposes
-            //{
-            //    isSliding = false;
-            //    return;
-            //}
-
             ApplySpinForceToStone();
 
             // ** Apply sweeping boost ** NEW SWEEPER CODE

@@ -23,13 +23,13 @@ public class SplashRoundCanvasController : MonoBehaviour
 
     public void OnEnable() {
         // This method is called when the canvas is enabled
-        Debug.Log("Splash Round Canvas Enabled");
+        // Debug.Log("Splash Round Canvas Enabled");
         UpdateTurnDisplay();
         ShowSplashRound();
     }
     public void OnDisable() {
         // This method is called when the canvas is disabled
-        Debug.Log("Splash Round Canvas Disabled");
+        // Debug.Log("Splash Round Canvas Disabled");
         HideSplashRound();
     }
     

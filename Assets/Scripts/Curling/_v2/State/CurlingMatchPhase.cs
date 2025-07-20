@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public enum CurlingMatchPhase
 {
     /// Should only be used at the start
+    None,
     Loading,
     RoundSplash,
     TeamSplash,

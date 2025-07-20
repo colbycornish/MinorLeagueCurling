@@ -1696,6 +1696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3751310387616246193}
+  - component: {fileID: 2682173308774145483}
   m_Layer: 0
   m_Name: CurlingSheet_Construction_001
   m_TagString: Untagged
@@ -1726,6 +1727,48 @@ Transform:
   - {fileID: 8434973571425040793}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 85.305, z: 0}
+--- !u!114 &2682173308774145483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6870860194367112427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc8ad0853db3469b91b51d4d12a6f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Construction Zone
+  description: Curling Hard or Hardly Curling
+  launchPoint: {fileID: 8434973571425040793}
+  targetZone: {fileID: 3678919461714371813}
+  directionalPivot: {fileID: 0}
+  throwerStartLocation: {fileID: 3057574574122054875}
+  sweeperLStartLocation: {fileID: 8065867222572580811}
+  sweeperRStartLocation: {fileID: 253342935296172114}
+  idleLocationsTeamHome:
+  - {fileID: 8609880967598694307}
+  - {fileID: 2839666348536014582}
+  - {fileID: 2071106847360889027}
+  idleLocationsTeamAway:
+  - {fileID: 4125107659429260583}
+  - {fileID: 7582037692458350601}
+  - {fileID: 5280574371325771065}
+  stonesSpawnLocationsTeamHome:
+  - {fileID: 5878027159793582316}
+  - {fileID: 5062281253082522366}
+  - {fileID: 2311576558362023375}
+  - {fileID: 2278347503177242986}
+  - {fileID: 5838712578591820068}
+  stonesSpawnLocationsTeamAway:
+  - {fileID: 3848247517801377767}
+  - {fileID: 7850395251330532813}
+  - {fileID: 6642450686711122385}
+  - {fileID: 3060733018552993065}
+  - {fileID: 3214743026976315191}
+  objectsToHideIfCurling: {fileID: 600224333149425089}
+  afterGameSpawnLocation: {fileID: 0}
 --- !u!1 &6920255534871597807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,7 +2114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2603f3bb021584edebcf9ab02d427117, type: 2}
+  - {fileID: 2100000, guid: a8c7e1f1d8dda4ac9ad82478ee656794, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2108,11 +2151,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 3.71, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7727109235383959940
 GameObject:
@@ -7265,6 +7308,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
+--- !u!1 &3678919461714371813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 302574851230316638, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
+  m_PrefabInstance: {fileID: 3980289247378480315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5304138280330360840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124510903560660147, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}

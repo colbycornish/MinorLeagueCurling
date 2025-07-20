@@ -22,12 +22,12 @@ public class PostThrowResultCanvasController : MonoBehaviour
 
     public void OnEnable() {
         // This method is called when the canvas is enabled
-        Debug.Log("Post Throw Result Canvas Enabled");
+        // Debug.Log("Post Throw Result Canvas Enabled");
         ShowPostThrowResult("GOOD THROW!");
     }
     public void OnDisable() {
         // This method is called when the canvas is disabled
-        Debug.Log("Post Throw Result Canvas Disabled");
+        // Debug.Log("Post Throw Result Canvas Disabled");
         HidePostThrowResult();
     }
 
@@ -36,13 +36,13 @@ public class PostThrowResultCanvasController : MonoBehaviour
         // Display the result message on the canvas
         content.SetActive(true);
         shadow.SetActive(true);
-        Debug.Log("Post Throw Result: " + resultMessage);
+        // Debug.Log("Post Throw Result: " + resultMessage);
     }
     public void HidePostThrowResult() {
         // Hide the result message and reset the canvas
         content.SetActive(false);
         shadow.SetActive(false);
-        Debug.Log("Post Throw Result Canvas Hidden");
+        // Debug.Log("Post Throw Result Canvas Hidden");
     }
 
 }

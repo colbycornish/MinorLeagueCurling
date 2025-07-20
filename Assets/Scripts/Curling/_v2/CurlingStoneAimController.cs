@@ -24,7 +24,7 @@ public class CurlingStoneAimController : MonoBehaviour
     public KeyCode leftAimKey = KeyCode.D;
 
 
-    private void Awake()
+    private void Start()
     {
         // rb = GetComponent<Rigidbody>();
     }
@@ -44,20 +44,26 @@ public class CurlingStoneAimController : MonoBehaviour
         CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
     }
 
+    // ⚠️ This doesn't seem to be working properly, and I'm not sure why.
+    // The debug message does not show up in the logs at all. 
+    // The reseting functionality has been moved to the CurlingGameManager
     public void HandlePhase(CurlingMatchPhase phase)
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-
-        if (currentPhase == CurlingMatchPhase.StoneSelection){ Reset(); }
+        Debug.Log($"[aim controller] Handling new phase {currentPhase}");
+        if (currentPhase == CurlingMatchPhase.StoneSelectionConfirm)
+        {
+            Reset();
+        }
         else if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             Enable();
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Reset();
-            }
         }
-        else { Disable(); }
+        else
+        {
+            Disable();
+        }
+
     }
 
     /// <summary>
@@ -69,6 +75,7 @@ public class CurlingStoneAimController : MonoBehaviour
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
         // Handle spin input before charging
+
         if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             if (Input.GetKeyDown(leftCurlKey))
@@ -80,10 +87,24 @@ public class CurlingStoneAimController : MonoBehaviour
             {
                 ApplyIntialCurlAmount(1f);
             }
-            ChangeDirection();
+
+            if (Input.GetAxis("Horizontal") != 0f)
+            {
+                ChangeDirection();
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reset();
+            }
+
+            // if (Input.GetKeyDown(confirmKey))
+            // {
+            //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
+            // }
         }
+        
     }
-    
+
     // void FixedUpdate()
     // {
     //     CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
@@ -95,9 +116,12 @@ public class CurlingStoneAimController : MonoBehaviour
 
     public void ApplyIntialCurlAmount(float amount)
     {
+
         CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
         curlAmountInitial = amount;
         currentStone.curlAmountInitial = amount;
+        ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
+        tdi.SetCurlAmount(amount);
     }
 
     
@@ -105,10 +129,10 @@ public class CurlingStoneAimController : MonoBehaviour
     /// Curl amount (Spin Amount): This governs how much initial spin is applied to the stone
     /// </summary>
 
-    public void ApplySpinForceToStone()
-    {
-        Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
-    }
+    // public void ApplySpinForceToStone()
+    // {
+    //     Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
+    // }
 
 
     /// <summary>
@@ -117,7 +141,8 @@ public class CurlingStoneAimController : MonoBehaviour
     public void ChangeDirection()
     {
         // Get the rotation direction from the input
-        float input = Input.GetAxis("Horizontal"); // A/D or Left/Right arrows
+        // A/D or Left/Right arrows
+        float input = Input.GetAxis("Horizontal");
 
         if (input != 0)
         {
@@ -170,16 +195,21 @@ public class CurlingStoneAimController : MonoBehaviour
         directionPivotObject = courseData.directionalPivot;
         directionPivot = directionPivotObject.transform;
     }
-    
+
 
     public void Enable()
     {
+        if (directionPivotObject == null) return;
         directionPivotObject.SetActive(true);
+        ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
     }
 
     public void Disable()
     {
+        if (directionPivotObject == null) return;
         directionPivotObject.SetActive(false);
+        ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
+        tdi.DeactivateSpin();
     }
 
     public void Reset()
@@ -188,10 +218,12 @@ public class CurlingStoneAimController : MonoBehaviour
         // hasLaunched = false;
         // isSliding = false;
         // directionPivot.Rotate(0f, input * rotationSpeed * Time.deltaTime, 0f);
-        if (directionPivot != null)
+        Debug.Log("resetting aim controls");
+        if (directionPivot != null && directionPivotObject != null)
         {
             // directionPivot.transform.rotation(0f, 0f, 0f);
-            directionPivot.rotation *= Quaternion.Euler(0, 0, 0);
+            directionPivotObject.transform.rotation = Quaternion.identity;//Quaternion.Euler(0, 0, 0);
+            directionPivot.rotation = Quaternion.identity; //Quaternion.Euler(0, 0, 0);
         }
         curlAmountInitial = 0f;
     }

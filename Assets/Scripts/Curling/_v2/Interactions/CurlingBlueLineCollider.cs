@@ -8,11 +8,10 @@ using UnityEngine;
 /// </summary>
 
 
-public class CurlingRedLineCollider : MonoBehaviour
+public class CurlingBlueLineCollider : MonoBehaviour
 {
 
     // public KeyCode interactKey = KeyCode.E;
-    private bool playerInRange = false;
     private bool stoneInRange = false;
     // public SceneDatabase sceneDatabase;
     // public GameObject promptUI;
@@ -23,13 +22,9 @@ public class CurlingRedLineCollider : MonoBehaviour
         if (other.CompareTag("stone"))
         {
             stoneInRange = true;
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
+            // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
         }
 
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -40,19 +35,11 @@ public class CurlingRedLineCollider : MonoBehaviour
             stoneInRange = false;
         }
 
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-        }
     }
 
     private void Update()
     {
         if (stoneInRange)
-        {
-
-        }
-        if (playerInRange)
         {
             
         }

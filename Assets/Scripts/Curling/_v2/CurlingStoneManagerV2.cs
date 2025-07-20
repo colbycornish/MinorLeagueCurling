@@ -32,6 +32,66 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     private int stonesInPlay = 0;
 
 
+    /// <summary>
+    /// Prepare for Next Turn
+    /// </summary>
+    // TODO: Adjust to look for a selection from the canvas. 
+    // These functions would then be a fallback state for if the selecting player
+    // times out before selecting a stone.
+    public void HasCurrentStoneStopped()
+    {
+        // currentStone.
+    }
+
+
+    // Needs to account for the initial state, with a null starting stone.
+    public void PrepareNextStone()
+    {
+        // stonesInPlay++;
+        // stonesThrown++;
+        // This method is called when a stone has been thrown, and prepares the next stone for the current team.
+        if (stonesThrown < stonesSpawned)
+        {
+            CurlingStone nextStone = GetNextStone();
+            if (nextStone != null)
+            {
+                nextStone.isThrown = false;
+                nextStone.isInPlay = true;
+                nextStone.transform.position = launchPoint.position; // Reset position to launch point
+                nextStone.rb.linearVelocity = Vector3.zero; // Reset velocity
+                nextStone.rb.angularVelocity = Vector3.zero; // Reset angular velocity
+                currentStone = nextStone;
+            }
+        }
+        stonesInPlay++;
+        stonesThrown++;
+    }
+
+
+    // Returns the next stone to be thrown based on the current team and stone index.
+    private CurlingStone GetNextStone()
+    {
+
+        if (stonesThrown < stonesSpawned)
+        {
+            int currentTeam = stonesThrown % 2; // 0 for Team A, 1 for Team B
+            int stoneIndex = stonesThrown / 2; // Each team has 5 stones
+
+            if (currentTeam == 0 && stoneIndex < stonesTeamHome.Count)
+            {
+                Debug.Log("Current Stone Retrieved -> Team A");
+                return stonesTeamHome[stoneIndex];
+            }
+            else if (currentTeam == 1 && stoneIndex < stonesTeamAway.Count)
+            {
+                Debug.Log("Current Stone Retrieved -> Team B");
+                return stonesTeamAway[stoneIndex];
+            }
+        }
+        return null;
+    }
+    
+
 
     /// <summary>
     /// Setup the initial values
@@ -50,8 +110,6 @@ public class CurlingStoneManagerV2 : MonoBehaviour
             teamHome.defaultStone,
             teamAway.defaultStone
         );
-        
-
     }
 
     public void SetLaunchPoint(Transform location)
@@ -120,8 +178,17 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     }
 
     /// <summary>
-    /// Rest all initial values
+    /// Reset various values
     /// </summary>
+    
+    /// clear the stones
+    public void ClearExistingStones()
+    {
+        foreach (CurlingStone stone in FindObjectsByType<CurlingStone>(FindObjectsSortMode.None))
+        {
+            Destroy(stone.gameObject);
+        }
+    }
 
     public void Reset()
     {
@@ -132,68 +199,6 @@ public class CurlingStoneManagerV2 : MonoBehaviour
         stonesSpawnLocationsTeamHome.Clear();
         stonesSpawnLocationsTeamAway.Clear();
         ClearExistingStones();
-    }
-
-    /// clear the stones
-    public void ClearExistingStones()
-    {
-        foreach (CurlingStone stone in FindObjectsByType<CurlingStone>(FindObjectsSortMode.None))
-        {
-            Destroy(stone.gameObject);
-        }   
-    }
-
-
-    /// <summary>
-    /// Prepare for Next Turn
-    /// </summary>
-    // TODO: Adjust to look for a selection from the canvas. 
-    // These functions would then be a fallback state for if the selecting player
-    // times out before selecting a stone.
-
-    // Needs to account for the initial state, with a null starting stone.
-    public void PrepareNextStone()
-    {
-        stonesInPlay++;
-        stonesThrown++;
-        // This method is called when a stone has been thrown, and prepares the next stone for the current team.
-        if (stonesThrown < stonesSpawned)
-        {
-            CurlingStone nextStone = GetNextStone();
-            if (nextStone != null)
-            {
-                nextStone.isThrown = false;
-                nextStone.isInPlay = true;
-                nextStone.transform.position = launchPoint.position; // Reset position to launch point
-                nextStone.rb.linearVelocity = Vector3.zero; // Reset velocity
-                nextStone.rb.angularVelocity = Vector3.zero; // Reset angular velocity
-                currentStone = nextStone;
-            }
-        }
-    }
-
-    
-    // Returns the next stone to be thrown based on the current team and stone index.
-    private CurlingStone GetNextStone()
-    {
-
-        if (stonesThrown < stonesSpawned)
-        {
-            int currentTeam = stonesThrown % 2; // 0 for Team A, 1 for Team B
-            int stoneIndex = stonesThrown / 2; // Each team has 5 stones
-
-            if (currentTeam == 0 && stoneIndex < stonesTeamHome.Count)
-            {
-                Debug.Log("Current Stone Retrieved -> Team A");
-                return stonesTeamHome[stoneIndex];
-            }
-            else if (currentTeam == 1 && stoneIndex < stonesTeamAway.Count)
-            {
-                Debug.Log("Current Stone Retrieved -> Team B");
-                return stonesTeamAway[stoneIndex];
-            }
-        }
-        return null;
     }
 
 
