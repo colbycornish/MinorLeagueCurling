@@ -10,38 +10,84 @@ using UnityEngine.UI;
 
 public class ThrowDirectionIndicator : MonoBehaviour
 {
-    public GameObject ArrowContainer;
+    public GameObject arrowContainer;
     public Transform pivotPoint;
-    public GameObject CurveIndicator;
+    public GameObject curveIndicator;
+    // private bool isCurveActive = false;
+    private bool isActive = false;
 
-    private void OnEnable()
+
+
+    // private void OnEnable()
+    // {
+    //     if (CurlingMatchPhaseManager.Instance == null) return;
+    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
+    // }
+
+    // private void OnDisable()
+    // {
+    //     if (CurlingMatchPhaseManager.Instance == null) return;
+    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
+    // }
+
+
+    // public void HandlePhase(CurlingMatchPhase phase)
+    // {
+    //     if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
+    //     {
+    //         // Set Active
+    //         isActive = true;
+    //     }
+    //     if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
+    //     {
+    //         // Set Active
+    //         isActive = false;
+    //     }
+    // }
+    public void ActivateSpin()
     {
-        if (CurlingMatchPhaseManager.Instance == null) return;
-        CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
+        isActive = true;
     }
 
-    private void OnDisable()
+    public void DeactivateSpin()
     {
-        if (CurlingMatchPhaseManager.Instance == null) return;
-        CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
+        isActive = false;
+    }
+
+    void Update()
+    {
+
+        if (isActive == true)
+        {
+            Debug.Log("Setting Curl amount");
+            SetCurlAmount(CurlingGameManagerV2.Instance.aimController.curlAmountInitial);
+            Spin();
+        }
+
     }
 
 
-    public void HandlePhase(CurlingMatchPhase phase)
+    public void SetCurlAmount(float amount)
     {
-        if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
+        ThrowCurveIndicator tci = curveIndicator.GetComponent<ThrowCurveIndicator>();
+        if (amount == 0f)
         {
-            // Set Active
+            tci.Hide();
+            curveIndicator.SetActive(false);
         }
-        else if (phase == CurlingMatchPhase.CurlingPowerMeterPhase)
+        if (amount < 0f)
         {
-            // do nothing
+            tci.Show();
         }
-        else
+        if (amount < 0f)
         {
-            // Disable
+            tci.Show();
         }
-
+    }
+    
+    public void Spin()
+    {
+        // curveIndicator.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
     }
 
 }

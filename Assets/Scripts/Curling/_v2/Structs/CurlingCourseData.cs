@@ -13,6 +13,7 @@ public class CurlingCourseData : MonoBehaviour
     [Header("In-Play Locations")]
     public Transform launchPoint;
     public GameObject targetZone;
+    public GameObject directionalPivot;
 
     [Header("Player Locations")]
     public Transform throwerStartLocation;

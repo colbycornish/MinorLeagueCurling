@@ -63,6 +63,8 @@ public class CurlingMatchCanvasController : MonoBehaviour
         stoneSelectionCanvasController = stoneSelectionCanvas.GetComponent<StoneSelectionCanvasController>();
         curlingInGameCanvasController = curlingInGameCanvas.GetComponent<CurlingInGameCanvasController>();
         postThrowResultCanvasController = postThrowResultCanvas.GetComponent<PostThrowResultCanvasController>();
+        DisableNonActiveCanvases();
+        ActivateLoadingCanvas(CurlingMatchPhase.Loading);
     }
 
     /// <summary>
@@ -166,6 +168,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
         {
             curlingInGameCanvasController.DisableExhaustionBars();
             curlingInGameCanvasController.DisablePowerMeter();
+            curlingInGameCanvasController.DisableResultText();
             curlingInGameCanvasController.EnableAimDisplay();
             // curlingInGameCanvasController.SetResultText(
             //     "Aiming",
@@ -176,6 +179,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
         {
             curlingInGameCanvasController.DisableAimDisplay();
             curlingInGameCanvasController.EnablePowerMeter();
+            curlingInGameCanvasController.DisableResultText();
             curlingInGameCanvasController.EnableExhaustionBars();
             // curlingInGameCanvasController.SetResultText(
             //     "Power",
@@ -185,6 +189,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
         else if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
         {
             curlingInGameCanvasController.DisableAimDisplay();
+            curlingInGameCanvasController.DisableResultText();
             curlingInGameCanvasController.DisablePowerMeter();
             curlingInGameCanvasController.EnableExhaustionBars();
             // curlingInGameCanvasController.SetResultText(
@@ -207,6 +212,7 @@ public class CurlingMatchCanvasController : MonoBehaviour
         curlingInGameCanvasController.DisableExhaustionBars();
 
         curlingInGameCanvasController.EnableTeamDisplays();
+        
         curlingInGameCanvasController.SetResultText(
             "Oh No!",
             "Out of Bounds"

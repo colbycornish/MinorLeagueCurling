@@ -21,10 +21,18 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public bool isSliding = false;
 
     [Header("Stats")]
+    [Header("Spin")]
     [HideInInspector] public float curlAmountCurrent = 0f;
-    [HideInInspector] public float launchForce = 0f;
-    // [HideInInspector] public float primaryColor = 0f;
+    [HideInInspector] public float curlAmountInitial = 0f;
+    [HideInInspector] public float spinAmountInitial = 0f;
+    [HideInInspector] public float spinAmountCurrent = 0f;
     
+    [Header("Launch Force")]
+    [HideInInspector] public float launchForce = 0f;
+    
+    [Header("Launch Force")]
+    // [HideInInspector] public float primaryColor = 0f;
+
     [Header("Model")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 

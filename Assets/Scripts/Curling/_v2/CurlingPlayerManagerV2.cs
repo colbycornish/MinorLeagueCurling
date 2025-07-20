@@ -28,8 +28,52 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
     private GameObject teamAwaySweeperL;
     private GameObject teamAwaySweeperR;
 
+
     /// <summary>
-    /// Ingesting and setting up all the initial data
+    /// Changing Turns
+    /// </summary>
+    public void PreparePlayers()
+    {
+        currentStoneIndex = 0;
+        currentTeamIndex = 0;
+    }
+
+    public void NextPlayer()
+    {
+        currentStoneIndex++;
+        currentTeamIndex = 1 - currentTeamIndex;
+    }
+
+    public int GetCurrentTeamIndex() => currentTeamIndex;
+    public CurlingTeam GetCurrentTeam() => teams[currentTeamIndex];
+
+
+    /// <summary>
+    /// Updating character positions 
+    /// - Moving players into  playing locations or to the bench
+    /// - Activing the movement controls for active players
+    /// - Deactivating movement controls for non-active players
+    /// </summary>
+
+
+    public void RepositionCharacters()
+    {
+        /// if turn == Home
+        /// - Move Away players to bench
+        /// - deactivate Away players
+        /// - Move Home players into position
+        /// - activate Home players
+        /// 
+        /// if turn == Away
+        /// - Move Home players to bench
+        /// - deactivate Home players
+        /// - Move Away players into position
+        /// - activate Away players
+    }
+    
+
+    /// <summary>
+    /// Setup / Reset: Ingesting and setting up all the initial data
     /// </summary>
     public void Setup(
         CurlingCourseData curlingCourse,
@@ -107,50 +151,5 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
         sweeperRStartLocation = null;
         currentStoneIndex = 0;
         currentTeamIndex = 0;
-    }
-
-
-
-
-    /// <summary>
-    /// Changing Turns
-    /// </summary>
-    public void PreparePlayers()
-    {
-        currentStoneIndex = 0;
-        currentTeamIndex = 0;
-    }
-
-    public void NextPlayer()
-    {
-        currentStoneIndex++;
-        currentTeamIndex = 1 - currentTeamIndex;
-    }
-
-    public int GetCurrentTeamIndex() => currentTeamIndex;
-    public CurlingTeam GetCurrentTeam() => teams[currentTeamIndex];
-
-
-    /// <summary>
-    /// Updating character positions 
-    /// - Moving players into  playing locations or to the bench
-    /// - Activing the movement controls for active players
-    /// - Deactivating movement controls for non-active players
-    /// </summary>
-
-
-    public void RepositionCharacters()
-    {
-        /// if turn == Home
-        /// - Move Away players to bench
-        /// - deactivate Away players
-        /// - Move Home players into position
-        /// - activate Home players
-        /// 
-        /// if turn == Away
-        /// - Move Home players to bench
-        /// - deactivate Home players
-        /// - Move Away players into position
-        /// - activate Away players
     }
 }
