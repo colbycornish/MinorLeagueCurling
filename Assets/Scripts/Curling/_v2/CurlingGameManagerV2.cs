@@ -8,6 +8,11 @@ using UnityEngine;
 /// </summary>
 
 
+[RequireComponent(typeof(CurlingPlayerManagerV2))]
+[RequireComponent(typeof(CurlingStoneManagerV2))]
+[RequireComponent(typeof(CurlingStoneAimController))]
+[RequireComponent(typeof(CurlingStoneSweepController))]
+[RequireComponent(typeof(CurlingEndGameManagerV2))]
 public class CurlingGameManagerV2 : MonoBehaviour
 {
 
@@ -17,17 +22,23 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public CurlingPlayerManagerV2 playerManager;
     public CurlingStoneManagerV2 stoneManager;
     public CurlingStoneAimController aimController;
+    public CurlingStoneSweepController sweepController;
     public CurlingGameData gameData;
 
-    [Header("Course")]
+    [Header("Canvas Objects")]
+    public PowerMeterUiV2 powerMeter;    
+    public PowerMeterUI powerMeterv2;          // Assign PowerMeterUI script in Inspector
+    public GameObject powerMeterPromptUI;
+
+    [Header("[Data] Course")]
     public Camera stoneCamera;
     CurlingCourseData courseData_tmp; // temporary for storage
 
-    [Header("Player")]
+    [Header("[Data] Player")]
     CurlingTeam teamHome_tmp; // temporary for storage
     CurlingTeam teamAway_tmp; // temporary for storage
 
-    [Header("Settings")]
+    [Header("[Data] Settings")]
     public int currentEnd = 1;
     public int maxEnds = 8;
     public int turnCount = 0;
@@ -96,7 +107,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     private void StartCurlingGame()
     {
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.Loading);
-        Debug.Log($"Starting End {currentEnd}");
+        // Debug.Log($"Starting End {currentEnd}");
         turnCount = 0;
         // Resets the current game layout, and removes the existing stones
         endManager.ResetCurlingGame();
@@ -128,6 +139,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     {
         stoneManager.PrepareNextStone();
         stoneCamera.GetComponent<CinemachineCamera>().Follow = stoneManager.currentStone.transform;
+        aimController.Reset();
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
     }
 

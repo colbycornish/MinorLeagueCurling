@@ -1325,6 +1325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9120169967542409367}
+  - component: {fileID: 3683733733243630283}
   m_Layer: 0
   m_Name: CurlingSheet_Ramped_001
   m_TagString: Untagged
@@ -1355,6 +1356,48 @@ Transform:
   - {fileID: 7938279243462233912}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3683733733243630283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6508000178234870602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc8ad0853db3469b91b51d4d12a6f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Ramp
+  description: Jump it up
+  launchPoint: {fileID: 7136904565953611950}
+  targetZone: {fileID: 5813405270788175296}
+  directionalPivot: {fileID: 0}
+  throwerStartLocation: {fileID: 1909580545049876645}
+  sweeperLStartLocation: {fileID: 4006211172097026419}
+  sweeperRStartLocation: {fileID: 7828517811485919086}
+  idleLocationsTeamHome:
+  - {fileID: 6283003651823839367}
+  - {fileID: 8261039723964538911}
+  - {fileID: 2664554532796229218}
+  idleLocationsTeamAway:
+  - {fileID: 1665649106025087037}
+  - {fileID: 3886374811443482788}
+  - {fileID: 8451646466785325523}
+  stonesSpawnLocationsTeamHome:
+  - {fileID: 7544222693513724853}
+  - {fileID: 4106234352306169058}
+  - {fileID: 308846644380404284}
+  - {fileID: 7262862136591426669}
+  - {fileID: 1941736900199360915}
+  stonesSpawnLocationsTeamAway:
+  - {fileID: 6865021467667916262}
+  - {fileID: 4287985380241490111}
+  - {fileID: 3751298154570395341}
+  - {fileID: 5345727587228467236}
+  - {fileID: 1326282924296259138}
+  objectsToHideIfCurling: {fileID: 8279623753138542734}
+  afterGameSpawnLocation: {fileID: 0}
 --- !u!1 &6747293830234225814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,6 +1819,7 @@ GameObject:
   - component: {fileID: 1357991888289057197}
   - component: {fileID: 5745112153378207327}
   - component: {fileID: 6818004295616354583}
+  - component: {fileID: 7324018982123153445}
   m_Layer: 0
   m_Name: BlueLine_NoCollider
   m_TagString: Untagged
@@ -1829,7 +1873,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2603f3bb021584edebcf9ab02d427117, type: 2}
+  - {fileID: 2100000, guid: e8c9cf42b0af84af58f6d9c41f024d8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1866,12 +1910,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 6.37, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7324018982123153445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933732260356742701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d5c6dc26b9e424797a39905edfbe74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8936635182858082463
 GameObject:
   m_ObjectHideFlags: 0
@@ -6060,6 +6116,11 @@ PrefabInstance:
 --- !u!4 &3044271861271865645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124510903560660147, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
+  m_PrefabInstance: {fileID: 6097780928094588318}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5813405270788175296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 302574851230316638, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
   m_PrefabInstance: {fileID: 6097780928094588318}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6426905784306517702

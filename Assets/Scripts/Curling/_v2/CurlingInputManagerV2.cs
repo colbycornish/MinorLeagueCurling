@@ -20,8 +20,10 @@ public class CurlingInputManagerV2 : MonoBehaviour
     public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode leftSweeperKey = KeyCode.K; // Action button for left sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode actionKey = KeyCode.Space;
+    public KeyCode confirmKey = KeyCode.X;
     public KeyCode beginKey = KeyCode.T;
     public KeyCode resetAllKey = KeyCode.R;
+
 
     private void Update()
     {
@@ -51,10 +53,13 @@ public class CurlingInputManagerV2 : MonoBehaviour
                 HandleCurlingAimControlsPhaseInput();
                 break;
             case CurlingMatchPhase.CurlingPowerMeterPhase:
-                HandlePowerMeterInput();
+                // HandlePowerMeterInput();
                 break;
             case CurlingMatchPhase.CurlingStoneSweepingPhase:
-                HandleCurlingStoneSweepingPhaseInput();
+                // HandleCurlingStoneSweepingPhaseInput();
+                break;
+            case CurlingMatchPhase.CurlingNoSweepZone:
+                HandleCurlingNoSweepZonePhaseInput();
                 break;
             case CurlingMatchPhase.PostThrowResult:
                 HandlePostThrowResultInput();
@@ -85,44 +90,44 @@ public class CurlingInputManagerV2 : MonoBehaviour
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.TeamSplash);
         }
     }
+
     private void HandleTeamSplashInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelection);
         }
-        // Handle inputs specific to the Team Splash phase
     }
+
     private void HandleStoneSelectionInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
         }
-        // Handle inputs specific to the Stone Selection phase
     }
+
     private void HandleStoneSelectionDetailsInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
         }
-        // Handle inputs specific to the Stone Selection Details phase
     }
+
     private void HandleStoneSelectionConfirmInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(confirmKey))
         {
             CurlingGameManagerV2.Instance.OnStoneSelectionConfirmed();
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
         }
-        // Handle inputs specific to the Stone Selection Confirm phase
     }
 
-
+    // ..... Handled by Aim Controller
     private void HandleCurlingAimControlsPhaseInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(confirmKey))
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
         }
@@ -130,18 +135,26 @@ public class CurlingInputManagerV2 : MonoBehaviour
     }
 
     // ❌ Handled by Stone Throw Controller
-    private void HandlePowerMeterInput()
-    {
-        // Handled by Stone Throw Controller
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
-        // }
-        // Handle inputs specific to the Power Meter phase
-    }
+    // private void HandlePowerMeterInput()
+    // {
+    //     // Handled by Stone Throw Controller
+    //     // if (Input.GetMouseButtonDown(0))
+    //     // {
+    //     //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+    //     // }
+    //     // Handle inputs specific to the Power Meter phase
+    // }
 
     // ❌ Handled by Stone Sweep Controller
-    private void HandleCurlingStoneSweepingPhaseInput()
+    // private void HandleCurlingStoneSweepingPhaseInput()
+    // {
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
+    //     }
+    // }
+
+    private void HandleCurlingNoSweepZonePhaseInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -149,6 +162,8 @@ public class CurlingInputManagerV2 : MonoBehaviour
         }
         // Handle inputs specific to the Curling Controls phase
     }
+
+    
 
     private void HandlePostThrowResultInput()
     {

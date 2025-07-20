@@ -68,6 +68,15 @@ public class CurlingDemoLauncher : MonoBehaviour
         teamDataB = teamAway.data;
     }
 
+    public void PrepGameDataSettings()
+    {
+        teamHome.SetData();
+        teamAway.SetData();
+
+        teamDataA = teamHome.data;
+        teamDataB = teamAway.data;
+    }
+
 
 }
 

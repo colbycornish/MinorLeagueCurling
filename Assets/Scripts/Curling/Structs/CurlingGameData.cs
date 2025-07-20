@@ -88,7 +88,7 @@ public struct CurlingGameData {
         this.isPaused = false;
         this.roundCurrent = 1;
         this.turnCurrent = 0;
-        this.gameScore.setScore(0, 0, false);
+        this.gameScore.SetScore(0, 0, false);
     }    
 }
 

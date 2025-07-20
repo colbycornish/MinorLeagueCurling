@@ -13,37 +13,24 @@ public class ThrowDirectionIndicator : MonoBehaviour
     public GameObject arrowContainer;
     public Transform pivotPoint;
     public GameObject curveIndicator;
+    public float rotationSpeed = 300f;
+    public float rotationDirection = 1f;
     // private bool isCurveActive = false;
     private bool isActive = false;
 
 
+    private void OnEnable()
+    {
+        SetCurlAmount(0);
+        isActive = false;
+    }
 
-    // private void OnEnable()
-    // {
-    //     if (CurlingMatchPhaseManager.Instance == null) return;
-    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
-    // }
+    private void OnDisable()
+    {
+        SetCurlAmount(0);
+        isActive = false;
+    }
 
-    // private void OnDisable()
-    // {
-    //     if (CurlingMatchPhaseManager.Instance == null) return;
-    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
-    // }
-
-
-    // public void HandlePhase(CurlingMatchPhase phase)
-    // {
-    //     if (phase == CurlingMatchPhase.CurlingAimControlsPhase)
-    //     {
-    //         // Set Active
-    //         isActive = true;
-    //     }
-    //     if (phase == CurlingMatchPhase.CurlingStoneSweepingPhase)
-    //     {
-    //         // Set Active
-    //         isActive = false;
-    //     }
-    // }
     public void ActivateSpin()
     {
         isActive = true;
@@ -59,7 +46,7 @@ public class ThrowDirectionIndicator : MonoBehaviour
 
         if (isActive == true)
         {
-            Debug.Log("Setting Curl amount");
+            // Debug.Log("Setting Curl amount");
             SetCurlAmount(CurlingGameManagerV2.Instance.aimController.curlAmountInitial);
             Spin();
         }
@@ -70,24 +57,31 @@ public class ThrowDirectionIndicator : MonoBehaviour
     public void SetCurlAmount(float amount)
     {
         ThrowCurveIndicator tci = curveIndicator.GetComponent<ThrowCurveIndicator>();
+        tci.SetRotationDirection(amount);
+        rotationDirection = amount;
         if (amount == 0f)
         {
             tci.Hide();
-            curveIndicator.SetActive(false);
+            DeactivateSpin();
         }
         if (amount < 0f)
         {
             tci.Show();
+            tci.CurlLeft();
+            ActivateSpin();
+            
         }
-        if (amount < 0f)
+        if (amount > 0f)
         {
             tci.Show();
+            tci.CurlRight();
+            ActivateSpin();
         }
     }
     
     public void Spin()
     {
-        // curveIndicator.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
+        curveIndicator.transform.Rotate(new Vector3(0, Time.deltaTime * rotationSpeed * rotationDirection, 0));
     }
 
 }

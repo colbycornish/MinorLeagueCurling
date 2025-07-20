@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 5204726120104591182}
   - component: {fileID: 453654403537836629}
   - component: {fileID: 6501307195633512948}
+  - component: {fileID: 7679707422987999247}
   m_Layer: 0
   m_Name: BlueLine_NoCollider
   m_TagString: Untagged
@@ -324,7 +325,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2603f3bb021584edebcf9ab02d427117, type: 2}
+  - {fileID: 2100000, guid: e8c9cf42b0af84af58f6d9c41f024d8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -361,12 +362,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 3.84, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7679707422987999247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577370823452820334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d5c6dc26b9e424797a39905edfbe74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1740671469177042881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,6 +1749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3487990293884576094}
+  - component: {fileID: 5803621997127298848}
   m_Layer: 0
   m_Name: CurlingSheet_Penguins_001
   m_TagString: Untagged
@@ -1766,6 +1780,48 @@ Transform:
   - {fileID: 513620021454497752}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 85.305, z: 0}
+--- !u!114 &5803621997127298848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470651095482536765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc8ad0853db3469b91b51d4d12a6f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Penguins!
+  description: Penguinosss
+  launchPoint: {fileID: 8679031314749307293}
+  targetZone: {fileID: 2312502050398776161}
+  directionalPivot: {fileID: 0}
+  throwerStartLocation: {fileID: 817280928890426122}
+  sweeperLStartLocation: {fileID: 7344567624602404259}
+  sweeperRStartLocation: {fileID: 6405103120312944184}
+  idleLocationsTeamHome:
+  - {fileID: 3758418272174826019}
+  - {fileID: 7868304707592446606}
+  - {fileID: 4739453250714657210}
+  idleLocationsTeamAway:
+  - {fileID: 2202438113234847427}
+  - {fileID: 4659268446772600383}
+  - {fileID: 7314508289369260256}
+  stonesSpawnLocationsTeamHome:
+  - {fileID: 8308936323230875753}
+  - {fileID: 1767888404170293587}
+  - {fileID: 930596554751208629}
+  - {fileID: 6381768481258112892}
+  - {fileID: 8744409809086651732}
+  stonesSpawnLocationsTeamAway:
+  - {fileID: 1819906539263009552}
+  - {fileID: 2390423343724653643}
+  - {fileID: 7367993030794184232}
+  - {fileID: 7310185550668959302}
+  - {fileID: 8974587559629467967}
+  objectsToHideIfCurling: {fileID: 5868622035920791349}
+  afterGameSpawnLocation: {fileID: 0}
 --- !u!1 &7603740761851179916
 GameObject:
   m_ObjectHideFlags: 0
@@ -4321,6 +4377,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
+--- !u!1 &2312502050398776161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 302574851230316638, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}
+  m_PrefabInstance: {fileID: 2604591749635314495}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6522786998212917132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124510903560660147, guid: e6ca8d143498d44768ee9a187a16c62e, type: 3}

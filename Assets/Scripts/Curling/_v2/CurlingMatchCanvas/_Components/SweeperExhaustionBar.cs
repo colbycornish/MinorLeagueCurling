@@ -80,14 +80,26 @@ public class SweeperExhaustionBar : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetKeyDown(rightSweepKey) & controlsRightSweeper){
-            IncreaseExhaustionLevel();
+        CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
+        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
+        {
+            
+            if (Input.GetKeyDown(rightSweepKey) & controlsRightSweeper)
+            {
+                Debug.Log("Exhaustion Bar: Sweep Right");
+                IncreaseExhaustionLevel();
+            }
+            if (Input.GetKeyDown(leftSweepKey) & controlsLeftSweeper)
+            {
+                Debug.Log("Exhaustion Bar: Sweep Left");
+                IncreaseExhaustionLevel();
+            }
+            // DecreaseExhaustionLevel();
         }
-        if (Input.GetKeyDown(leftSweepKey) & controlsLeftSweeper){
-            IncreaseExhaustionLevel();
+        else
+        {
+            // DecreaseExhaustionLevel();
         }
-
-        DecreaseExhaustionLevel();
         
     }
 

@@ -17,6 +17,10 @@ public struct CurlingGameSettings {
     public bool isTimedMode;
     public float timeLimit; // in seconds if timed mode
 
+    [Header("Additional")]
+    public bool enableObstaclePlacementByPlayer;
+    public bool enableObstaclePlacementByEnvironment;
+
     //Constructor (not necessary, but helpful)
     public void SetSettings(
         int roundsPerGame = 5,
@@ -24,7 +28,9 @@ public struct CurlingGameSettings {
         int maxStonesPerTeam = 5,
         bool isPracticeMode = false,
         bool isTimedMode = false,
-        float timeLimit = 0.0f // 0 means no time limit
+        float timeLimit = 0.0f,
+        bool enableObstaclePlacementByPlayer = false,
+        bool enableObstaclePlacementByEnvironment = false
     )
     {
         this.roundsPerGame = roundsPerGame;
@@ -33,6 +39,8 @@ public struct CurlingGameSettings {
         this.isPracticeMode = isPracticeMode;
         this.isTimedMode = isTimedMode;
         this.timeLimit = timeLimit;
+        this.enableObstaclePlacementByPlayer = enableObstaclePlacementByPlayer;
+        this.enableObstaclePlacementByEnvironment = enableObstaclePlacementByEnvironment;
 
         // set the total turns per game based on the rounds and turns per team
         int totalTurnsPerRound = turnsPerTeamPerRound * 2;
