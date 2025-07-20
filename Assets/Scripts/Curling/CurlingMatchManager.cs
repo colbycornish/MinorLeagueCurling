@@ -136,7 +136,7 @@ public class CurlingMatchManager : MonoBehaviour
             roundCurrent: 1,
             turnCurrent: 0
         );
-        game.gameSettings.SetSettings(
+        game.settings.SetSettings(
             roundsPerGame: matchData.matchSettings.roundsPerGame,
             turnsPerTeamPerRound: matchData.matchSettings.turnsPerTeamPerRound,
             maxStonesPerTeam: matchData.matchSettings.maxStonesPerTeam,

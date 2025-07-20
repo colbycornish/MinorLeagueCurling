@@ -23,10 +23,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public CurlingStoneManagerV2 stoneManager;
     public CurlingStoneAimController aimController;
     public CurlingStoneSweepController sweepController;
-    public CurlingGameData gameData;
 
     [Header("Canvas Objects")]
-    public PowerMeterUiV2 powerMeter;    
+    public PowerMeterUiV2 powerMeter;
     public PowerMeterUI powerMeterv2;          // Assign PowerMeterUI script in Inspector
     public GameObject powerMeterPromptUI;
 
@@ -34,14 +33,20 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public Camera stoneCamera;
     CurlingCourseData courseData_tmp; // temporary for storage
 
+    [Header("[Data] Exit Information")]
+    public string exitScene;
+    public string exitSpawnId;
+
     [Header("[Data] Player")]
     CurlingTeam teamHome_tmp; // temporary for storage
     CurlingTeam teamAway_tmp; // temporary for storage
 
     [Header("[Data] Settings")]
-    public int currentEnd = 1;
-    public int maxEnds = 8;
-    public int turnCount = 0;
+    public CurlingGameData gameData;
+    public int turnsMax = 10; // turn count starts at 0
+    // public int currentEnd = 1;
+    // public int maxEnds = 8;
+    // public int turnCount = 0;
 
     private void Awake()
     {
@@ -60,12 +65,18 @@ public class CurlingGameManagerV2 : MonoBehaviour
     public void InitSetupFromDemo(
         CurlingCourseData courseData,
         CurlingTeam teamHome,
-        CurlingTeam teamAway
+        CurlingTeam teamAway,
+        CurlingGameData data,
+        string exitSceneName,
+        string exitSpawnIdName
     )
     {
         courseData_tmp = courseData;
         teamHome_tmp = teamHome;
         teamAway_tmp = teamAway;
+        gameData = data;
+        exitScene = exitSceneName;
+        exitSpawnId = exitSpawnIdName;
         LoadInitialData();
     }
 
@@ -107,8 +118,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
     private void StartCurlingGame()
     {
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.Loading);
+        gameData.turnCurrent = 0;
         // Debug.Log($"Starting End {currentEnd}");
-        turnCount = 0;
+        // turnCount = 0;
         // Resets the current game layout, and removes the existing stones
         endManager.ResetCurlingGame();
 
@@ -127,11 +139,28 @@ public class CurlingGameManagerV2 : MonoBehaviour
     /// <summary>
     /// Next Turn
     /// </summary>
+    // private void HandleNextTurn()
+    // {
+    //     bool gameIsOver = false;
+    //     int currentTurnCount = CurlingGameManagerV2.Instance.gameData.currentTurn;
+    //     int maxTurnCount = CurlingGameManagerV2.Instance.gameData.turnsMax;
+    //     if ((currentTurnCount + 1) == maxTurnCount)
+    //     {
+    //         CurlingGameManagerV2.Instance.EndCurrentCurlingGame(); // End Curling Game
+    //     }
+    //     else
+    //     {
+    //         CurlingGameManagerV2.Instance.NextTurn();
+    //         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelection);
+    //     }
+    // }
+
     public void NextTurn()
     {
         playerManager.NextPlayer();
-        turnCount++;
-        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
+        gameData.turnCurrent++;
+        // turnCount++;
+        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelection);
     }
 
 
@@ -142,23 +171,8 @@ public class CurlingGameManagerV2 : MonoBehaviour
         aimController.Reset();
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
     }
-
-
     // Called when a stone finishes moving, and is now resting in the target zone.
-    public void OnStoneRested(GameObject stone)
-    {
-        // endManager.AddStone(stone);
 
-        // if (playerManager.AllStonesThrown())
-        // {
-        //     EndCurrentCurlingGame();
-        // }
-        // else
-        // {
-        //     playerManager.NextPlayer();
-        //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.TeamSplash);
-        // }
-    }
 
     /// <summary>
     /// End Game
@@ -167,16 +181,24 @@ public class CurlingGameManagerV2 : MonoBehaviour
     {
         endManager.CalculateScore();
         // playerManager.UpdateScore(endManager.GetScore());
+        CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
+        SaveCurlingGameResults();
 
-        if (currentEnd < maxEnds)
-        {
-            currentEnd++;
-            StartCurlingGame();
-        }
-        else
-        {
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
-        }
+    }
+
+    public void SaveCurlingGameResults()
+    {
+        
+    }
+    
+
+    public void ExitCurlingGame()
+    {
+        GameManager._instance.TeleportToScene(
+            exitScene,
+            exitSpawnId
+        );
+
     }
 }
 
