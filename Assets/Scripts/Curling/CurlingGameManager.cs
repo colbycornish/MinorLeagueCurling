@@ -128,7 +128,7 @@ public class CurlingGameManager : MonoBehaviour
     public bool getHasGameEnded() { return hasGameEnded; }
     public bool ShouldEndMatch()
     {
-        if (gameData.turnCurrent > gameData.gameSettings.totalTurnsPerGame)
+        if (gameData.turnCurrent > gameData.settings.totalTurnsPerGame)
         {
             EndGame();
             gameData.hasEnded = true;

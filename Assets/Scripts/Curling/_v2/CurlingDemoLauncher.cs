@@ -13,12 +13,22 @@ using UnityEngine;
 public class CurlingDemoLauncher : MonoBehaviour
 {
 
+    [Header("Critical Information")]
     public CurlingCourseData courseData;
     public CurlingTeam teamHome;
     public CurlingTeam teamAway;
     public CurlingTeamData teamDataA;
     public CurlingTeamData teamDataB;
 
+    [Header("Settings")]
+    public CurlingGameData gameData;
+
+    [Header("End Game Location")]
+    public string exitScene;
+    public string exitSpawnId;
+
+
+    [Header("Useful Tools")]
     public bool demoHasBeenLoaded = false;
     public KeyCode beginKey = KeyCode.T;
     public KeyCode resetAllKey = KeyCode.R;
@@ -51,10 +61,15 @@ public class CurlingDemoLauncher : MonoBehaviour
     public void StartDemo()
     {
         PrepDemoTeamData();
+        PrepGameDataSettings();
+        PrepExitLocation();
         CurlingGameManagerV2.Instance.InitSetupFromDemo(
             courseData,
             teamHome,
-            teamAway
+            teamAway,
+            gameData,
+            exitScene,
+            exitSpawnId
         );
         demoHasBeenLoaded = true;
     }
@@ -70,11 +85,23 @@ public class CurlingDemoLauncher : MonoBehaviour
 
     public void PrepGameDataSettings()
     {
-        teamHome.SetData();
-        teamAway.SetData();
+        gameData.Reset();
+        gameData.settings.SetSettings(
+            5, // roundsPerGame
+            1, // turnsPerTeamPerRound
+            5, // maxStonesPerTeam
+            false, // isPracticeMode
+            false, // isTimedMode
+            0.0f, // timeLimit
+            false, // enableObstaclePlacementByPlayer
+            false // enableObstaclePlacementByEnvironment
+        );
+    }
 
-        teamDataA = teamHome.data;
-        teamDataB = teamAway.data;
+    public void PrepExitLocation()
+    {
+        exitScene = "Town";
+        exitSpawnId = "Town_Curling_Sheet_Underground";
     }
 
 

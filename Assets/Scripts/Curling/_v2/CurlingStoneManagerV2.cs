@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -38,9 +39,65 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     // TODO: Adjust to look for a selection from the canvas. 
     // These functions would then be a fallback state for if the selecting player
     // times out before selecting a stone.
-    public void HasCurrentStoneStopped()
+
+    public bool IsCurrentStoneMoving()
     {
-        // currentStone.
+        
+        CurlingStone cs = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+        Rigidbody rb = cs.rb;
+        float threshold = 0.3f;
+
+        Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
+        if (rb.linearVelocity == Vector3.zero)
+        {
+            Debug.Log("Velocity is zero (direct comparison)");
+            return false;
+            // Do something when velocity is zero
+        }
+
+        // Method 2: Checking the magnitude
+        if (rb.linearVelocity.magnitude < threshold)
+        {
+            Debug.Log("Velocity is near zero (magnitude)");
+            return false;
+            // Do something when velocity is near zero
+        }
+
+        // Method 3: Checking the square of the magnitude (slightly faster than magnitude)
+        if (rb.linearVelocity.sqrMagnitude < threshold * threshold)
+        {
+            Debug.Log("Velocity is near zero (squared magnitude)");
+            return false;
+            // Do something when velocity is near zero
+        }
+
+        // Method 4: Using IsSleeping() (for more reliable check if object is at rest)
+        if (rb.IsSleeping())
+        {
+            Debug.Log("Rigidbody is sleeping (at rest)");
+            return false;
+            // Do something when the rigidbody is sleeping
+        }
+
+        return true;
+    }
+
+    public bool IsCurrentStoneMovingForward()
+    {
+        CurlingStone cs = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+        Rigidbody rb = cs.rb;
+        Vector3 forwardVelocity = Vector3.Project(rb.linearVelocity, transform.forward);
+        float threshold = 0.3f;
+
+        // Check if the forward velocity is close to zero
+        if (Mathf.Approximately(forwardVelocity.magnitude, 0f) || forwardVelocity.magnitude < threshold)
+        {
+            // Object is not moving forward (or very slowly)
+            Debug.Log("Object is not moving forward");
+            return false;
+        }
+
+        return true;
     }
 
 

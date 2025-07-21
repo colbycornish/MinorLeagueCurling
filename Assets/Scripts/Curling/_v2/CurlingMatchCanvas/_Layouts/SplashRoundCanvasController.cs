@@ -36,7 +36,7 @@ public class SplashRoundCanvasController : MonoBehaviour
     public void UpdateTurnDisplay()
     {
         
-        int turnCount = CurlingGameManagerV2.Instance.turnCount;
+        int turnCount = CurlingGameManagerV2.Instance.gameData.turnCurrent;
         string turnDisplay = "Turn " + (turnCount + 1);
 
         turnDisplayText.GetComponent<TMPro.TextMeshProUGUI>().text = turnDisplay;

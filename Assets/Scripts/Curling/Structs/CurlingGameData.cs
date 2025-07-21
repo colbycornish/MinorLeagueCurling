@@ -32,8 +32,8 @@ public struct CurlingGameData {
     public int roundCurrent;
     public int turnCurrent;
 
-    public CurlingGameScore gameScore;
-    public CurlingGameSettings gameSettings;
+    public CurlingGameScore score;
+    public CurlingGameSettings settings;
 
     //Constructor (not necessary, but helpful)
     public void SetGameData(
@@ -61,11 +61,11 @@ public struct CurlingGameData {
     }
 
     // Score & Settings Management
-    public void SetGameScore(CurlingGameScore gameScore) {
-        this.gameScore = gameScore;
+    public void SetScore(CurlingGameScore gameScore) {
+        this.score = gameScore;
     }
-    public void SetGameSettings(CurlingGameSettings gameSettings) {
-        this.gameSettings = gameSettings;
+    public void SetSettings(CurlingGameSettings gameSettings) {
+        this.settings = gameSettings;
     }
 
     // public void SetSettings 
@@ -82,13 +82,13 @@ public struct CurlingGameData {
     }
 
     // Game Data Management
-    public void ResetGame() {
+    public void Reset() {
         this.hasStarted = false;
         this.hasEnded = false;
         this.isPaused = false;
         this.roundCurrent = 1;
         this.turnCurrent = 0;
-        this.gameScore.SetScore(0, 0, false);
+        this.score.SetScore(0, 0, false);
     }    
 }
 
