@@ -194,6 +194,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
 
     public void ExitCurlingGame()
     {
+        // Clear Existing Stones
+        // Clear Team People
+        // Reset All Necessary Things 
         GameManager._instance.TeleportToScene(
             exitScene,
             exitSpawnId
