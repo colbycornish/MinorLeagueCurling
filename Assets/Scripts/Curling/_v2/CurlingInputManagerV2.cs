@@ -30,6 +30,11 @@ public class CurlingInputManagerV2 : MonoBehaviour
         if (!isInputEnabled) return;
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            CurlingGameManagerV2.Instance.ExitCurlingGame();
+        }
+
         switch (currentPhase)
         {
             case CurlingMatchPhase.Loading:
@@ -56,6 +61,7 @@ public class CurlingInputManagerV2 : MonoBehaviour
                 // HandlePowerMeterInput();
                 break;
             case CurlingMatchPhase.CurlingStoneSweepingPhase:
+                HandleCurlingTurnEndInput();
                 // HandleCurlingStoneSweepingPhaseInput();
                 break;
             case CurlingMatchPhase.CurlingNoSweepZone:
@@ -153,10 +159,22 @@ public class CurlingInputManagerV2 : MonoBehaviour
     //         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
     //     }
     // }
+    private void HandleCurlingTurnEndInput()
+    {
+        bool stoneIsMoving = CurlingGameManagerV2.Instance.stoneManager.IsCurrentStoneMoving();
+        bool stoneIsMovingForward = CurlingGameManagerV2.Instance.stoneManager.IsCurrentStoneMovingForward();
+        if (!stoneIsMoving || !stoneIsMovingForward)
+        {
+            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
+        }
+        // Handle inputs specific to the Curling Controls phase
+    }
 
     private void HandleCurlingNoSweepZonePhaseInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        bool stoneIsMoving = CurlingGameManagerV2.Instance.stoneManager.IsCurrentStoneMoving();
+        bool stoneIsMovingForward = CurlingGameManagerV2.Instance.stoneManager.IsCurrentStoneMovingForward();
+        if (!stoneIsMoving || !stoneIsMovingForward)
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
         }
@@ -169,7 +187,16 @@ public class CurlingInputManagerV2 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
+            if (!CurlingGameManagerV2.Instance.gameData.settings.enableObstaclePlacementByPlayer &&
+                !CurlingGameManagerV2.Instance.gameData.settings.enableObstaclePlacementByEnvironment
+            )
+            {
+                HandleNextTurn();
+            }
+            else
+            {
+                CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
+            }
         }
         // Handle inputs specific to the Post Throw Result phase
     }
@@ -186,16 +213,9 @@ public class CurlingInputManagerV2 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // if (CurlingGameManagerV2.Instance.playerManager.totalStonesPerEnd == CurlingGameManagerV2.Instance.playerManager.currentStoneIndex)
-            // {
-            // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
-            // return;
-            // }
-            // else
-            // {
-            CurlingGameManagerV2.Instance.NextTurn();
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
-            // }
+            // CurlingGameManagerV2.Instance.NextTurn();
+            HandleNextTurn();
+            // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
         }
         // Handle inputs specific to the Obstacle Placement phase
     }
@@ -208,12 +228,31 @@ public class CurlingInputManagerV2 : MonoBehaviour
         {
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
         }
+    }
 
+    /// <summary>
+    /// Helpers
+    /// </summary>
+
+    private void HandleNextTurn()
+    {
+        bool gameIsOver = false;
+        int currentTurnCount = CurlingGameManagerV2.Instance.gameData.turnCurrent;
+        int maxTurnCount = CurlingGameManagerV2.Instance.turnsMax;
+        if ((currentTurnCount + 1) == maxTurnCount)
+        {
+            CurlingGameManagerV2.Instance.EndCurrentCurlingGame(); // End Curling Game
+        }
+        else
+        {
+            CurlingGameManagerV2.Instance.NextTurn();
+            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.StoneSelection);
+        }
     }
 
     private void HandleExitCurlingGameInput()
     {
-        
+
     }
     // public void SetCurrentThrower(CurlingStoneThrowControllerV2 thrower)
     // {
