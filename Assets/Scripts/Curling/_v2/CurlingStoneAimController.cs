@@ -29,6 +29,14 @@ public class CurlingStoneAimController : MonoBehaviour
         // rb = GetComponent<Rigidbody>();
     }
 
+    public void AdjustPowers()
+    {
+        float stoneMassMultiplier = CurlingGameManagerV2.Instance.stoneMassMultiplier;
+        this.curlStrength = curlStrength * stoneMassMultiplier;
+        this.curlAmountInitial = curlAmountInitial * stoneMassMultiplier;
+        
+    }
+
     /// <summary>
     /// Listen for curling phase changes
     /// </summary>
@@ -104,11 +112,6 @@ public class CurlingStoneAimController : MonoBehaviour
         }
         
     }
-
-    // void FixedUpdate()
-    // {
-    //     CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
-    // }
 
     /// <summary>
     /// Curl amount (Spin Amount): This governs how much initial spin is applied to the stone

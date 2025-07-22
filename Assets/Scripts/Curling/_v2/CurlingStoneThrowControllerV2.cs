@@ -32,6 +32,13 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
         // rb = GetComponent<Rigidbody>();
     }
 
+    // public void AdjustPowers()
+    // {
+    //     float stoneMassMultiplier = CurlingGameManagerV2.Instance.stoneMassMultiplier;
+    //     launchForce = launchForce * stoneMassMultiplier;
+    //     spinStrength = spinStrength * stoneMassMultiplier;
+    // }
+
     /// <summary>
     /// Listen for curling phase changes
     /// </summary>
@@ -115,26 +122,29 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
 
     public void LaunchStone(float power)
     {
+
         // Get relevant game objects;
-        Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
+        CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+        Rigidbody rb = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
         Vector3 launchDirection = CurlingGameManagerV2.Instance.aimController.directionPivot.forward;
-        float curlAmountInitial = CurlingGameManagerV2.Instance.aimController.curlAmountInitial;
-        // Apply information to Stone
-        CurlingGameManagerV2.Instance.stoneManager.currentStone.isThrown = true;
-        CurlingGameManagerV2.Instance.stoneManager.currentStone.isInPlay = true;
 
         // Fire the stone
-        cs.AddForce(launchDirection * launchForce * power, ForceMode.Impulse);
-        Debug.Log("[Stone Throw] 🚀 Stone launched with power: " + power);
-
+        currentStone.LaunchStone(
+            launchForceMultiplier: power, // power
+            launchForce: launchForce, // default power
+            launchDirection: launchDirection
+        );
 
         // Add initial spin to the stone
-        cs.angularVelocity = Vector3.up * curlAmountInitial * spinStrength; // Add angular velocity for curling effect (purely visual spin)
-        Debug.Log($"[Stone Throw] 🌀 Curl applied: angularVelocity = {cs.angularVelocity}");
+        float curlAmountInitial = CurlingGameManagerV2.Instance.aimController.curlAmountInitial;
+        rb.angularVelocity = Vector3.up * curlAmountInitial * spinStrength; // Add angular velocity for curling effect (purely visual spin)
+        Debug.Log($"[Stone Throw] 🌀 Curl applied: angularVelocity = {rb.angularVelocity}");
 
 
         // Tell relevant parties that stone has been launched
         CurlingGameManagerV2.Instance.stoneManager.currentStone.isSliding = true;
+        CurlingGameManagerV2.Instance.stoneManager.currentStone.isThrown = true;
+        CurlingGameManagerV2.Instance.stoneManager.currentStone.isInPlay = true;
         
         // The trigger for moving onto the sweeping phase has been moved to a yellow line collider
         // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);

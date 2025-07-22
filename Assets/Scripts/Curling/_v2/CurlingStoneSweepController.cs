@@ -26,7 +26,6 @@ public class CurlingStoneSweepController : MonoBehaviour
     public KeyCode resetKey = KeyCode.R;
     public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode leftSweeperKey = KeyCode.K; // Action button for left sweeper sweeping ** NEW SWEEPER CODE **
-    public KeyCode actionKey = KeyCode.Space; // This is the key used to activate the power meter and launch the stone
 
 
     private void Awake()
@@ -37,6 +36,14 @@ public class CurlingStoneSweepController : MonoBehaviour
     /// <summary>
     /// Listen for curling phase changes
     /// </summary>
+    /// 
+    // public void AdjustPowers()
+    // {
+    //     float stoneMassMultiplier = CurlingGameManagerV2.Instance.stoneMassMultiplier;
+    //     sweepStrength = sweepStrength * stoneMassMultiplier;
+    //     sweepBoostAmount = sweepBoostAmount * stoneMassMultiplier;
+    //     sweepDecayRate = sweepDecayRate * stoneMassMultiplier;
+    // }
 
     private void OnEnable()
     {
@@ -54,7 +61,10 @@ public class CurlingStoneSweepController : MonoBehaviour
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
-        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase){ Reset(); }
+        if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
+        {
+            Reset();
+        }
         if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase){
             // hasLaunched = true;
             // isSliding = true;
@@ -122,10 +132,13 @@ public class CurlingStoneSweepController : MonoBehaviour
 
     public void ApplySpinForceToStone()
     {
-        Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
-        Vector3 forward = cs.linearVelocity.normalized;
-        Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
-        cs.AddForce(side * curlAmount * 0.33f * sweepStrength, ForceMode.Acceleration); // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
+        CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+        // Fire the stone
+        currentStone.ApplySpinForceToStone(
+            spinAmount: curlAmount, // curlAmount
+            sweepStrength: sweepStrength
+        );
+        
         // 🧪 Debug: draw movement and curl direction
         // Debug.DrawRay(currentStone.position, forward * 2f, Color.green);  // forward
         // Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
@@ -138,24 +151,22 @@ public class CurlingStoneSweepController : MonoBehaviour
 
     public void ApplySweepingImpactToStone()
     {
-        Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
-        Vector3 forward = cs.linearVelocity.normalized;
+        CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+        Rigidbody rb = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
+        Vector3 forward = rb.linearVelocity.normalized;
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
         sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor + Time.fixedDeltaTime * sweepDecayRate);
-        cs.AddForce(forward * sweepBoostFactor * sweepBoostAmount, ForceMode.Acceleration);
 
-        // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
-        if (isSweepingLeft && !isSweepingRight)
-        {
-            cs.AddForce(-side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
-        }
+        currentStone.ApplySweepingImpactToStone(
+            sweepStrength: sweepStrength,
+            sweepBoostFactor: sweepBoostFactor,
+            sweepBoostAmount: sweepBoostAmount,
+            sweepDecayRate: sweepDecayRate,
+            isSweepingLeft: isSweepingLeft,
+            isSweepingRight: isSweepingRight
+        );
 
-        else if (isSweepingRight && !isSweepingLeft)
-        {
-            cs.AddForce(side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
-        }
-
-        else
+        if (isSweepingLeft && isSweepingRight)
         {
             sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor - Time.fixedDeltaTime * sweepDecayRate);
         }
