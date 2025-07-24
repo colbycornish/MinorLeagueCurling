@@ -47,7 +47,7 @@ public class CurlingStoneManagerV2 : MonoBehaviour
         Rigidbody rb = cs.rb;
         float threshold = 0.3f;
 
-        Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
+        // Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
         if (rb.linearVelocity == Vector3.zero)
         {
             Debug.Log("Velocity is zero (direct comparison)");
