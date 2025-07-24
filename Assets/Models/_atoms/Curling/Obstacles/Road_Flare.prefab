@@ -9553,6 +9553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7200472493659454450}
   - component: {fileID: 4359076795569601279}
+  - component: {fileID: 8159253975036677728}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -9587,7 +9588,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.99607843, g: 0.6039216, b: 0.3764706, a: 1}
   m_Intensity: 0
-  m_Range: 10
+  m_Range: 1.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
   m_CookieSize: 10
@@ -9640,6 +9641,29 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &8159253975036677728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098271954292460700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &8140871319889055480
 GameObject:
   m_ObjectHideFlags: 0
@@ -14555,8 +14579,8 @@ MonoBehaviour:
     fadeOut: 1
     fadeOutDuration: 1
     animateRange: 1
-    rangeStart: 7
-    rangeEnd: 10
+    rangeStart: 1
+    rangeEnd: 1.2
     rangeDuration: 0
     rangeCurve:
       serializedVersion: 2
@@ -14619,9 +14643,12 @@ GameObject:
   - component: {fileID: 5288326213691524826}
   - component: {fileID: 7964369537747956240}
   - component: {fileID: 8738824152020561555}
+  - component: {fileID: 6300935121466826361}
+  - component: {fileID: 29846026340998725}
+  - component: {fileID: 6554589229377546972}
   m_Layer: 0
   m_Name: Road_Flare
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14712,11 +14739,72 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2530351460319517288, guid: 7f8bbc60a29cdb64dbb0904cc77e72b7, type: 3}
+--- !u!114 &6300935121466826361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8468987857473049541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526c67c85502d49328dc451c45a911c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &29846026340998725
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8468987857473049541}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15669
+  m_Height: 1.535764
+  m_Direction: 1
+  m_Center: {x: 0.000000055879354, y: 0.15000263, z: -0.00000014528632}
+--- !u!114 &6554589229377546972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8468987857473049541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99853b8c33979462da42cb67229c2ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Road Flare
+  description: Just your basic curling stone.
+  avatarImage: {fileID: 0}
+  hasInteractionFx: 1
+  isOnFire: 0
+  isSlippery: 0
+  impactFx: {fileID: 4402440628042192964}
+  fireFx: {fileID: 8140871319889055480}
+  animationsAreActive: 0
+  hasAnimations: 0
+  hasImpactFX: 0
+  hasFireFX: 0
+  rb: {fileID: 0}
+  visual: {fileID: 0}
 --- !u!1001 &2294687091169024714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14800,10 +14888,46 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6484188613129301618, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2115536972076770359}
   m_SourcePrefab: {fileID: 100100000, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+--- !u!1 &4402440628042192964 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+  m_PrefabInstance: {fileID: 2294687091169024714}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4402440628042192969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2504214343621411459, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
   m_PrefabInstance: {fileID: 2294687091169024714}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5054211893002613944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6484188613129301618, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+  m_PrefabInstance: {fileID: 2294687091169024714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2115536972076770359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054211893002613944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0

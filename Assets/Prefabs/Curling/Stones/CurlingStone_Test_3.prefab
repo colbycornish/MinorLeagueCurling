@@ -734,7 +734,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6243164765640768093}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1218,10 +1218,12 @@ MonoBehaviour:
   isThrown: 0
   isInPlay: 0
   isSliding: 0
+  isInScoringZone: 0
   curlAmountCurrent: 0
   curlAmountInitial: 0
   spinAmountInitial: 0
   spinAmountCurrent: 0
+  speedCurrent: 0
   rb: {fileID: 7211359655643630791}
   visual: {fileID: 0}
 --- !u!64 &126145218404932243
@@ -1245,7 +1247,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 70948873267775455, guid: 246e142a883b34c4d85c4aa1ac19e57b, type: 3}
+  m_Mesh: {fileID: -8100072554156059167, guid: efe1e3db4ecb841cea1b03e05b5b98b6, type: 3}
 --- !u!1 &7254736780593800109
 GameObject:
   m_ObjectHideFlags: 0
