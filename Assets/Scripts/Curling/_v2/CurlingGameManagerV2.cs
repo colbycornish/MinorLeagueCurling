@@ -43,7 +43,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
 
     [Header("[Data] Settings")]
     public CurlingGameData gameData;
-    public int turnsMax = 10; // turn count starts at 0
+    public int turnsMax = 10;
+    public float stoneMassMultiplier = 10f;
+    // turn count starts at 0
     // public int currentEnd = 1;
     // public int maxEnds = 8;
     // public int turnCount = 0;
@@ -71,6 +73,9 @@ public class CurlingGameManagerV2 : MonoBehaviour
         string exitSpawnIdName
     )
     {
+        // aimController.AdjustPowers();
+        // sweepController.AdjustPowers();
+
         courseData_tmp = courseData;
         teamHome_tmp = teamHome;
         teamAway_tmp = teamAway;

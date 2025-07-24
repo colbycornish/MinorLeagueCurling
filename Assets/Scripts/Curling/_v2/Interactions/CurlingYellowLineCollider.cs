@@ -21,6 +21,7 @@ public class CurlingYellowLineCollider : MonoBehaviour
     {
         if (other.CompareTag("stone"))
         {
+            Debug.Log("Yellow Line Collision");
             stoneInRange = true;
             CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
         }
