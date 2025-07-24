@@ -12,6 +12,10 @@ GameObject:
   - component: {fileID: 3134355731144669030}
   - component: {fileID: 908461207689003948}
   - component: {fileID: 1970910904222752549}
+  - component: {fileID: 5299396059563266414}
+  - component: {fileID: 5049516582406391281}
+  - component: {fileID: 1529341298670528742}
+  - component: {fileID: 3656182221983202679}
   m_Layer: 0
   m_Name: Propunbutan_Big
   m_TagString: Untagged
@@ -110,6 +114,94 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6749683812690227675, guid: 9ff59e443d90a00428110c1d1f1c8190, type: 3}
+--- !u!54 &5299396059563266414
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701090549507367545}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0.05
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5049516582406391281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701090549507367545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397589228e014415286ce86286e4b0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &1529341298670528742
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701090549507367545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6756829
+  m_Height: 4.2
+  m_Direction: 1
+  m_Center: {x: 0.0000022351742, y: 1.72, z: 0.000006824732}
+--- !u!114 &3656182221983202679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701090549507367545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99853b8c33979462da42cb67229c2ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Propane Tank
+  description: Just a propane tank
+  avatarImage: {fileID: 0}
+  hasInteractionFx: 1
+  isOnFire: 0
+  isSlippery: 0
+  impactFx: {fileID: 7929102731621055000}
+  fireFx: {fileID: 8927806859405418187}
+  animationsAreActive: 0
+  hasAnimations: 0
+  hasImpactFX: 0
+  hasFireFX: 0
+  rb: {fileID: 0}
+  visual: {fileID: 0}
 --- !u!1 &2070359512026215182
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +308,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+--- !u!1 &8927806859405418187 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8764043878647920493, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+  m_PrefabInstance: {fileID: 163768340896623014}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8930353065531857593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8767152486562788127, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
@@ -306,6 +403,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+--- !u!1 &7929102731621055000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  m_PrefabInstance: {fileID: 5750275802328024340}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7929102731621279288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2433282508538045228, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
