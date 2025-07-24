@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 /// <summary>
 /// Manages the end game scoring for a curling match.
@@ -17,6 +19,7 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
     // list of stones, instead of adding to / creating a new list. 
     private List<GameObject> stonesThisEnd = new List<GameObject>();
     private int[] endScore = new int[2];
+    public event Action<CurlingGameScore> OnCurlingGameScoreChanged;
 
     public void SetTargetZone(GameObject zone)
     {
@@ -35,19 +38,98 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
 
     public void CalculateScore()
     {
-        stonesThisEnd.Sort((a, b) =>
-            Vector3.Distance(Vector3.zero, a.transform.position)
-            .CompareTo(Vector3.Distance(Vector3.zero, b.transform.position)));
+        if (targetZone == null) return;
+        List<CurlingStone> stonesTeamHome = CurlingGameManagerV2.Instance.stoneManager.stonesTeamHome.Where(a =>
+            a.isInPlay == true
+        ).ToList();
+        List<CurlingStone> stonesTeamAway = CurlingGameManagerV2.Instance.stoneManager.stonesTeamAway.Where(a =>
+            a.isInPlay == true
+        ).ToList();
 
-        endScore = new int[2];
-        if (stonesThisEnd.Count > 0)
+        Vector3 targetZoneCenter = targetZone.transform.position;
+        stonesTeamHome.Sort((a, b) =>
+            Vector3.Distance(targetZoneCenter, a.rb.transform.position)
+            .CompareTo(Vector3.Distance(targetZoneCenter, b.rb.transform.position)));
+
+        stonesTeamAway.Sort((a, b) =>
+            Vector3.Distance(targetZoneCenter, a.rb.transform.position)
+            .CompareTo(Vector3.Distance(targetZoneCenter, b.rb.transform.position)));
+
+        int teamHomeScore = 0;
+        int teamAwayScore = 0;
+
+        if (stonesTeamHome.Count > 0 && stonesTeamAway.Count > 0)
         {
-            CurlingStone stone = stonesThisEnd[0].GetComponent<CurlingStone>();
-            endScore[stone.teamId_i]++;
+            if (IsStoneCloserToTargetThanOtherStone(stonesTeamHome[0], stonesTeamAway[0]) > 0)
+            {
+                teamHomeScore = CalculatePoints(
+                    scoringStones: stonesTeamHome,
+                    closestNonScoringStone: stonesTeamAway[0]
+                );
+                teamAwayScore = 0;
+            }
+            else if (IsStoneCloserToTargetThanOtherStone(stonesTeamAway[0], stonesTeamHome[0]) > 0)
+            {
+                teamAwayScore = CalculatePoints(
+                    scoringStones: stonesTeamAway,
+                    closestNonScoringStone: stonesTeamHome[0]
+                );
+                teamHomeScore = 0;
+            }
+        }
+        // These just catch if only one team has valid stones
+        else if (stonesTeamHome.Count > 0 && stonesTeamAway.Count == 0)
+        {
+            teamHomeScore = stonesTeamHome.Count;
+        }
+        else if (stonesTeamAway.Count > 0 && stonesTeamHome.Count == 0)
+        {
+            teamAwayScore = stonesTeamAway.Count;
         }
 
-        Debug.Log($"Scoring End: Team A: {endScore[0]}, Team B: {endScore[1]}");
+        CurlingGameManagerV2.Instance.gameData.score.SetScore(
+            teamHomeScore: teamHomeScore,
+            teamAwayScore: teamAwayScore,
+            isFinal: false
+        );
+
+        Debug.Log($"[Scoring] Team Home: {teamHomeScore}, Team Away: {teamAwayScore}");
+        OnCurlingGameScoreChanged?.Invoke(CurlingGameManagerV2.Instance.gameData.score);
+        
     }
+
+    /// returns 1 if true
+    /// returns -1 if false
+    /// returns 0 if equal
+    private int IsStoneCloserToTargetThanOtherStone(CurlingStone stoneA, CurlingStone otherStone)
+    {
+        Vector3 targetZoneCenter = targetZone.transform.position;
+        return Vector3.Distance(targetZoneCenter, stoneA.rb.transform.position)
+            .CompareTo(Vector3.Distance(targetZoneCenter, otherStone.rb.transform.position));
+    }
+
+    private int CalculatePoints(List<CurlingStone> scoringStones, CurlingStone closestNonScoringStone)
+    {
+        int score = 0;
+
+        foreach (CurlingStone scoringStone in scoringStones)
+        {
+            if (IsStoneCloserToTargetThanOtherStone(scoringStone, closestNonScoringStone) > 0)
+            {
+                score += 1;
+            }
+            else
+            {
+                return score;
+            }
+        }
+
+        return score;
+
+        
+    }
+
+
 
     public int[] GetScore() => endScore;
 }

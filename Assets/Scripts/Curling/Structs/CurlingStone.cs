@@ -19,6 +19,9 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public bool isThrown = false;
     [HideInInspector] public bool isInPlay = false;
     [HideInInspector] public bool isSliding = false;
+    [HideInInspector] public bool isInScoringZone = false;
+    
+    
 
     [Header("Stats")]
     [Header("Spin")]
@@ -26,6 +29,10 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public float curlAmountInitial = 0f;
     [HideInInspector] public float spinAmountInitial = 0f;
     [HideInInspector] public float spinAmountCurrent = 0f;
+
+    [Header("Speed")]
+    [HideInInspector] public float speedCurrent = 0f;
+
 
     // [Header("Launch Force")]
     // [HideInInspector] public float launchForce = 0f;
