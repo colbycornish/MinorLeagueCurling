@@ -16,6 +16,7 @@ public class PracticeStoneSpinController : MonoBehaviour
     public CurlingStone currentStone;
     public float currentSpinSpeed = 0f;
     public float targetSpinSpeed = 0f;
+    public float spinSpeedStep = 0.2f;
     public float maxTargetSpinSpeed = 3f;
     public float maxTorque = 10f;
     public bool isEnabled = true;
@@ -35,12 +36,12 @@ public class PracticeStoneSpinController : MonoBehaviour
         
     }
 
-    // void FixedUpdate()
-    // {
-    //     if (!isEnabled || currentStone == null) return;
-    //     HandleVisualSpin();
+    void FixedUpdate()
+    {
+        if (!isEnabled || currentStone == null) return;
+        HandleVisualSpin();
         
-    // }
+    }
 
     private void HandleVelocity()
     {
@@ -51,7 +52,7 @@ public class PracticeStoneSpinController : MonoBehaviour
     {
         if (maxTargetSpinSpeed > targetSpinSpeed)
         {
-            targetSpinSpeed += 0.1f;
+            targetSpinSpeed -= spinSpeedStep;
         }
         HandleSweepStop();
     }
@@ -60,18 +61,18 @@ public class PracticeStoneSpinController : MonoBehaviour
     {
         if (-maxTargetSpinSpeed < targetSpinSpeed)
         {
-            targetSpinSpeed -= 0.1f; 
+            targetSpinSpeed += spinSpeedStep; 
         }
         HandleSweepStop();
     }
 
     public void HandleSweepStop()
     {
-        if (targetSpinSpeed > 0f && targetSpinSpeed < 0.1f)
+        if (targetSpinSpeed > 0f && targetSpinSpeed < spinSpeedStep)
         {
             targetSpinSpeed = 0f; // Prevent negative spin speed
         }
-        if (targetSpinSpeed < 0f && targetSpinSpeed > -0.1f)
+        if (targetSpinSpeed < 0f && targetSpinSpeed > -spinSpeedStep)
         {
             targetSpinSpeed = 0f; // Prevent negative spin speed
         }

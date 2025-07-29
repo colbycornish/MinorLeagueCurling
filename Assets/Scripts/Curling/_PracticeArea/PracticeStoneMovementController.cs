@@ -24,18 +24,29 @@ public class PracticeStoneMovementController : MonoBehaviour
     public float maxSpeed = 10f;
     public bool isEnabled = true;
 
+    [Header("Launch Settings")]
+    public float sweepStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
+
+    [Header("Sweeper Settings")]
+    public float sweepBoostAmount = 1.5f; // how strong the speed boost is ** NEW SWEEPER CODE **
+    public float sweepDecayRate = 2f;
+
+    // State
+    // private Rigidbody currentStone; // [HideInInspector] 
+    // private bool hasLaunched = false;
+    // private bool isSliding = false;
+    public float curlAmount = -1f;       // -1 = left curl, 0 = no curl, 1 = right curl
+
+    // Sweeper State ** NEW SWEEPER CODE **
+    private bool isSweepingLeft = false; // ** NEW SWEEPER CODE **
+    private bool isSweepingRight = false; // ** NEW SWEEPER CODE **
+    private float sweepBoostFactor = 0f; // ** NEW SWEEPER CODE **
+
 
     private void Update()
     {
         if (!isEnabled || currentStone == null) return;
-        if (Input.GetKeyDown(sweepLeftKey))
-        {
-            HandleLeftSweep();
-        }
-        if (Input.GetKeyDown(sweepRightKey))
-        {
-            HandleRightSweep();
-        }
+        
 
         if (Input.GetKeyDown(resetKey))
         {
@@ -47,11 +58,18 @@ public class PracticeStoneMovementController : MonoBehaviour
         }
     }
 
-    // void FixedUpdate()
-    // {
-    //     if (!isEnabled || currentStone == null) return;
-        
-    // }
+    void FixedUpdate()
+    {
+        if (!isEnabled || currentStone == null) return;
+        if (Input.GetKeyDown(sweepLeftKey))
+        {
+            HandleLeftSweep();
+        }
+        if (Input.GetKeyDown(sweepRightKey))
+        {
+            HandleRightSweep();
+        }
+    }
 
     private void HandleLaunchStone()
     {
@@ -69,20 +87,36 @@ public class PracticeStoneMovementController : MonoBehaviour
 
     private void HandleLeftSweep()
     {
-        // if (maxTargetSpinSpeed > targetSpinSpeed)
-        // {
-        //     targetSpinSpeed += 0.1f;
-        // }
-        // HandleSweepStop();
+        currentStone.ApplySpinForceToStone(
+            spinAmount: curlAmount, // curlAmount
+            sweepStrength: sweepStrength
+        );
+
+        // currentStone.ApplySweepingImpactToStone(
+        //     sweepStrength: sweepStrength,
+        //     sweepBoostFactor: sweepBoostFactor,
+        //     sweepBoostAmount: sweepBoostAmount,
+        //     sweepDecayRate: sweepDecayRate,
+        //     isSweepingLeft: isSweepingLeft,
+        //     isSweepingRight: isSweepingRight
+        // );
     }
 
     private void HandleRightSweep()
     {
-        // if (-maxTargetSpinSpeed < targetSpinSpeed)
-        // {
-        //     targetSpinSpeed -= 0.1f; 
-        // }
-        // HandleSweepStop();
+        currentStone.ApplySpinForceToStone(
+            spinAmount: curlAmount, // curlAmount
+            sweepStrength: sweepStrength
+        );
+
+        // currentStone.ApplySweepingImpactToStone(
+        //     sweepStrength: sweepStrength,
+        //     sweepBoostFactor: sweepBoostFactor,
+        //     sweepBoostAmount: sweepBoostAmount,
+        //     sweepDecayRate: sweepDecayRate,
+        //     isSweepingLeft: isSweepingLeft,
+        //     isSweepingRight: isSweepingRight
+        // );
     }
 
     public void HandleSweepStop()

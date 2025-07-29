@@ -11,13 +11,15 @@ using UnityEngine;
 
 public class PracticeSweeperController : MonoBehaviour
 {
-    public Transform player;  // Assign your main character here
+    public Transform currentStone;  // Assign your main character here
     public float followDistance = 0f;
     private UnityEngine.AI.NavMeshAgent agent;
     private Animator animator;
     public bool isLeftSweeper = false; // Assuming this is a left sweeper, adjust as needed
     public bool isRightSweeper = false; // Assuming this is a right sweeper, adjust as needed
     public Transform targetToLookAt;
+    public float pathUpdateFrequency = 0.5f;
+    private float pathUpdateTimer = 0f; // How often to update the path
 
 
     void Start()
@@ -27,27 +29,21 @@ public class PracticeSweeperController : MonoBehaviour
         agent.stoppingDistance = 0f;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, currentStone.position);
 
-        // if (distance > followDistance)
-        // {
-        if (isLeftSweeper)
-        {
-            // Debug.Log($"[Distance] {distance}");
-        }
         if (agent != null && agent.isOnNavMesh)
         {
             MoveCloserToPlayer();
         }
-        // MoveCloserToPlayer();
 
-        // }
-        // else
+        // if (pathUpdateTimer <= 0f)
         // {
-        //     SitNextToPlayer();
+            // pathUpdateTimer = pathUpdateFrequency;
+            
         // }
+        // pathUpdateTimer -= Time.fixedDeltaTime;
     }
 
     // void FixedUpdate()
@@ -57,28 +53,21 @@ public class PracticeSweeperController : MonoBehaviour
 
     void MoveCloserToPlayer()
     {
-        // this works for the dog animations specifically
-        // TODO: align the other creater animation labels.
-        // if (animator.GetBool("Sit_b") == true)
-        // {
-        // animator.SetBool("Sit_b", false);
-        // }
 
-        // Vector3 playerForward = player.transform.forward; // player.position
-        Vector3 playerPosition = player.position;
-        // Vector3 sweeperPosition = playerPosition + playerForward * 6;
+        Vector3 playerPosition = currentStone.position;
         Vector3 sweeperPositionL = new Vector3(-4, 0, 8);
         Vector3 sweeperPositionR = new Vector3(4, 0, 8);
-        
-        // Debug.Log($"[playerForward] {playerForward}");
+
         if (isLeftSweeper)
         {
-            Vector3 leftSweeperPosition = playerPosition + sweeperPositionL;//new Vector3(sweeperPosition.x + 4, sweeperPosition.y, sweeperPosition.z);
+            Vector3 leftSweeperPosition = playerPosition + sweeperPositionL;//
+            // Vector3 leftSweeperPosition = new Vector3(playerPosition.x + 4, playerPosition.y, playerPosition.z + 6);
             agent.SetDestination(leftSweeperPosition);
         }
         else if (isRightSweeper)
         {
-            Vector3 rightSweeperPosition = playerPosition + sweeperPositionR; //new Vector3(sweeperPosition.x - 4, sweeperPosition.y, sweeperPosition.z);
+            Vector3 rightSweeperPosition = playerPosition + sweeperPositionR; //
+            // Vector3 rightSweeperPosition = new Vector3(playerPosition.x - 4, playerPosition.y, playerPosition.z + 6);
             agent.SetDestination(rightSweeperPosition);
         }
 
@@ -86,20 +75,8 @@ public class PracticeSweeperController : MonoBehaviour
         {
             transform.LookAt(targetToLookAt.position);
         }
-        
-        
-        
-
-        // float speed = agent.velocity.magnitude;
-        // animator.SetFloat("Movement_f", speed);
     }
 
-    // void SitNextToPlayer()
-    // {
-    //     agent.ResetPath();
-    //     animator.SetFloat("Movement_f", 0f);
-    //     animator.SetBool("Sit_b", true);
-    // }
 
      
 
