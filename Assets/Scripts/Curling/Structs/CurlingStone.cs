@@ -25,10 +25,25 @@ public class CurlingStone : MonoBehaviour
 
     [Header("Stats")]
     [Header("Spin")]
+    /// <summary>
+    /// spin can go in either the left (negative) or right (positive) direction
+    /// </summary>
+    public float spinSpeedInitial = 0f;
+    public float spinSpeedCurrent = 0f;
+    public float spinSpeedTarget = 0f;
+    public float spinSpeedStep = 0.2f;
+    public float spinSpeedTargetMax = 3f;
+    // public float spinSpeedDecay = 0.05f;
+    public float maxTorque = 10f;
+    /// <summary>
+    /// Todo: remove?
+    /// </summary>
     [HideInInspector] public float curlAmountCurrent = 0f;
     [HideInInspector] public float curlAmountInitial = 0f;
     [HideInInspector] public float spinAmountInitial = 0f;
     [HideInInspector] public float spinAmountCurrent = 0f;
+    
+    
 
     [Header("Speed")]
     [HideInInspector] public float speedCurrent = 0f;
@@ -62,7 +77,12 @@ public class CurlingStone : MonoBehaviour
 
     public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
 
-    
+    /// <summary>
+    /// Launch Functions
+    /// </summary>
+    /// <param name="launchForceMultiplier"></param>
+    /// <param name="launchForce"></param>
+    /// <param name="launchDirection"></param>
     
     public void LaunchStone(
         float launchForceMultiplier, // power
@@ -84,6 +104,10 @@ public class CurlingStone : MonoBehaviour
         isSliding = true;
     }
 
+    /// <summary>
+    /// Spin functions
+    /// </summary>
+    
     public void ApplySpinForceToStone(
         float spinAmount,
         float sweepStrength
@@ -98,7 +122,70 @@ public class CurlingStone : MonoBehaviour
         // Debug.DrawRay(currentStone.position, side * 2f, Color.red);       // curl direction
         // Debug.Log("Drawing curl debug rays!"); // FLAG: THIS IS NOT TRIGGERING SO CLEARLY SOMETHING IS WRONG
     }
-    
+
+
+    public void HandleLeftSweepSpin()
+    {
+        spinSpeedTarget -= spinSpeedStep;
+        spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
+        if (spinSpeedTargetMax >= spinSpeedTarget)
+        {
+
+        }
+        HandleSpinStop();
+    }
+
+    public void HandleRightSweepSpin()
+    {
+        spinSpeedTarget += spinSpeedStep;
+        spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
+        // if (-spinSpeedTargetMax <= spinSpeedTarget)
+        // {
+        //     spinSpeedTarget += spinSpeedStep;
+        // }
+        HandleSpinStop();
+    }
+
+    public void HandleSpinStop()
+    {
+        if (spinSpeedTarget > 0f && spinSpeedTarget < spinSpeedStep)
+        {
+            spinSpeedTarget = 0f; // Prevent negative spin speed
+        }
+        if (spinSpeedTarget < 0f && spinSpeedTarget > -spinSpeedStep)
+        {
+            spinSpeedTarget = 0f; // Prevent negative spin speed
+        }
+    }
+
+    public void HandleVisualSpin()
+    {
+        // Rigidbody rb = currentStone.GetComponent<Rigidbody>();
+        float appliedSpinSpeed = spinSpeedTarget;
+        if (spinSpeedCurrent > maxTorque)
+        {
+            appliedSpinSpeed = 0;
+        }
+        float torqueMagnitude = 1f * appliedSpinSpeed; // Adjust this value to control the strength of the spin
+        rb.AddRelativeTorque(transform.up * torqueMagnitude, ForceMode.Acceleration);
+        LogCurrentSpinForce();
+
+    }
+
+    private void LogCurrentSpinForce()
+    {
+        spinSpeedCurrent = rb.angularVelocity.magnitude;
+        Mathf.Clamp(spinSpeedCurrent, -10f, 10f); // Clamp the spin speed to a reasonable range
+
+        // rigidbody.velocity.normalized;
+        // myTransform.forward = Vector3.Slerp(transform.forward, rigidbody.velocity.normalized, gravityRotate * Time.deltaTime);
+
+    }
+
+    /// <summary>
+    /// Sweeping Functions
+    /// </summary>
+
     public void ApplySweepingImpactToStone(
         float sweepStrength,
         float sweepBoostFactor,

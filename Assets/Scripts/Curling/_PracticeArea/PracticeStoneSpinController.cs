@@ -27,11 +27,12 @@ public class PracticeStoneSpinController : MonoBehaviour
         if (!isEnabled || currentStone == null) return;
         if (Input.GetKeyDown(sweepLeftKey))
         {
-            HandleLeftSweep();
+            currentStone.HandleLeftSweepSpin();
         }
         if (Input.GetKeyDown(sweepRightKey))
         {
-            HandleRightSweep();
+            // HandleRightSweep();
+            currentStone.HandleRightSweepSpin();
         }
         
     }
@@ -39,7 +40,7 @@ public class PracticeStoneSpinController : MonoBehaviour
     void FixedUpdate()
     {
         if (!isEnabled || currentStone == null) return;
-        HandleVisualSpin();
+        currentStone.HandleVisualSpin();
         
     }
 
@@ -88,7 +89,7 @@ public class PracticeStoneSpinController : MonoBehaviour
         }
         float torqueMagnitude = 1f * appliedSpinSpeed; // Adjust this value to control the strength of the spin
         currentStone.rb.AddRelativeTorque(transform.up * torqueMagnitude, ForceMode.Acceleration);
-        // LogCurrentSpinForce();
+        LogCurrentSpinForce();
 
     }
 
