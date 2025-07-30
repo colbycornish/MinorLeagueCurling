@@ -5,25 +5,17 @@ using System;
 // [RequireComponent(typeof(Rigidbody))]
 public class CurlingStoneThrowControllerV2 : MonoBehaviour
 {
-    public Action<GameObject> onRestCallback;
+    // public Action<GameObject> onRestCallback;
 
     [Header("Other References")]
-    public PowerMeterUI powerMeter;          // Assign PowerMeterUI script in Inspector
+    public PowerMeterUI powerMeter; // Assign PowerMeterUI script in Inspector
     public GameObject powerMeterPromptUI;
 
     [Header("Launch Settings")]
-    public float launchForce = 100f;        // Base launch force (tweak as needed; adjust for distance--may want to bring force down if we shorten the distance)
-    public float spinStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
-
-    // State
-    // private Rigidbody currentStone;
-    // private bool hasLaunched = false;
-    // public float curlAmount = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
+    public float launchForce = 100f; // Base launch force (tweak as needed; adjust for distance--may want to bring force down if we shorten the distance)
+    public float spinStrength = 5f; // Tweak for how much spin affects trajectory (side force applied during slide)
 
     [Header("Input Keys")]
-    public KeyCode resetKey = KeyCode.R;
-    public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
-    public KeyCode leftSweeperKey = KeyCode.K; // Action button for left sweeper sweeping ** NEW SWEEPER CODE **
     public KeyCode actionKey = KeyCode.Space; // This is the key used to activate the power meter and launch the stone
 
 
@@ -31,13 +23,6 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     {
         // rb = GetComponent<Rigidbody>();
     }
-
-    // public void AdjustPowers()
-    // {
-    //     float stoneMassMultiplier = CurlingGameManagerV2.Instance.stoneMassMultiplier;
-    //     launchForce = launchForce * stoneMassMultiplier;
-    //     spinStrength = spinStrength * stoneMassMultiplier;
-    // }
 
     /// <summary>
     /// Listen for curling phase changes
@@ -67,11 +52,6 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
         {
             ResetPowerMeter();
             ActivatePowerMeter();
-        }
-        
-        if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
-        {
-
         }
     }
 
@@ -109,8 +89,7 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
         powerMeter.SelectPower();  // locks the power level
         float power = powerMeter.GetPower();  // get selected power
         LaunchStone(power);
-        // hasLaunched = true;
-        // isSliding = true;
+        
         if (powerMeterPromptUI != null){
             powerMeterPromptUI.SetActive(false);
         }
@@ -125,27 +104,28 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
 
         // Get relevant game objects;
         CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
-        Rigidbody rb = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
         Vector3 launchDirection = CurlingGameManagerV2.Instance.aimController.directionPivot.forward;
 
         // Fire the stone
         currentStone.LaunchStone(
             launchForceMultiplier: power, // power
             launchForce: launchForce, // default power
-            launchDirection: launchDirection
+            launchDirection: launchDirection,
+            initialSpinDirection: currentStone.spinAmountInitial, // initial spin direction
+            // initialSpinDirection: CurlingGameManagerV2.Instance.aimController.spinAmountInitial, // initial spin direction
+            initialSpinStrength: spinStrength // initial spin strength
         );
+        
+        // Tell relevant parties that stone has been launched
+        currentStone.isSliding = true;
+        currentStone.isThrown = true;
+        currentStone.isInPlay = true;
 
         // Add initial spin to the stone
-        float curlAmountInitial = CurlingGameManagerV2.Instance.aimController.curlAmountInitial;
-        rb.angularVelocity = Vector3.up * curlAmountInitial * spinStrength; // Add angular velocity for curling effect (purely visual spin)
-        Debug.Log($"[Stone Throw] 🌀 Curl applied: angularVelocity = {rb.angularVelocity}");
+        // float curlAmountInitial = CurlingGameManagerV2.Instance.aimController.curlAmountInitial;
+        // rb.angularVelocity = Vector3.up * curlAmountInitial * spinStrength; // Add angular velocity for curling effect (purely visual spin)
+        // Debug.Log($"[Stone Throw] 🌀 Curl applied: angularVelocity = {rb.angularVelocity}");
 
-
-        // Tell relevant parties that stone has been launched
-        CurlingGameManagerV2.Instance.stoneManager.currentStone.isSliding = true;
-        CurlingGameManagerV2.Instance.stoneManager.currentStone.isThrown = true;
-        CurlingGameManagerV2.Instance.stoneManager.currentStone.isInPlay = true;
-        
         // The trigger for moving onto the sweeping phase has been moved to a yellow line collider
         // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
     }  
@@ -155,7 +135,6 @@ public class CurlingStoneThrowControllerV2 : MonoBehaviour
     /// <summary>
     /// Reset / Setup
     /// </summary>
-    
     public void Reset()
     {
         ResetPowerMeter();

@@ -11,33 +11,31 @@ using UnityEngine;
 
 public class PracticeStoneMovementController : MonoBehaviour
 {
+    public bool isEnabled = true;
+
+    [Header("Control Settings")]
     public KeyCode sweepLeftKey = KeyCode.K;
     public KeyCode resetKey = KeyCode.R;
     public KeyCode sweepRightKey = KeyCode.L;
     public KeyCode launchStoneKey = KeyCode.Space;
+
+    [Header("Game Objects")]
     public CurlingStone currentStone;
-    public float currentSpeed = 0f;
     public GameObject directionObject;
     public Transform launchPoint;
-    public float targetSpeed = 0f;
-    public float maxTargetSpeed = 3f;
-    public float maxSpeed = 10f;
-    public bool isEnabled = true;
+
+    // public bool isEnabled = true;
 
     [Header("Launch Settings")]
     public float sweepStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
 
+    [Header("Spin Settings")]
+    public float spinDirection = 0f;
+    public float curlAmount = -1f;       // -1 = left curl, 0 = no curl, 1 = right curl
+
     [Header("Sweeper Settings")]
     public float sweepBoostAmount = 1.5f; // how strong the speed boost is ** NEW SWEEPER CODE **
     public float sweepDecayRate = 2f;
-
-    // State
-    // private Rigidbody currentStone; // [HideInInspector] 
-    // private bool hasLaunched = false;
-    // private bool isSliding = false;
-    public float curlAmount = -1f;       // -1 = left curl, 0 = no curl, 1 = right curl
-
-    // Sweeper State ** NEW SWEEPER CODE **
     private bool isSweepingLeft = false; // ** NEW SWEEPER CODE **
     private bool isSweepingRight = false; // ** NEW SWEEPER CODE **
     private float sweepBoostFactor = 0f; // ** NEW SWEEPER CODE **
@@ -46,7 +44,7 @@ public class PracticeStoneMovementController : MonoBehaviour
     private void Update()
     {
         if (!isEnabled || currentStone == null) return;
-        
+
 
         if (Input.GetKeyDown(resetKey))
         {
@@ -56,7 +54,11 @@ public class PracticeStoneMovementController : MonoBehaviour
         {
             HandleLaunchStone();
         }
+        isSweepingLeft = Input.GetKey(sweepLeftKey); // ** NEW SWEEPER CODE **
+        isSweepingRight = Input.GetKey(sweepRightKey); // ** NEW SWEEPER CODE **
+
     }
+
 
     void FixedUpdate()
     {
@@ -69,7 +71,31 @@ public class PracticeStoneMovementController : MonoBehaviour
         {
             HandleRightSweep();
         }
+        if (isSweepingLeft || isSweepingRight)
+        {
+            ApplySweepingImpactToStone();
+        }
+
+        currentStone.ApplySpinForceToStone(
+            spinAmount: spinDirection,
+            sweepStrength: sweepStrength,
+            spinSpeedMultiplier: 1f // adjusting to spinMultiplier
+        );
+
+        // The stone does have a component of additional spin that can be applied visually,
+        // but currently it does actually affect how the stone moves. We might need to adjust
+        // the stone's game object to have a rigidbody (for movement and physics), and then a 
+        // separate component for just visual looks.
+
+        // TODO: Impliment this.
+        // if (!isEnabled || currentStone == null) return;
+        // currentStone.HandleVisualSpin();
+
     }
+
+    /// <summary>
+    /// Launching functions
+    /// </summary>
 
     private void HandleLaunchStone()
     {
@@ -80,83 +106,65 @@ public class PracticeStoneMovementController : MonoBehaviour
         );
     }
 
-    private void ResetStone()
-    {
-        currentStone.transform.position = launchPoint.position;
-    }
+    /// <summary>
+    /// Sweeping Functions
+    /// </summary>
 
     private void HandleLeftSweep()
     {
-        currentStone.ApplySpinForceToStone(
-            spinAmount: curlAmount, // curlAmount
-            sweepStrength: sweepStrength
-        );
+        /// Sets spin settings in the stone.
+        /// currently doesn't do anything.
+        currentStone.HandleLeftSweepSpin();
 
-        // currentStone.ApplySweepingImpactToStone(
-        //     sweepStrength: sweepStrength,
-        //     sweepBoostFactor: sweepBoostFactor,
-        //     sweepBoostAmount: sweepBoostAmount,
-        //     sweepDecayRate: sweepDecayRate,
-        //     isSweepingLeft: isSweepingLeft,
-        //     isSweepingRight: isSweepingRight
-        // );
+        // this works though
+        spinDirection = -1f;
+        currentStone.ApplySpinForceToStone(
+            spinAmount: spinDirection, // adjusting to spin multiplier
+            sweepStrength: sweepStrength,
+            spinSpeedMultiplier: 1f
+        );
     }
 
     private void HandleRightSweep()
     {
+        /// Sets spin settings in the stone.
+        /// currently doesn't do anything.
+        currentStone.HandleRightSweepSpin();
+
+        // this works though
+        spinDirection = 1f;
         currentStone.ApplySpinForceToStone(
-            spinAmount: curlAmount, // curlAmount
-            sweepStrength: sweepStrength
+            spinAmount: spinDirection, // adjusting to spin multiplier
+            sweepStrength: sweepStrength,
+            spinSpeedMultiplier: 1f
         );
 
-        // currentStone.ApplySweepingImpactToStone(
-        //     sweepStrength: sweepStrength,
-        //     sweepBoostFactor: sweepBoostFactor,
-        //     sweepBoostAmount: sweepBoostAmount,
-        //     sweepDecayRate: sweepDecayRate,
-        //     isSweepingLeft: isSweepingLeft,
-        //     isSweepingRight: isSweepingRight
-        // );
     }
 
-    public void HandleSweepStop()
+    public void ApplySweepingImpactToStone()
     {
-        // if (targetSpinSpeed > 0f && targetSpinSpeed < 0.1f)
-        // {
-        //     targetSpinSpeed = 0f; // Prevent negative spin speed
-        // }
-        // if (targetSpinSpeed < 0f && targetSpinSpeed > -0.1f)
-        // {
-        //     targetSpinSpeed = 0f; // Prevent negative spin speed
-        // }
-    }
+        sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor + Time.fixedDeltaTime * sweepDecayRate);
 
-    private void HandleVisualSpin()
+        currentStone.ApplySweepingImpactToStone(
+            sweepStrength: sweepStrength,
+            sweepBoostFactor: sweepBoostFactor,
+            sweepBoostAmount: sweepBoostAmount,
+            sweepDecayRate: sweepDecayRate,
+            isSweepingLeft: isSweepingLeft,
+            isSweepingRight: isSweepingRight
+        );
+
+        if (isSweepingLeft && isSweepingRight)
+        {
+            sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor - Time.fixedDeltaTime * sweepDecayRate);
+        }
+    }
+    
+    /// <summary>
+    /// Reset the stone to the launch point
+    /// </summary>
+    private void ResetStone()
     {
-        // Rigidbody rb = currentStone.GetComponent<Rigidbody>();
-        // float appliedSpinSpeed = targetSpinSpeed;
-        // if (currentSpinSpeed > maxTorque)
-        // {
-        //     appliedSpinSpeed = 0;   
-        // }
-        // float torqueMagnitude = 1f * appliedSpinSpeed; // Adjust this value to control the strength of the spin
-        // rb.AddRelativeTorque(transform.up * torqueMagnitude, ForceMode.Acceleration);
-        // LogCurrentSpinForce();
-
+        currentStone.transform.position = launchPoint.position;
     }
-
-    private void LogCurrentSpinForce()
-    {
-        // currentSpinSpeed = currentStone.rb.angularVelocity.magnitude;
-        // Mathf.Clamp(currentSpinSpeed, -10f, 10f); // Clamp the spin speed to a reasonable range
-
-        // rigidbody.velocity.normalized;
-
-        // myTransform.forward = Vector3.Slerp(transform.forward, rigidbody.velocity.normalized, gravityRotate * Time.deltaTime);
-
-    }
-
-     
-
-
 }

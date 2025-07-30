@@ -8,7 +8,7 @@ using UnityEngine;
 /// managing player turns, and handling the end of the game.
 /// </summary>
 
-
+[RequireComponent(typeof(CurlingObstacle))]
 public class RoadFlareInteraction : MonoBehaviour
 {
 

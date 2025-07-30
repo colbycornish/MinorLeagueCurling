@@ -37,19 +37,9 @@ public class PracticeSweeperController : MonoBehaviour
         {
             MoveCloserToPlayer();
         }
-
-        // if (pathUpdateTimer <= 0f)
-        // {
-            // pathUpdateTimer = pathUpdateFrequency;
-            
-        // }
-        // pathUpdateTimer -= Time.fixedDeltaTime;
     }
 
-    // void FixedUpdate()
-    // {
-        
-    // }
+
 
     void MoveCloserToPlayer()
     {
@@ -76,9 +66,4 @@ public class PracticeSweeperController : MonoBehaviour
             transform.LookAt(targetToLookAt.position);
         }
     }
-
-
-     
-
-
 }

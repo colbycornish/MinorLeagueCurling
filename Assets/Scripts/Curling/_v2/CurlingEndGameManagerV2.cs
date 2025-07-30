@@ -13,28 +13,31 @@ using System;
 
 public class CurlingEndGameManagerV2 : MonoBehaviour
 {
+    [Header("Game Objects")]
     public GameObject targetZone;
-
     // TODO: This might not be necessary. We might be able to pull the objects from the 
-    // list of stones, instead of adding to / creating a new list. 
-    private List<GameObject> stonesThisEnd = new List<GameObject>();
+    // list of stones, instead of adding to / creating a new list.
+
+    [Header("Score")]
     private int[] endScore = new int[2];
+
+    // [Header("Update Functions")]
     public event Action<CurlingGameScore> OnCurlingGameScoreChanged;
+
+    
+
+    /// <summary>
+    /// Setup functions
+    /// </summary>
 
     public void SetTargetZone(GameObject zone)
     {
         targetZone = zone;
     }
 
-    public void ResetCurlingGame()
-    {
-        stonesThisEnd.Clear();
-    }
-
-    public void AddStone(GameObject stone)
-    {
-        stonesThisEnd.Add(stone);
-    }
+    /// <summary>
+    /// Score Calculation
+    /// </summary>
 
     public void CalculateScore()
     {
@@ -95,7 +98,7 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
 
         Debug.Log($"[Scoring] Team Home: {teamHomeScore}, Team Away: {teamAwayScore}");
         OnCurlingGameScoreChanged?.Invoke(CurlingGameManagerV2.Instance.gameData.score);
-        
+
     }
 
     /// returns 1 if true
@@ -126,10 +129,22 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
 
         return score;
 
-        
+
     }
 
-
+    /// <summary>
+    /// Helper Functions
+    /// </summary>
 
     public int[] GetScore() => endScore;
+    
+    public void ResetCurlingGame()
+    {
+        // stonesThisEnd.Clear();
+    }
+
+    // public void AddStone(GameObject stone)
+    // {
+    //     stonesThisEnd.Add(stone);
+    // }
 }
