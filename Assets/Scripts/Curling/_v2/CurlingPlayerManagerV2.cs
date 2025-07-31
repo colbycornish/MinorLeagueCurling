@@ -47,31 +47,6 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
     public int GetCurrentTeamIndex() => currentTeamIndex;
     public CurlingTeam GetCurrentTeam() => teams[currentTeamIndex];
 
-
-    /// <summary>
-    /// Updating character positions 
-    /// - Moving players into  playing locations or to the bench
-    /// - Activing the movement controls for active players
-    /// - Deactivating movement controls for non-active players
-    /// </summary>
-
-
-    public void RepositionCharacters()
-    {
-        /// if turn == Home
-        /// - Move Away players to bench
-        /// - deactivate Away players
-        /// - Move Home players into position
-        /// - activate Home players
-        /// 
-        /// if turn == Away
-        /// - Move Home players to bench
-        /// - deactivate Home players
-        /// - Move Away players into position
-        /// - activate Away players
-    }
-    
-
     /// <summary>
     /// Setup / Reset: Ingesting and setting up all the initial data
     /// </summary>
@@ -104,6 +79,29 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
         sweeperLStartLocation = curlingCourse.sweeperLStartLocation;
         sweeperRStartLocation = curlingCourse.sweeperRStartLocation;
     }
+    
+    /// <summary>
+    /// Updating character positions 
+    /// - Moving players into  playing locations or to the bench
+    /// - Activing the movement controls for active players
+    /// - Deactivating movement controls for non-active players
+    /// </summary>
+
+
+    public void RepositionCharacters()
+    {
+        /// if turn == Home
+        /// - Move Away players to bench
+        /// - deactivate Away players
+        /// - Move Home players into position
+        /// - activate Home players
+        /// 
+        /// if turn == Away
+        /// - Move Home players to bench
+        /// - deactivate Home players
+        /// - Move Away players into position
+        /// - activate Away players
+    }
 
 
     // TODO: Establish the Curling Player Data structure first.
@@ -114,31 +112,33 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
         teamHomeThrower = Instantiate(teamHome.thrower, idleLocationsTeamHome[0].position, Quaternion.identity);
         teamHome.thrower = teamHomeThrower;
 
-        teamHomeSweeperL = Instantiate(teamHome.sweeperLeft,idleLocationsTeamHome[1].position,Quaternion.identity);
+        teamHomeSweeperL = Instantiate(teamHome.sweeperLeft, idleLocationsTeamHome[1].position, Quaternion.identity);
         teamHome.sweeperLeft = teamHomeSweeperL;
 
-        teamHomeSweeperR = Instantiate(teamHome.sweeperRight,idleLocationsTeamHome[2].position,Quaternion.identity);
+        teamHomeSweeperR = Instantiate(teamHome.sweeperRight, idleLocationsTeamHome[2].position, Quaternion.identity);
         teamHome.sweeperRight = teamHomeSweeperR;
         /// away team
-        teamAwayThrower = Instantiate(teamAway.thrower,idleLocationsTeamAway[0].position,Quaternion.identity);
+        teamAwayThrower = Instantiate(teamAway.thrower, idleLocationsTeamAway[0].position, Quaternion.identity);
         teamAway.thrower = teamAwayThrower;
 
-        teamAwaySweeperL = Instantiate(teamAway.sweeperLeft,idleLocationsTeamAway[1].position,Quaternion.identity);
+        teamAwaySweeperL = Instantiate(teamAway.sweeperLeft, idleLocationsTeamAway[1].position, Quaternion.identity);
         teamAway.sweeperLeft = teamAwaySweeperL;
 
-        teamAwaySweeperR = Instantiate(teamAway.sweeperRight,idleLocationsTeamAway[2].position,Quaternion.identity);
+        teamAwaySweeperR = Instantiate(teamAway.sweeperRight, idleLocationsTeamAway[2].position, Quaternion.identity);
         teamAway.sweeperRight = teamAwaySweeperR;
     }
+
+
+    /// <summary>
+    /// Helper Functions
+    /// </summary>
+    /// 
 
     // Ready?
     public bool IsReady()
     {
         return teams.Count == 2;
     }
-
-    /// <summary>
-    /// Resetting all data
-    /// </summary>
 
     // Reset
     public void Reset()

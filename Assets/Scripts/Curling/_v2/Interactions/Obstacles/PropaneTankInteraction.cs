@@ -10,16 +10,13 @@ using UnityEngine;
 /// managing player turns, and handling the end of the game.
 /// </summary>
 
-
+[RequireComponent(typeof(CurlingObstacle))]
 public class PropaneTankInteraction : MonoBehaviour
 {
-
-    // public KeyCode interactKey = KeyCode.E;
     private bool stoneInRange = false;
-    private bool isFlameActive = true;
+    // private bool isFlameActive = true;
     private CurlingObstacle obstacle;
-    // public SceneDatabase sceneDatabase;
-    // public GameObject promptUI;
+
     private void Awake()
     {
         if (obstacle == null)
@@ -51,10 +48,10 @@ public class PropaneTankInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (isFlameActive)
-        {
+        // if (isFlameActive)
+        // {
 
-        }
+        // }
     }
 }
 

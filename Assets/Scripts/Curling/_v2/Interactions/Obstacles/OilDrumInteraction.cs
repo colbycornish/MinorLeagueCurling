@@ -8,15 +8,19 @@ using UnityEngine;
 /// managing player turns, and handling the end of the game.
 /// </summary>
 
-
+[RequireComponent(typeof(CurlingObstacle))]
 public class OilDrumInteraction : MonoBehaviour
 {
-
-    // public KeyCode interactKey = KeyCode.E;
     private bool stoneInRange = false;
-    // public SceneDatabase sceneDatabase;
-    // public GameObject promptUI;
-
+    private CurlingObstacle obstacle;
+    
+    private void Awake()
+    {
+        if (obstacle == null)
+        {
+            obstacle = GetComponent<CurlingObstacle>();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

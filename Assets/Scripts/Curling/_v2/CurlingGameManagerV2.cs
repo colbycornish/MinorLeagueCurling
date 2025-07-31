@@ -44,7 +44,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     [Header("[Data] Settings")]
     public CurlingGameData gameData;
     public int turnsMax = 10;
-    public float stoneMassMultiplier = 10f;
+    // public float stoneMassMultiplier = 10f;
     // turn count starts at 0
     // public int currentEnd = 1;
     // public int maxEnds = 8;
@@ -75,7 +75,6 @@ public class CurlingGameManagerV2 : MonoBehaviour
     {
         // aimController.AdjustPowers();
         // sweepController.AdjustPowers();
-
         courseData_tmp = courseData;
         teamHome_tmp = teamHome;
         teamAway_tmp = teamAway;
@@ -124,8 +123,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     {
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.Loading);
         gameData.turnCurrent = 0;
-        // Debug.Log($"Starting End {currentEnd}");
-        // turnCount = 0;
+
         // Resets the current game layout, and removes the existing stones
         endManager.ResetCurlingGame();
 

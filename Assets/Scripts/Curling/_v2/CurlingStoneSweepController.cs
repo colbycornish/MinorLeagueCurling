@@ -10,11 +10,6 @@ public class CurlingStoneSweepController : MonoBehaviour
     [Header("Sweeper Settings")]
     public float sweepBoostAmount = 1.5f; // how strong the speed boost is ** NEW SWEEPER CODE **
     public float sweepDecayRate = 2f;
-
-    // State
-    // private Rigidbody currentStone; // [HideInInspector] 
-    // private bool hasLaunched = false;
-    // private bool isSliding = false;
     public float curlAmount = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
 
     // Sweeper State ** NEW SWEEPER CODE **
@@ -36,14 +31,6 @@ public class CurlingStoneSweepController : MonoBehaviour
     /// <summary>
     /// Listen for curling phase changes
     /// </summary>
-    /// 
-    // public void AdjustPowers()
-    // {
-    //     float stoneMassMultiplier = CurlingGameManagerV2.Instance.stoneMassMultiplier;
-    //     sweepStrength = sweepStrength * stoneMassMultiplier;
-    //     sweepBoostAmount = sweepBoostAmount * stoneMassMultiplier;
-    //     sweepDecayRate = sweepDecayRate * stoneMassMultiplier;
-    // }
 
     private void OnEnable()
     {
@@ -60,7 +47,6 @@ public class CurlingStoneSweepController : MonoBehaviour
     public void HandlePhase(CurlingMatchPhase phase)
     {
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-
         if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
         {
             Reset();
@@ -82,16 +68,6 @@ public class CurlingStoneSweepController : MonoBehaviour
             // Track sweeping input ** NEW SWEEPER CODE **
             isSweepingLeft = Input.GetKey(leftSweeperKey); // ** NEW SWEEPER CODE **
             isSweepingRight = Input.GetKey(rightSweeperKey); // ** NEW SWEEPER CODE **
-
-            // 🔍 Debug logs: Is Unity registering these keys?
-            // if (Input.GetKeyDown(leftSweeperKey))
-            // {
-            //     Debug.Log("✔️ K key pressed");
-            // }
-            // if (Input.GetKeyDown(rightSweeperKey))
-            // {
-            //     Debug.Log("✔️ L key pressed");
-            // }
             return;
         }
 
@@ -100,6 +76,7 @@ public class CurlingStoneSweepController : MonoBehaviour
     void FixedUpdate()
     {
         CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
+        if (currentStone == null || currentStone.rb == null) return;
 
         // TODO: Move to the match flow
         if (currentStone != null && currentStone.isSliding && currentStone.rb != null) // The following line used to be in immediately after != null and I think it was throwing things off: && Mathf.Abs(curlAmount) > 0.01f
@@ -172,19 +149,7 @@ public class CurlingStoneSweepController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Helpers
-    /// </summary>
     
-    // public void SetCurrentStone(CurlingStone stone)
-    // {
-    //     // RigidBody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
-    //     if (currentStone != null)
-    //     {
-    //         currentStone.isKinematic = true; // Disable physics on the previous stone
-    //     }
-    //     currentStone = stone.rb;
-    // }
   
     /// <summary>
     /// Reset

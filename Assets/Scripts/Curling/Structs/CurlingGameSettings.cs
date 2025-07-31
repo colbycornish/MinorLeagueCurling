@@ -1,7 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
+public enum CurlingGameType
+{
+    /// Should only be used at the start
+    Default,
+    RollingTotal, // scores cumulate every turn
+    WinnerTakeAll, // after all stones are thrown, only the closest player scores
+    HouseParty, // points are only scored if the stone is within the target zone
+    Skins, // Last thrower must score at least two points to win.
+    HotShot, // Trick shot points based on the situation
+    Practice // throw as many stones as you can
+}
 
 public struct CurlingGameSettings {
     //Variable declaration
@@ -12,7 +22,7 @@ public struct CurlingGameSettings {
     public int maxStonesPerTeam;
 
     [Header("Game Type")]
-    public string gameType;
+    public CurlingGameType gameType;
     public bool isPracticeMode;
     public bool isTimedMode;
     public float timeLimit; // in seconds if timed mode

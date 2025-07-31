@@ -104,8 +104,6 @@ public class CurlingStoneManagerV2 : MonoBehaviour
     // Needs to account for the initial state, with a null starting stone.
     public void PrepareNextStone()
     {
-        // stonesInPlay++;
-        // stonesThrown++;
         // This method is called when a stone has been thrown, and prepares the next stone for the current team.
         if (stonesThrown < stonesSpawned)
         {
@@ -256,39 +254,5 @@ public class CurlingStoneManagerV2 : MonoBehaviour
         stonesSpawnLocationsTeamHome.Clear();
         stonesSpawnLocationsTeamAway.Clear();
         ClearExistingStones();
-    }
-
-
-    
+    }   
 }
-
-
-
-
-
-
-
-            // // Instantiate Team A stones
-            // GameObject stoneA = Instantiate(stonePrefab_TeamA, spawnPointA.position, Quaternion.identity);
-            // CurlingStone curlingStoneA = stoneA.GetComponent<CurlingStone>();
-
-            // // toDo: change id to a string
-            // curlingStoneA.teamId = 0; // Team A
-            // curlingStoneA.stoneIndex = i;
-            // curlingStoneA.rb = stoneA.GetComponent<Rigidbody>();
-            // curlingStoneA.visual = stoneA;
-            // stonesTeamA.Add(curlingStoneA);
-            
-
-            // // Instantiate Team B stones
-            // GameObject stoneB = Instantiate(stonePrefab_TeamB, spawnPointB.position, Quaternion.identity);
-            // CurlingStone curlingStoneB = stoneB.GetComponent<CurlingStone>();
-
-            // // toDo: change id to a string
-            // curlingStoneB.teamId = 1; // Team B
-            // curlingStoneB.stoneIndex = i;
-            // curlingStoneB.rb = stoneB.GetComponent<Rigidbody>();
-            // curlingStoneB.visual = stoneB; // Assuming the visual is the same as the stone GameObject
-            // stonesTeamB.Add(curlingStoneB);
-
-            

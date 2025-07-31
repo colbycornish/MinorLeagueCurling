@@ -12,6 +12,8 @@ using UnityEngine;
 
 public class CurlingDemoLauncher : MonoBehaviour
 {
+    [Header("Use Demo Launcher")]
+    public bool isEnabled = true;
 
     [Header("Critical Information")]
     public CurlingCourseData courseData;
@@ -32,6 +34,7 @@ public class CurlingDemoLauncher : MonoBehaviour
     public bool demoHasBeenLoaded = false;
     public KeyCode beginKey = KeyCode.T;
     public KeyCode resetAllKey = KeyCode.R;
+    
 
     // base skin used for each team
     // This method will takes the exiting stone prefab, and instantiate 5 stones for each team at 
@@ -43,11 +46,11 @@ public class CurlingDemoLauncher : MonoBehaviour
 
     public void Update()
     {
-        if (!demoHasBeenLoaded && Input.GetKeyDown(beginKey))
+        if (!demoHasBeenLoaded && isEnabled && Input.GetKeyDown(beginKey))
         {
             StartDemo();
         }
-        if (demoHasBeenLoaded && Input.GetKeyDown(resetAllKey))
+        if (demoHasBeenLoaded && isEnabled && Input.GetKeyDown(resetAllKey))
         {
             // StartDemo();
         }
