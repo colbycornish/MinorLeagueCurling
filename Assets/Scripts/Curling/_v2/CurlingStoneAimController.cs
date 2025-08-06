@@ -24,19 +24,6 @@ public class CurlingStoneAimController : MonoBehaviour
     public KeyCode leftAimKey = KeyCode.D;
 
 
-    private void Start()
-    {
-        // rb = GetComponent<Rigidbody>();
-    }
-
-    public void AdjustPowers()
-    {
-        float stoneMassMultiplier = CurlingGameManagerV2.Instance.stoneMassMultiplier;
-        this.curlStrength = curlStrength * stoneMassMultiplier;
-        this.curlAmountInitial = curlAmountInitial * stoneMassMultiplier;
-        
-    }
-
     /// <summary>
     /// Listen for curling phase changes
     /// </summary>
@@ -71,7 +58,6 @@ public class CurlingStoneAimController : MonoBehaviour
         {
             Disable();
         }
-
     }
 
     /// <summary>
@@ -119,24 +105,16 @@ public class CurlingStoneAimController : MonoBehaviour
 
     public void ApplyIntialCurlAmount(float amount)
     {
-
         CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
-        curlAmountInitial = amount;
-        currentStone.curlAmountInitial = amount;
+        if (currentStone == null || currentStone.rb == null) return;
+        curlAmountInitial = amount; // TODO: phase out
+        currentStone.curlAmountInitial = amount; // TODO: Phase out
+
+        currentStone.spinSpeedInitial = amount;
+        currentStone.spinAmountInitial = amount;
         ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
         tdi.SetCurlAmount(amount);
     }
-
-    
-    /// <summary>
-    /// Curl amount (Spin Amount): This governs how much initial spin is applied to the stone
-    /// </summary>
-
-    // public void ApplySpinForceToStone()
-    // {
-    //     Rigidbody cs = CurlingGameManagerV2.Instance.stoneManager.currentStone.rb; // currentStone
-    // }
-
 
     /// <summary>
     /// Launch Direction: Change the direction in which the stone is initially thrown
@@ -149,16 +127,12 @@ public class CurlingStoneAimController : MonoBehaviour
 
         if (input != 0)
         {
-            // Debug.Log($"Direction Rotation {input}");
             float rotationAmount = input * rotationSpeed * Time.deltaTime;
-
-            // Debug.Log($"rotation amount {rotationAmount}");
             bool canRotate = CanUpdateDirection(rotationAmount);
             if (canRotate)
             {
                 directionPivot.Rotate(0f, rotationAmount, 0f);
             }
-            // CurlingStone currentStone = CurlingGameManagerV2.Instance.stoneManager.currentStone;
         }
     }
 
@@ -167,24 +141,15 @@ public class CurlingStoneAimController : MonoBehaviour
     {
         float currentY = directionPivot.eulerAngles.y;
         float nextY = currentY + rotationAmount;
+
         // Rotation is 360 degrees. The arrow starts at zero. 
         // We're allowing for 30 degrees to the left, and 30 degrees to the right.
-
-        // Left bound: The launch direction can only move [directionalLimit] to the left
         float leftLimit = 360f - directionalLimit;
-        // Right bound:  The launch direction can only move [directionalLimit] to the left
         float rightLimit = 0 + directionalLimit;
 
         // Test that the next position is within the range
         // [leftBound....359, 360/0, 1....rightBound]
-        if (nextY > leftLimit || nextY < rightLimit)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (nextY > leftLimit || nextY < rightLimit);
     }
 
 
@@ -217,14 +182,8 @@ public class CurlingStoneAimController : MonoBehaviour
 
     public void Reset()
     {
-
-        // hasLaunched = false;
-        // isSliding = false;
-        // directionPivot.Rotate(0f, input * rotationSpeed * Time.deltaTime, 0f);
-        Debug.Log("resetting aim controls");
         if (directionPivot != null && directionPivotObject != null)
         {
-            // directionPivot.transform.rotation(0f, 0f, 0f);
             directionPivotObject.transform.rotation = Quaternion.identity;//Quaternion.Euler(0, 0, 0);
             directionPivot.rotation = Quaternion.identity; //Quaternion.Euler(0, 0, 0);
         }

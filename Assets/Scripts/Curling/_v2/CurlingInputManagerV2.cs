@@ -11,10 +11,7 @@ using UnityEngine;
 
 public class CurlingInputManagerV2 : MonoBehaviour
 {
-    // public CurlingGameManagerV2 gameManager;
-    // private CurlingStoneThrowControllerV2 currentThrower;
     private bool isInputEnabled = true;
-    // public KeyCode resetKey = KeyCode.R;
     public KeyCode rightCurlKey = KeyCode.E;
     public KeyCode leftCurlKey = KeyCode.Q;
     public KeyCode rightSweeperKey = KeyCode.L; // Action button for right sweeper sweeping ** NEW SWEEPER CODE **
@@ -37,6 +34,8 @@ public class CurlingInputManagerV2 : MonoBehaviour
 
         switch (currentPhase)
         {
+            case CurlingMatchPhase.None:
+                break;
             case CurlingMatchPhase.Loading:
                 break;
             case CurlingMatchPhase.RoundSplash:
