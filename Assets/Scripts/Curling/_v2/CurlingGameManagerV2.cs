@@ -44,11 +44,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     [Header("[Data] Settings")]
     public CurlingGameData gameData;
     public int turnsMax = 10;
-    // public float stoneMassMultiplier = 10f;
-    // turn count starts at 0
-    // public int currentEnd = 1;
-    // public int maxEnds = 8;
-    // public int turnCount = 0;
+
 
     private void Awake()
     {
@@ -121,6 +117,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
     // Starts the curling game.
     private void StartCurlingGame()
     {
+        
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.Loading);
         gameData.turnCurrent = 0;
 
@@ -134,6 +131,7 @@ public class CurlingGameManagerV2 : MonoBehaviour
         playerManager.PreparePlayers();
 
         // Sets the initial phase of the match
+        
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
         // OnStoneSelectionConfirmed();
     }
@@ -186,7 +184,6 @@ public class CurlingGameManagerV2 : MonoBehaviour
         // playerManager.UpdateScore(endManager.GetScore());
         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.FinalResults);
         SaveCurlingGameResults();
-
     }
 
     public void SaveCurlingGameResults()
@@ -204,7 +201,6 @@ public class CurlingGameManagerV2 : MonoBehaviour
             exitScene,
             exitSpawnId
         );
-
     }
 }
 
