@@ -75,14 +75,12 @@ public class SplashTeamCanvasController : MonoBehaviour
         // Display the splash team on the canvas
         content.SetActive(true);
         shadow.SetActive(true);
-        // Debug.Log("Splash Team Displayed: " + teamName_1 + " vs " + teamName_2);
     }
     public void HideSplashTeam()
     {
         // Hide the splash team on the canvas
         content.SetActive(false);
         shadow.SetActive(false);
-        // Debug.Log("Splash Team Hidden");
     }
 
 
