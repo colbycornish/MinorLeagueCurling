@@ -30,8 +30,8 @@ public abstract class CharacterState : StateBehaviour, IOwnedState<CharacterStat
     /************************************************************************************************************************/
 
     [SerializeField]
-    private Character _Character;
-    public Character Character => _Character;
+    private AnimancerCharacter _Character;
+    public AnimancerCharacter Character => _Character;
 
     /************************************************************************************************************************/
 

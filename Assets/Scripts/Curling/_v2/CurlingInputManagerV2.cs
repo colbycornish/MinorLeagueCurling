@@ -27,6 +27,11 @@ public class CurlingInputManagerV2 : MonoBehaviour
         if (!isInputEnabled) return;
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
+        // if (Input.GetKeyDown(KeyCode.T))
+        // {
+        //     CurlingGameManagerV2.Instance.InitSetupFromDemo();
+        // }
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             CurlingGameManagerV2.Instance.ExitCurlingGame();

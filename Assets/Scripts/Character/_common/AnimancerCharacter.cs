@@ -15,7 +15,7 @@ using UnityEngine;
 
     // [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Character")]
     // [AnimancerHelpUrl(typeof(Character))]
-    public class Character : MonoBehaviour
+    public class AnimancerCharacter : MonoBehaviour
     {
         /************************************************************************************************************************/
 
