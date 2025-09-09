@@ -12,11 +12,12 @@ public class CharacterSquareItemState : MonoBehaviour
     [SerializeField] private RawImage faceRenderTexture;
 
     public void UpdateText(string name){
-        textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}:";
+        textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}";
     }
 
-    public void UpdateFace(RawImage renderTexture){
-        faceRenderTexture = renderTexture;
+    public void UpdateFace(RenderTexture renderTexture){
+        faceRenderTexture.texture = renderTexture;
+        // faceRenderTexture = renderTexture;
     }
 
     public void UpdateBackgroundColor(Image bc){

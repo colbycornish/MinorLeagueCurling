@@ -35,61 +35,36 @@ public struct CurlingPlayerStats
 
     [Header("Exhaustion Stats")]
     public CurlingPlayerStat exhaustionRate;
-    // public int exhaustionLevelMax;
-    // public int exhaustionLevelMin;
-    // public int exhaustionLevelCurrent;
 
     [Header("Cooldown Stats")]
     public CurlingPlayerStat cooldownRate; // How quickly the player can recover from exhaustion
 
     [Header("Strength Stats")]
     public CurlingPlayerStat strength;
-    // public int strengthLevelBase;
-    // public int strengthLevelMax;
-    // public int strengthLevelMin;
-    // public int strengthLevelCurrent;
-
+    
     [Header("Stamina Stats")]
     public CurlingPlayerStat stamina;
-    // public int staminaLevelBase;
-    // public int staminaLevelMax;
-    // public int staminaLevelMin;
-    // public int staminaLevelCurrent;
 
     [Header("Speed Stats")]
-    CurlingPlayerStat speed;
-    // public int speedLevelBase;
-    // public int speedLevelMax;
-    // public int speedLevelMin;
-    // public int speedLevelCurrent;
+    public CurlingPlayerStat speed;
 
     [Header("Sweeper State")]
     public bool isSweeping;
     public bool isExhausted;
     public bool hasAdditionalBenefits;
-    // Add any additional benefits or animations as needed
-    // public List<string> additionalBenefits; // List of additional benefits
-    // public List<string> animations; // List of animations
-
 
     // Sweeper State Functions
-    public void SetIsSweepingState(
-        bool isSweeping = false
-    )
+    public void SetIsSweepingState(bool isSweeping = false)
     {
         this.isSweeping = isSweeping; // Default sweeping state
     }
 
-    public void SetIsExhausted(
-        bool isExhausted = false
-    )
+    public void SetIsExhausted(bool isExhausted = false)
     {
         this.isExhausted = isExhausted; // Default exhausted state
     }
 
-    public void SetHasAdditionalBenefits(
-        bool hasAdditionalBenefits = false
-    )
+    public void SetHasAdditionalBenefits(bool hasAdditionalBenefits = false)
     {
         this.hasAdditionalBenefits = hasAdditionalBenefits; // Default additional benefits state
     }
@@ -113,6 +88,13 @@ public struct CurlingPlayerStat
         this.max = max; // Default max value
         this.min = min; // Default min value
         this.current = baseValue; // Default current value
+    }
+
+    public void SetCurrent(int newCurrent)
+    {
+        if (newCurrent > max) this.current = max;
+        else if (newCurrent < min) this.current = min;
+        else this.current = newCurrent;
     }
 
     public void Reset()

@@ -19,6 +19,7 @@ public enum CanvasState
 public class CanvasManager : MonoBehaviour
 {
     public static CanvasManager _instance;
+    [Header("Canvases")]
     public GameObject CanvasMainMenu;
     public GameObject CanvasPauseMenu;
     public GameObject CanvasDialogue;
@@ -28,6 +29,10 @@ public class CanvasManager : MonoBehaviour
     public GameObject CanvasCredits;
     public GameObject CanvasCurlingMatch;
     public GameObject CanvasLoading;
+
+    [Header("Helper Areas")]
+    public GameObject CanvasDisplayArea; // Place to put 3d models that can then be rendered into a UI Canvas
+    public CanvasDisplayAreaController canvasDisplayAreaController;
 
     public CanvasState currentState = CanvasState.None;
 
@@ -45,7 +50,10 @@ public class CanvasManager : MonoBehaviour
         // isReady = true;
     }
 
-
+    /// <summary>
+    /// Canvas Control Area
+    /// </summary>
+    /// <param name="newState"></param>
     public void OpenCanvas(CanvasState newState)
     {
         if (currentState == newState) return;
@@ -115,4 +123,9 @@ public class CanvasManager : MonoBehaviour
     {
         canvas.SetActive(false);
     }
+
+    /// <summary>
+    /// Canvas Display Area Control
+    /// </summary>
+    /// <param name="newState"></param>
 }

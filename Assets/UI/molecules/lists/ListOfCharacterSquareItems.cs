@@ -22,7 +22,7 @@ public class ListOfCharacterSquareItems : MonoBehaviour
     {
 
     }
-    
+
     public void CreateList()
     {
 
@@ -39,7 +39,8 @@ public class ListOfCharacterSquareItems : MonoBehaviour
 
     public void HighlightPrev()
     {
-        if (selectedIndex > 0){
+        if (selectedIndex > 0)
+        {
             selectedIndex--;
             UpdateSelectionDisplay();
         }
@@ -47,23 +48,46 @@ public class ListOfCharacterSquareItems : MonoBehaviour
 
     public void UpdateSelectionDisplay()
     {
-        
+
     }
 
     public void BuildList(
         GameObject[] characterPrefabs
     )
     {
-        // foreach (Transform child in listArea.transform) {
-        //     GameObject.Destroy(child.gameObject);
-        // }
+        foreach (Transform child in listArea.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
 
-        // foreach (GameObject characterPrefab in characterPrefabs) {
-        //     GameObject listItem = Instantiate(listItemPrefab, listArea.transform);
-        //     CharacterSquareItemController controller = listItem.GetComponent<CharacterSquareItemController>();
-        //     controller.Init(characterPrefab);
-        //     controller.UpdateUI();
-        // }
+        foreach (GameObject characterPrefab in characterPrefabs)
+        {
+            Character c = characterPrefab.GetComponent<Character>();
+
+            GameObject listItem = Instantiate(listItemPrefab, listArea.transform);
+            CharacterSquareItem controller = listItem.GetComponent<CharacterSquareItem>();
+            listItem.transform.SetParent(this.transform);
+            
+            RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetCharacterRenderTextureById(
+                characterId: c.id,
+                getFace: true,
+                getBody: false
+            );
+
+            controller.Init(
+                name: c.fullName,
+                characterId: c.id,
+                renderTexture: renderTexture
+            );
+            // controller.UpdateUI();
+        }
+    }
+
+    public void ClearList()
+    {
+        foreach (Transform child in listArea.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
     }
 
 

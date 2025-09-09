@@ -12,6 +12,11 @@ public class LayoutGameobjectInGrid : MonoBehaviour
     [ContextMenu("Layout Grid")]
     void Start()
     {
+        LayoutIntoGrid();
+    }
+
+    public void LayoutIntoGrid()
+    {
         int index = 0;
         if(subChildren)
         {

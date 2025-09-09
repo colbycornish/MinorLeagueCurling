@@ -10,12 +10,14 @@ public class SectionTeamSelection : MonoBehaviour
     // public Sprite icon;
     [SerializeField] public CharacterSelectionDisplayArea characterSelectionDisplayArea;
     [SerializeField] public SelectedDisplayArea selectedDisplayArea;
+    [SerializeField] public ListOfCharacterSquareItems listOfCharacterSquareItems;
     // Time in seconds to complete shrinkage
 
 
     void Start()
     {
         StartCoroutine(selectedDisplayArea.leftSweeperItem.Expand());
+        LoadData();
     }
 
     //
@@ -25,13 +27,21 @@ public class SectionTeamSelection : MonoBehaviour
         {
             selectedDisplayArea.ChangeSelection(-1);
             characterSelectionDisplayArea.ChangeSelection(-1);
-            
+
         }
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             selectedDisplayArea.ChangeSelection(1);
             characterSelectionDisplayArea.ChangeSelection(1);
         }
+    }
+
+    public void LoadData()
+    {
+        listOfCharacterSquareItems.ClearList();
+        listOfCharacterSquareItems.BuildList(
+            CurlingPreGameSetupManager._instance.listOfCharacters.ToArray()
+        );
     }
 
     // public void ChangeSelection(int modifyIndex)
@@ -69,5 +79,5 @@ public class SectionTeamSelection : MonoBehaviour
     //     }
     // }
 
-   
+
 }

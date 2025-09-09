@@ -20,4 +20,50 @@ public struct CurlingPlayer
     public GameObject character;
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 
+
+
+    public void BuildRandomStats()
+    {
+        stats = new CurlingPlayerStats
+        {
+            exhaustionRate = new CurlingPlayerStat
+            {
+                baseValue = Random.Range(1, 100),
+                min = 100,
+                max = 1,
+                current = Random.Range(1, 100)
+            },
+            cooldownRate = new CurlingPlayerStat
+            {
+                baseValue = Random.Range(1, 100),
+                min = 100,
+                max = 1,
+                current = Random.Range(1, 100)
+            },
+            strength = new CurlingPlayerStat
+            {
+                baseValue = Random.Range(1, 100),
+                min = 100,
+                max = 1,
+                current = Random.Range(1, 100)
+            },
+            stamina = new CurlingPlayerStat
+            {
+                baseValue = Random.Range(1, 100),
+                min = 100,
+                max = 1,
+                current = Random.Range(1, 100)
+            },
+            speed = new CurlingPlayerStat
+            {
+                baseValue = Random.Range(1, 100),
+                min = 100,
+                max = 1,
+                current = Random.Range(1, 100)
+            },
+            isSweeping = false,
+            isExhausted = false,
+            hasAdditionalBenefits = false
+        };
+    }
 }

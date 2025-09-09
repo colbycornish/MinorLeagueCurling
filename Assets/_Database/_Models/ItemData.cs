@@ -1,4 +1,5 @@
 [System.Serializable]
+
 public class ItemData
 {
     public string id;

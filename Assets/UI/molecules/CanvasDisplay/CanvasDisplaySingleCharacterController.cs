@@ -8,14 +8,14 @@ using TMPro;
 public class CanvasDisplaySingleCharacterController : MonoBehaviour
 {
     // public Sprite icon;
-    [SerializeField] private string id;
-    [SerializeField] private GameObject characterPrefab;
-    [SerializeField] private GameObject model;
-    [SerializeField] private GameObject modelArea;
-    [SerializeField] private Camera cameraFace;
-    [SerializeField] private Camera cameraFull;
-    [SerializeField][HideInInspector] private RenderTexture rtFace;
-    [SerializeField][HideInInspector] private RenderTexture rtFull;
+    [SerializeField] public string id;
+    [SerializeField] public GameObject characterPrefab;
+    [SerializeField] public GameObject model;
+    [SerializeField] public GameObject modelArea;
+    [SerializeField] public Camera cameraFace;
+    [SerializeField] public Camera cameraFull;
+    [SerializeField][HideInInspector] public RenderTexture rtFace;
+    [SerializeField][HideInInspector] public RenderTexture rtFull;
 
     public void Init(
         GameObject characterPrefabInstance,
@@ -40,11 +40,12 @@ public class CanvasDisplaySingleCharacterController : MonoBehaviour
             Destroy(model);
         }
 
-        characterPrefabInstance.SetLayerRecursively("UI-Object");
+        characterPrefabInstance.SetLayerRecursively("UI-ObjectRenderer");
         model = Instantiate(characterPrefabInstance, modelArea.transform);
         model.transform.localPosition = Vector3.zero;
-        model.transform.localRotation = Quaternion.Euler(0, 180, 0);
-        model.transform.localScale = new Vector3(100, 100, 100);
+        model.SetLayerRecursively("UI-ObjectRenderer");
+        // model.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        // model.transform.localScale = new Vector3(100, 100, 100);
 
     }
 
@@ -64,7 +65,6 @@ public class CanvasDisplaySingleCharacterController : MonoBehaviour
 
     public RenderTexture GetRenderTextureFull()
     {
-
         return cameraFull.targetTexture;
     }
     

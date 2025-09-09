@@ -10,7 +10,7 @@ public class CharacterInfo
     public string description;
     public string iconPath; // Path to the icon asset
     public string addressableModelPath; // Path to the model asset
-    public CurlingPlayer CurlingPlayerData;
+    public CurlingPlayer curlingPlayerData;
     // public GameObject model;
 
 }
