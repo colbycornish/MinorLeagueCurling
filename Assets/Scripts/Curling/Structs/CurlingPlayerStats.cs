@@ -73,6 +73,7 @@ public struct CurlingPlayerStats
 
 public struct CurlingPlayerStat
 {
+    public string title;
     public int baseValue;
     public int max;
     public int min;
@@ -81,13 +82,15 @@ public struct CurlingPlayerStat
     public void SetStat(
         int baseValue,
         int min = 0,
-        int max = 100
+        int max = 100,
+        string title = null
     )
     {
         this.baseValue = baseValue;
         this.max = max; // Default max value
         this.min = min; // Default min value
         this.current = baseValue; // Default current value
+        this.title = title;
     }
 
     public void SetCurrent(int newCurrent)

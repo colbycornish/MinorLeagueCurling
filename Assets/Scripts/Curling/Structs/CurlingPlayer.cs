@@ -28,37 +28,42 @@ public struct CurlingPlayer
         {
             exhaustionRate = new CurlingPlayerStat
             {
+                title = "Exhaustion",
                 baseValue = Random.Range(1, 100),
-                min = 100,
-                max = 1,
+                min = 1,
+                max = 100,
                 current = Random.Range(1, 100)
             },
             cooldownRate = new CurlingPlayerStat
             {
+                title = "Recovery",
                 baseValue = Random.Range(1, 100),
-                min = 100,
-                max = 1,
+                min = 1,
+                max = 100,
                 current = Random.Range(1, 100)
             },
             strength = new CurlingPlayerStat
             {
+                title = "Strength",
                 baseValue = Random.Range(1, 100),
-                min = 100,
-                max = 1,
+                min = 1,
+                max = 100,
                 current = Random.Range(1, 100)
             },
             stamina = new CurlingPlayerStat
             {
+                title = "Stamina",
                 baseValue = Random.Range(1, 100),
-                min = 100,
-                max = 1,
+                min = 1,
+                max = 100,
                 current = Random.Range(1, 100)
             },
             speed = new CurlingPlayerStat
             {
+                title = "Speed",
                 baseValue = Random.Range(1, 100),
-                min = 100,
-                max = 1,
+                min = 1,
+                max = 100,
                 current = Random.Range(1, 100)
             },
             isSweeping = false,

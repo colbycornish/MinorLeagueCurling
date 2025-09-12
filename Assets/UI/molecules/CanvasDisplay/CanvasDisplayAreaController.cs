@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class CanvasDisplayAreaController : MonoBehaviour
 {
     // public Sprite icon;
-    [SerializeField] public int spacingX;
+    [Header("Game Objects")]
     [SerializeField] public GameObject canvasDisplayPrefab;
     [SerializeField] public List<GameObject> characterObjectsToLoad;
     [SerializeField] public List<CanvasDisplaySingleCharacterController> characterItems;
+
+    [Header("Spacing")]
+    [SerializeField] public int spacingX;
 
 
     public void Start()
@@ -93,6 +96,31 @@ public class CanvasDisplayAreaController : MonoBehaviour
         }
         return null;
     }
+
+    public RenderTexture GetRandomCharacterRenderTexture(
+        bool getFace = true,
+        bool getBody = false
+    )
+    {
+        if (characterItems.Count == 0) return null;
+
+        int randomIndex = Random.Range(0, characterItems.Count);
+        CanvasDisplaySingleCharacterController item = characterItems[randomIndex];
+        if (item != null)
+        {
+            if (getBody)
+            {
+                return item.GetRenderTextureFull();
+            }
+            else
+            {
+                return item.GetRenderTextureFace();
+            }
+        }
+        return null;
+    }
+
+    
 
     public void UnloadCharacters()
     {

@@ -15,9 +15,15 @@ using TMPro;
 public class CharacterFullDisplayItem : MonoBehaviour
 {
     // public Sprite icon;
-    [SerializeField] private GameObject stats;
+    [Header("Components")]
+    [SerializeField] private CharacterInfoDisplay infoDisplay;
     [SerializeField] private RawImage characterImage;
     [HideInInspector] private RectTransform rectTransform;
+
+    [Header("Settings")]
+    [SerializeField] private bool hasInfo = false;
+
+    [Header("Shrink / Expand Settings")]
     [SerializeField] private float minWidth;
     [SerializeField] private float maxWidth;
     [SerializeField] public float shrinkDuration = 2f; // Time in seconds to complete shrinkage
@@ -38,9 +44,41 @@ public class CharacterFullDisplayItem : MonoBehaviour
         characterImage.texture = renderTexture;
     }
 
-    public void UpdateInfo()
+    public void UpdateInfo(
+        Character character = null
+    )
     {
-        
+        if (character == null)
+        {
+            SetAsUnSelected();
+        }
+        else
+        {
+            SetAsSelected();
+            infoDisplay.UpdateInfo(
+                character: character,
+                name: character.fullName,
+                // position: character.position,
+                description: character.description
+            );
+        }
+    }
+
+    public void SetAsUnSelected()
+    {
+        hasInfo = false;
+        infoDisplay.UpdateInfo(
+            name: "?????????",
+            // position: character.position,
+            description: "unknown"
+        );
+        characterImage.color = Color.black;
+    }
+
+    public void SetAsSelected()
+    {
+        hasInfo = true;
+        characterImage.color = Color.white;
     }
 
     /// Animations

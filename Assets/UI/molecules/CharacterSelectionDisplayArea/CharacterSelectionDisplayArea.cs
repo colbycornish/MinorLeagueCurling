@@ -8,9 +8,10 @@ using TMPro;
 public class CharacterSelectionDisplayArea : MonoBehaviour
 {
     // public Sprite icon;
-    [SerializeField] public CharacterInfoDisplayItem leftSweeperItem;
-    [SerializeField] public CharacterInfoDisplayItem throwerItem;
-    [SerializeField] public CharacterInfoDisplayItem rightSweeperItem;
+    [Header("Game Objects")]
+    [SerializeField] public HorizontalInfoDisplayItem leftSweeperItem;
+    [SerializeField] public HorizontalInfoDisplayItem throwerItem;
+    [SerializeField] public HorizontalInfoDisplayItem rightSweeperItem;
     [SerializeField] public int currentIndex = 0;
     // Time in seconds to complete shrinkage
 
@@ -23,16 +24,7 @@ public class CharacterSelectionDisplayArea : MonoBehaviour
     //
     public void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.LeftShift))
-        // {
-        //     ChangeSelection(-1);
-            
-        // }
-        // if (Input.GetKeyDown(KeyCode.RightShift))
-        // {
-        //     ChangeSelection(1);
-            
-        // }
+
     }
 
     public void ChangeSelection(int modifyIndex)
@@ -60,7 +52,6 @@ public class CharacterSelectionDisplayArea : MonoBehaviour
                     }
                     break;
                 case 2:
-                    // StartCoroutine(leftSweeperItem.Shrink());
                     StartCoroutine(throwerItem.Shrink());
                     StartCoroutine(rightSweeperItem.Expand());
                     break;

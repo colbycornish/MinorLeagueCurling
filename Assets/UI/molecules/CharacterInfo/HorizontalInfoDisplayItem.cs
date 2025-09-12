@@ -5,10 +5,12 @@ using UnityEngine.Events;
 using TMPro;
 
 
-public class CharacterInfoDisplayItem : MonoBehaviour
+public class HorizontalInfoDisplayItem : MonoBehaviour
 {
     // public Sprite icon;
+    [Header("Components")]
     [SerializeField] private GameObject icon;
+    [SerializeField] private CharacterInfoDisplay infoDisplay;
     [SerializeField] private TextMeshProUGUI textName;
     [SerializeField] private TextMeshProUGUI textPosition;
     [SerializeField] private TextMeshProUGUI textDescription;
@@ -16,6 +18,8 @@ public class CharacterInfoDisplayItem : MonoBehaviour
     [SerializeField] private GameObject statsArea;
     [SerializeField] private GameObject actionButtonsArea;
     [HideInInspector] private RectTransform rectTransform;
+
+    [Header("Shrink / Expand Settings")]
     [SerializeField] private float minWidth;
     [SerializeField] private float maxWidth;
     [SerializeField] public float shrinkDuration = 2f; // Time in seconds to complete shrinkage
@@ -49,31 +53,40 @@ public class CharacterInfoDisplayItem : MonoBehaviour
 
     }
 
-    // Update the character info display with new data
-
     public void UpdateInfo(
-        string name,
-        string position,
-        string description
+        Character character = null
     )
     {
-
+        if (character == null)
+        {
+            // SetAsUnSelected();
+        }
+        else
+        {
+            // SetAsSelected();
+            infoDisplay.UpdateInfo(
+                character: character,
+                name: character.fullName,
+                // position: character.position,
+                description: character.description
+            );
+        }
     }
 
-    private void UpdateName(string name)
-    {
-        textName.GetComponent<TMPro.TextMeshProUGUI>().text = name;
-    }
+    // private void UpdateName(string name)
+    // {
+    //     textName.GetComponent<TMPro.TextMeshProUGUI>().text = name;
+    // }
 
-    private void UpdatePosition(string position)
-    {
-        textPosition.GetComponent<TMPro.TextMeshProUGUI>().text = position;
-    }
+    // private void UpdatePosition(string position)
+    // {
+    //     textPosition.GetComponent<TMPro.TextMeshProUGUI>().text = position;
+    // }
 
-    private void UpdateDescription(string description)
-    {
-        textDescription.GetComponent<TMPro.TextMeshProUGUI>().text = description;
-    }
+    // private void UpdateDescription(string description)
+    // {
+    //     textDescription.GetComponent<TMPro.TextMeshProUGUI>().text = description;
+    // }
 
     private void UpdatePositionIcon(Sprite icon)
     {

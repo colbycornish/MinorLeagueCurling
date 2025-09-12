@@ -3,21 +3,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System;
 
 
 public class CharacterSquareItem : MonoBehaviour
 {
     // public Sprite icon;
+    [Header("State")]
     [SerializeField][HideInInspector] private bool isHighlighted;
     [SerializeField][HideInInspector] private bool isDisabled;
     [SerializeField][HideInInspector] private bool isDefault;
     [SerializeField][HideInInspector] private bool isSelected;
+
+    [Header("Game Objects")]
     [SerializeField] private GameObject itemDefault;
     [SerializeField] private GameObject itemSelected;
     [SerializeField] private GameObject itemHighlighted;
     [SerializeField] private GameObject itemDisabled;
-    [SerializeField] private string characterId;
+
+    [Header("Info")]
+    [SerializeField] public string characterId;
     [SerializeField] private string characterName;
+
+    [Header("Functions")]
+    [SerializeField] public Action<string> OnSelect;
+    
 
 
     public void Init(
@@ -26,7 +36,8 @@ public class CharacterSquareItem : MonoBehaviour
         RenderTexture renderTexture,
         bool isDefault = true,
         bool isHighlighted = false,
-        bool isDisabled = false
+        bool isDisabled = false,
+        Action<string> OnSelect = null
     )
     {
         this.characterName = name;
@@ -36,6 +47,7 @@ public class CharacterSquareItem : MonoBehaviour
         this.isHighlighted = isHighlighted;
         this.isDisabled = isDisabled;
         this.isSelected = false;
+        this.OnSelect = OnSelect;
         itemDefault.GetComponent<CharacterSquareItemState>().UpdateText(name);
         itemDefault.GetComponent<CharacterSquareItemState>().UpdateFace(renderTexture);
 
@@ -66,7 +78,14 @@ public class CharacterSquareItem : MonoBehaviour
     public void SetDisabled(bool val)
     {
         itemDisabled.SetActive(val);
-        itemDefault.SetActive(false);
+        itemDefault.SetActive(!val);
         itemHighlighted.SetActive(false);
+    }
+
+    public void OnSelected()
+    {
+        OnSelect?.Invoke(characterId);
+        // SetHighlighted(true);
+        // CurlingPreGameSetupManager._instance.OnSelectLeftSweeper(characterId);
     }
 }

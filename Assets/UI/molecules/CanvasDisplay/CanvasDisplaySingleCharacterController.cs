@@ -8,10 +8,13 @@ using TMPro;
 public class CanvasDisplaySingleCharacterController : MonoBehaviour
 {
     // public Sprite icon;
+    [Header("Components")]
     [SerializeField] public string id;
     [SerializeField] public GameObject characterPrefab;
     [SerializeField] public GameObject model;
     [SerializeField] public GameObject modelArea;
+
+    [Header("Cameras and Render Textures")]
     [SerializeField] public Camera cameraFace;
     [SerializeField] public Camera cameraFull;
     [SerializeField][HideInInspector] public RenderTexture rtFace;
@@ -26,6 +29,19 @@ public class CanvasDisplaySingleCharacterController : MonoBehaviour
         characterPrefab = characterPrefabInstance;
         SetupModel(characterPrefab);
         SetupRenderTextures();
+        AdjustFaceCamera();
+    }
+
+    public void AdjustFaceCamera()
+    {
+        Transform modelHeadTransform = transform.Find("Head_M");
+        
+        if (modelHeadTransform != null)
+        {
+            // transformY
+            cameraFace.transform.position = modelHeadTransform.position + new Vector3(0, 0, -1.71f);
+            cameraFace.transform.LookAt(modelHeadTransform.position);
+        }
     }
 
     public void UpdateUI()
@@ -54,7 +70,7 @@ public class CanvasDisplaySingleCharacterController : MonoBehaviour
         rtFace = new RenderTexture(256, 256, 24);
         cameraFace.targetTexture = rtFace;
 
-        rtFull = new RenderTexture(256, 256, 24);
+        rtFull = new RenderTexture(1024, 1024, 24);
         cameraFull.targetTexture = rtFull;
     }
 
