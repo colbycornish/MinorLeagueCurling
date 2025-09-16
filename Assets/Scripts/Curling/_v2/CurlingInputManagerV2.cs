@@ -240,7 +240,7 @@ public class CurlingInputManagerV2 : MonoBehaviour
 
     private void HandleNextTurn()
     {
-        bool gameIsOver = false;
+        // bool gameIsOver = false;
         int currentTurnCount = CurlingGameManagerV2.Instance.gameData.turnCurrent;
         int maxTurnCount = CurlingGameManagerV2.Instance.turnsMax;
         if ((currentTurnCount + 1) == maxTurnCount)

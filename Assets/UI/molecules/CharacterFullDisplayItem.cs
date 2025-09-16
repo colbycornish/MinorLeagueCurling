@@ -20,7 +20,7 @@ public class CharacterFullDisplayItem : MonoBehaviour
     [SerializeField] private RawImage characterImage;
     [HideInInspector] private RectTransform rectTransform;
 
-    [Header("Settings")]
+    // [Header("Settings")]
     [SerializeField] private bool hasInfo = false;
 
     [Header("Shrink / Expand Settings")]

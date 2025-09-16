@@ -19,7 +19,7 @@ public class PracticeSweeperController : MonoBehaviour
     public bool isRightSweeper = false; // Assuming this is a right sweeper, adjust as needed
     public Transform targetToLookAt;
     public float pathUpdateFrequency = 0.5f;
-    private float pathUpdateTimer = 0f; // How often to update the path
+    // private float pathUpdateTimer = 0f; // How often to update the path
 
 
     void Start()

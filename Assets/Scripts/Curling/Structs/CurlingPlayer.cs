@@ -17,7 +17,7 @@ public struct CurlingPlayer
     public CurlingPlayerStats stats;
 
     [Header("Model")]
-    public GameObject character;
+    public GameObject character; // TODO -> change
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 
 

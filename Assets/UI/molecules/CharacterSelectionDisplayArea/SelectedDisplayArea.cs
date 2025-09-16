@@ -21,21 +21,6 @@ public class SelectedDisplayArea : MonoBehaviour
          
     }
 
-    //
-    public void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.LeftShift))
-        // {
-        //     ChangeSelection(-1);
-            
-        // }
-        // if (Input.GetKeyDown(KeyCode.RightShift))
-        // {
-        //     ChangeSelection(1);
-            
-        // }
-    }
-
     public void UpdateSelectionDisplays()
     {
         UpdateDisplayItem(
@@ -105,7 +90,6 @@ public class SelectedDisplayArea : MonoBehaviour
                 case 0:
                     StartCoroutine(leftSweeperItem.Expand());
                     StartCoroutine(throwerItem.Shrink());
-                    // StartCoroutine(rightSweeperItem.Shrink());
                     break;
                 case 1:
                     if (modifyIndex > 0)
@@ -119,7 +103,6 @@ public class SelectedDisplayArea : MonoBehaviour
                     }
                     break;
                 case 2:
-                    // StartCoroutine(leftSweeperItem.Shrink());
                     StartCoroutine(throwerItem.Shrink());
                     StartCoroutine(rightSweeperItem.Expand());
                     break;

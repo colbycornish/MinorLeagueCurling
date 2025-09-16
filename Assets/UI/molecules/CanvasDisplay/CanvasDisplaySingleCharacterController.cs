@@ -74,6 +74,12 @@ public class CanvasDisplaySingleCharacterController : MonoBehaviour
         cameraFull.targetTexture = rtFull;
     }
 
+    // public RenderTexture GetRenderTexture(bool getFace = false, bool getBody = false)
+    // {
+    //     if (getFace) return GetRenderTexture();
+    //     else return GetRenderTexture();
+    // }
+
     public RenderTexture GetRenderTextureFace()
     {
         return cameraFace.targetTexture;

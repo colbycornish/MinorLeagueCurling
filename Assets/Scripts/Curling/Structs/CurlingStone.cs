@@ -22,6 +22,7 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public bool isInScoringZone = false;
     
     [Header("Stats")]
+    public float distanceFromTarget = 100f;
     [Header("Spin")]
     /// <summary>
     /// spin can go in either the left (negative) or right (positive) direction
@@ -32,7 +33,6 @@ public class CurlingStone : MonoBehaviour
     public float spinSpeedStep = 0.25f;
     public float spinSpeedDecay = 0.05f;
     public float spinSpeedTargetMax = 1f;
-    // public float spinSpeedDecay = 0.05f;
     public float maxTorque = 1f;
     /// <summary>
     /// Todo: remove?

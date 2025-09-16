@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class CurlingCourseData : MonoBehaviour
 {
     [Header("Base Data")]
+    public string id = "";
     public string title = "";
     public string description = "";
-
+    public Texture thumbnail;
+    
     // Main Locations
     [Header("In-Play Locations")]
     public Transform launchPoint;
@@ -22,9 +24,7 @@ public class CurlingCourseData : MonoBehaviour
     public List<Transform> idleLocationsTeamHome;
     public List<Transform> idleLocationsTeamAway;
 
-    // Stones
-    // public List<CurlingStone> stonesTeamHome = new List<CurlingStone>();
-    // public List<CurlingStone> stonesTeamAway = new List<CurlingStone>();
+    
     [Header("Stone Locations")]
     public List<Transform> stonesSpawnLocationsTeamHome = new List<Transform>();
     public List<Transform> stonesSpawnLocationsTeamAway = new List<Transform>();

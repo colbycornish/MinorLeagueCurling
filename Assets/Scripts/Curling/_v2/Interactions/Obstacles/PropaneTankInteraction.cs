@@ -29,7 +29,7 @@ public class PropaneTankInteraction : MonoBehaviour
     {
         if (other.CompareTag("stone"))
         {
-            stoneInRange = true;
+            this.stoneInRange = true;
             obstacle.ActivateFx();
             // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
         }
@@ -41,7 +41,7 @@ public class PropaneTankInteraction : MonoBehaviour
 
         if (other.CompareTag("stone"))
         {
-            stoneInRange = false;
+            this.stoneInRange = false;
         }
 
     }

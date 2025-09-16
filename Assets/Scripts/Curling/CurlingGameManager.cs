@@ -53,9 +53,9 @@ public class CurlingGameManager : MonoBehaviour
     private bool hasGameStarted = false;
     private bool hasGamePaused = false;
     // private string phaseID = "START";
-    private float gameTime = 0f;
+    // private float gameTime = 0f;
     private float canvasDisplayTimeMarker = 0f;
-    private bool canvasDisplayTimeMarkerIsActive = false;
+    // private bool canvasDisplayTimeMarkerIsActive = false;
 
     /// <summary>
     /// Array of current stone placements (logged after throw)

@@ -28,30 +28,15 @@ public class HorizontalInfoDisplayItem : MonoBehaviour
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        // initialWidth = rectTransform.sizeDelta.x;
-        
     }
 
     //
     public void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.B))
-        // {
-        //     StartCoroutine(Expand());
-            
-        // }
-        // if (Input.GetKeyDown(KeyCode.V))
-        // {
-        //     StartCoroutine(Shrink());
-            
-        // }
 
     }
 
-    public void Init()
-    {
 
-    }
 
     public void UpdateInfo(
         Character character = null
@@ -63,37 +48,19 @@ public class HorizontalInfoDisplayItem : MonoBehaviour
         }
         else
         {
-            // SetAsSelected();
             infoDisplay.UpdateInfo(
                 character: character,
                 name: character.fullName,
-                // position: character.position,
                 description: character.description
             );
         }
     }
-
-    // private void UpdateName(string name)
-    // {
-    //     textName.GetComponent<TMPro.TextMeshProUGUI>().text = name;
-    // }
-
-    // private void UpdatePosition(string position)
-    // {
-    //     textPosition.GetComponent<TMPro.TextMeshProUGUI>().text = position;
-    // }
-
-    // private void UpdateDescription(string description)
-    // {
-    //     textDescription.GetComponent<TMPro.TextMeshProUGUI>().text = description;
-    // }
 
     private void UpdatePositionIcon(Sprite icon)
     {
 
     }
 
-    
     public IEnumerator Expand()
     {
         float timer = 0f;

@@ -2,34 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-
-
-/*
-- Sweeper Structure
-    - GameObject: Sweeper Character
-    - Int: Exhaustion Level
-    - Int: Exhaustion Level Max
-    - Int: Exhaustion Level Min
-    - Int: Exhaustion Level Current
-    - Int: Strength Level
-    - Int: Strength Level Max
-    - Int: Strength Level Min
-    - Int: Strength Level Current
-    - Int: Stamina Level
-    - Int: Stamina Level Max
-    - Int: Stamina Level Min
-    - Int: Stamina Level Current
-    - Int: Speed Level
-    - Int: Speed Level Max
-    - Int: Speed Level Min
-    - Int: Speed Level Current
-    - bool isSweeping
-    - bool isExhausted
-    - hasAdditionalBenefits
-    - SWEEPERBENEFITS
-    - ANIMATIONS
-*/
-
 public struct CurlingPlayerStats
 {
 
@@ -110,41 +82,28 @@ public struct CurlingPlayerStat
 
 
 
-
-
-
-
-
-
-
-
-// public struct CurlingThrower {
-//     //Variable declaration
-//     public string name;
-//     public string characterId;
-//     public GameObject characterBody;
-//     public CurlingPlayerStats stats;
-   
-    
-//     public void SetThrowerInfo(
-
-//     ) {
-        
-//     }
-// }
-
-// public struct CurlingSweeper {
-//     //Variable declaration
-//     public string name;
-//     public string characterId;
-//     public GameObject characterBody;
-//     public CurlingPlayerStats stats;
-   
-    
-//     public void SetSweeperInfo(
-
-//     ) {
-        
-//     }
-// }
-
+/*
+- Sweeper Structure
+    - GameObject: Sweeper Character
+    - Int: Exhaustion Level
+    - Int: Exhaustion Level Max
+    - Int: Exhaustion Level Min
+    - Int: Exhaustion Level Current
+    - Int: Strength Level
+    - Int: Strength Level Max
+    - Int: Strength Level Min
+    - Int: Strength Level Current
+    - Int: Stamina Level
+    - Int: Stamina Level Max
+    - Int: Stamina Level Min
+    - Int: Stamina Level Current
+    - Int: Speed Level
+    - Int: Speed Level Max
+    - Int: Speed Level Min
+    - Int: Speed Level Current
+    - bool isSweeping
+    - bool isExhausted
+    - hasAdditionalBenefits
+    - SWEEPERBENEFITS
+    - ANIMATIONS
+*/

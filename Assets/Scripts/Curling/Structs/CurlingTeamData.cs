@@ -2,34 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-/*
-Team Structure
-    - String: Team Name
-    - GameObject: Thrower
-    - GameObject: Sweeper Left
-    - GameObject: Sweeper Right
-
-    - List<GameObject>: Stones
-         - Stone Structure
-            - GameObject: Stone Type
-            - string: StoneTypeId
-            - GameObject: Attachment Type
-            - bool: hasAttachment
-            - string: AttachmentTypeId
-            - bool hasAdditionalAnimations
-            - bool hasAdditionalControls
-            - CONTROLS
-            - ANIMATIONS
-            - IN_GAME_METRICS
-                - bool hasBeenThrown
-                - bool canBeThrown
-                - bool isInPlay
-                - Vector3: currentPosition
-                - Vector3: currentRotation
-*/
-
-
-
 public struct CurlingTeamData
 {
     //Variable declaration

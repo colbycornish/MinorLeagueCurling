@@ -6,7 +6,7 @@ using TMPro;
 using System;
 
 
-public class CharacterSquareItem : MonoBehaviour
+public class CourseItem : MonoBehaviour
 {
     // public Sprite icon;
     [Header("State")]
@@ -22,8 +22,8 @@ public class CharacterSquareItem : MonoBehaviour
     [SerializeField] private GameObject itemDisabled;
 
     [Header("Info")]
-    [SerializeField] public string characterId;
-    [SerializeField] private string characterName;
+    [SerializeField] public string courseId;
+    [SerializeField] private string name;
 
     [Header("Functions")]
     [SerializeField] public Action<string> OnSelect;
@@ -32,30 +32,33 @@ public class CharacterSquareItem : MonoBehaviour
 
     public void Init(
         string name,
-        string characterId,
-        RenderTexture renderTexture,
+        string courseId,
+        Texture renderTexture,
         bool isDefault = true,
         bool isHighlighted = false,
         bool isDisabled = false,
         Action<string> OnSelect = null
     )
     {
-        this.characterName = name;
-        this.characterId = characterId;
+        this.name = name;
+        this.courseId = courseId;
         // Initialize the item state
         this.isDefault = isDefault;
         this.isHighlighted = isHighlighted;
         this.isDisabled = isDisabled;
         this.isSelected = false;
         this.OnSelect = OnSelect;
-        itemDefault.GetComponent<CharacterSquareItemState>().UpdateText(name);
-        itemDefault.GetComponent<CharacterSquareItemState>().UpdateFace(renderTexture);
+        itemDefault.GetComponent<CourseItemState>().UpdateText(name);
+        itemDefault.GetComponent<CourseItemState>().UpdateImage(renderTexture);
 
-        itemHighlighted.GetComponent<CharacterSquareItemState>().UpdateText(name);
-        itemHighlighted.GetComponent<CharacterSquareItemState>().UpdateFace(renderTexture);
+        itemHighlighted.GetComponent<CourseItemState>().UpdateText(name);
+        itemHighlighted.GetComponent<CourseItemState>().UpdateImage(renderTexture);
 
-        itemDisabled.GetComponent<CharacterSquareItemState>().UpdateText(name);
-        itemDisabled.GetComponent<CharacterSquareItemState>().UpdateFace(renderTexture);
+        itemSelected.GetComponent<CourseItemState>().UpdateText(name);
+        itemSelected.GetComponent<CourseItemState>().UpdateImage(renderTexture);
+
+        itemDisabled.GetComponent<CourseItemState>().UpdateText(name);
+        itemDisabled.GetComponent<CourseItemState>().UpdateImage(renderTexture);
     }
 
     public void UpdateUI()
@@ -65,25 +68,28 @@ public class CharacterSquareItem : MonoBehaviour
 
     public void SetSelected(bool val)
     {
+        isSelected = val;
+        itemDisabled.SetActive(false);
+        itemDefault.SetActive(!val);
         itemSelected.SetActive(val);
     }
 
     public void SetHighlighted(bool val)
     {
-        itemDisabled.SetActive(false);
-        itemDefault.SetActive(!val);
+        isHighlighted = val;
         itemHighlighted.SetActive(val);
     }
 
     public void SetDisabled(bool val)
     {
+        isDisabled = val;
         itemDisabled.SetActive(val);
         itemDefault.SetActive(!val);
-        itemHighlighted.SetActive(false);
+        itemSelected.SetActive(false);
     }
 
     public void OnSelected()
     {
-        OnSelect?.Invoke(characterId);
+        OnSelect?.Invoke(courseId);
     }
 }

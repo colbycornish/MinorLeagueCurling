@@ -12,7 +12,7 @@ public class StatProgressBar : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private bool useSecondFill = false;
-    [SerializeField] private bool shouldUpdate = false;
+    // [SerializeField] private bool shouldUpdate = false;
 
     [Header("Stat Values")]
     [SerializeField] private int minValue = 0;

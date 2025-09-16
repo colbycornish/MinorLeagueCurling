@@ -24,6 +24,7 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     [Header("Equipment Selection")]
     [SerializeField] public GameObject selectedLeftSweeperBroom;
     [SerializeField] public GameObject selectedRightSweeperBroom;
+    [SerializeField] public List<GameObject> selectedStones;
     [SerializeField] public GameObject selectedStone1;
     [SerializeField] public GameObject selectedStone2;
     [SerializeField] public GameObject selectedStone3;
@@ -97,7 +98,6 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     /// <summary>
     /// When an item is selected...
     /// </summary>
-    /// <param name="characterId"></param>
 
     public void OnSelectLeftSweeper(string characterId)
     {
@@ -138,9 +138,28 @@ public class CurlingPreGameSetupManager : MonoBehaviour
 
     public void OnSelectCourse(string courseId)
     {
-        // GameObject obj = listOfCourses.Find(c => c.GetComponent<CurlingCourseData>().id == courseId);
-        // selectedCourse = obj;
+        Debug.Log("Course Selected: {courseId}");
+        GameObject obj = listOfCourses.Find(c => c.GetComponent<CurlingCourseData>().id == courseId);
+        selectedCourse = obj;
     }
+
+
+    public void OnSelectBroom(string broomId, bool isLeft = false, bool isRight = false)
+    {
+        // GameObject obj = listOfBrooms.Find(b => b.GetComponent<Broom>().id == broomId);
+        // if (isLeft){ selectedLeftSweeperBroom = obj; }
+        // else{ selectedRightSweeperBroom = obj; }
+    }
+
+
+    public void OnSelectStone(string stoneId, int stoneIndex)
+    {
+        
+
+    }
+
+
+
 
     public void CheckForCharacterSelectionErrors(
         string characterId,
@@ -169,19 +188,6 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         }
     }
 
-
-    public void OnSelectBroom(string broomId, bool isLeft = false, bool isRight = false)
-    {
-        // GameObject obj = listOfBrooms.Find(b => b.GetComponent<Broom>().id == broomId);
-        // if (isLeft){ selectedLeftSweeperBroom = obj; }
-        // else{ selectedRightSweeperBroom = obj; }
-    }
-
-
-    public void OnSelectStone(string stoneId, int stoneIndex)
-    {
-
-    }
     /// <summary>
     /// Check for completeness
     /// </summary>
@@ -244,6 +250,11 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         selectedThrower = null;
     }
 
+    public void OnResetCourseSelections()
+    {
+        selectedCourse = null;
+    }
+
     /// <summary>
     /// Helper
     /// </summary>
@@ -253,6 +264,17 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     {
         GameObject obj = listOfCharacters.Find(c => c.GetComponent<Character>().id == characterId);
         return obj.GetComponent<Character>();
+    }
+
+    public List<string> GetSelectedCourseIds()
+    {
+        List<string> listOfIds = new List<string>();// = new Array();
+        if (selectedCourse != null)
+        {
+            listOfIds.Add(selectedCourse.GetComponent<CurlingCourseData>().id);
+            
+        }
+        return listOfIds;
     }
 
     public List<string> GetSelectedCharacterIds()

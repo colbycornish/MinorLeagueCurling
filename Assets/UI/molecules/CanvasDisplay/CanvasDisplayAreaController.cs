@@ -10,6 +10,13 @@ public class CanvasDisplayAreaController : MonoBehaviour
     [SerializeField] public GameObject canvasDisplayPrefab;
     [SerializeField] public List<GameObject> characterObjectsToLoad;
     [SerializeField] public List<CanvasDisplaySingleCharacterController> characterItems;
+    [SerializeField] public List<CanvasDisplaySingleCharacterController> broomItems;
+    [SerializeField] public List<CanvasDisplaySingleCharacterController> stoneItems;
+
+    [Header("Render Areas")]
+    [SerializeField] public GameObject characterArea;
+    [SerializeField] public GameObject broomArea;
+    [SerializeField] public GameObject stoneArea;
 
     [Header("Spacing")]
     [SerializeField] public int spacingX;
@@ -18,11 +25,6 @@ public class CanvasDisplayAreaController : MonoBehaviour
     public void Start()
     {
         LoadCharacters();
-    }
-
-    public void CreateCharacterItems()
-    {
-
     }
 
     public void UpdateUI()
@@ -39,7 +41,7 @@ public class CanvasDisplayAreaController : MonoBehaviour
         foreach (GameObject obj in characterObjectsToLoad)
         {
             Character c = obj.GetComponent<Character>();
-            GameObject instance = Instantiate(canvasDisplayPrefab, this.transform);
+            GameObject instance = Instantiate(canvasDisplayPrefab, this.characterArea.transform);
             CanvasDisplaySingleCharacterController controller = instance.GetComponent<CanvasDisplaySingleCharacterController>();
 
             obj.SetLayerRecursively("UI-ObjectRenderer");
@@ -52,13 +54,13 @@ public class CanvasDisplayAreaController : MonoBehaviour
 
             if (controller != null)
             {
-                AddItem(controller);
+                AddCharacterItem(controller);
             }
 
-            instance.transform.SetParent(this.transform);
+            instance.transform.SetParent(this.characterArea.transform);
         }
 
-        LayoutIntoGrid();
+        LayoutIntoGrid(area: characterArea);
     }
 
 
@@ -66,9 +68,7 @@ public class CanvasDisplayAreaController : MonoBehaviour
     {
         foreach (CanvasDisplaySingleCharacterController item in characterItems)
         {
-            if (item != null && item.id == characterId)
-            {
-                Debug.Log($"Found character with ID: {characterId}");
+            if (item != null && item.id == characterId){
                 return item;
             }
         }
@@ -120,25 +120,16 @@ public class CanvasDisplayAreaController : MonoBehaviour
         return null;
     }
 
-    
 
-    public void UnloadCharacters()
-    {
-
-    }
-
-    public void AddItem(CanvasDisplaySingleCharacterController item)
-    {
+    public void AddCharacterItem(CanvasDisplaySingleCharacterController item){
         characterItems.Add(item);
     }
 
-    public void RemoveItem(CanvasDisplaySingleCharacterController item)
-    {
+    public void RemoveCharacterItem(CanvasDisplaySingleCharacterController item){
         characterItems.Remove(item);
     }
 
-    public void Clear()
-    {
+    public void ClearCharacterItems(){
         characterItems = new List<CanvasDisplaySingleCharacterController>();
     }
     
@@ -147,7 +138,9 @@ public class CanvasDisplayAreaController : MonoBehaviour
     /// Utility
     /// </summary>
 
-    public void LayoutIntoGrid()
+    public void LayoutIntoGrid(
+        GameObject area
+    )
     {
         int index = 0;
         int columns = 15;
@@ -160,7 +153,7 @@ public class CanvasDisplayAreaController : MonoBehaviour
         }
         else
         {
-            foreach (Transform item in transform)
+            foreach (Transform item in area.transform)
             {
                 int row = index / columns;
                 int column = index % columns;

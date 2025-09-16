@@ -21,7 +21,6 @@ public class CharacterSelectionDisplayArea : MonoBehaviour
          
     }
 
-    //
     public void Update()
     {
 
@@ -39,7 +38,6 @@ public class CharacterSelectionDisplayArea : MonoBehaviour
                 case 0:
                     StartCoroutine(leftSweeperItem.Expand());
                     StartCoroutine(throwerItem.Shrink());
-                    // StartCoroutine(rightSweeperItem.Shrink());
                     break;
                 case 1:
                     if (modifyIndex > 0){
