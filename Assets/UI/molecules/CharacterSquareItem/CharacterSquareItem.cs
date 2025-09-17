@@ -65,12 +65,15 @@ public class CharacterSquareItem : MonoBehaviour
 
     public void SetSelected(bool val)
     {
+        isSelected = val;
         itemSelected.SetActive(val);
     }
 
     public void SetHighlighted(bool val)
     {
         itemDisabled.SetActive(false);
+        isDisabled = false;
+
         itemDefault.SetActive(!val);
         itemHighlighted.SetActive(val);
     }
@@ -78,8 +81,12 @@ public class CharacterSquareItem : MonoBehaviour
     public void SetDisabled(bool val)
     {
         itemDisabled.SetActive(val);
+        isDisabled = val;
+
         itemDefault.SetActive(!val);
+        
         itemHighlighted.SetActive(false);
+        isHighlighted = false;
     }
 
     public void OnSelected()

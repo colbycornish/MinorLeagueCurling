@@ -33,7 +33,7 @@ public class CanvasDisplaySingleBroomController : MonoBehaviour
 
     public void AdjustFaceCamera()
     {
-        Transform modelHeadTransform = transform.Find("Head_M");
+        Transform modelHeadTransform = transform.Find("Brush");
         
         if (modelHeadTransform != null)
         {

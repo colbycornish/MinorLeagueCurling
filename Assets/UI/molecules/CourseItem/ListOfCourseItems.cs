@@ -111,7 +111,7 @@ public class ListOfCourseItems : MonoBehaviour
             // );
 
             controller.Init(
-                name: c.name,
+                title: c.title,
                 courseId: c.id,
                 renderTexture: c.thumbnail,
                 OnSelect: (string courseId) => { OnSelection(courseId); }

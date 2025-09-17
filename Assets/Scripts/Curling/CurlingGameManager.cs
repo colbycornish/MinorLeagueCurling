@@ -54,7 +54,7 @@ public class CurlingGameManager : MonoBehaviour
     private bool hasGamePaused = false;
     // private string phaseID = "START";
     // private float gameTime = 0f;
-    private float canvasDisplayTimeMarker = 0f;
+    // private float canvasDisplayTimeMarker = 0f;
     // private bool canvasDisplayTimeMarkerIsActive = false;
 
     /// <summary>
@@ -148,7 +148,7 @@ public class CurlingGameManager : MonoBehaviour
 
     void ResetCanvasTimer()
     {
-        canvasDisplayTimeMarker = 0f;
+        // canvasDisplayTimeMarker = 0f;
     }
 
     public void DisplaySplashRound()

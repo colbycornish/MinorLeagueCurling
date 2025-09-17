@@ -23,7 +23,7 @@ public class CourseItem : MonoBehaviour
 
     [Header("Info")]
     [SerializeField] public string courseId;
-    [SerializeField] private string name;
+    [SerializeField] private string title;
 
     [Header("Functions")]
     [SerializeField] public Action<string> OnSelect;
@@ -31,7 +31,7 @@ public class CourseItem : MonoBehaviour
 
 
     public void Init(
-        string name,
+        string title,
         string courseId,
         Texture renderTexture,
         bool isDefault = true,
@@ -40,7 +40,7 @@ public class CourseItem : MonoBehaviour
         Action<string> OnSelect = null
     )
     {
-        this.name = name;
+        this.title = title;
         this.courseId = courseId;
         // Initialize the item state
         this.isDefault = isDefault;
@@ -48,16 +48,16 @@ public class CourseItem : MonoBehaviour
         this.isDisabled = isDisabled;
         this.isSelected = false;
         this.OnSelect = OnSelect;
-        itemDefault.GetComponent<CourseItemState>().UpdateText(name);
+        itemDefault.GetComponent<CourseItemState>().UpdateText(title);
         itemDefault.GetComponent<CourseItemState>().UpdateImage(renderTexture);
 
-        itemHighlighted.GetComponent<CourseItemState>().UpdateText(name);
+        itemHighlighted.GetComponent<CourseItemState>().UpdateText(title);
         itemHighlighted.GetComponent<CourseItemState>().UpdateImage(renderTexture);
 
-        itemSelected.GetComponent<CourseItemState>().UpdateText(name);
+        itemSelected.GetComponent<CourseItemState>().UpdateText(title);
         itemSelected.GetComponent<CourseItemState>().UpdateImage(renderTexture);
 
-        itemDisabled.GetComponent<CourseItemState>().UpdateText(name);
+        itemDisabled.GetComponent<CourseItemState>().UpdateText(title);
         itemDisabled.GetComponent<CourseItemState>().UpdateImage(renderTexture);
     }
 

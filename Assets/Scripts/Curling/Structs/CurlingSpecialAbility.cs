@@ -10,7 +10,7 @@ public struct CurlingSpecialAbility
 
 
     [Header("Stats")]
-    public CurlingPlayerStats stats;
+    public CurlingSpecialAbilityEffect effect;
 
     // [Header("Model")]
 
@@ -38,6 +38,9 @@ public struct CurlingSpecialAbilityEffect
         Opponent // -> Stat
     }
 
+    [Header("Ability Category")]
+    public string abilityTargetCategory;
+
     public enum TargetCategory
     {
         team, // -> Stat
@@ -56,6 +59,9 @@ public struct CurlingSpecialAbilityEffect
         inventory
     }
 
+    [Header("Ability Sub Category")]
+    public string abilityTargetSubCategory;
+
     public enum TargetSubCategory
     {
         // team, // -> Stat
@@ -69,6 +75,9 @@ public struct CurlingSpecialAbilityEffect
         obstacle, // -> Lock/Unlock, 
         inventory
     }
+
+    [Header("Ability Target Field")]
+    public string abilityTargetField;
 
     public enum TargetField
     {

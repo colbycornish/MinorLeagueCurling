@@ -22,7 +22,7 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public bool isInScoringZone = false;
     
     [Header("Stats")]
-    public float distanceFromTarget = 100f;
+    public float distanceFromTarget = 1000f;
     [Header("Spin")]
     /// <summary>
     /// spin can go in either the left (negative) or right (positive) direction
@@ -47,16 +47,14 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public float speedCurrent = 0f;
 
 
-    // [Header("Launch Force")]
-    // [HideInInspector] public float launchForce = 0f;
-
-    // [Header("Launch Force")]
-    // [HideInInspector] public float primaryColor = 0f;
-
     [Header("Model")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 
-    // 
+
+    [Header("Special Abilities")]
+    [HideInInspector] public bool hasSpecialAbility = false;
+
+    
     private void Awake()
     {
         if (rb == null)
