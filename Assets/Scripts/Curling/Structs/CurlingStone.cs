@@ -8,6 +8,7 @@ public class CurlingStone : MonoBehaviour
     [Header("Basic Data")]
     public string title = "Basic Stone";
     public string description = "Just your basic curling stone.";
+    public string id = "";
     public Image avatarImage;
 
     [Header("Ids")]

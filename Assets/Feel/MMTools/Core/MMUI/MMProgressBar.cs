@@ -552,6 +552,15 @@ namespace MoreMountains.Tools
 		/// <summary>
 		/// Test method - increases the bar's current value by 10%
 		/// </summary>
+		public virtual void ChangeCustomPercent(
+			float percentage
+		)
+		{
+			float newProgress = BarTarget + percentage;
+			newProgress = Mathf.Clamp(newProgress, 0f, 1f);
+			UpdateBar01(newProgress);
+		}
+
 		public virtual void Plus10Percent()
 		{
 			float newProgress = BarTarget + 0.1f;

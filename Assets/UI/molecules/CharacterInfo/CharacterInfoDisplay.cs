@@ -58,17 +58,26 @@ public class CharacterInfoDisplay : MonoBehaviour
 
     public void UpdateName(string text)
     {
-        textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{text}";
+        if (textName != null)
+        {
+            textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{text}";
+        }
     }
 
     public void UpdatePosition(string text)
     {
-        textPosition.GetComponent<TMPro.TextMeshProUGUI>().text = text;
+        if (textPosition != null)
+        {
+            textPosition.GetComponent<TMPro.TextMeshProUGUI>().text = text;
+        }
     }
 
     public void UpdateAbility(string text)
     {
-        textDescription.GetComponent<TMPro.TextMeshProUGUI>().text = text;
+        if (textDescription != null)
+        {
+            textDescription.GetComponent<TMPro.TextMeshProUGUI>().text = text;
+        }
     }
 
     public void UpdateStats(

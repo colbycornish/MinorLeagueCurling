@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class CurlingObstacle : MonoBehaviour
 {
     [Header("Basic Data")]
-    public string title = "Basic Stone";
-    public string description = "Just your basic curling stone.";
+    public string title = "Basic Obstacle";
+    public string description = "Just your basic curling obstacle.";
     public Image avatarImage;
 
     [Header("Status")]
@@ -55,3 +55,5 @@ public class CurlingObstacle : MonoBehaviour
     }
 
 }
+
+
