@@ -18,6 +18,9 @@ public class CharacterInfoDisplay : MonoBehaviour
     [SerializeField] private CharacterStatItem statItem2;
     [SerializeField] private CharacterStatItem statItem3;
 
+    [Header("Settings")]
+    [SerializeField] private bool showStats = true;
+
     public void UpdateUI()
     {
 
@@ -38,15 +41,12 @@ public class CharacterInfoDisplay : MonoBehaviour
             CurlingPlayerStats characterStats = curlingPlayerData.stats;
             // if (characterStats != null)
             // {
-            statItem1.UpdateStat(stat: characterStats.speed);
-            statItem2.UpdateStat(stat: characterStats.strength);
-            statItem3.UpdateStat(stat: characterStats.cooldownRate);
-                // UpdateStats(
-                //     stat1: characterStats.speed,
-                //     stat2: characterStats.strength,
-                //     stat3: characterStats.cooldownRate
-                // );
-            // }
+            if (showStats == true){
+                statItem1.UpdateStat(stat: characterStats.speed);
+                statItem2.UpdateStat(stat: characterStats.strength);
+                statItem3.UpdateStat(stat: characterStats.cooldownRate);
+            }
+            
         }
         else
         {

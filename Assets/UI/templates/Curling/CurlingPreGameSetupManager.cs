@@ -37,7 +37,7 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     [SerializeField] public bool isOpponentOnline;
 
     [Header("Rules")]
-    [SerializeField] public GameObject curlingRules;
+    [SerializeField] public CurlingRules curlingRules;
 
     [Header("Course Selection")]
     [SerializeField] public List<GameObject> listOfCourses;
@@ -45,6 +45,21 @@ public class CurlingPreGameSetupManager : MonoBehaviour
 
     [Header("Completeness")]
     [SerializeField] public bool isReadyToPlay;
+
+    [Header("Selection Settings")]
+    // rules
+    [SerializeField] public bool disableUserRuleSelection = false;
+    // course
+    [SerializeField] public bool disableUserCourseSelection = false;
+    // team
+    [SerializeField] public bool disableUserTeamSelection = false;
+    [SerializeField] public bool disableUserTeamThrowerSelection = false;
+    [SerializeField] public bool disableUserTeamLeftSweeperSelection = false;
+    [SerializeField] public bool disableUserTeamRightSweeperSelection = false;
+
+    // equipment
+    [SerializeField] public bool disableUserEquipmentSelection = false;
+
 
     // [Header("Settings")]
     // [SerializeField] public bool isTeamSelected;
@@ -144,7 +159,11 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     }
 
 
-    public void OnSelectBroom(string broomId, bool isLeft = false, bool isRight = false)
+    public void OnSelectBroom(
+        string broomId, 
+        bool isLeft = false, 
+        bool isRight = false
+    )
     {
         // GameObject obj = listOfBrooms.Find(b => b.GetComponent<Broom>().id == broomId);
         // if (isLeft){ selectedLeftSweeperBroom = obj; }
@@ -152,14 +171,21 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     }
 
 
-    public void OnSelectStone(string stoneId, int stoneIndex)
+    public void OnSelectStone(
+        string stoneId, 
+        int stoneIndex
+    )
     {
         
 
     }
 
-
-
+    public void OnSelectRules(
+        CurlingRules rules
+    )
+    {
+        this.curlingRules = rules;
+    }
 
     public void CheckForCharacterSelectionErrors(
         string characterId,
@@ -191,27 +217,37 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     /// <summary>
     /// Check for completeness
     /// </summary>
-    /// <returns></returns>
     public bool IsCourseSelected()
     {
-        return true;
+        return selectedCourse != null;
     }
 
     public bool IsTeamSelectionComplete()
     {
-        return selectedLeftSweeper != null && selectedRightSweeper != null && selectedThrower != null;
+        bool isLeftSweeperSelected = selectedLeftSweeper != null;
+        bool isRightSweeperSelected = selectedRightSweeper != null;
+        bool isThrowerSelected = selectedThrower != null;
+        return isLeftSweeperSelected && isRightSweeperSelected && isThrowerSelected;
     }
 
     public bool IsEquipmentSelectionComplete()
     {
-        return selectedLeftSweeperBroom != null && selectedRightSweeperBroom != null &&
-               selectedStone1 != null && selectedStone2 != null && selectedStone3 != null &&
+        bool isLeftSweeperBroomSelected = selectedLeftSweeperBroom != null;
+        bool isRightSweeperBroomSelected = selectedRightSweeperBroom != null;
+        bool isStonesSelected = selectedStone1 != null && selectedStone2 != null && selectedStone3 != null &&
                selectedStone4 != null && selectedStone5 != null;
+        
+        return isLeftSweeperBroomSelected && isRightSweeperBroomSelected && isStonesSelected;
+               
     }
 
     public bool IsCurlingRulesSet()
     {
-        return curlingRules != null;
+        bool isCurlingRulesCompleted = true;
+        // if (curlingRules != null){
+        //     isCurlingRulesCompleted = true;
+        // } 
+        return isCurlingRulesCompleted;
     }
 
     public bool CheckIsReadyToPlay()

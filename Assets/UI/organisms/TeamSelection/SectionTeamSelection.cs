@@ -10,18 +10,20 @@ public class SectionTeamSelection : MonoBehaviour
     [SerializeField] public CharacterSelectionDisplayArea characterSelectionDisplayArea;
     [SerializeField] public SelectedDisplayArea selectedDisplayArea;
     [SerializeField] public ListOfCharacterSquareItems listOfCharacterSquareItems;
-
-    public enum TeamSelectionState
-    {
-        TeamMembers,
-        Equipment
-    }
+    [SerializeField] public GameObject listOfBroomItems;
+    [SerializeField] public GameObject listOfStoneItems;
 
     public enum TeamMemberSelectionState
     {
         LeftSweeper,
         Thrower,
         RightSweeper
+    }
+
+    public enum TeamSelectionState
+    {
+        TeamMembers,
+        Equipment
     }
 
     public enum TeamEquipmentSelectionState
@@ -33,17 +35,41 @@ public class SectionTeamSelection : MonoBehaviour
     public TeamSelectionState currentTeamSelectionState = TeamSelectionState.TeamMembers;
     public TeamMemberSelectionState currentTeamMemberSelectionState = TeamMemberSelectionState.LeftSweeper;
     public TeamEquipmentSelectionState currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Brooms;
-
+    public int stoneSelectionIndex = 0;
+    public int maxStonesAllowed = 5;
     // Time in seconds to complete shrinkage
 
 
     void Start()
     {
-        StartCoroutine(selectedDisplayArea.leftSweeperItem.Expand());
+        selectedDisplayArea.leftSweeperItem.SetSelected(status: true);
         selectedDisplayArea.UpdateSelectionDisplays();
         listOfCharacterSquareItems.Init(OnSelect: OnSelectCharacter);
+        UpdateSelectedAreaDisplayItems();
         LoadData();
     }
+
+    public void LoadData()
+    {
+        listOfCharacterSquareItems.ClearList();
+        listOfCharacterSquareItems.BuildList(
+            CurlingPreGameSetupManager._instance.listOfCharacters.ToArray()
+        );
+
+        // listOfBroomItems.BuildList(
+        //     CurlingPreGameSetupManager._instance.listOfBrooms.ToArray()
+        // );
+
+        // listOfStoneItems.BuildList(
+        //     CurlingPreGameSetupManager._instance.listOfStones.ToArray()
+        // );
+    }
+
+    // private void OnEnable()
+    // {
+    //     if (CanvasManager._instance.canvasDisplayAreaController == null) return;
+    //     CanvasManager._instance.canvasDisplayAreaController.OnCharactersLoaded += LoadData;
+    // }
 
     //
     public void Update()
@@ -54,30 +80,32 @@ public class SectionTeamSelection : MonoBehaviour
             switch (currentTeamMemberSelectionState)
             {
                 case TeamMemberSelectionState.Thrower:
-                    ChangeTeamMemberSelectionState(TeamMemberSelectionState.LeftSweeper);
+                    EditLeftSweeper();
                     break;
                 case TeamMemberSelectionState.RightSweeper:
-                    ChangeTeamMemberSelectionState(TeamMemberSelectionState.Thrower);
+                    EditThrower();
                     break;
                 default:
                     break;
             }
-
+            UpdateUI();
         }
+
         // change the team member selection from RS to T to LS
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             switch (currentTeamMemberSelectionState)
             {
                 case TeamMemberSelectionState.LeftSweeper:
-                    ChangeTeamMemberSelectionState(TeamMemberSelectionState.Thrower);
+                    EditThrower();
                     break;
                 case TeamMemberSelectionState.Thrower:
-                    ChangeTeamMemberSelectionState(TeamMemberSelectionState.RightSweeper);
+                    EditRightSweeper();
                     break;
                 default:
                     break;
             }
+            UpdateUI();
         }
         // Switch item selection right
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -90,26 +118,81 @@ public class SectionTeamSelection : MonoBehaviour
             listOfCharacterSquareItems.HighlightPrev();
             UpdateUI();
         }
+
+
+
+        // Switch item selection right
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            switch (currentTeamMemberSelectionState)
+            {
+                case TeamMemberSelectionState.LeftSweeper:
+                    EditLeftSweeperCharacter();
+                    break;
+                case TeamMemberSelectionState.RightSweeper:
+                    EditRightSweeperCharacter();
+                    break;
+                case TeamMemberSelectionState.Thrower:
+                    if (currentTeamSelectionState == TeamSelectionState.Equipment && stoneSelectionIndex > 0) {
+                        stoneSelectionIndex -= 1;
+                        stoneSelectionIndex = Mathf.Clamp(stoneSelectionIndex, 0, maxStonesAllowed - 1);
+                        UpdateSelectedAreaDisplayItems();
+                    }
+                    else {
+                        stoneSelectionIndex = -1;
+                        EditThrowerCharacter();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            UpdateUI();
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            switch (currentTeamMemberSelectionState)
+            {
+                case TeamMemberSelectionState.LeftSweeper:
+                    EditLeftSweeperEquipment();
+                    break;
+                case TeamMemberSelectionState.RightSweeper:
+                    EditRightSweeperEquipment();
+                    break;
+                case TeamMemberSelectionState.Thrower:
+                    if (currentTeamSelectionState == TeamSelectionState.TeamMembers){
+                        stoneSelectionIndex = 0;
+                        EditThrowerEquipment();
+                    }
+                    else {
+                        stoneSelectionIndex += 1;
+                        stoneSelectionIndex = Mathf.Clamp(stoneSelectionIndex, 0, maxStonesAllowed - 1);
+                        UpdateSelectedAreaDisplayItems();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            UpdateUI();
+        }
     }
 
-    public void LoadData()
-    {
-        listOfCharacterSquareItems.ClearList();
-        listOfCharacterSquareItems.BuildList(
-            CurlingPreGameSetupManager._instance.listOfCharacters.ToArray()
-        );
-    }
+    
 
     public void UpdateUI()
     {
+        // update highlighted lists
         listOfCharacterSquareItems.UpdateHighlightedDisplay(
             higlighedIds: CurlingPreGameSetupManager._instance.GetSelectedCharacterIds()
         );
 
+        // update selection info displays
         string characterId = listOfCharacterSquareItems.GetSelectedChildCharacterId();
         Character c = CurlingPreGameSetupManager._instance.GetCharacterById(
             characterId: characterId
         );
+
+
 
         switch (currentTeamMemberSelectionState)
         {
@@ -126,11 +209,159 @@ public class SectionTeamSelection : MonoBehaviour
                 Debug.Log("Unknown selection");
                 break;
         }
+    }
+
+
+
+
+    public void EditLeftSweeper(){
+        currentTeamMemberSelectionState = TeamMemberSelectionState.LeftSweeper;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Brooms;
+        UpdateSelectedAreaDisplayItems();
+    }
+
+
+    public void EditLeftSweeperCharacter(){
+        currentTeamSelectionState = TeamSelectionState.TeamMembers;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Brooms;
+        EditLeftSweeper();
+    }
+
+    public void EditLeftSweeperEquipment(){
+        currentTeamSelectionState = TeamSelectionState.Equipment;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Brooms;
+        EditLeftSweeper();
+    }
+
+    /// right sweeper
+    public void EditRightSweeper(){
+        currentTeamMemberSelectionState = TeamMemberSelectionState.RightSweeper;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Brooms;
+        UpdateSelectedAreaDisplayItems();
+    }
+
+    public void EditRightSweeperCharacter(){
+        currentTeamSelectionState = TeamSelectionState.TeamMembers;
+        EditRightSweeper();
+    }
+
+    public void EditRightSweeperEquipment(){
+        currentTeamSelectionState = TeamSelectionState.Equipment;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Brooms;
+        EditRightSweeper();
         
-        // GetCharacterById();
+    }
+
+    /// thrower
+    public void EditThrower(){
+        currentTeamMemberSelectionState = TeamMemberSelectionState.Thrower;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Stones;
+        UpdateSelectedAreaDisplayItems();
+    }
+
+    public void EditThrowerCharacter(){
+        currentTeamSelectionState = TeamSelectionState.TeamMembers;
+        EditThrower();
+        
+    }
+
+    public void EditThrowerEquipment(){
+        currentTeamSelectionState = TeamSelectionState.Equipment;
+        currentTeamEquipmentSelectionState = TeamEquipmentSelectionState.Stones;
+        EditThrower();
+    }
+
+
+    public void UpdateSelectedAreaDisplayItems(){
+        // team member cards
+        bool isLeftSweeperHighlighted = currentTeamMemberSelectionState == TeamMemberSelectionState.LeftSweeper;
+        bool isRightSweeperHighlighted = currentTeamMemberSelectionState == TeamMemberSelectionState.RightSweeper;
+        bool isThrowerHighlighted = currentTeamMemberSelectionState == TeamMemberSelectionState.Thrower;
+        bool isLeftSweeperEquipmentHighlighted = (
+            currentTeamMemberSelectionState == TeamMemberSelectionState.LeftSweeper &&
+            currentTeamSelectionState == TeamSelectionState.Equipment
+        );
+        bool isRightSweeperEquipmentHighlighted = (
+            currentTeamMemberSelectionState == TeamMemberSelectionState.RightSweeper &&
+            currentTeamSelectionState == TeamSelectionState.Equipment
+        );
+        bool isThrowerEquipmentHighlighted = (
+            currentTeamMemberSelectionState == TeamMemberSelectionState.Thrower &&
+            currentTeamSelectionState == TeamSelectionState.Equipment
+        );
+        
+        selectedDisplayArea.leftSweeperItem.SetHighlighted(isLeftSweeperHighlighted);
+        selectedDisplayArea.throwerItem.SetHighlighted(isThrowerHighlighted);
+        selectedDisplayArea.rightSweeperItem.SetHighlighted(isRightSweeperHighlighted);
+
+        selectedDisplayArea.leftSweeperItem.SetSelected(isLeftSweeperHighlighted);
+        selectedDisplayArea.throwerItem.SetSelected(isThrowerHighlighted);
+        selectedDisplayArea.rightSweeperItem.SetSelected(isRightSweeperHighlighted);
+
+
+        // team member card equipment
+        selectedDisplayArea.leftSweeperItem.equipment.SetSelected(
+            status: isLeftSweeperEquipmentHighlighted
+        );
+        selectedDisplayArea.throwerItem.equipment.SetSelected(
+            status: isThrowerEquipmentHighlighted,
+            selectedIndex: stoneSelectionIndex
+        );
+        selectedDisplayArea.rightSweeperItem.equipment.SetSelected(
+            status: isRightSweeperEquipmentHighlighted
+        );
+
+
+        selectedDisplayArea.leftSweeperItem.equipment.SetHighlighted(
+            status: isLeftSweeperEquipmentHighlighted
+        );
+        selectedDisplayArea.throwerItem.equipment.SetHighlighted(
+            status: isThrowerEquipmentHighlighted,
+            highlightedIndex: stoneSelectionIndex
+        );
+        selectedDisplayArea.rightSweeperItem.equipment.SetHighlighted(
+            status: isRightSweeperEquipmentHighlighted
+        );
+
+        ///
+        if (currentTeamSelectionState == TeamSelectionState.TeamMembers){
+            ShowListOfCharacters();
+        }
+        if (currentTeamSelectionState == TeamSelectionState.Equipment){
+            if (isLeftSweeperEquipmentHighlighted || isRightSweeperEquipmentHighlighted){
+                ShowListOfBrooms();
+            }
+            else {
+                ShowListOfStones();
+            }
+        }
 
     }
 
+
+    ///
+    /// Equipement
+    ///  
+    public void ShowListOfBrooms(){
+        listOfCharacterSquareItems.gameObject.SetActive(false);
+        listOfBroomItems.SetActive(true);
+        listOfStoneItems.SetActive(false);
+    }
+
+    public void ShowListOfCharacters(){
+        listOfCharacterSquareItems.gameObject.SetActive(true);
+        listOfBroomItems.SetActive(false);
+        listOfStoneItems.SetActive(false);
+    }
+    
+    public void ShowListOfStones(){
+        listOfCharacterSquareItems.gameObject.SetActive(false);
+        listOfBroomItems.SetActive(false);
+        listOfStoneItems.SetActive(true);
+    }
+
+
+    
 
 
 
@@ -181,58 +412,8 @@ public class SectionTeamSelection : MonoBehaviour
 
     public void OnSelectStone(string stoneId)
     {
-        Debug.Log($"Stone selected: {stoneId}");
-        
+
+        Debug.Log($"Stone selected: {stoneId} | Stone Index: {stoneSelectionIndex}");
     }
 
-
-    ///
-    /// State
-    /// 
-
-    public void ChangeTeamSelectionState(TeamSelectionState newState)
-    {
-        currentTeamSelectionState = newState;
-        switch (currentTeamSelectionState)
-        {
-            case TeamSelectionState.TeamMembers:
-                // Show character selection
-                listOfCharacterSquareItems.gameObject.SetActive(true);
-                break;
-            case TeamSelectionState.Equipment:
-                // Show equipment selection
-                listOfCharacterSquareItems.gameObject.SetActive(false);
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void ChangeTeamMemberSelectionState(TeamMemberSelectionState newState)
-    {
-        int currentIndex = (int)currentTeamMemberSelectionState;
-        int newIndex = (int)newState;
-        int modifyIndex = newIndex - currentIndex;
-
-        currentTeamMemberSelectionState = newState;
-
-        characterSelectionDisplayArea.ChangeSelection(modifyIndex);
-        selectedDisplayArea.ChangeSelection(modifyIndex);
-    }
-    
-    public void ChangeTeamEquipmentSelectionState(TeamEquipmentSelectionState newState)
-    {
-        currentTeamEquipmentSelectionState = newState;
-        switch (currentTeamEquipmentSelectionState)
-        {
-            case TeamEquipmentSelectionState.Brooms:
-                // Show broom selection
-                break;
-            case TeamEquipmentSelectionState.Stones:
-                // Show stone selection
-                break;
-            default:
-                break;
-        }
-    }
 }

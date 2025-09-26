@@ -15,7 +15,7 @@ public class StoneItemState : MonoBehaviour
         textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}";
     }
 
-    public void UpdateFace(RenderTexture renderTexture){
+    public void UpdateImage(Texture renderTexture){
         faceRenderTexture.texture = renderTexture;
     }
 

@@ -39,6 +39,10 @@ public class ScorebugTeamArea : MonoBehaviour
         }
     }
 
+    public void SetTotalNumberOfStones(int num){
+        stoneAvailabilityArea.SetTotalNumberOfStones(num: num);   
+    }
+
     public void UpdateStoneAvailability(
         int numAvailableStones
     ){

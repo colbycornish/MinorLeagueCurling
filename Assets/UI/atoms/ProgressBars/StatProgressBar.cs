@@ -98,10 +98,6 @@ public class StatProgressBar : MonoBehaviour
             float bottom =  rt.offsetMin.y;
 
             float newRight = Mathf.Lerp(right, -bottomBarTargetRight, timer / duration);
-            // bottomBar Target is made negative to adjust for the inherent negative value of offsetMax.x
-
-            Debug.Log($"right: {right} | target: {-bottomBarTargetRight} | new right: {newRight}");
-
             rt.offsetMax = new Vector2(newRight, 0);
 
             currentValue = Mathf.RoundToInt(Mathf.Lerp(currentValue, targetValue, timer / duration));

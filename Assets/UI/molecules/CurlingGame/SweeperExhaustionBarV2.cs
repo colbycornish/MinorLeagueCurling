@@ -79,12 +79,12 @@ public class SweeperExhaustionBarV2 : MonoBehaviour
     /// Sets or resets variables and meters. 
     /// </summary>
     public void SetExhaustionLevelsFromCharacter(
-        int exhaustionLevel, 
-        int maxExhaustionLevel, 
-        int minExhaustionLevel,
-        int exhaustionRate,
-        int recoveryRate,
-        int exhaustionThreshold
+        float exhaustionLevel, 
+        float maxExhaustionLevel,// = 1.0f, 
+        float minExhaustionLevel,// = 0.0f,
+        float exhaustionRate,// = 0.06f,
+        float recoveryRate,// = 0.04f,
+        float exhaustionThreshold// = 0.85f,
     ){
         this.exhaustionLevel = exhaustionLevel;
         this.maxExhaustionValue = maxExhaustionLevel;
@@ -109,7 +109,6 @@ public class SweeperExhaustionBarV2 : MonoBehaviour
 
     /// <summary>
     /// High level functions to change the exhaustion level of the Sweeper
-    /// This includes helper functions that manipulate the display
     /// </summary>
 
     public void IncreaseExhaustionLevel(){
@@ -173,32 +172,17 @@ public class SweeperExhaustionBarV2 : MonoBehaviour
         // }
     }
 
-
-    /// <summary>
-    /// Transitional helpers for showing and hiding the Sweeper Exhaustion Bar
-    /// </summary>
-    public void TransitionIn(){
-        // Transition in the Sweeper Exhaustion Bar
-        // This will be called when the player is in the Sweeping phase
-    }
-    public void TransitionOut(){
-        // Transition out the Sweeper Exhaustion Bar
-        // This will be called when the player is in the Sweeping phase
-    }
     public void UpdateBar(){
         // Update the Sweeper Exhaustion Bar
         // This will be called when the player is in the Sweeping phase
     }
 
 
-    public void Reset()
-    {
-        InitializeDisplay();
-    }
+   
 
-    ///
+    /// <summary>
     /// Warn and Freeze
-    /// 
+    /// </summary>
     public bool ShouldBeWarned(){
         // if (isWarningVisible == true){
             if (progressBar.BarTarget > exhaustionWarningThreshold){
@@ -249,10 +233,27 @@ public class SweeperExhaustionBarV2 : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Transitional helpers for showing and hiding the Sweeper Exhaustion Bar
+    /// </summary>
+    public void TransitionIn(){
+        // Transition in the Sweeper Exhaustion Bar
+        // This will be called when the player is in the Sweeping phase
+    }
+    public void TransitionOut(){
+        // Transition out the Sweeper Exhaustion Bar
+        // This will be called when the player is in the Sweeping phase
+    }
+
+
 
     /// <summary>
     /// Error Checking and Debugging
     /// </summary>
+    public void Reset()
+    {
+        InitializeDisplay();
+    }
 
     public void ErrorCheck()
     {

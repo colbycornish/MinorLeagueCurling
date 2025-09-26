@@ -9,7 +9,13 @@ public class SectionRulesSelection : MonoBehaviour
     // public Sprite icon;
     // [SerializeField] public CharacterSelectionDisplayArea characterSelectionDisplayArea;
     // [SerializeField] public SelectedDisplayArea selectedDisplayArea;
-    [SerializeField] public ListOfCourseItems listOfCourses;
+    [SerializeField] public GameObject curlingGameModeRules;
+    [SerializeField] public GameObject curlingScoringTypeRules;
+    [SerializeField] public GameObject curlingNumberOfGamesRules;
+    [SerializeField] public GameObject curlingDifficultyRules;
+    [SerializeField] public GameObject curlingOpponentRules;
+    [SerializeField] public GameObject curlingThrowClockRules;
+    [SerializeField] public GameObject curlingObstacleRules;
 
     
 

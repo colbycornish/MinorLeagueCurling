@@ -33,7 +33,7 @@ public class StoneItem : MonoBehaviour
     public void Init(
         string title,
         string stoneId,
-        // Texture renderTexture,
+        Texture renderTexture,
         bool isDefault = true,
         bool isHighlighted = false,
         bool isDisabled = false,
@@ -48,17 +48,17 @@ public class StoneItem : MonoBehaviour
         this.isDisabled = isDisabled;
         this.isSelected = false;
         this.OnSelect = OnSelect;
-        itemDefault.GetComponent<CourseItemState>().UpdateText(title);
-        // itemDefault.GetComponent<CourseItemState>().UpdateImage(renderTexture);
+        itemDefault.GetComponent<StoneItemState>().UpdateText(title);
+        itemDefault.GetComponent<StoneItemState>().UpdateImage(renderTexture);
 
-        itemHighlighted.GetComponent<CourseItemState>().UpdateText(title);
-        // itemHighlighted.GetComponent<CourseItemState>().UpdateImage(renderTexture);
+        itemHighlighted.GetComponent<StoneItemState>().UpdateText(title);
+        itemHighlighted.GetComponent<StoneItemState>().UpdateImage(renderTexture);
 
-        itemSelected.GetComponent<CourseItemState>().UpdateText(title);
-        // itemSelected.GetComponent<CourseItemState>().UpdateImage(renderTexture);
+        itemSelected.GetComponent<StoneItemState>().UpdateText(title);
+        itemSelected.GetComponent<StoneItemState>().UpdateImage(renderTexture);
 
-        itemDisabled.GetComponent<CourseItemState>().UpdateText(title);
-        // itemDisabled.GetComponent<CourseItemState>().UpdateImage(renderTexture);
+        itemDisabled.GetComponent<StoneItemState>().UpdateText(title);
+        itemDisabled.GetComponent<StoneItemState>().UpdateImage(renderTexture);
     }
 
     public void UpdateUI()

@@ -11,9 +11,9 @@ public class HorizontalInfoDisplayItem : MonoBehaviour
     [Header("Components")]
     [SerializeField] private GameObject icon;
     [SerializeField] private CharacterInfoDisplay infoDisplay;
-    [SerializeField] private TextMeshProUGUI textName;
-    [SerializeField] private TextMeshProUGUI textPosition;
-    [SerializeField] private TextMeshProUGUI textDescription;
+    // [SerializeField] private TextMeshProUGUI textName;
+    // [SerializeField] private TextMeshProUGUI textPosition;
+    // [SerializeField] private TextMeshProUGUI textDescription;
     [SerializeField] private GameObject infoArea;
     [SerializeField] private GameObject statsArea;
     [SerializeField] private GameObject actionButtonsArea;

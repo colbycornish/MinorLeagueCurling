@@ -28,12 +28,12 @@ public class ScorebugScoreArea : MonoBehaviour
         int awayTeamScore = 0
     ){
 
-        int htc = homeTeamScore;
-        int atc = awayTeamScore;
+        string htc = homeTeamScore.ToString();;
+        string atc = awayTeamScore.ToString();;
         string text = $"{htc}-{atc}";
         if (text != null)
         {
-            scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = $"{scoreText}";
+            scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = text;
         }
     }
 

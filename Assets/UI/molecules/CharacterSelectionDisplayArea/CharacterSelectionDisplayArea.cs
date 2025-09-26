@@ -36,6 +36,7 @@ public class CharacterSelectionDisplayArea : MonoBehaviour
             switch (currentIndex)
             {
                 case 0:
+                    
                     StartCoroutine(leftSweeperItem.Expand());
                     StartCoroutine(throwerItem.Shrink());
                     break;

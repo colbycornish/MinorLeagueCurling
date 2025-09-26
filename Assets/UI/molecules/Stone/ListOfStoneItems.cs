@@ -47,15 +47,15 @@ public class ListOfStoneItems : MonoBehaviour
         }
     }
 
-    public string GetSelectedChildCharacterId()
+    public string GetSelectedChildStoneId()
     {
         int currentIndex = 0;
         foreach (Transform child in listArea.transform)
         {
-            CharacterSquareItem controller = child.GetComponent<CharacterSquareItem>();
+            StoneItem controller = child.GetComponent<StoneItem>();
             if (currentIndex == selectedIndex)
             {
-                return controller.characterId;
+                return controller.stoneId;
             }
             currentIndex++;
         }
@@ -100,7 +100,6 @@ public class ListOfStoneItems : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="characterPrefabs"></param>
     public void BuildList(
         GameObject[] stonePrefabs
     )
@@ -118,16 +117,16 @@ public class ListOfStoneItems : MonoBehaviour
             StoneItem controller = listItem.GetComponent<StoneItem>();
             listItem.transform.SetParent(this.transform);
 
-            // RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetStoneRenderTextureById(
-            //     characterId: stone.id,
-            //     getFace: true,
-            //     getBody: false
-            // );
+            RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetStoneRenderTextureById(
+                stoneId: stone.id,
+                getFace: true,
+                getBody: false
+            );
 
             controller.Init(
                 title: stone.title,
                 stoneId: stone.id,
-                // renderTexture: renderTexture,
+                renderTexture: renderTexture,
                 OnSelect: (string stoneId) => { OnSelection(stoneId); }
             );
             // controller.UpdateUI();

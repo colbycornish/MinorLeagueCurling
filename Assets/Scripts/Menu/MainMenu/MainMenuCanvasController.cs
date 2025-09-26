@@ -12,6 +12,7 @@ public enum CanvasMainMenuState
     LoadGame,
     Settings,
     Controls,
+    QuickCurl,
     Multiplayer,
     ExitGame
 }
@@ -26,6 +27,7 @@ public class MainMenuCanvasController : UIController
     public GameObject CanvasNewGame;
     public GameObject CanvasLoadGame;
     public GameObject CanvasSettings;
+    public GameObject CanvasQuickCurl;
     public GameObject CanvasControls;
     public GameObject CanvasMultiplayer;
     public GameObject CanvasExitGame;
@@ -85,6 +87,10 @@ public class MainMenuCanvasController : UIController
         OpenSection(CanvasMainMenuState.Multiplayer);
     }
 
+    public void ShowQuickCurlCanvas(){
+        OpenSection(CanvasMainMenuState.QuickCurl);
+    }
+
 
 
     public void OpenSection(CanvasMainMenuState newState)
@@ -108,6 +114,9 @@ public class MainMenuCanvasController : UIController
                 break;
             case CanvasMainMenuState.Settings:
                 EnableCanvas(CanvasSettings);
+                break;
+            case CanvasMainMenuState.QuickCurl:
+                EnableCanvas(CanvasQuickCurl);
                 break;
             case CanvasMainMenuState.Controls:
                 EnableCanvas(CanvasControls);

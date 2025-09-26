@@ -63,7 +63,7 @@ public struct CurlingRulesOpponent
         Online,
         Ghost // attempts to mimic your previous throws path
     }
-    public CurlingRulesOpponentType opponent;
+    public CurlingRulesOpponentType opponentType;
 
     public void SetOpponentType(
         bool isAI = false,
@@ -73,13 +73,13 @@ public struct CurlingRulesOpponent
         bool isOnline = false
     ){
 
-        if (isAI) this.opponent = CurlingRulesOpponentType.AI;
-        else if (isGhost) this.opponent = CurlingRulesOpponentType.Ghost;
-        else if (isLocal) this.opponent = CurlingRulesOpponentType.Local;
-        else if (isOnline) this.opponent = CurlingRulesOpponentType.Online;
-        else if (isNone) this.opponent = CurlingRulesOpponentType.None;
+        if (isAI) this.opponentType = CurlingRulesOpponentType.AI;
+        else if (isGhost) this.opponentType = CurlingRulesOpponentType.Ghost;
+        else if (isLocal) this.opponentType = CurlingRulesOpponentType.Local;
+        else if (isOnline) this.opponentType = CurlingRulesOpponentType.Online;
+        else if (isNone) this.opponentType = CurlingRulesOpponentType.None;
         else {
-            this.opponent = CurlingRulesOpponentType.None;
+            this.opponentType = CurlingRulesOpponentType.None;
         }
     }
 }

@@ -25,11 +25,12 @@ public class ScorebugTeamStoneAvailability : MonoBehaviour
     /// Start is called before the first frame update
     /// </summary>
     public void Start(){
-        
+        BuildList();
     }
 
-    public void SetNumberOfStones(int num){
+    public void SetTotalNumberOfStones(int num){
         numberOfStones = num;
+        BuildList();
     }
 
 
