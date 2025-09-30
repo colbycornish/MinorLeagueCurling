@@ -26,23 +26,36 @@ public class SelectedDisplayArea : MonoBehaviour
     {
         UpdateDisplayItem(
             displayItem: leftSweeperItem,
-            characterObject: CurlingPreGameSetupManager._instance.selectedLeftSweeper
+            characterObject: CurlingPreGameSetupManager._instance.selectedLeftSweeper,
+            broomObject: CurlingPreGameSetupManager._instance.selectedLeftSweeperBroom
         );
 
         UpdateDisplayItem(
             displayItem: throwerItem,
-            characterObject: CurlingPreGameSetupManager._instance.selectedThrower
+            characterObject: CurlingPreGameSetupManager._instance.selectedThrower,
+            stoneObject1: CurlingPreGameSetupManager._instance.selectedStone1,
+            stoneObject2: CurlingPreGameSetupManager._instance.selectedStone2,
+            stoneObject3: CurlingPreGameSetupManager._instance.selectedStone3,
+            stoneObject4: CurlingPreGameSetupManager._instance.selectedStone4,
+            stoneObject5: CurlingPreGameSetupManager._instance.selectedStone5
         );
 
         UpdateDisplayItem(
             displayItem: rightSweeperItem,
-            characterObject: CurlingPreGameSetupManager._instance.selectedRightSweeper
+            characterObject: CurlingPreGameSetupManager._instance.selectedRightSweeper,
+            broomObject: CurlingPreGameSetupManager._instance.selectedRightSweeperBroom
         );
     }
 
     public void UpdateDisplayItem(
         CharacterFullDisplayItem displayItem,
-        GameObject characterObject = null
+        GameObject characterObject = null,
+        GameObject broomObject = null,
+        GameObject stoneObject1 = null,
+        GameObject stoneObject2 = null,
+        GameObject stoneObject3 = null,
+        GameObject stoneObject4 = null,
+        GameObject stoneObject5 = null
     )
     {
         if (characterObject != null)
@@ -74,9 +87,101 @@ public class SelectedDisplayArea : MonoBehaviour
             );
 
             displayItem.SetAsUnSelected();
-            
         }
+
+        if (broomObject != null)
+        {
+            UpdateDisplayItemBroom(
+                displayItem: displayItem,
+                broomObject: broomObject
+            );
+        }
+        // else {
+        //     displayItem.ClearEquipmentInfo();
+        // }
+
+        if (stoneObject1 != null)
+        {
+            UpdateDisplayItemStone(displayItem: displayItem, stoneObject: stoneObject1, index: 0);
+        }
+        if (stoneObject2 != null)
+        {
+            UpdateDisplayItemStone(displayItem: displayItem, stoneObject: stoneObject2, index: 1);
+        }
+        if (stoneObject3 != null)
+        {
+            UpdateDisplayItemStone(displayItem: displayItem, stoneObject: stoneObject3, index: 2);
+        }
+        if (stoneObject4 != null)
+        {
+            UpdateDisplayItemStone(displayItem: displayItem, stoneObject: stoneObject4, index: 3);
+        }
+        if (stoneObject5 != null)
+        {
+            UpdateDisplayItemStone(displayItem: displayItem, stoneObject: stoneObject5, index: 4);
+        }
+
+        
     }
+
+    public void UpdateDisplayItemBroom(
+        CharacterFullDisplayItem displayItem,
+        GameObject broomObject = null
+    ){
+        if (broomObject != null)
+        {
+            CurlingBroom b = broomObject.GetComponent<CurlingBroom>();
+            if (b != null)
+            {
+                RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetBroomRenderTextureById(
+                    broomId: b.id,
+                    getFace: true,
+                    getBody: false
+                );
+
+                displayItem.UpdateEquipmentInfo(
+                    broom: b,
+                    renderTexture: renderTexture
+                );
+            }
+        }
+        // else {
+        //     displayItem.ClearEquipmentInfo();
+        // }
+    }
+
+    public void UpdateDisplayItemStone(
+        CharacterFullDisplayItem displayItem,
+        GameObject stoneObject = null,
+        int index = 0
+    ){
+        if (stoneObject != null)
+        {
+            CurlingStone s = stoneObject.GetComponent<CurlingStone>();
+            if (s != null)
+            {
+                RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetStoneRenderTextureById(
+                    stoneId: s.id,
+                    getFace: true,
+                    getBody: false
+                );
+                
+                displayItem.UpdateEquipmentInfo(
+                    stone: s,
+                    stoneIndex: index,
+                    renderTexture: renderTexture
+                );
+            }
+        }
+        // else {
+        //     displayItem.ClearEquipmentInfo(index);
+        // }
+    }
+
+    
+
+
+
 
     // public void ChangeSelection(int modifyIndex)
     // {

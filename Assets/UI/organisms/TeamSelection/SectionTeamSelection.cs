@@ -10,8 +10,8 @@ public class SectionTeamSelection : MonoBehaviour
     [SerializeField] public CharacterSelectionDisplayArea characterSelectionDisplayArea;
     [SerializeField] public SelectedDisplayArea selectedDisplayArea;
     [SerializeField] public ListOfCharacterSquareItems listOfCharacterSquareItems;
-    [SerializeField] public GameObject listOfBroomItems;
-    [SerializeField] public GameObject listOfStoneItems;
+    [SerializeField] public ListOfBroomSquareItems listOfBroomSquareItems;
+    [SerializeField] public ListOfStoneSquareItems listOfStoneSquareItems;
 
     public enum TeamMemberSelectionState
     {
@@ -45,6 +45,8 @@ public class SectionTeamSelection : MonoBehaviour
         selectedDisplayArea.leftSweeperItem.SetSelected(status: true);
         selectedDisplayArea.UpdateSelectionDisplays();
         listOfCharacterSquareItems.Init(OnSelect: OnSelectCharacter);
+        listOfBroomSquareItems.Init(OnSelect: OnSelectBroom);
+        listOfStoneSquareItems.Init(OnSelect: OnSelectStone);
         UpdateSelectedAreaDisplayItems();
         LoadData();
     }
@@ -56,13 +58,13 @@ public class SectionTeamSelection : MonoBehaviour
             CurlingPreGameSetupManager._instance.listOfCharacters.ToArray()
         );
 
-        // listOfBroomItems.BuildList(
-        //     CurlingPreGameSetupManager._instance.listOfBrooms.ToArray()
-        // );
+        listOfBroomSquareItems.BuildList(
+            CurlingPreGameSetupManager._instance.listOfBrooms.ToArray()
+        );
 
-        // listOfStoneItems.BuildList(
-        //     CurlingPreGameSetupManager._instance.listOfStones.ToArray()
-        // );
+        listOfStoneSquareItems.BuildList(
+            CurlingPreGameSetupManager._instance.listOfStones.ToArray()
+        );
     }
 
     // private void OnEnable()
@@ -71,7 +73,6 @@ public class SectionTeamSelection : MonoBehaviour
     //     CanvasManager._instance.canvasDisplayAreaController.OnCharactersLoaded += LoadData;
     // }
 
-    //
     public void Update()
     {
         // change the team member selection from LS to T to RS
@@ -192,18 +193,48 @@ public class SectionTeamSelection : MonoBehaviour
             characterId: characterId
         );
 
+        // CurlingBroom leftSweeperBroom = CurlingPreGameSetupManager._instance.selectedLeftSweeperBroom.GetComponent<CurlingBroom>();
+        // CurlingBroom rightSweeperBroom = CurlingPreGameSetupManager._instance.selectedRightSweeperBroom.GetComponent<CurlingBroom>();
+        // CurlingStone stone1 = CurlingPreGameSetupManager._instance.selectedStone1.GetComponent<CurlingStone>();
+        // CurlingStone stone2 = CurlingPreGameSetupManager._instance.selectedStone2.GetComponent<CurlingStone>();
+        // CurlingStone stone3 = CurlingPreGameSetupManager._instance.selectedStone3.GetComponent<CurlingStone>();
+        // CurlingStone stone4 = CurlingPreGameSetupManager._instance.selectedStone4.GetComponent<CurlingStone>();
+        // CurlingStone stone5 = CurlingPreGameSetupManager._instance.selectedStone5.GetComponent<CurlingStone>();
 
-
+        // selectedDisplayArea.UpdateSelectionDisplays();
         switch (currentTeamMemberSelectionState)
         {
             case TeamMemberSelectionState.LeftSweeper:
                 characterSelectionDisplayArea.leftSweeperItem.UpdateInfo(character: c);
+                // characterSelectionDisplayArea.leftSweeperItem.UpdateEquipmentInfo(
+                //     broom: leftSweeperBroom
+                // );
                 break;
             case TeamMemberSelectionState.Thrower:
-                characterSelectionDisplayArea.throwerItem.UpdateInfo(character: c);
+                // characterSelectionDisplayArea.throwerItem.UpdateInfo(
+                //     character: c
+                // );
+                // characterSelectionDisplayArea.throwerItem.UpdateEquipmentInfo(
+                //     stone: stone1, index: 0
+                // );
+                // characterSelectionDisplayArea.throwerItem.UpdateEquipmentInfo(
+                //     stone: stone2, index: 1
+                // );
+                // characterSelectionDisplayArea.throwerItem.UpdateEquipmentInfo(
+                //     stone: stone3, index: 2
+                // );
+                // characterSelectionDisplayArea.throwerItem.UpdateEquipmentInfo(
+                //     stone: stone4, index: 3
+                // );
+                // characterSelectionDisplayArea.throwerItem.UpdateEquipmentInfo(
+                //     stone: stone5, index: 4
+                // );
                 break;
             case TeamMemberSelectionState.RightSweeper:
                 characterSelectionDisplayArea.rightSweeperItem.UpdateInfo(character: c);
+                // characterSelectionDisplayArea.rightSweeperItem.UpdateEquipmentInfo(
+                //     broom: rightSweeperBroom
+                // );
                 break;
             default:
                 Debug.Log("Unknown selection");
@@ -322,6 +353,13 @@ public class SectionTeamSelection : MonoBehaviour
         selectedDisplayArea.rightSweeperItem.equipment.SetHighlighted(
             status: isRightSweeperEquipmentHighlighted
         );
+        if (isThrowerEquipmentHighlighted == false){
+            selectedDisplayArea.throwerItem.equipment.SetHighlighted(
+                status: isThrowerEquipmentHighlighted,
+                highlightedIndex: -1
+            );
+        }
+
 
         ///
         if (currentTeamSelectionState == TeamSelectionState.TeamMembers){
@@ -344,20 +382,20 @@ public class SectionTeamSelection : MonoBehaviour
     ///  
     public void ShowListOfBrooms(){
         listOfCharacterSquareItems.gameObject.SetActive(false);
-        listOfBroomItems.SetActive(true);
-        listOfStoneItems.SetActive(false);
+        listOfBroomSquareItems.gameObject.SetActive(true);
+        listOfStoneSquareItems.gameObject.SetActive(false);
     }
 
     public void ShowListOfCharacters(){
         listOfCharacterSquareItems.gameObject.SetActive(true);
-        listOfBroomItems.SetActive(false);
-        listOfStoneItems.SetActive(false);
+        listOfBroomSquareItems.gameObject.SetActive(false);
+        listOfStoneSquareItems.gameObject.SetActive(false);
     }
     
     public void ShowListOfStones(){
         listOfCharacterSquareItems.gameObject.SetActive(false);
-        listOfBroomItems.SetActive(false);
-        listOfStoneItems.SetActive(true);
+        listOfBroomSquareItems.gameObject.SetActive(false);
+        listOfStoneSquareItems.gameObject.SetActive(true);
     }
 
 
@@ -408,12 +446,17 @@ public class SectionTeamSelection : MonoBehaviour
                 Debug.Log("Unknown selection");
                 break;
         }
+        selectedDisplayArea.UpdateSelectionDisplays();
     }
 
     public void OnSelectStone(string stoneId)
     {
-
+        CurlingPreGameSetupManager._instance.OnSelectStone(
+            stoneId: stoneId, 
+            stoneIndex: stoneSelectionIndex
+        );
         Debug.Log($"Stone selected: {stoneId} | Stone Index: {stoneSelectionIndex}");
+        selectedDisplayArea.UpdateSelectionDisplays();
     }
 
 }

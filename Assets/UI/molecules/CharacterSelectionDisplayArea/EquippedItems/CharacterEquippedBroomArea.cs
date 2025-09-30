@@ -20,10 +20,20 @@ public class CharacterEquippedBroomArea : MonoBehaviour
     }
 
     public void UpdateBroomInfo(
-        CurlingBroom broom
+        CurlingBroom broom,
+        RenderTexture renderTexture = null
+
     ){
         if (broom != null){
-            
+            broomItem.UpdateInfo(
+                broom: broom,
+                name: broom.title,
+                desc: broom.description,
+                image: renderTexture
+            );
+        }
+        else {
+            broomItem.ClearInfo();
         }
     }
 
@@ -31,8 +41,7 @@ public class CharacterEquippedBroomArea : MonoBehaviour
         broomItem.SetEmpty(status);
     }
 
-    
-    
+
     public void SetHighlighted(bool status = false){
         broomItem.SetHighlighted(status);
         
@@ -40,7 +49,6 @@ public class CharacterEquippedBroomArea : MonoBehaviour
 
     public void SetSelected(bool status = false){
         broomItem.SetSelected(status);
-
     }
 
     

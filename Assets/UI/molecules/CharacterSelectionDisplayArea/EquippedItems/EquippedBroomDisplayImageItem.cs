@@ -29,6 +29,24 @@ public class EquippedBroomDisplayImageItem : MonoBehaviour
         
     }
 
+    // public void SetName(string name){
+    //     empty.UpdateName(name);
+    //     highlighted.UpdateName(name);
+    //     selected.UpdateName(name);
+    // }
+
+    // public void SetDescription(string desc){
+    //     empty.UpdateDesc(desc);
+    //     highlighted.UpdateDesc(desc);
+    //     selected.UpdateDesc(desc);
+    // }
+
+    public void SetImage(Texture image){
+        // empty.UpdateImage(image);
+        highlighted.UpdateImage(image);
+        selected.UpdateImage(image);
+    }
+
     public void SetEmpty(bool status = false){
         empty.gameObject.SetActive(status);
         // highlighted.gameObject.SetActive(false);

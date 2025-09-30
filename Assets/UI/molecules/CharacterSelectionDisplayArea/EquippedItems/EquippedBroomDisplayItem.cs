@@ -33,6 +33,33 @@ public class EquippedBroomDisplayItem : MonoBehaviour
         
     }
 
+    public void ClearInfo(){
+        
+    }
+
+    public void UpdateInfo(
+        CurlingBroom broom,
+        string name,
+        string desc,
+        Texture image
+    ){
+        SetName(name);
+        SetDescription(desc);
+        SetImage(image);
+    }
+
+    public void SetName(string name){
+        textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}";
+    }
+
+    public void SetDescription(string desc){
+        textDesc.GetComponent<TMPro.TextMeshProUGUI>().text = $"{desc}";
+    }
+
+    public void SetImage(Texture image){
+        imageItem.SetImage(image);
+    }
+
     public void SetEmpty(bool status = false){
         imageItem.SetEmpty(status: status);
     }

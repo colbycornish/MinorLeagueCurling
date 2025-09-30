@@ -27,32 +27,11 @@ public class CanvasDisplayAreaController : MonoBehaviour
     [Header("Spacing")]
     [SerializeField] public int spacingX;
 
-    // [Header("Functional Indicators")]
-    // public event Action OnCharactersLoaded;
-
-
-
     public void Start()
     {
-
-        // broomArea
         LoadCharacters();
         LoadBrooms();
-
-        // AdjustAreaZPosition(
-        //     area: characterArea,
-        //     zAdjustment: 0.0f
-        // );
-
-        // AdjustAreaZPosition(
-        //     area: broomArea,
-        //     zAdjustment: -20.0f
-        // );
-
-        // AdjustAreaZPosition(
-        //     area: stoneArea,
-        //     zAdjustment: -40.0f
-        // );
+        LoadStones();
     }
 
     public void UpdateUI()
@@ -116,35 +95,6 @@ public class CanvasDisplayAreaController : MonoBehaviour
         return null;
     }
 
-    public RenderTexture GetCharacterRenderTextureById(
-        string characterId,
-        bool getFace = true,
-        bool getBody = false
-    )
-    {
-        CanvasDisplaySingleCharacterController item = FindCharacterById(characterId);
-        if (item != null)
-        {
-            if (getBody) return item.GetRenderTextureFull();
-            else return item.GetRenderTextureFace();
-        }
-        return null;
-    }
-
-    public RenderTexture GetRandomCharacterRenderTexture(bool getFace = true, bool getBody = false)
-    {
-        if (characterItems.Count == 0) return null;
-        int randomIndex = UnityEngine.Random.Range(0, characterItems.Count);
-        CanvasDisplaySingleCharacterController item = characterItems[randomIndex];
-        if (item != null)
-        {
-            if (getBody) return item.GetRenderTextureFull();
-            else return item.GetRenderTextureFace();
-        }
-        return null;
-    }
-
-
     /// <summary>
     /// Broom List
     /// </summary>
@@ -174,10 +124,7 @@ public class CanvasDisplayAreaController : MonoBehaviour
         }
 
         LayoutIntoGrid(area: broomArea);
-        // AdjustAreaZPosition(
-        //     area: broomArea,
-        //     zAdjustment: -20.0f
-        // );
+        
     }
 
     public void AddBroomItem(CanvasDisplaySingleBroomController item){
@@ -205,20 +152,7 @@ public class CanvasDisplayAreaController : MonoBehaviour
         return null;
     }
 
-    public RenderTexture GetBroomRenderTextureById(
-        string broomId,
-        bool getFace = true,
-        bool getBody = false
-    )
-    {
-        CanvasDisplaySingleBroomController item = FindBroomById(broomId);
-        if (item != null)
-        {
-            if (getBody) return item.GetRenderTextureFull();
-            else return item.GetRenderTextureHead();
-        }
-        return null;
-    }
+    
 
 
     /// <summary>
@@ -250,10 +184,6 @@ public class CanvasDisplayAreaController : MonoBehaviour
         }
 
         LayoutIntoGrid(area: stoneArea);
-        // AdjustAreaZPosition(
-        //     area: broomArea,
-        //     zAdjustment: -20.0f
-        // );
     }
 
     public void AddStoneItem(CanvasDisplaySingleStoneController item){
@@ -281,6 +211,91 @@ public class CanvasDisplayAreaController : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Get Stone Render Texture By ID
+    /// </summary>
+
+    public RenderTexture GetRenderTextureById(
+        string id,
+        bool isStone = false,
+        bool isCharacter = false,
+        bool isBroom = false,
+        bool getFace = true, 
+        bool getBody = false
+    )
+    {
+        if (isStone)
+        {
+            return GetStoneRenderTextureById(
+                stoneId: id,
+                getFace: getFace,
+                getBody: getBody
+            );
+        }
+        else if (isBroom)
+        {
+            return GetBroomRenderTextureById(
+                broomId: id,
+                getFace: getFace,
+                getBody: getBody
+            );
+        }
+        else // default to character
+        {
+            return GetCharacterRenderTextureById(
+                characterId: id,
+                getFace: getFace,
+                getBody: getBody
+            );
+        }
+    }
+
+    public RenderTexture GetCharacterRenderTextureById(
+        string characterId,
+        bool getFace = true,
+        bool getBody = false
+    )
+    {
+        CanvasDisplaySingleCharacterController item = FindCharacterById(characterId);
+        if (item != null)
+        {
+            if (getBody) return item.GetRenderTextureFull();
+            else return item.GetRenderTextureFace();
+        }
+        return null;
+    }
+
+    public RenderTexture GetRandomCharacterRenderTexture(
+        bool getFace = true, 
+        bool getBody = false
+    )
+    {
+        if (characterItems.Count == 0) return null;
+        int randomIndex = 0; //UnityEngine.Random.Range(0, characterItems.Count);
+        CanvasDisplaySingleCharacterController item = characterItems[randomIndex];
+        if (item != null)
+        {
+            if (getBody) return item.GetRenderTextureFull();
+            else return item.GetRenderTextureFace();
+        }
+        return null;
+    }
+
+    public RenderTexture GetBroomRenderTextureById(
+        string broomId,
+        bool getFace = true,
+        bool getBody = false
+    )
+    {
+        CanvasDisplaySingleBroomController item = FindBroomById(broomId);
+        if (item != null)
+        {
+            if (getBody) return item.GetRenderTextureFull();
+            else return item.GetRenderTextureHead();
+        }
+        return null;
+    }
+
     public RenderTexture GetStoneRenderTextureById(
         string stoneId,
         bool getFace = true,
@@ -295,24 +310,7 @@ public class CanvasDisplayAreaController : MonoBehaviour
         }
         return null;
     } 
-    
-
-    // public RenderTexture GetRandomCharacterRenderTexture(bool getFace = true, bool getBody = false)
-    // {
-    //     if (characterItems.Count == 0) return null;
-    //     int randomIndex = UnityEngine.Random.Range(0, characterItems.Count);
-    //     CanvasDisplaySingleCharacterController item = characterItems[randomIndex];
-    //     if (item != null)
-    //     {
-    //         if (getBody) return item.GetRenderTextureFull();
-    //         else return item.GetRenderTextureFace();
-    //     }
-    //     return null;
-    // }
-
-
-    
-    
+        
 
     /// <summary>
     /// Utility
@@ -345,17 +343,4 @@ public class CanvasDisplayAreaController : MonoBehaviour
         }
     }
 
-    public void AdjustAreaZPosition(
-        GameObject area,
-        float zAdjustment = 0.0f
-    ){
-        // Get the current position
-        Vector3 currentPosition = area.transform.position;
-
-        // Create a new Vector3 with the desired Z position, keeping X and Y the same
-        Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z + zAdjustment);
-
-        // Assign the new position back to the transform
-        area.transform.position = newPosition;
-    }
 }

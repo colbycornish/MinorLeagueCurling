@@ -6,7 +6,7 @@ using TMPro;
 using System;
 
 
-public class StoneItem : MonoBehaviour
+public class BroomSquareItem : MonoBehaviour
 {
     // public Sprite icon;
     [Header("State")]
@@ -22,8 +22,8 @@ public class StoneItem : MonoBehaviour
     [SerializeField] private GameObject itemDisabled;
 
     [Header("Info")]
-    [SerializeField] public string stoneId;
-    [SerializeField] private string title;
+    [SerializeField] public string broomId;
+    [SerializeField] private string broomName;
 
     [Header("Functions")]
     [SerializeField] public Action<string> OnSelect;
@@ -31,34 +31,31 @@ public class StoneItem : MonoBehaviour
 
 
     public void Init(
-        string title,
-        string stoneId,
-        Texture renderTexture,
+        string name,
+        string broomId,
+        RenderTexture renderTexture,
         bool isDefault = true,
         bool isHighlighted = false,
         bool isDisabled = false,
         Action<string> OnSelect = null
     )
     {
-        this.title = title;
-        this.stoneId = stoneId;
+        this.broomName = name;
+        this.broomId = broomId;
         // Initialize the item state
         this.isDefault = isDefault;
         this.isHighlighted = isHighlighted;
         this.isDisabled = isDisabled;
         this.isSelected = false;
         this.OnSelect = OnSelect;
-        itemDefault.GetComponent<StoneItemState>().UpdateText(title);
-        itemDefault.GetComponent<StoneItemState>().UpdateImage(renderTexture);
+        itemDefault.GetComponent<BroomSquareItemState>().UpdateText(name);
+        itemDefault.GetComponent<BroomSquareItemState>().UpdateFace(renderTexture);
 
-        itemHighlighted.GetComponent<StoneItemState>().UpdateText(title);
-        itemHighlighted.GetComponent<StoneItemState>().UpdateImage(renderTexture);
+        itemHighlighted.GetComponent<BroomSquareItemState>().UpdateText(name);
+        itemHighlighted.GetComponent<BroomSquareItemState>().UpdateFace(renderTexture);
 
-        itemSelected.GetComponent<StoneItemState>().UpdateText(title);
-        itemSelected.GetComponent<StoneItemState>().UpdateImage(renderTexture);
-
-        itemDisabled.GetComponent<StoneItemState>().UpdateText(title);
-        itemDisabled.GetComponent<StoneItemState>().UpdateImage(renderTexture);
+        itemDisabled.GetComponent<BroomSquareItemState>().UpdateText(name);
+        itemDisabled.GetComponent<BroomSquareItemState>().UpdateFace(renderTexture);
     }
 
     public void UpdateUI()
@@ -69,27 +66,31 @@ public class StoneItem : MonoBehaviour
     public void SetSelected(bool val)
     {
         isSelected = val;
-        itemDisabled.SetActive(false);
-        itemDefault.SetActive(!val);
         itemSelected.SetActive(val);
     }
 
     public void SetHighlighted(bool val)
     {
-        isHighlighted = val;
+        itemDisabled.SetActive(false);
+        isDisabled = false;
+
+        itemDefault.SetActive(!val);
         itemHighlighted.SetActive(val);
     }
 
     public void SetDisabled(bool val)
     {
-        isDisabled = val;
         itemDisabled.SetActive(val);
+        isDisabled = val;
+
         itemDefault.SetActive(!val);
-        itemSelected.SetActive(false);
+        
+        itemHighlighted.SetActive(false);
+        isHighlighted = false;
     }
 
     public void OnSelected()
     {
-        OnSelect?.Invoke(stoneId);
+        OnSelect?.Invoke(broomId);
     }
 }

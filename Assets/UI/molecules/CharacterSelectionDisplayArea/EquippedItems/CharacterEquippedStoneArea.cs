@@ -21,17 +21,13 @@ public class CharacterEquippedStoneArea : MonoBehaviour
         
     }
 
-    public void UpdateStoneInfo(
-        CurlingStone stone = null,
-        int stoneIndex = 0
-    ){
-        if (stone != null){
-            
-        }
-    }
 
     public void SetEmpty(bool status = false, int index = 0){
         // stoneItem.SetEmpty(status: status, index: index);
+    }
+
+    public void UnSelectAll(){
+        listOfStoneItems.SetSelectedIndex(index: -1);
     }
 
 
@@ -41,6 +37,16 @@ public class CharacterEquippedStoneArea : MonoBehaviour
 
     public void SetSelected(bool status = false, int selectedIndex = 0){
         listOfStoneItems.SetSelectedIndex(index: selectedIndex);
+    }
+
+    public void UpdateStoneInfo(
+        CurlingStone stone = null,
+        int stoneIndex = 0,
+        RenderTexture renderTexture = null
+    ){
+        if (stone != null){
+            UpdateInfo(stone: stone, index: stoneIndex, renderTexture: renderTexture);
+        }
     }
 
     public void UpdateAllStoneInfo(
@@ -59,9 +65,10 @@ public class CharacterEquippedStoneArea : MonoBehaviour
 
     public void UpdateInfo(
         CurlingStone stone,
-        int index = 0
+        int index = 0,
+        RenderTexture renderTexture = null
     ){
-        listOfStoneItems.UpdateStoneInfo(stone: stone, index: index);
+        listOfStoneItems.UpdateStoneInfo(stone: stone, index: index, renderTexture: renderTexture);
     }
     
 

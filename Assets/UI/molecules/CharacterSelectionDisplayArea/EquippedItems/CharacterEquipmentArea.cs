@@ -10,8 +10,10 @@ public class CharacterEquipmentArea : MonoBehaviour
 {
     // public Sprite icon;
     [Header("Components")]
-    [SerializeField] public CharacterEquippedBroomArea broomArea;
+    // [SerializeField] public CharacterEquippedBroomArea broomArea;
+    [SerializeField] public GameObject broomArea;
     [SerializeField] public CharacterEquippedStoneArea stoneArea;
+    [SerializeField] public EquippedBroomDisplayItemV2 equippedBroomItem;
 
     [Header("Visual Display Settings")]
     [SerializeField] public bool useBrooms = false;
@@ -32,16 +34,29 @@ public class CharacterEquipmentArea : MonoBehaviour
 
     public void UpdateStoneInfo(
         CurlingStone stone = null,
-        int stoneIndex = 0
+        int stoneIndex = 0,
+        RenderTexture renderTexture = null
     ){
         if (stone != null){
-            stoneArea.UpdateStoneInfo(stone: stone, stoneIndex: stoneIndex);
+            stoneArea.UpdateStoneInfo(
+                stone: stone, 
+                stoneIndex: stoneIndex,
+                renderTexture: renderTexture
+            );
         }
     }
 
-    public void UpdateBroomInfo(CurlingBroom broom = null){
+    public void UpdateBroomInfo(
+        CurlingBroom broom = null,
+        RenderTexture renderTexture = null
+    ){
         if (broom != null){
-            broomArea.UpdateBroomInfo(broom: broom);
+            equippedBroomItem.UpdateInfo(
+                broom: broom,
+                name: broom.title,
+                desc: broom.description,
+                image: renderTexture
+            );
         }
     }
 
@@ -55,7 +70,8 @@ public class CharacterEquipmentArea : MonoBehaviour
     }
 
     private void SetSelectedBroomArea(bool status = false){
-        broomArea.SetSelected(status: status);
+        equippedBroomItem.SetSelected(status: status);
+        // broomArea.SetSelected(status: status);
     }
 
     private void SetSelectedStoneArea(bool status = false, int selectedIndex = 0){
@@ -75,7 +91,8 @@ public class CharacterEquipmentArea : MonoBehaviour
     }
 
     private void SetHighlightedBroomArea(bool status = false){
-        broomArea.SetHighlighted(status: status);
+        equippedBroomItem.SetHighlighted(status: status);
+        // broomArea.SetHighlighted(status: status);
     }
 
     private void SetHighlightedStoneArea(bool status = false, int highlightedIndex = 0){

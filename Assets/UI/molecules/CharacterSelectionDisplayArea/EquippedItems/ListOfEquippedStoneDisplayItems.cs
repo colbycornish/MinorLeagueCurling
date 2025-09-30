@@ -63,17 +63,25 @@ public class ListOfEquippedStoneDisplayItems : MonoBehaviour
 
     public void UpdateStoneInfo(
         CurlingStone stone = null, 
-        int index = 0
+        int index = 0,
+        RenderTexture renderTexture = null
     ){
         int currentIndex = 0;
         foreach(Transform item in listArea.transform){
             EquippedStoneDisplayItem controller = item.GetComponent<EquippedStoneDisplayItem>();
             if (currentIndex == index){
-                controller.SetHighlighted(status: true);
+                controller.UpdateInfo(
+                    stone: stone,
+                    image: renderTexture
+                );
             }
-            else {
-                controller.SetHighlighted(status: false);
-            }
+
+            // if (currentIndex == index){
+            //     controller.SetHighlighted(status: true);
+            // }
+            // else {
+            //     controller.SetHighlighted(status: false);
+            // }
             currentIndex += 1;
         }
     }

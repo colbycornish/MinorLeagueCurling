@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-public class StoneItemState : MonoBehaviour
+public class BroomSquareItemState : MonoBehaviour
 {
     // public Sprite icon;
     [SerializeField] private TextMeshProUGUI textName;
@@ -15,7 +15,7 @@ public class StoneItemState : MonoBehaviour
         textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}";
     }
 
-    public void UpdateImage(Texture renderTexture){
+    public void UpdateFace(RenderTexture renderTexture){
         faceRenderTexture.texture = renderTexture;
     }
 

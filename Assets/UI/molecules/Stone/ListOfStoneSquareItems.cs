@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using TMPro;
 
 
-public class ListOfStoneItems : MonoBehaviour
+public class ListOfStoneSquareItems : MonoBehaviour
 {
     // public Sprite icon;
     [SerializeField] private GameObject listArea;
@@ -52,7 +52,7 @@ public class ListOfStoneItems : MonoBehaviour
         int currentIndex = 0;
         foreach (Transform child in listArea.transform)
         {
-            StoneItem controller = child.GetComponent<StoneItem>();
+            StoneSquareItem controller = child.GetComponent<StoneSquareItem>();
             if (currentIndex == selectedIndex)
             {
                 return controller.stoneId;
@@ -67,7 +67,7 @@ public class ListOfStoneItems : MonoBehaviour
         int currentIndex = 0;
         foreach (Transform child in listArea.transform)
         {
-            StoneItem controller = child.GetComponent<StoneItem>();
+            StoneSquareItem controller = child.GetComponent<StoneSquareItem>();
             if (currentIndex == selectedIndex)
             {
                 controller.SetSelected(true);
@@ -86,7 +86,7 @@ public class ListOfStoneItems : MonoBehaviour
     {
         foreach (Transform child in listArea.transform)
         {
-            StoneItem controller = child.GetComponent<StoneItem>();
+            StoneSquareItem controller = child.GetComponent<StoneSquareItem>();
             if (higlighedIds != null && higlighedIds.Contains(controller.stoneId))
             {
                 controller.SetHighlighted(true);
@@ -114,7 +114,7 @@ public class ListOfStoneItems : MonoBehaviour
             CurlingStone stone = stonePrefab.GetComponent<CurlingStone>();
 
             GameObject listItem = Instantiate(listItemPrefab, listArea.transform);
-            StoneItem controller = listItem.GetComponent<StoneItem>();
+            StoneSquareItem controller = listItem.GetComponent<StoneSquareItem>();
             listItem.transform.SetParent(this.transform);
 
             RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetStoneRenderTextureById(

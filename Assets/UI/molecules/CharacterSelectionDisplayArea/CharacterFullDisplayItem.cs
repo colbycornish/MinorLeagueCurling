@@ -43,21 +43,21 @@ public class CharacterFullDisplayItem : MonoBehaviour
     [SerializeField] private float maxWidth;
     [SerializeField] public float shrinkDuration = 2f; // Time in seconds to complete shrinkage
 
-    // public void UpdateText(string name){
-    //     textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}:";
-    // }
+    
     public void Start()
     {
         if (isThrower && equipment != null){
             equipment.useBrooms = false;
             equipment.useStones = true;
-            equipment.broomArea.gameObject.SetActive(false);
+            // equipment.broomArea.gameObject.SetActive(false);
+            equipment.broomArea.SetActive(false);
             equipment.stoneArea.gameObject.SetActive(true);
         }
         if ((isLeftSweeper || isRightSweeper) && equipment != null){
             equipment.useBrooms = true;
             equipment.useStones = false;
-            equipment.broomArea.gameObject.SetActive(true);
+            // equipment.broomArea.gameObject.SetActive(true);
+            equipment.broomArea.SetActive(true);
             equipment.stoneArea.gameObject.SetActive(false);
         }
         
@@ -102,6 +102,55 @@ public class CharacterFullDisplayItem : MonoBehaviour
         characterImage.texture = renderTexture;
     }
 
+
+    ///
+    /// Equipment Functions
+    /// 
+    
+    public void UpdateEquipmentInfo(
+        RenderTexture renderTexture = null,
+        CurlingBroom broom = null,
+        CurlingStone stone = null,
+        int stoneIndex = 0
+    )
+    {
+        if (isThrower)
+        {
+            equipment.UpdateStoneInfo(
+                stone: stone, 
+                stoneIndex: stoneIndex,
+                renderTexture: renderTexture
+            );
+        }
+        else
+        {   
+            equipment.UpdateBroomInfo(
+                broom: broom,
+                renderTexture: renderTexture
+            );
+        }
+    }
+
+    public void SetEquipmentInfo(
+        int index = 0
+    ){
+
+    }
+
+    public void SetSelectedEquipment(bool status = false, int index = 0){
+        // if (status == true){
+            // equipment.
+        // }
+        // if ()
+    }
+
+
+    
+
+    ///
+    /// Transitions
+    /// 
+    
     public void SetAsUnSelected()
     {
         hasInfo = false;
@@ -128,54 +177,11 @@ public class CharacterFullDisplayItem : MonoBehaviour
         }
     }
 
-
     public void SetHighlighted(bool status = false){
         if (selectedBackground != null){
             selectedBackground.SetActive(status);
         }
     }
-
-    public void SetEquipmentInfo(
-        int index = 0
-    ){
-
-    }
-
-    public void SetSelectedEquipment(bool status = false, int index = 0){
-        // if (status == true){
-            // equipment.
-        // }
-        // if ()
-    }
-
-
-    public void UpdateEquipmentInfo(
-        CurlingBroom broom = null,
-        CurlingStone stone = null,
-        int stoneIndex = 0
-    )
-    {
-        if (isThrower)
-        {
-            equipment.UpdateStoneInfo(stone: stone, stoneIndex: stoneIndex);
-        }
-        else
-        {   
-            equipment.UpdateBroomInfo(broom: broom);
-        }
-    }
-
-    
-
-
-
-    // public void SetUnHighlighted(){
-    //     if (selectedBackground != null){
-    //         selectedBackground.SetActive(false);
-    //     }
-    // }
-
-
 
     /// Animations
     public IEnumerator Expand()

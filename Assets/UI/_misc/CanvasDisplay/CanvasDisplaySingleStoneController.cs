@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System.Collections.Generic;
 
 
 public class CanvasDisplaySingleStoneController : MonoBehaviour
@@ -56,6 +57,10 @@ public class CanvasDisplaySingleStoneController : MonoBehaviour
 
         stonePrefabInstance.SetLayerRecursively("UI-ObjectRenderer");
         model = Instantiate(stonePrefabInstance, modelArea.transform);
+        CurlingStone cs = model.GetComponent<CurlingStone>();
+        Rigidbody rb = cs.rb;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        
         model.transform.localPosition = Vector3.zero;
         model.SetLayerRecursively("UI-ObjectRenderer");
     }

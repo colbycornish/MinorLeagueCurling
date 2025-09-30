@@ -165,9 +165,9 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         bool isRight = false
     )
     {
-        // GameObject obj = listOfBrooms.Find(b => b.GetComponent<Broom>().id == broomId);
-        // if (isLeft){ selectedLeftSweeperBroom = obj; }
-        // else{ selectedRightSweeperBroom = obj; }
+        GameObject obj = listOfBrooms.Find(b => b.GetComponent<CurlingBroom>().id == broomId);
+        if (isLeft){ selectedLeftSweeperBroom = obj; }
+        else{ selectedRightSweeperBroom = obj; }
     }
 
 
@@ -176,6 +176,12 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         int stoneIndex
     )
     {
+        GameObject obj = listOfStones.Find(b => b.GetComponent<CurlingStone>().id == stoneId);
+        if (stoneIndex == 0){ selectedStone1 = obj; }
+        else if (stoneIndex == 1){ selectedStone2 = obj; }
+        else if (stoneIndex == 2){ selectedStone3 = obj; }
+        else if (stoneIndex == 3){ selectedStone4 = obj; }
+        else if (stoneIndex == 4){ selectedStone5 = obj; }
         
 
     }

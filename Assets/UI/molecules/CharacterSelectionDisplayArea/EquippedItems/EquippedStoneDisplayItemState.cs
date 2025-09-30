@@ -8,27 +8,23 @@ using TMPro;
 
 public class EquippedStoneDisplayItemState : MonoBehaviour
 {
-    // public Sprite icon;
-    [Header("Components")]
-    [SerializeField] private GameObject image;
-    // [SerializeField] private TextMeshProUGUI textName;
-    // [SerializeField] private TextMeshProUGUI textAbilityDesc;
-
-    // [Header("Settings")]
-    // [SerializeField] public bool hasInfo = false;
-    // [SerializeField] public bool isHighlighted = false;
     
-    public void Start()
-    {
+    [SerializeField] private TextMeshProUGUI textName;
+    [SerializeField] private Image backgroundColor;
+    [SerializeField] private RawImage renderTexture;
 
-        
+    public void UpdateText(string name){
+        textName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{name}";
     }
 
-    public void Init(){ 
-
+    public void UpdateImage(Texture newTexture){
+        if (renderTexture != null){
+            renderTexture.texture = newTexture;
+        }
     }
-    
 
-
+    public void UpdateBackgroundColor(Image bc){
+        backgroundColor = bc;
+    }
     
 }

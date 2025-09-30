@@ -52,7 +52,7 @@ public class ListOfBroomSquareItems : MonoBehaviour
         int currentIndex = 0;
         foreach (Transform child in listArea.transform)
         {
-            BroomItem controller = child.GetComponent<BroomItem>();
+            BroomSquareItem controller = child.GetComponent<BroomSquareItem>();
             if (currentIndex == selectedIndex)
             {
                 return controller.broomId;
@@ -67,7 +67,7 @@ public class ListOfBroomSquareItems : MonoBehaviour
         int currentIndex = 0;
         foreach (Transform child in listArea.transform)
         {
-            BroomItem controller = child.GetComponent<BroomItem>();
+            BroomSquareItem controller = child.GetComponent<BroomSquareItem>();
             if (currentIndex == selectedIndex)
             {
                 controller.SetSelected(true);
@@ -86,7 +86,7 @@ public class ListOfBroomSquareItems : MonoBehaviour
     {
         foreach (Transform child in listArea.transform)
         {
-            BroomItem controller = child.GetComponent<BroomItem>();
+            BroomSquareItem controller = child.GetComponent<BroomSquareItem>();
             if (higlighedIds != null && higlighedIds.Contains(controller.broomId))
             {
                 controller.SetHighlighted(true);
@@ -115,7 +115,7 @@ public class ListOfBroomSquareItems : MonoBehaviour
             CurlingBroom c = broomPrefab.GetComponent<CurlingBroom>();
 
             GameObject listItem = Instantiate(listItemPrefab, listArea.transform);
-            BroomItem controller = listItem.GetComponent<BroomItem>();
+            BroomSquareItem controller = listItem.GetComponent<BroomSquareItem>();
             listItem.transform.SetParent(this.transform);
 
             RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetBroomRenderTextureById(
@@ -138,6 +138,7 @@ public class ListOfBroomSquareItems : MonoBehaviour
 
     public void OnSelection(string broomId)
     {
+        Debug.Log($"Selected Broom ID: {broomId}");
         if (OnSelect != null)
         {
             OnSelect?.Invoke(broomId);
