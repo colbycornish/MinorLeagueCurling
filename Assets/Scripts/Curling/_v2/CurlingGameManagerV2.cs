@@ -13,6 +13,7 @@ using UnityEngine;
 [RequireComponent(typeof(CurlingStoneAimController))]
 [RequireComponent(typeof(CurlingStoneSweepController))]
 [RequireComponent(typeof(CurlingEndGameManagerV2))]
+
 public class CurlingGameManagerV2 : MonoBehaviour
 {
 
@@ -203,13 +204,3 @@ public class CurlingGameManagerV2 : MonoBehaviour
         );
     }
 }
-
-
-
-// public void InitSetup()
-//     {
-//         Debug.Log("Initializing Curling Game Setup");
-        
-//         StartCurlingGame();
-//         CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
-//     }

@@ -52,7 +52,7 @@ public class CanvasManager : MonoBehaviour
 
     /// <summary>
     /// Canvas Control Area
-    /// </summary>
+    /// </summary> 
     /// <param name="newState"></param>
     public void OpenCanvas(CanvasState newState)
     {
@@ -103,9 +103,9 @@ public class CanvasManager : MonoBehaviour
     {
         DisableCanvas(CanvasMainMenu);
         DisableCanvas(CanvasPauseMenu);
-        DisableCanvas(CanvasDialogue);
+        if (CanvasDialogue != null) DisableCanvas(CanvasDialogue);
         DisableCanvas(CanvasInventory);
-        DisableCanvas(CanvasShop);
+        if (CanvasShop != null) DisableCanvas(CanvasShop);
         DisableCanvas(CanvasCredits);
         DisableCanvas(CanvasCurlingMatch);
         DisableCanvas(CanvasLoading);

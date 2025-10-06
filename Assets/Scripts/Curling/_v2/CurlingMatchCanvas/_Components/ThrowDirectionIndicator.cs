@@ -46,9 +46,20 @@ public class ThrowDirectionIndicator : MonoBehaviour
 
         if (isActive == true)
         {
+            if (CurlingGameManagerV2.Instance != null){
+                SetCurlAmount(
+                    CurlingGameManagerV2.Instance.aimController.curlAmountInitial
+                );
+                Spin();
+            }
+            if (CurlingManagersV3.CurlingManager._instance != null){
+                SetCurlAmount(
+                    CurlingManagersV3.CurlingManager._instance.aiming.curlAmountInitial
+                );
+                Spin();
+            }
             // Debug.Log("Setting Curl amount");
-            SetCurlAmount(CurlingGameManagerV2.Instance.aimController.curlAmountInitial);
-            Spin();
+            
         }
 
     }

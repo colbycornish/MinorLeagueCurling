@@ -1,13 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
+
 public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
 {
     [SerializeField] public string helloString;
-    // [SerializeField] public ListOfGameSaveSlots listOfGameSaves;
+    [SerializeField] public ListOfStoneSquareItems listOfCurlingStones;
 
     void Start()
     {
@@ -42,6 +44,20 @@ public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
         // listOfCourses.UpdateSelectedDisplay(
             // selectedIds: CurlingPreGameSetupManager._instance.GetSelectedCourseIds()
         // );
+    }
+
+    public void DisplayActiveListOfStones(){
+        CurlingManagersV3.CurlingManager cm = CurlingManagersV3.CurlingManager._instance;
+        if(cm == null) return;
+
+        List<CurlingStone> stones = cm.stoneManager.GetStonesForCurrentTeam();
+        if(stones == null) return;
+
+        listOfCurlingStones.ClearList();
+        // listOfCurlingStones.BuildList(
+        //     stones.ConvertAll(s => s.id).ToArray()
+        // );
+        listOfCurlingStones.UpdateUI();
     }
 
     ///

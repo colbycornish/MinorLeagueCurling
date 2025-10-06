@@ -10,10 +10,57 @@ public class CanvasPreGameSetupCanvasController : MonoBehaviour
     [SerializeField] public GameObject sectionTeamSelection;
     [SerializeField] public GameObject sectionReadyScreen;
 
+    void Start()
+    {
+        OpenCourseSelection();
+    }
+
+    void OnEnable(){
+        // CurlingPreGameSetupManager._instance.OnChangeState += OnChangeState;
+        CanvasManager._instance.canvasDisplayAreaController.BuildAllDisplayAreas();
+    }
+
+    void OnDisable(){
+        // CurlingPreGameSetupManager._instance.OnChangeState -= OnChangeState;
+        CanvasManager._instance.canvasDisplayAreaController.CloseAllDisplayAreas();
+    }
+
     
+    public void OpenRulesSelection(){
+        SetActiveSelection(openRulesSelection: true);
+    }
+
+    public void OpenCourseSelection(){
+        SetActiveSelection(openCourseSelection: true);
+    }
+
+    public void OpenTeamSelection(){
+        SetActiveSelection(openTeamSelection: true);
+    }
+
+    public void OpenReadyScreen(){
+        SetActiveSelection(openReadyScreen: true);
+    }
+
+    public void LaunchCurlingGame(){
+        Debug.Log("Launching Curling Game...");
+    }
+
+    /// activate/Deactivate Sections
+    private void SetActiveSelection(
+        bool openCourseSelection = false, 
+        bool openRulesSelection = false, 
+        bool openTeamSelection = false, 
+        bool openReadyScreen = false
+    ){
+        sectionCourseSelection.SetActive(openCourseSelection);
+        sectionRulesSelection.SetActive(openRulesSelection);
+        sectionTeamSelection.SetActive(openTeamSelection);
+        sectionReadyScreen.SetActive(openReadyScreen);
+    }
 
 
-
+    /// DEMO FUNCTIONS
     public void DemoSelectCourse(){
         CurlingPreGameSetupManager._instance.OnSelectCourse(courseId: "");
     }

@@ -24,6 +24,7 @@ public class CurlingStone : MonoBehaviour
     
     [Header("Stats")]
     public float distanceFromTarget = 1000f;
+
     [Header("Spin")]
     /// <summary>
     /// spin can go in either the left (negative) or right (positive) direction
@@ -72,8 +73,6 @@ public class CurlingStone : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
-
     /// <summary>
     /// Launch Functions
     /// </summary>
@@ -114,7 +113,9 @@ public class CurlingStone : MonoBehaviour
     {
         Vector3 forward = rb.linearVelocity.normalized;
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
-        rb.AddForce(side * spinAmount * 0.33f * sweepStrength, ForceMode.Acceleration); // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
+
+        float temp_spinMultiplier = 0.33f; // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
+        rb.AddForce(side * spinAmount * temp_spinMultiplier * sweepStrength, ForceMode.Acceleration); 
     }
 
     
@@ -127,7 +128,7 @@ public class CurlingStone : MonoBehaviour
 
     public void HandleRightSweepSpin()
     {
-        spinSpeedTarget += spinSpeedStep;
+        spinSpeedTarget = spinSpeedTarget + spinSpeedStep;
         spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
         HandleSpinStop();
     }
@@ -191,14 +192,18 @@ public class CurlingStone : MonoBehaviour
         // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
         if (isSweepingLeft && !isSweepingRight)
         {
+            Debug.Log("Left Sweep Only Applied");
             // applies reduced force in the left direction
             rb.AddForce(-side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else if (!isSweepingLeft && isSweepingRight)
         {
+            Debug.Log("Right Sweep Only Applied");
             // applies reduced force in the right direction
             rb.AddForce(side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
     }
+
+    public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
 }

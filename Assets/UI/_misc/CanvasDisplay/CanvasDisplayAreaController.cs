@@ -29,14 +29,36 @@ public class CanvasDisplayAreaController : MonoBehaviour
 
     public void Start()
     {
-        LoadCharacters();
-        LoadBrooms();
-        LoadStones();
+        // LoadCharacters();
+        // LoadBrooms();
+        // LoadStones();
     }
 
     public void UpdateUI()
     {
 
+    }
+
+    public void CloseAllDisplayAreas()
+    {
+        characterArea.SetActive(false);
+        broomArea.SetActive(false);
+        stoneArea.SetActive(false);
+
+        ClearCharacterItems();
+        ClearBroomItems();
+        ClearStoneItems();
+    }
+
+    public void BuildAllDisplayAreas()
+    {
+        characterArea.SetActive(true);
+        broomArea.SetActive(true);
+        stoneArea.SetActive(true);
+
+        LoadCharacters();
+        LoadBrooms();
+        LoadStones();
     }
 
     /// <summary>

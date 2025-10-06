@@ -10,7 +10,7 @@ public struct CurlingRules
     public CurlingRulesObstacles obstacles;
     public CurlingRulesThrowClock throwClock;
 
-    public void ResetAll(){
+    public void SetDefaultRules(){
         gameMode.SetGameMode(isMatch: true);
         opponent.SetOpponentType(isAI: true);
         difficulty.SetDifficulty(isDefault: true);
@@ -20,6 +20,11 @@ public struct CurlingRules
         obstacles.DisableObstaclePlacementByCourse();
         obstacles.EnableObstacles();
         throwClock.DisableThrowClock();
+    }
+
+
+    public void ResetAll(){
+        SetDefaultRules();
     }
 }
 

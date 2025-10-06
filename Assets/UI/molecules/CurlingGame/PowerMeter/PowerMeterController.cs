@@ -53,6 +53,7 @@ public class PowerMeterController : MonoBehaviour
         this.currentPower = current;
         this.minPower = min;
         this.maxPower = max;
+        UpdatePowerDisplay();
     }
 
     

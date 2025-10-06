@@ -23,7 +23,13 @@ public class CurlingRedLineCollider : MonoBehaviour
         if (other.CompareTag("stone"))
         {
             stoneInRange = true;
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
+            if (CurlingMatchPhaseManager.Instance != null){
+                CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
+            }
+            if (CurlingManagersV3.MatchPhaseManager._instance != null){
+                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.CurlingMatchPhase.CurlingNoSweepZone);
+            }
+            
         }
 
         if (other.CompareTag("Player"))

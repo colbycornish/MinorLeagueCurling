@@ -27,25 +27,25 @@ public class SectionCurlingInGameDisplay : MonoBehaviour
     public void Update()
     {
         // Switch item selection right
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            leftSweeperExhaustionBar.IncreaseExhaustionLevel();
-        }
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            rightSweeperExhaustionBar.IncreaseExhaustionLevel();
+        // if (Input.GetKeyDown(KeyCode.LeftShift))
+        // {
+        //     leftSweeperExhaustionBar.IncreaseExhaustionLevel();
+        // }
+        // if (Input.GetKeyDown(KeyCode.RightShift))
+        // {
+        //     rightSweeperExhaustionBar.IncreaseExhaustionLevel();
             
-        }
+        // }
         
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            powerMeter.IncreasePower();
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            powerMeter.DecreasePower();
-        }
+        // if (Input.GetKeyDown(KeyCode.UpArrow))
+        // {
+        //     powerMeter.IncreasePower();
+        // }
+        // if (Input.GetKeyDown(KeyCode.DownArrow))
+        // {
+        //     powerMeter.DecreasePower();
+        // }
     
     }
 
