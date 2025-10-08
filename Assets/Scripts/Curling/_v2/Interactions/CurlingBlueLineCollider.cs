@@ -21,6 +21,7 @@ public class CurlingBlueLineCollider : MonoBehaviour
     {
         if (other.CompareTag("stone"))
         {
+            
             stoneInRange = true;
             // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
         }

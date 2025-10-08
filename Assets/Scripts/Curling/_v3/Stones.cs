@@ -227,7 +227,7 @@ namespace CurlingManagersV3
             
             CurlingStone cs = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone;
             Rigidbody rb = cs.rb;
-            float threshold = 0.3f;
+            float threshold = 0.2f;
 
             // Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
             if (rb.linearVelocity == Vector3.zero)
@@ -269,7 +269,7 @@ namespace CurlingManagersV3
             CurlingStone cs = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone;
             Rigidbody rb = cs.rb;
             Vector3 forwardVelocity = Vector3.Project(rb.linearVelocity, transform.forward);
-            float threshold = 0.3f;
+            float threshold = 0.2f;
 
             // Check if the forward velocity is close to zero
             if (Mathf.Approximately(forwardVelocity.magnitude, 0f) || forwardVelocity.magnitude < threshold)
