@@ -521,6 +521,15 @@ namespace MoreMountains.Tools
 			}
 		}
 
+		/// <summary>
+		/// Call this method to set a new initial color at runtime, which will be used as a base for the bump color changes
+		/// </summary>
+		/// <param name="newInitialColor"></param>
+		public virtual void SetInitialColor(Color newInitialColor)
+		{
+			_initialColor = newInitialColor;
+		}
+
 		protected virtual void StoreInitialColor()
 		{
 			if (!Bumping && _isForegroundImageNotNull)
@@ -552,15 +561,6 @@ namespace MoreMountains.Tools
 		/// <summary>
 		/// Test method - increases the bar's current value by 10%
 		/// </summary>
-		public virtual void ChangeCustomPercent(
-			float percentage
-		)
-		{
-			float newProgress = BarTarget + percentage;
-			newProgress = Mathf.Clamp(newProgress, 0f, 1f);
-			UpdateBar01(newProgress);
-		}
-
 		public virtual void Plus10Percent()
 		{
 			float newProgress = BarTarget + 0.1f;
@@ -594,6 +594,15 @@ namespace MoreMountains.Tools
 		public virtual void Minus20Percent()
 		{
 			float newProgress = BarTarget - 0.2f;
+			newProgress = Mathf.Clamp(newProgress, 0f, 1f);
+			UpdateBar01(newProgress);
+		}
+
+		public virtual void ChangeCustomPercent(
+			float percentage
+		)
+		{
+			float newProgress = BarTarget + percentage;
 			newProgress = Mathf.Clamp(newProgress, 0f, 1f);
 			UpdateBar01(newProgress);
 		}
@@ -1008,4 +1017,5 @@ namespace MoreMountains.Tools
 		
 		#endif
 	}
+	
 }
