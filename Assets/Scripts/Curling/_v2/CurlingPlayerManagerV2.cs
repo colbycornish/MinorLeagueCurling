@@ -107,7 +107,11 @@ public class CurlingPlayerManagerV2 : MonoBehaviour
     // TODO: Establish the Curling Player Data structure first.
     // We cannot just bring in one of the NPC as a base (since their nav agent and 
     // action controls conflict with the basis here)
-    public void SetPlayers(CurlingTeam teamHome, CurlingTeam teamAway, CurlingCourseData curlingCourse)
+    public void SetPlayers(
+        CurlingTeam teamHome, 
+        CurlingTeam teamAway, 
+        CurlingCourseData curlingCourse
+    )
     {
         teamHomeThrower = Instantiate(teamHome.thrower, idleLocationsTeamHome[0].position, Quaternion.identity);
         teamHome.thrower = teamHomeThrower;

@@ -28,6 +28,4 @@ public enum CurlingMatchPhase
 
     // Exit the Curling Game and return to previous location
     ExitCurlingGame
-
-
 }

@@ -23,7 +23,13 @@ public class CurlingYellowLineCollider : MonoBehaviour
         {
             Debug.Log("Yellow Line Collision");
             stoneInRange = true;
-            CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+            /// previous phase manager code, not needed once v3 is adopted
+            if (CurlingMatchPhaseManager.Instance != null){
+                CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+            }
+            if (CurlingManagersV3.MatchPhaseManager._instance != null){
+                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.CurlingMatchPhase.CurlingStoneSweepingPhase);
+            }
         }
 
     }

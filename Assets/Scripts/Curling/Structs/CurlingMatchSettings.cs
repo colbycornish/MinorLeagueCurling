@@ -30,7 +30,8 @@ Match Structure
 
 */
 
-public struct CurlingMatchSettings {
+public struct CurlingMatchSettings
+{
     //Variable declaration
     //Note: I'm explicitly declaring them as public, but they are public by default. You can use private if you choose.
     [Header("Base Settings")]
@@ -44,7 +45,7 @@ public struct CurlingMatchSettings {
     public bool isPracticeMode;
     public bool isTimedMode;
     public float timeLimit;
-    
+
     //Constructor (not necessary, but helpful)
     public void SetSettings(
         int gamesPerMatch = 1,
@@ -55,7 +56,8 @@ public struct CurlingMatchSettings {
         bool isPracticeMode = false,
         bool isTimedMode = false,
         float timeLimit = 0.0f
-    ) {
+    )
+    {
         this.gamesPerMatch = gamesPerMatch;
         this.roundsPerGame = roundsPerGame;
         this.turnsPerTeamPerRound = turnsPerTeamPerRound;

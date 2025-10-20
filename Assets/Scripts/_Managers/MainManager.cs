@@ -15,7 +15,7 @@ public enum MainState
 public class MainManager : MonoBehaviour
 {
     public static MainManager _instance;
-    public event Action<MainState> OnStateChanged;
+    public event Action<MainState> OnMainStateChanged;
     public MainState currentState = MainState.MainMenu;
 
     // A public stat propert to allow other classes to get the reference, but not set it.
@@ -59,7 +59,7 @@ public class MainManager : MonoBehaviour
         if (currentState == newState) return;
         currentState = newState;
         Debug.Log($"[MainState] {currentState} → {newState}");
-        OnStateChanged?.Invoke(newState);
+        OnMainStateChanged?.Invoke(newState);
     }
 
     public void Play()

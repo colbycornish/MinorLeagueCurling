@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Manages inputs for the Curling game.
-/// It's unclear if inputs should be handled here, or at a lower level.
+/// Manages the behavior of the sweeper characters in the curling match.
+/// This is related to 
 /// 
 /// TODO: Research Input handling in Unity and decide if this is the right place.
 /// </summary>
@@ -19,7 +19,7 @@ public class PracticeSweeperController : MonoBehaviour
     public bool isRightSweeper = false; // Assuming this is a right sweeper, adjust as needed
     public Transform targetToLookAt;
     public float pathUpdateFrequency = 0.5f;
-    private float pathUpdateTimer = 0f; // How often to update the path
+    // private float pathUpdateTimer = 0f; // How often to update the path
 
 
     void Start()
@@ -38,8 +38,6 @@ public class PracticeSweeperController : MonoBehaviour
             MoveCloserToPlayer();
         }
     }
-
-
 
     void MoveCloserToPlayer()
     {

@@ -8,8 +8,8 @@ public class CurlingTeam : MonoBehaviour
     public CurlingTeamData data;
 
     [Header("Basic Data")]
-    public string teamName;
-    public string teamId;
+    public string teamName; // change to name
+    public string teamId; // change to id
     // public Image avatarImage;
     // public bool isControlledByAi;
 
@@ -35,6 +35,14 @@ public class CurlingTeam : MonoBehaviour
 
         data.defaultStone = defaultStone;
         data.stones = stones;
+        if (defaultStone != null && stones != null && stones.Count == 0)
+        {
+            stones.Add(defaultStone);
+            stones.Add(defaultStone);
+            stones.Add(defaultStone);
+            stones.Add(defaultStone);
+            stones.Add(defaultStone);
+        }
 
         CurlingPlayer cp_thrower = new CurlingPlayer
         {

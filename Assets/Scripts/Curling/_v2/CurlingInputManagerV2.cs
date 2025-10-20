@@ -27,6 +27,11 @@ public class CurlingInputManagerV2 : MonoBehaviour
         if (!isInputEnabled) return;
         CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
 
+        // if (Input.GetKeyDown(KeyCode.T))
+        // {
+        //     CurlingGameManagerV2.Instance.InitSetupFromDemo();
+        // }
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             CurlingGameManagerV2.Instance.ExitCurlingGame();
@@ -235,7 +240,7 @@ public class CurlingInputManagerV2 : MonoBehaviour
 
     private void HandleNextTurn()
     {
-        bool gameIsOver = false;
+        // bool gameIsOver = false;
         int currentTurnCount = CurlingGameManagerV2.Instance.gameData.turnCurrent;
         int maxTurnCount = CurlingGameManagerV2.Instance.turnsMax;
         if ((currentTurnCount + 1) == maxTurnCount)

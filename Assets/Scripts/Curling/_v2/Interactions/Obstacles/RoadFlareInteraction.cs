@@ -11,12 +11,9 @@ using UnityEngine;
 [RequireComponent(typeof(CurlingObstacle))]
 public class RoadFlareInteraction : MonoBehaviour
 {
-
-    // public KeyCode interactKey = KeyCode.E;
     private bool stoneInRange = false;
     private CurlingObstacle obstacle;
-    // public SceneDatabase sceneDatabase;
-    // public GameObject promptUI;
+    
     private void Awake()
     {
         if (obstacle == null)

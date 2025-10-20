@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public Vector3 playerSpawnPosition;
     public string playerSpawnID;
     public bool isReady = false;
-    public event Action<GameState> OnStateChanged;
+    public event Action<GameState> OnGameStateChanged;
     // public static CurlingMatchManager curlingMatch;
     // public MainState CurrentState { get; private set; }
 
@@ -51,20 +51,12 @@ public class GameManager : MonoBehaviour
 
         currentState = newState;
         Debug.Log($"[MatchPhase] {currentState} → {newState}");
-        OnStateChanged?.Invoke(newState);
+        OnGameStateChanged?.Invoke(newState);
     }
 
     /// <summary>
     /// Teleport the player to a new scene at a specified spawn position.
     /// </summary>
-    // public void TeleportToScene(string sceneName, Vector3 spawnPosition)
-    // {
-    //     playerSpawnPosition = spawnPosition;
-    //     StartCoroutine(LoadSceneWithFade(sceneName));
-    // }
-
-
-
 
     public void TeleportToScene(string sceneName, string spawnID)
     {

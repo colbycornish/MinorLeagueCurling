@@ -1,76 +1,64 @@
-
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
-// #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
-using Animancer;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-// namespace Animancer.Samples.AnimatorControllers.GameKit
-// {
-    /// <summary>
-    /// A centralised group of references to the common parts of a character and a state machine for their actions.
-    /// </summary>
-    /// 
-    /// <remarks>
+public class Character : MonoBehaviour
+{
+    public string id;
+    public string version;
+    public string firstName;
+    public string lastName;
+    public string fullName => $"{firstName} {lastName}";
+    public string description;
+    public string iconPath; // Path to the icon asset
+    public string addressableModelPath; // Path to the model asset
+    public CurlingPlayer curlingPlayerData;
+    public GameObject model;
 
-    // [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Character")]
-    // [AnimancerHelpUrl(typeof(Character))]
-    public class Character : MonoBehaviour
+    public void Start()
     {
-        /************************************************************************************************************************/
-
-        [SerializeField]
-        private AnimancerComponent _Animancer;
-        public AnimancerComponent Animancer => _Animancer;
-
-        [SerializeField]
-        private CharacterMovement _Movement;
-        public CharacterMovement Movement => _Movement;
-
-        [SerializeField]
-        private CharacterParameters _Parameters;
-        public CharacterParameters Parameters => _Parameters;
-
-        /************************************************************************************************************************/
-
-        [SerializeField]
-        private CharacterState.StateMachine _StateMachine;
-        public CharacterState.StateMachine StateMachine => _StateMachine;
-
-        protected virtual void Awake()
-        {
-            StateMachine.InitializeAfterDeserialize();
-        }
-
-        /************************************************************************************************************************/
-
-        /// <summary>
-        /// Check if this <see cref="Character"/> should enter the Idle, Locomotion, or Airborne state depending on
-        /// whether it is grounded and the movement input from the <see cref="Brain"/>.
-        /// </summary>
-        /// <remarks>
-        /// We could add some null checks to this method to support characters that don't have all the standard states,
-        /// such as a character that can't move or a flying character that never lands.
-        /// </remarks>
-        public bool CheckMotionState()
-        {
-            CharacterState state;
-            if (Movement.IsGrounded)
-            {
-                state = Parameters.MovementDirection == Vector3.zero && Parameters.ForwardSpeed < 0.1f
-                    ? StateMachine.DefaultState
-                    : StateMachine.Locomotion;
-            }
-            else
-            {
-                state = StateMachine.Airborne;
-            }
-
-            return
-                state != StateMachine.CurrentState &&
-                StateMachine.TryResetState(state);
-        }
-
-        /************************************************************************************************************************/
+        BuildRandomCurlingPlayerData();
+        AttachModel();
     }
-// }
+
+    public void UseInCanvasDisplayMode(){
+        if (model != null){
+            model.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
+        }
+    }
+
+    public void UseInGameWorld(){
+        if (model != null){
+            model.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
+        }
+    }
+
+    public void BuildRandomCurlingPlayerData()
+    {
+        curlingPlayerData = new CurlingPlayer();
+        curlingPlayerData.name = fullName;
+        curlingPlayerData.characterId = id;
+        curlingPlayerData.BuildRandomStats();
+    }
+
+    private void ErrorCheck(){
+        if (model == null){
+            Debug.LogError($"Character {fullName} is missing a model.");
+        }
+        
+    }
+
+    private void AttachModel(){
+        if (model == null){
+            Debug.Log($"Attaching model for character {fullName} unsafely. Should fix this...");
+            foreach (Transform child in this.transform) {
+                if (child.name != "Brain"){
+                    model = child.gameObject;
+                }
+            }
+            
+        }
+    }
+
+}
+

@@ -8,6 +8,7 @@ public class CurlingStone : MonoBehaviour
     [Header("Basic Data")]
     public string title = "Basic Stone";
     public string description = "Just your basic curling stone.";
+    public string id = "";
     public Image avatarImage;
 
     [Header("Ids")]
@@ -22,6 +23,8 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public bool isInScoringZone = false;
     
     [Header("Stats")]
+    public float distanceFromTarget = 1000f;
+
     [Header("Spin")]
     /// <summary>
     /// spin can go in either the left (negative) or right (positive) direction
@@ -32,7 +35,6 @@ public class CurlingStone : MonoBehaviour
     public float spinSpeedStep = 0.25f;
     public float spinSpeedDecay = 0.05f;
     public float spinSpeedTargetMax = 1f;
-    // public float spinSpeedDecay = 0.05f;
     public float maxTorque = 1f;
     /// <summary>
     /// Todo: remove?
@@ -47,16 +49,14 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public float speedCurrent = 0f;
 
 
-    // [Header("Launch Force")]
-    // [HideInInspector] public float launchForce = 0f;
-
-    // [Header("Launch Force")]
-    // [HideInInspector] public float primaryColor = 0f;
-
     [Header("Model")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 
-    // 
+
+    [Header("Special Abilities")]
+    [HideInInspector] public bool hasSpecialAbility = false;
+
+    
     private void Awake()
     {
         if (rb == null)
@@ -72,8 +72,6 @@ public class CurlingStone : MonoBehaviour
         transform.position = position;
         transform.rotation = rotation;
     }
-
-    public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
 
     /// <summary>
     /// Launch Functions
@@ -115,7 +113,9 @@ public class CurlingStone : MonoBehaviour
     {
         Vector3 forward = rb.linearVelocity.normalized;
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
-        rb.AddForce(side * spinAmount * 0.33f * sweepStrength, ForceMode.Acceleration); // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
+
+        float temp_spinMultiplier = 0.33f; // Added "* 0.33f" so the default curved trajectory is more mild (might need to make even more mild)
+        rb.AddForce(side * spinAmount * temp_spinMultiplier * sweepStrength, ForceMode.Acceleration); 
     }
 
     
@@ -128,7 +128,7 @@ public class CurlingStone : MonoBehaviour
 
     public void HandleRightSweepSpin()
     {
-        spinSpeedTarget += spinSpeedStep;
+        spinSpeedTarget = spinSpeedTarget + spinSpeedStep;
         spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
         HandleSpinStop();
     }
@@ -192,14 +192,18 @@ public class CurlingStone : MonoBehaviour
         // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
         if (isSweepingLeft && !isSweepingRight)
         {
+            Debug.Log("Left Sweep Only Applied");
             // applies reduced force in the left direction
             rb.AddForce(-side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else if (!isSweepingLeft && isSweepingRight)
         {
+            Debug.Log("Right Sweep Only Applied");
             // applies reduced force in the right direction
             rb.AddForce(side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
     }
+
+    public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
 }

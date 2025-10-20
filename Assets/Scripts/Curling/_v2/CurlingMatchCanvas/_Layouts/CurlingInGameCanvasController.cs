@@ -133,7 +133,6 @@ public class CurlingInGameCanvasController : MonoBehaviour
         string titleText,
         string subtitleText
     ) {
-        // contentResultText.GetComponent<TextMeshProUGUI>().text = titleText;
         contentResultText.GetComponent<TMPro.TextMeshProUGUI>().text = titleText;
         contentResultSubtitle.GetComponent<TMPro.TextMeshProUGUI>().text = subtitleText;
         // Enable the result subtitle UI

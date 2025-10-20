@@ -107,8 +107,10 @@ public class CurlingEndGameManagerV2 : MonoBehaviour
     private int IsStoneCloserToTargetThanOtherStone(CurlingStone stoneA, CurlingStone otherStone)
     {
         Vector3 targetZoneCenter = targetZone.transform.position;
-        return Vector3.Distance(targetZoneCenter, stoneA.rb.transform.position)
-            .CompareTo(Vector3.Distance(targetZoneCenter, otherStone.rb.transform.position));
+        float DistanceOfStoneAToTarget = Vector3.Distance(targetZoneCenter, stoneA.rb.transform.position);
+        float DistanceOfStoneBToTarget = Vector3.Distance(targetZoneCenter, otherStone.rb.transform.position);
+
+        return DistanceOfStoneAToTarget.CompareTo(DistanceOfStoneBToTarget);
     }
 
     private int CalculatePoints(List<CurlingStone> scoringStones, CurlingStone closestNonScoringStone)
