@@ -18707,6 +18707,8 @@ GameObject:
   - component: {fileID: 6656096999756876397}
   - component: {fileID: 6656096999756876396}
   - component: {fileID: 2520974054915129867}
+  - component: {fileID: 7700547664479318764}
+  - component: {fileID: 3526776958134833197}
   m_Layer: 0
   m_Name: 3RD Person
   m_TagString: Player
@@ -18826,6 +18828,41 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   distToGround: 1
   isGrounded: 1
+  mouseSensitivity: 3
+  playerBody: {fileID: 0}
+--- !u!114 &7700547664479318764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656097000227532582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2404343c31bd24f639f91666678d25d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 8
+  orientation: {fileID: 0}
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  walkAnimationSpeed: 2.2
+  runAnimatonSpeed: 1
+--- !u!114 &3526776958134833197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656097000227532582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9e6f274743b4a30888bef2e6fef748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 100
+  playerBody: {fileID: 0}
+  cameraHolder: {fileID: 0}
 --- !u!1 &6656097000227532626
 GameObject:
   m_ObjectHideFlags: 0
