@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.63919544, g: 0.9581202, b: 1.018868, a: 1.5}
+  m_AmbientSkyColor: {r: 0.5245372, g: 0.6156027, b: 0.64838624, a: 1.5}
   m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0}
   m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_AmbientIntensity: 0
@@ -5962,19 +5962,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4899429757080328136, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4899429757080328136, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4899429757080328136, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4899429757080328136, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5801600126762278493, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_Name
@@ -6062,19 +6062,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5942775166905645197, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5942775166905645197, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5942775166905645197, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5942775166905645197, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6084442140614987379, guid: ab1e460ec4a1641c886335c46d857ff2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -103881,14 +103881,13 @@ PlayableDirector:
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
-  m_InitialTime: 0
+  m_InitialTime: 5
   m_SceneBindings:
-  - key: {fileID: 8926084698249795919, guid: dbd82b79092b7455ab7a561b25e4669d, type: 2}
-    value: {fileID: 1329184913}
-  - key: {fileID: 3867120409922277647, guid: dbd82b79092b7455ab7a561b25e4669d, type: 2}
-    value: {fileID: 2090486117}
+  - key: {fileID: 1231650171031452551, guid: dbd82b79092b7455ab7a561b25e4669d, type: 2}
+    value: {fileID: 1641870563}
   m_ExposedReferences:
-    m_References: []
+    m_References:
+    - 62501c180b82741f6a9cc2190b21a30c: {fileID: 2090486121}
 --- !u!1001 &960473027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108064,7 +108063,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042915595}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 0, g: 0, b: 0, a: 0}
@@ -121895,8 +121894,8 @@ MonoBehaviour:
   highAltitudeCloudColor: {r: 1.2955844, g: 1.4204134, b: 1.374917, a: 1}
   sunlightColor: {r: 1.5878433, g: 1.0865898, b: 0.87074834, a: 1}
   starColor: {r: 0, g: 0, b: 0, a: 1}
-  ambientLightHorizonColor: {r: 0.64048016, g: 0.5107476, b: 0.4279477, a: 1}
-  ambientLightZenithColor: {r: 0.4261303, g: 0.6387468, b: 0.6792453, a: 1}
+  ambientLightHorizonColor: {r: 0.32780057, g: 0.3847104, b: 0.40519792, a: 1}
+  ambientLightZenithColor: {r: 0.34969148, g: 0.4104018, b: 0.4322575, a: 1}
   ambientLightMultiplier: 1.5
   galaxyIntensity: 0
   fogColor1: {r: 0, g: 0, b: 0, a: 0.007843138}
@@ -211525,7 +211524,7 @@ MonoBehaviour:
   biomes: []
   weight: 1
   totalSystemWeight: 0
-  cumulus: 2
+  cumulus: 0
   cirrus: 0
   altocumulus: 0
   cirrostratus: 0
@@ -211536,12 +211535,12 @@ MonoBehaviour:
   borderHeight: 0.553
   borderEffect: 1
   borderVariation: 0.95
-  fogDensity: 2
-  filterSaturation: -0.5
-  filterValue: -0.06
-  filterColor: {r: 0.5647059, g: 0.6627451, b: 0.69803923, a: 0}
-  sunFilter: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 0}
-  cloudFilter: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
+  fogDensity: 1
+  filterSaturation: 0
+  filterValue: 0
+  filterColor: {r: 1, g: 1, b: 1, a: 0}
+  sunFilter: {r: 1, g: 1, b: 1, a: 0}
+  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
   ecosystem:
     forecastProfile: {fileID: 11400000, guid: eacc8459f121a3d4c83bf331999911ef, type: 2}
     weatherSelectionMode: 1
@@ -220786,7 +220785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2090486118
 Transform:
   m_ObjectHideFlags: 0
@@ -220866,7 +220865,7 @@ MonoBehaviour:
     - rid: 1861780218332577983
       type: {class: SplineAutoDolly/FixedSpeed, ns: Unity.Cinemachine, asm: Unity.Cinemachine}
       data:
-        Speed: 5
+        Speed: 0.08
 --- !u!114 &2090486121
 MonoBehaviour:
   m_ObjectHideFlags: 0
