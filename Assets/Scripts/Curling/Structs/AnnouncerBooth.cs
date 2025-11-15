@@ -8,9 +8,11 @@ namespace CurlingObjects
     {
         public string boothID;
         public string boothName;
-        public string spawnLocation1;
-        public string spawnLocation2;
-        public GameObject lights;
+        public GameObject boothContainerObject;
+        public Transform spawnLocation1;
+        public Transform spawnLocation2;
+        public List<GameObject> lights;
+        public List<GameObject> cameras;
 
         public AnnouncerBooth(
             int id,
@@ -21,6 +23,16 @@ namespace CurlingObjects
             // boothID = id;
             // announcerName = name;
             // boothLocation = location;
+        }
+
+        public void LoadAnnouncers()
+        {
+            //load announcers into booth
+        }
+        
+        public void UnloadAnnouncers()
+        {
+            //unload announcers from booth
         }
     }
 }
