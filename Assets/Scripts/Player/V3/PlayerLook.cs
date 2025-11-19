@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+// using UnityEngine.InputSystem;
 
 namespace PlayerControls.v3
 {
@@ -27,6 +28,11 @@ namespace PlayerControls.v3
             //     }
             // }
         }
+
+        // void OnSprint(InputValue value)
+        // {
+        //     Debug.Log("Sprint Input Detected");
+        // }
 
         void FixedUpdate()
         {
