@@ -189,6 +189,13 @@ namespace PixelCrushers.DialogueSystem
             m_panelAnimator = GetComponent<Animator>();
         }
 
+        protected override void Start()
+        {
+            base.Start();
+            var typewriter = GetTypewriter();
+            if (typewriter != null) typewriter.playOnEnable = false;
+        }
+
         #endregion
 
         #region Typewriter Control
@@ -385,7 +392,10 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public override void Close()
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
+            if (m_focusWhenOpenCoroutine != null) StopCoroutine(m_focusWhenOpenCoroutine);
+            if (m_showAfterClosingOtherPanelsCoroutine != null) StopCoroutine(m_showAfterClosingOtherPanelsCoroutine);
+            if (m_setAnimatorCoroutine != null) StopCoroutine(m_setAnimatorCoroutine);
             m_focusWhenOpenCoroutine = null;
             m_showAfterClosingOtherPanelsCoroutine = null;
             m_setAnimatorCoroutine = null;

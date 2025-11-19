@@ -787,10 +787,17 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             m_isPlaying = true;
-            if (commandName == "Continue") // Don't use 'required' in front of Continue()
+            // Don't use 'required' in front of Continue()
+            if (commandName == "Continue") 
             {
                 required = false;
                 commandRecord.required = false;
+            }
+            // If display settings treats all commands as 'required', set it here:
+            else if (currentDisplaySettings.cameraSettings.treatAllCommandsAsRequired)
+            {
+                required = true;
+                commandRecord.required = true;
             }
             if ((time <= InstantThreshold) && !IsTimePaused() && string.IsNullOrEmpty(message))
             {
