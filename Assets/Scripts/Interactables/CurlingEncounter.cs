@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Playables;
+
 
 /// <summary>
 /// Teleports the player to a target scene and spawn ID, using a validated dropdown from a spawn database.
@@ -13,6 +15,8 @@ public class CurlingEncounter : MonoBehaviour
     public KeyCode interactKey = KeyCode.X;
     public KeyCode challengeKey = KeyCode.E;
     public KeyCode cancelKey = KeyCode.O;
+    public PlayableDirector courseIntroTimeline;
+    
 
     private void Update()
     {
@@ -66,6 +70,16 @@ public class CurlingEncounter : MonoBehaviour
     }
 
 
+    public void PlayCourseIntroTimeline()
+    {
+        // timeline = GetComponent<PlayableDirector>();
+        if (courseIntroTimeline != null)
+        {
+            courseIntroTimeline.Play();
+        }
+    }
+
+
 
     /// Notification Controls
     public void OpenNotification()
@@ -100,6 +114,8 @@ public class CurlingEncounter : MonoBehaviour
     /// utility
     public void InitiateCurlingMatch()
     {
+        CloseDialogue();
         Debug.Log("Initiate Curling!");
+        PlayCourseIntroTimeline();
     }
 }
