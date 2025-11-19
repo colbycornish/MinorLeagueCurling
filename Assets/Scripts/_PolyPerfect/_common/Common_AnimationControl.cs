@@ -40,14 +40,14 @@ namespace Polyperfect.Common
 
 
         }
-        // public void SetDeathAnimation(int numOfClips)
-        // {
+        public void SetDeathAnimation(int numOfClips)
+        {
 
-        //     int clipIndex = Random.Range(0, numOfClips);
-        //     string animationName = "Death";
-        //     Debug.Log(clipIndex);
+            int clipIndex = Random.Range(0, numOfClips);
+            string animationName = "Death";
+            Debug.Log(clipIndex);
 
-        //     this.GetComponent<Animator>().SetInteger(animationName, clipIndex);
-        // }
+            this.GetComponent<Animator>().SetInteger(animationName, clipIndex);
+        }
     }
 }

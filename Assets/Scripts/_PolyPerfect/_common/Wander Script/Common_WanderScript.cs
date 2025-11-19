@@ -48,8 +48,8 @@ namespace Polyperfect.Common
         private int dominance = 1;
         private int originalDominance = 0;
 
-        // [SerializeField, Tooltip("How far this animal can sense a predator.")]
-        // private float awareness = 30f;
+        [SerializeField, Tooltip("How far this animal can sense a predator.")]
+        private float awareness = 30f;
 
         [SerializeField, Tooltip("How far this animal can sense it's prey.")]
         private float scent = 30f;
@@ -60,7 +60,7 @@ namespace Polyperfect.Common
         private float stamina = 10f;
 
         // [SerializeField, Tooltip("How much this damage this animal does to another animal.")]
-        // private float power = 10f;
+        private float power = 10f;
 
         // [SerializeField, Tooltip("How much health this animal has.")]
         private float toughness = 5f;
@@ -77,9 +77,6 @@ namespace Polyperfect.Common
 
         // [SerializeField, Tooltip("Stealthy animals can't be detected by other animals.")]
         private bool stealthy = false;
-
-        // [SerializeField, Tooltip("If true, this character will not move")]
-        public bool disableMovement = false;
 
         [SerializeField, Tooltip("If true, this animal will never leave it's zone, even if it's chasing or running away from another animal.")]
         private bool constainedToWanderZone = false;
@@ -105,16 +102,16 @@ namespace Polyperfect.Common
         [SerializeField, Tooltip("If true, AI changes to this animal will be logged in the console.")]
         private bool logChanges = false;
 
-        // [SerializeField, Tooltip("If true, gizmos will be drawn in the editor.")]
-        // private bool showGizmos = false;
+        [SerializeField, Tooltip("If true, gizmos will be drawn in the editor.")]
+        private bool showGizmos = false;
 
-        // [SerializeField] private bool drawWanderRange = true;
-        // [SerializeField] private bool drawScentRange = true;
-        // [SerializeField] private bool drawAwarenessRange = true;
+        [SerializeField] private bool drawWanderRange = true;
+        [SerializeField] private bool drawScentRange = true;
+        [SerializeField] private bool drawAwarenessRange = true;
 
         public UnityEngine.Events.UnityEvent deathEvent;
         public UnityEngine.Events.UnityEvent attackingEvent;
-        public UnityEngine.Events.UnityEvent idleEvent; 
+        public UnityEngine.Events.UnityEvent idleEvent;
         public UnityEngine.Events.UnityEvent movementEvent;
 
 
@@ -133,6 +130,9 @@ namespace Polyperfect.Common
 
         private float turnSpeed = 0f;
 
+        private Vector3 currentRotationOffset = Vector3.zero;
+        private float currentRotationSpeed = 0f;
+
         public enum WanderState
         {
             Idle,
@@ -143,7 +143,7 @@ namespace Polyperfect.Common
             Dead
         }
 
-        // float attackTimer = 0;
+        float attackTimer = 0;
         float MinimumStaminaForAggression
         {
             get { return stats.stamina * .9f; }
@@ -155,11 +155,11 @@ namespace Polyperfect.Common
         }
 
         public WanderState CurrentState;
-        // Common_WanderScript primaryPrey;
+        Common_WanderScript primaryPrey;
         Common_WanderScript primaryPursuer;
         Common_WanderScript attackTarget;
         float moveSpeed = 0f;
-        // float attackReach =2f;
+        float attackReach =2f;
         bool forceUpdate = false;
         float idleStateDuration;
         Vector3 startPosition;
@@ -168,63 +168,63 @@ namespace Polyperfect.Common
         float idleUpdateTime;
         
 
-        // public void OnDrawGizmosSelected()
-        // {
-        //     if (!showGizmos)
-        //         return;
+        public void OnDrawGizmosSelected()
+        {
+            if (!showGizmos)
+                return;
 
-        //     if (drawWanderRange)
-        //     {
-        //         // Draw circle of radius wander zone
-        //         Gizmos.color = distanceColor;
-        //         Gizmos.DrawWireSphere(origin == Vector3.zero ? transform.position : origin, wanderZone);
+            if (drawWanderRange)
+            {
+                // Draw circle of radius wander zone
+                Gizmos.color = distanceColor;
+                Gizmos.DrawWireSphere(origin == Vector3.zero ? transform.position : origin, wanderZone);
 
-        //         Vector3 IconWander = new Vector3(transform.position.x, transform.position.y + wanderZone, transform.position.z);
-        //         Gizmos.DrawIcon(IconWander, "ico-wander", true);
-        //     }
+                Vector3 IconWander = new Vector3(transform.position.x, transform.position.y + wanderZone, transform.position.z);
+                Gizmos.DrawIcon(IconWander, "ico-wander", true);
+            }
 
-        //     if (drawAwarenessRange)
-        //     {
-        //         //Draw circle radius for Awarness.
-        //         Gizmos.color = awarnessColor;
-        //         Gizmos.DrawWireSphere(transform.position, awareness);
+            if (drawAwarenessRange)
+            {
+                //Draw circle radius for Awarness.
+                Gizmos.color = awarnessColor;
+                Gizmos.DrawWireSphere(transform.position, awareness);
 
 
-        //         Vector3 IconAwareness = new Vector3(transform.position.x, transform.position.y + awareness, transform.position.z);
-        //         Gizmos.DrawIcon(IconAwareness, "ico-awareness", true);
-        //     }
+                Vector3 IconAwareness = new Vector3(transform.position.x, transform.position.y + awareness, transform.position.z);
+                Gizmos.DrawIcon(IconAwareness, "ico-awareness", true);
+            }
 
-        //     if (drawScentRange)
-        //     {
-        //         //Draw circle radius for Scent.
-        //         Gizmos.color = scentColor;
-        //         Gizmos.DrawWireSphere(transform.position, scent);
+            if (drawScentRange)
+            {
+                //Draw circle radius for Scent.
+                Gizmos.color = scentColor;
+                Gizmos.DrawWireSphere(transform.position, scent);
 
-        //         Vector3 IconScent = new Vector3(transform.position.x, transform.position.y + scent, transform.position.z);
-        //         Gizmos.DrawIcon(IconScent, "ico-scent", true);
-        //     }
+                Vector3 IconScent = new Vector3(transform.position.x, transform.position.y + scent, transform.position.z);
+                Gizmos.DrawIcon(IconScent, "ico-scent", true);
+            }
 
-        //     if (!Application.isPlaying)
-        //         return;
+            if (!Application.isPlaying)
+                return;
 
-        //     // Draw target position.
-        //     if (useNavMesh)
-        //     {
-        //         if (navMeshAgent.remainingDistance > 1f)
-        //         {
-        //             Gizmos.DrawSphere(navMeshAgent.destination + new Vector3(0f, 0.1f, 0f), 0.2f);
-        //             Gizmos.DrawLine(transform.position, navMeshAgent.destination);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         if (targetLocation != Vector3.zero)
-        //         {
-        //             Gizmos.DrawSphere(targetLocation + new Vector3(0f, 0.1f, 0f), 0.2f);
-        //             Gizmos.DrawLine(transform.position, targetLocation);
-        //         }
-        //     }
-        // }
+            // Draw target position.
+            if (useNavMesh)
+            {
+                if (navMeshAgent.remainingDistance > 1f)
+                {
+                    Gizmos.DrawSphere(navMeshAgent.destination + new Vector3(0f, 0.1f, 0f), 0.2f);
+                    Gizmos.DrawLine(transform.position, navMeshAgent.destination);
+                }
+            }
+            else
+            {
+                if (targetLocation != Vector3.zero)
+                {
+                    Gizmos.DrawSphere(targetLocation + new Vector3(0f, 0.1f, 0f), 0.2f);
+                    Gizmos.DrawLine(transform.position, targetLocation);
+                }
+            }
+        }
 
         private void Awake()
         {
@@ -386,8 +386,6 @@ namespace Polyperfect.Common
 
             toughness = stats.toughness;
             territorial = stats.territorial;
-            
-            disableMovement = stats.disableMovement;
 
             stamina = stats.stamina;
 
@@ -442,10 +440,10 @@ namespace Polyperfect.Common
         private void Start()
         {
             startPosition = transform.position;
-            // if (Common_WanderManager.Instance != null && Common_WanderManager.Instance.PeaceTime)
-            // {
-            //     SetPeaceTime(true);
-            // }
+            if (Common_WanderManager.Instance != null && Common_WanderManager.Instance.PeaceTime)
+            {
+                SetPeaceTime(true);
+            }
 
             StartCoroutine(RandomStartingDelay());
         }
@@ -459,83 +457,83 @@ namespace Polyperfect.Common
                 return;
             if (forceUpdate)
             {
-                // UpdateAI();
+                UpdateAI();
                 forceUpdate = false;
             }
 
-            // if (CurrentState == WanderState.Attack)
-            // {
-            //     if (!attackTarget || attackTarget.CurrentState == WanderState.Dead)
-            //     {
-            //         var previous = attackTarget;
-            //         UpdateAI();
-            //         if (previous && previous == attackTarget)
-            //             Debug.LogError(string.Format("Target was same {0}", previous.gameObject.name));
-            //     }
+            if (CurrentState == WanderState.Attack)
+            {
+                if (!attackTarget || attackTarget.CurrentState == WanderState.Dead)
+                {
+                    var previous = attackTarget;
+                    UpdateAI();
+                    if (previous && previous == attackTarget)
+                        Debug.LogError(string.Format("Target was same {0}", previous.gameObject.name));
+                }
 
-            //     attackTimer += Time.deltaTime;
-            // }
+                attackTimer += Time.deltaTime;
+            }
 
-            // if (attackTimer>attackSpeed)
-            // {
-            //     attackTimer -= attackSpeed;
-            //     if (attackTarget)
-            //         attackTarget.TakeDamage(power);
-            //     if (attackTarget.CurrentState == WanderState.Dead) 
-            //         UpdateAI();
-            // }
+            if (attackTimer>attackSpeed)
+            {
+                attackTimer -= attackSpeed;
+                if (attackTarget)
+                    attackTarget.TakeDamage(power);
+                if (attackTarget.CurrentState == WanderState.Dead) 
+                    UpdateAI();
+            }
 
-            var position = transform.position; 
+            var position = transform.position;
             var targetPosition = position;
             switch (CurrentState)
             {
-                // case WanderState.Attack:
-                //     FaceDirection((attackTarget.transform.position - position).normalized);
-                //     targetPosition = position;
-                //     break;
-                // case WanderState.Chase:
-                //     if (!primaryPrey || primaryPrey.CurrentState == WanderState.Dead)
-                //     {
-                //         primaryPrey = null;
-                //         SetState(WanderState.Idle);
-                //         goto case WanderState.Idle;
-                //     }
-                //     targetPosition = primaryPrey.transform.position;
-                //     ValidatePosition(ref targetPosition);
-                //     if (!IsValidLocation(targetPosition))
-                //     {
-                //         SetState(WanderState.Idle);
-                //         targetPosition = position;
-                //         UpdateAI();
-                //         break;
-                //     }
+                case WanderState.Attack:
+                    FaceDirection((attackTarget.transform.position - position).normalized);
+                    targetPosition = position;
+                    break;
+                case WanderState.Chase:
+                    if (!primaryPrey || primaryPrey.CurrentState == WanderState.Dead)
+                    {
+                        primaryPrey = null;
+                        SetState(WanderState.Idle);
+                        goto case WanderState.Idle;
+                    }
+                    targetPosition = primaryPrey.transform.position;
+                    ValidatePosition(ref targetPosition);
+                    if (!IsValidLocation(targetPosition))
+                    {
+                        SetState(WanderState.Idle);
+                        targetPosition = position;
+                        UpdateAI();
+                        break;
+                    }
 
-                //     FaceDirection((targetPosition - position).normalized);
-                //     stamina -= Time.deltaTime;
-                //     if (stamina<=0f)
-                //         UpdateAI();
-                //     break;
-                // case WanderState.Evade:
-                //     targetPosition = position + Vector3.ProjectOnPlane(position - primaryPursuer.transform.position, Vector3.up);
-                //     if (!IsValidLocation(targetPosition))
-                //         targetPosition = startPosition;
-                //     ValidatePosition(ref targetPosition);
-                //     FaceDirection((targetPosition - position).normalized);
-                //     stamina -= Time.deltaTime;
-                //     if (stamina<=0f)
-                //         UpdateAI();
-                //     break;
+                    FaceDirection((targetPosition - position).normalized);
+                    stamina -= Time.deltaTime;
+                    if (stamina<=0f)
+                        UpdateAI();
+                    break;
+                case WanderState.Evade:
+                    targetPosition = position + Vector3.ProjectOnPlane(position - primaryPursuer.transform.position, Vector3.up);
+                    if (!IsValidLocation(targetPosition))
+                        targetPosition = startPosition;
+                    ValidatePosition(ref targetPosition);
+                    FaceDirection((targetPosition - position).normalized);
+                    stamina -= Time.deltaTime;
+                    if (stamina<=0f)
+                        UpdateAI();
+                    break;
                 case WanderState.Wander:
                     stamina = Mathf.MoveTowards(stamina, stats.stamina, Time.deltaTime);
                     targetPosition = wanderTarget;
                     Debug.DrawLine(position,targetPosition,Color.yellow);
                     FaceDirection((targetPosition-position).normalized);
                     var displacementFromTarget = Vector3.ProjectOnPlane(targetPosition - transform.position, Vector3.up);
-                    // if (displacementFromTarget.magnitude < contingencyDistance)
-                    // {
-                    //     SetState(WanderState.Idle);
-                    //     UpdateAI();
-                    // }
+                    if (displacementFromTarget.magnitude < contingencyDistance)
+                    {
+                        SetState(WanderState.Idle);
+                        UpdateAI();
+                    }
 
                     break;
                 case WanderState.Idle:
@@ -543,29 +541,21 @@ namespace Polyperfect.Common
                     if (Time.time>=idleUpdateTime)
                     {
                         SetState(WanderState.Wander);
-                        // UpdateAI();
+                        UpdateAI();
                     }
                     break;
             }
 
             if (navMeshAgent)
             {
-                if (disableMovement == true){
-                    // navMeshAgent.destination = position;
-                    navMeshAgent.speed = 0f;
-                    navMeshAgent.angularSpeed = 0f;
-                }
-                else {
-                    navMeshAgent.destination = targetPosition;
-                    navMeshAgent.speed = moveSpeed;
-                    navMeshAgent.angularSpeed = turnSpeed;
-                }
-                
+                navMeshAgent.destination = targetPosition;
+                navMeshAgent.speed = moveSpeed;
+                navMeshAgent.angularSpeed = turnSpeed;
             }
             else
                 characterController.SimpleMove(moveSpeed * UnityEngine.Vector3.ProjectOnPlane(targetPosition - position,Vector3.up).normalized);
 
-
+            transform.GetChild(0).transform.localRotation = Quaternion.Slerp(transform.GetChild(0).transform.localRotation, Quaternion.Euler(currentRotationOffset), Time.deltaTime * currentRotationSpeed);
         }
 
         void FaceDirection(Vector3 facePosition)
@@ -574,159 +564,159 @@ namespace Polyperfect.Common
                 facePosition, turnSpeed * Time.deltaTime*Mathf.Deg2Rad, 0f), Vector3.up), Vector3.up);
         }
 
-        // public void TakeDamage(float damage)
-        // {
-        //     toughness -= damage;
-        //     if (toughness <= 0f)
-        //         Die();
-        // }
-        // public void Die()
-        // {
-        //     SetState(WanderState.Dead);
-        // }
+        public void TakeDamage(float damage)
+        {
+            toughness -= damage;
+            if (toughness <= 0f)
+                Die();
+        }
+        public void Die()
+        {
+            SetState(WanderState.Dead);
+        }
 
-        // public void SetPeaceTime(bool peace)
-        // {
-        //     if (peace)
-        //     {
-        //         dominance = 0;
-        //         scent = 0f;
-        //         aggression = 0f;
-        //     }
-        //     else
-        //     {
-        //         dominance = originalDominance;
-        //         scent = originalScent;
-        //         aggression = originalAggression;
-        //     }
-        // }
+        public void SetPeaceTime(bool peace)
+        {
+            if (peace)
+            {
+                dominance = 0;
+                scent = 0f;
+                aggression = 0f;
+            }
+            else
+            {
+                dominance = originalDominance;
+                scent = originalScent;
+                aggression = originalAggression;
+            }
+        }
         
-        // void UpdateAI()
-        // {
-            // if (CurrentState == WanderState.Dead)
-            // {
-            //     Debug.LogError("Trying to update the AI of a dead animal, something probably went wrong somewhere.");
-            //     return;
-            // }
+        void UpdateAI()
+        {
+            if (CurrentState == WanderState.Dead)
+            {
+                Debug.LogError("Trying to update the AI of a dead animal, something probably went wrong somewhere.");
+                return;
+            }
 
-            // var position = transform.position;
-            // primaryPursuer = null;
-            // if (awareness > 0)
-            // {
-            //     var closestDistance = awareness;
-            //     if (allAnimals.Count > 0)
-            //     {
-            //         foreach (var chaser in allAnimals)
-            //         {
-            //             if (chaser.primaryPrey != this && chaser.attackTarget != this)
-            //                 continue;
+            var position = transform.position;
+            primaryPursuer = null;
+            if (awareness > 0)
+            {
+                var closestDistance = awareness;
+                if (allAnimals.Count > 0)
+                {
+                    foreach (var chaser in allAnimals)
+                    {
+                        if (chaser.primaryPrey != this && chaser.attackTarget != this)
+                            continue;
 
-            //             if (chaser.CurrentState == WanderState.Dead)
-            //                 continue;
-            //             var distance = Vector3.Distance(position, chaser.transform.position);
-            //             if ((chaser.attackTarget!=this&&chaser.stealthy) || chaser.dominance <= this.dominance || distance > closestDistance)
-            //                 continue;
+                        if (chaser.CurrentState == WanderState.Dead)
+                            continue;
+                        var distance = Vector3.Distance(position, chaser.transform.position);
+                        if ((chaser.attackTarget!=this&&chaser.stealthy) || chaser.dominance <= this.dominance || distance > closestDistance)
+                            continue;
                         
-            //             closestDistance = distance;
-            //             primaryPursuer = chaser;
-            //         }
-            //     }
-            // }
+                        closestDistance = distance;
+                        primaryPursuer = chaser;
+                    }
+                }
+            }
 
-            // var wasSameTarget = false;
-            // if (primaryPrey)
-            // {
-            //     if (primaryPrey.CurrentState == WanderState.Dead)
-            //         primaryPrey = null;
-            //     else
-            //     {
-            //         var distanceToPrey = Vector3.Distance(position, primaryPrey.transform.position);
-            //         if (distanceToPrey > scent)
-            //             primaryPrey = null;
-            //         else
-            //             wasSameTarget = true;
-            //     }
-            // }
-            // if (!primaryPrey)
-            // {
-            //     primaryPrey = null;
-            //     if (dominance > 0 && attackingStates.Length>0)
-            //     {
-            //         var aggFrac = aggression * .01f;
-            //         aggFrac *= aggFrac;
-            //         var closestDistance = scent;
-            //         foreach (var potentialPrey in allAnimals)
-            //         {
-            //             if (potentialPrey.CurrentState == WanderState.Dead)
-            //                 Debug.LogError(string.Format("Dead animal found: {0}", potentialPrey.gameObject.name));
-            //             if (potentialPrey == this || (potentialPrey.species == species && !territorial) ||
-            //                 potentialPrey.dominance > dominance || potentialPrey.stealthy)
-            //                 continue;
-            //             if (nonAgressiveTowards.Contains(potentialPrey.species))
-            //                 continue;
-            //             if (Random.Range(0f,0.99999f) >= aggFrac)
-            //                 continue;
+            var wasSameTarget = false;
+            if (primaryPrey)
+            {
+                if (primaryPrey.CurrentState == WanderState.Dead)
+                    primaryPrey = null;
+                else
+                {
+                    var distanceToPrey = Vector3.Distance(position, primaryPrey.transform.position);
+                    if (distanceToPrey > scent)
+                        primaryPrey = null;
+                    else
+                        wasSameTarget = true;
+                }
+            }
+            if (!primaryPrey)
+            {
+                primaryPrey = null;
+                if (dominance > 0 && attackingStates.Length>0)
+                {
+                    var aggFrac = aggression * .01f;
+                    aggFrac *= aggFrac;
+                    var closestDistance = scent;
+                    foreach (var potentialPrey in allAnimals)
+                    {
+                        if (potentialPrey.CurrentState == WanderState.Dead)
+                            Debug.LogError(string.Format("Dead animal found: {0}", potentialPrey.gameObject.name));
+                        if (potentialPrey == this || (potentialPrey.species == species && !territorial) ||
+                            potentialPrey.dominance > dominance || potentialPrey.stealthy)
+                            continue;
+                        if (nonAgressiveTowards.Contains(potentialPrey.species))
+                            continue;
+                        if (Random.Range(0f,0.99999f) >= aggFrac)
+                            continue;
                         
-            //             var preyPosition = potentialPrey.transform.position;
-            //             if (!IsValidLocation(preyPosition)) 
-            //                 continue;
+                        var preyPosition = potentialPrey.transform.position;
+                        if (!IsValidLocation(preyPosition)) 
+                            continue;
 
-            //             var distance = Vector3.Distance(position, preyPosition);
-            //             if (distance > closestDistance)
-            //                 continue;
-            //             if (logChanges)
-            //                 Debug.Log(string.Format("{0}: Found prey ({1}), chasing.", gameObject.name, potentialPrey.gameObject.name));
+                        var distance = Vector3.Distance(position, preyPosition);
+                        if (distance > closestDistance)
+                            continue;
+                        if (logChanges)
+                            Debug.Log(string.Format("{0}: Found prey ({1}), chasing.", gameObject.name, potentialPrey.gameObject.name));
 
-            //             closestDistance = distance;
-            //             primaryPrey = potentialPrey;
-            //         }
-            //     }
-            // }
+                        closestDistance = distance;
+                        primaryPrey = potentialPrey;
+                    }
+                }
+            }
 
-            // var aggressiveOption = false;
-            // if (primaryPrey)
-            // {
-            //     if ((wasSameTarget&&stamina>0) || stamina > MinimumStaminaForAggression)
-            //         aggressiveOption = true;
-            //     else
-            //         primaryPrey = null;
-            // }
+            var aggressiveOption = false;
+            if (primaryPrey)
+            {
+                if ((wasSameTarget&&stamina>0) || stamina > MinimumStaminaForAggression)
+                    aggressiveOption = true;
+                else
+                    primaryPrey = null;
+            }
 
-            // var defensiveOption = false;
-            // if (primaryPursuer && !aggressiveOption)
-            // {
-            //     if (stamina > MinimumStaminaForFlee)
-            //         defensiveOption = true;
-            // }
+            var defensiveOption = false;
+            if (primaryPursuer && !aggressiveOption)
+            {
+                if (stamina > MinimumStaminaForFlee)
+                    defensiveOption = true;
+            }
 
-            // var updateTargetAI = false;
-            // var isPreyInAttackRange = aggressiveOption && Vector3.Distance(position, primaryPrey.transform.position) < CalcAttackRange(primaryPrey);
-            // var isPursuerInAttackRange = defensiveOption && Vector3.Distance(position, primaryPursuer.transform.position) < CalcAttackRange(primaryPursuer);
-            // if (isPursuerInAttackRange)
-            // {
-            //     attackTarget = primaryPursuer;
-            // }
-            // else if (isPreyInAttackRange)
-            // {
-            //     attackTarget = primaryPrey;
-            //     if (!attackTarget.attackTarget==this)
-            //         updateTargetAI = true;
-            // }
-            // else
-            //     attackTarget = null;
-            // var shouldAttack = attackingStates.Length > 0 && (isPreyInAttackRange || isPursuerInAttackRange);
+            var updateTargetAI = false;
+            var isPreyInAttackRange = aggressiveOption && Vector3.Distance(position, primaryPrey.transform.position) < CalcAttackRange(primaryPrey);
+            var isPursuerInAttackRange = defensiveOption && Vector3.Distance(position, primaryPursuer.transform.position) < CalcAttackRange(primaryPursuer);
+            if (isPursuerInAttackRange)
+            {
+                attackTarget = primaryPursuer;
+            }
+            else if (isPreyInAttackRange)
+            {
+                attackTarget = primaryPrey;
+                if (!attackTarget.attackTarget==this)
+                    updateTargetAI = true;
+            }
+            else
+                attackTarget = null;
+            var shouldAttack = attackingStates.Length > 0 && (isPreyInAttackRange || isPursuerInAttackRange);
 
-            // if (shouldAttack)
-            //     SetState(WanderState.Attack);
-            // else if (aggressiveOption)
-            //     SetState(WanderState.Chase);
-            // else if (defensiveOption)
-            //     SetState(WanderState.Evade);
-            // else if (CurrentState!= WanderState.Idle && CurrentState != WanderState.Wander)
-            //     SetState(WanderState.Idle);
-            // if (shouldAttack&&updateTargetAI) 
-            //     attackTarget.forceUpdate = true;
-        // }
+            if (shouldAttack)
+                SetState(WanderState.Attack);
+            else if (aggressiveOption)
+                SetState(WanderState.Chase);
+            else if (defensiveOption)
+                SetState(WanderState.Evade);
+            else if (CurrentState!= WanderState.Idle && CurrentState != WanderState.Wander)
+                SetState(WanderState.Idle);
+            if (shouldAttack&&updateTargetAI) 
+                attackTarget.forceUpdate = true;
+        }
 
         bool IsValidLocation(Vector3 targetPosition)
         {
@@ -737,12 +727,12 @@ namespace Polyperfect.Common
             return isInWander;
         }
 
-        // float CalcAttackRange(Common_WanderScript other)
-        // {
-        //     var thisRange = navMeshAgent ? navMeshAgent.radius : characterController.radius;
-        //     var thatRange = other.navMeshAgent ? other.navMeshAgent.radius : other.characterController.radius;
-        //     return attackReach+thisRange+thatRange;
-        // }
+        float CalcAttackRange(Common_WanderScript other)
+        {
+            var thisRange = navMeshAgent ? navMeshAgent.radius : characterController.radius;
+            var thatRange = other.navMeshAgent ? other.navMeshAgent.radius : other.characterController.radius;
+            return attackReach+thisRange+thatRange;
+        }
 
         void SetState(WanderState state)
         {
@@ -760,18 +750,18 @@ namespace Polyperfect.Common
                     case WanderState.Idle:
                         HandleBeginIdle();
                         break;
-                    // case WanderState.Chase:
-                    //     HandleBeginChase();
-                    //     break;
-                    // case WanderState.Evade:
-                    //     HandleBeginEvade();
-                    //     break;
-                    // case WanderState.Attack:
-                    //     HandleBeginAttack();
-                    //     break;
-                    // case WanderState.Dead:
-                    //     HandleBeginDeath();
-                    //     break;
+                    case WanderState.Chase:
+                        HandleBeginChase();
+                        break;
+                    case WanderState.Evade:
+                        HandleBeginEvade();
+                        break;
+                    case WanderState.Attack:
+                        HandleBeginAttack();
+                        break;
+                    case WanderState.Dead:
+                        HandleBeginDeath();
+                        break;
                     case WanderState.Wander:
                         HandleBeginWander();
                         break;
@@ -780,7 +770,6 @@ namespace Polyperfect.Common
                 }
             }
         }
-
 
         void ClearAnimatorBools()
         {
@@ -802,47 +791,45 @@ namespace Polyperfect.Common
             }
         }
 
-        // void HandleBeginDeath()
-        // {
-        //     ClearAnimatorBools();
-        //     if (deathStates.Length > 0) 
-        //         TrySetBool(deathStates[Random.Range(0, deathStates.Length)].animationBool, true);
+        void HandleBeginDeath()
+        {
+            ClearAnimatorBools();
+            if (deathStates.Length > 0) 
+                TrySetBool(deathStates[Random.Range(0, deathStates.Length)].animationBool, true);
 
-        //     deathEvent.Invoke();
-        //     if (navMeshAgent && navMeshAgent.isOnNavMesh)
-        //         navMeshAgent.destination = transform.position;
-        //     enabled = false;
-        // }
+            deathEvent.Invoke();
+            if (navMeshAgent && navMeshAgent.isOnNavMesh)
+                navMeshAgent.destination = transform.position;
+            enabled = false;
+            currentRotationOffset = Vector3.zero;
+            currentRotationSpeed = 20;
+        }
 
-        // void HandleBeginAttack()
-        // {
-        //     var attackState = Random.Range(0, attackingStates.Length);
-        //     turnSpeed = 120f;
-        //     ClearAnimatorBools();
-        //     TrySetBool(attackingStates[attackState].animationBool,true);
-        //     attackingEvent.Invoke();
-        // }
+        void HandleBeginAttack()
+        {
+            var attackState = Random.Range(0, attackingStates.Length);
+            turnSpeed = 120f;
+            ClearAnimatorBools();
+            TrySetBool(attackingStates[attackState].animationBool,true);
+            attackingEvent.Invoke();
+            currentRotationOffset = Vector3.zero;
+            currentRotationSpeed = 20;
+        }
 
-        // void HandleBeginEvade()
-        // {
-        //     SetMoveFast();
-        //     movementEvent.Invoke();
-        // }
+        void HandleBeginEvade()
+        {
+            SetMoveFast();
+            movementEvent.Invoke();
+        }
 
-        // void HandleBeginChase()
-        // {
-        //     SetMoveFast();
-        //     movementEvent.Invoke();
-        // }
+        void HandleBeginChase()
+        {
+            SetMoveFast();
+            movementEvent.Invoke();
+        }
 
         void SetMoveFast()
         {
-            if(disableMovement == true){
-                turnSpeed = 0f;
-                moveSpeed = 0f;
-                return;
-            }
-
             MovementState moveState = null;
             var maxSpeed = 0f;
             foreach (var state in movementStates)
@@ -860,16 +847,12 @@ namespace Polyperfect.Common
             moveSpeed = maxSpeed;
             ClearAnimatorBools();
             TrySetBool(moveState.animationBool,true);
+            currentRotationOffset = moveState.RotationOffset;
+            currentRotationSpeed = moveState.turnSpeed;
         }
 
         void SetMoveSlow()
         {
-            if(disableMovement == true){
-                turnSpeed = 0f;
-                moveSpeed = 0f;
-                return;
-            }
-
             MovementState moveState = null;
             var minSpeed = float.MaxValue;
             foreach (var state in movementStates)
@@ -887,10 +870,12 @@ namespace Polyperfect.Common
             moveSpeed = minSpeed;
             ClearAnimatorBools();
             TrySetBool(moveState.animationBool, true);
+            currentRotationOffset = moveState.RotationOffset;
+            currentRotationSpeed = moveState.turnSpeed;
         }
         void HandleBeginIdle()
         {
-            // primaryPrey = null;
+            primaryPrey = null;
             var targetWeight = Random.Range(0, totalIdleStateWeight);
             var curWeight = 0;
             foreach (var idleState in idleStates)
@@ -905,10 +890,12 @@ namespace Polyperfect.Common
                 break;
             }
             idleEvent.Invoke();
+            currentRotationOffset = Vector3.zero;
+            currentRotationSpeed = 20;
         }
         void HandleBeginWander()
         {
-            // primaryPrey = null;
+            primaryPrey = null;
             var rand = Random.insideUnitSphere * wanderZone;
             var targetPos = startPosition + rand;
             ValidatePosition(ref targetPos);
@@ -945,7 +932,7 @@ namespace Polyperfect.Common
         {
             while (true)
             {
-                // UpdateAI();
+                UpdateAI();
                 yield return new WaitForSeconds(delay);
             }
             // ReSharper disable once IteratorNeverReturns
