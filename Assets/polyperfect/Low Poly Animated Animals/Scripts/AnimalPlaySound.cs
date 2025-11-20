@@ -5,6 +5,6 @@ using Polyperfect.Common;
 
 namespace Polyperfect.Animals
 {
-    public class AnimalPlaySound : Common_PlaySound { }
+    public class AnimalPlaySound : MonoBehaviour { } // Common_PlaySound
 }
 
