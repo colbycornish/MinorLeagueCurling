@@ -873,6 +873,7 @@ namespace Polyperfect.Common
             currentRotationOffset = moveState.RotationOffset;
             currentRotationSpeed = moveState.turnSpeed;
         }
+        
         void HandleBeginIdle()
         {
             primaryPrey = null;
@@ -893,6 +894,7 @@ namespace Polyperfect.Common
             currentRotationOffset = Vector3.zero;
             currentRotationSpeed = 20;
         }
+
         void HandleBeginWander()
         {
             primaryPrey = null;

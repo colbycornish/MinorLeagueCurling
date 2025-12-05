@@ -38,6 +38,14 @@ namespace AnimalNPC
         /************************************************************************************************************************/
 
         [SerializeField]
+        private bool _IsPatrolling;
+        public ref bool IsPatrolling => ref _IsPatrolling;
+
+        [SerializeField]
+        private bool _IsWandering;
+        public ref bool IsWandering => ref _IsWandering;
+
+        [SerializeField]
         private bool _WantsToRun;
         public ref bool WantsToRun => ref _WantsToRun;
 

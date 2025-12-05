@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: CharacterWalk-LinearLocomotion-Mixer
+  m_EditorClassIdentifier: Kybernetik.Animancer::Animancer.TransitionAsset
+  _Transition:
+    rid: 1861780442405405287
+  references:
+    version: 2
+    RefIds:
+    - rid: 1861780442405405287
+      type: {class: LinearMixerTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Animations:
+        - {fileID: 7400000, guid: 6e54321904d204f278d3c91679b4ca99, type: 2}
+        - {fileID: 7400000, guid: befad5b7e1e8346ccb8d533cd339ec05, type: 2}
+        - {fileID: 7400000, guid: d6416bfa991f1482b88c7340bcb61be7, type: 2}
+        _Speeds: []
+        _SynchronizeChildren: 
+        _Thresholds:
+        - 0
+        - 0.5
+        - 1
+        _DefaultParameter: 0
+        _ExtrapolateSpeed: 1
+        _ParameterName: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}

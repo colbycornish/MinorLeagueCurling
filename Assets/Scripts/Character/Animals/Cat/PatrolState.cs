@@ -101,4 +101,22 @@ namespace AnimalControllers.Cat
         }
     }
 }
+// in Start():
+// StartCoroutine(RandomStartingDelay());
 
+// IEnumerator RandomStartingDelay()
+//         {
+//             yield return new WaitForSeconds(Random.Range(0f, 2f));
+//             started = true;
+//             StartCoroutine(ConstantTicking(Random.Range(.7f,1f)));
+//         }
+
+// IEnumerator ConstantTicking(float delay)
+//         {
+//             while (true)
+//             {
+//                 UpdateAI();
+//                 yield return new WaitForSeconds(delay);
+//             }
+//             // ReSharper disable once IteratorNeverReturns
+//         }
