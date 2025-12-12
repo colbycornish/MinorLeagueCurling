@@ -22,6 +22,7 @@ namespace CharacterNPC.v2
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Layers/LayeredAnimationManager
     /// 
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Layers - Layered Animation Manager")]
+    [DefaultExecutionOrder(-10001)]// Initialize the Animation Manager late.
     // [AnimancerHelpUrl(typeof(LayeredAnimationManager))]
     public class LayeredAnimationManager : MonoBehaviour
     {

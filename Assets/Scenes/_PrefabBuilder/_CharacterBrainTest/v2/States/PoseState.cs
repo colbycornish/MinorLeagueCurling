@@ -52,7 +52,7 @@ namespace CharacterNPC.v2
         // middle of an attack.
 
         public override bool CanExitState
-            => _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime;
+            => _CurrentAnimation != null && _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime;
 
         /************************************************************************************************************************/
 
@@ -75,7 +75,7 @@ namespace CharacterNPC.v2
                 canPlayActionFullBody: true
             );
 
-            Character.Parameters.ForwardSpeed = 0;
+            Character.Parameters.Movement.ForwardSpeed = 0;
             _OnStart.Invoke();
         }
 
@@ -99,9 +99,7 @@ namespace CharacterNPC.v2
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-        }
-
-        
+        }        
 
         /************************************************************************************************************************/
 
@@ -114,11 +112,6 @@ namespace CharacterNPC.v2
         // }
 
         /************************************************************************************************************************/
-        
-
-
-        
-
     }
 }
 

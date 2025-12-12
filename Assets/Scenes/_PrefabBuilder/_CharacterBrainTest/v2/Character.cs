@@ -6,6 +6,7 @@ using Animancer.FSM;
 using UnityEngine;
 using Animancer;
 using UnityEngine.AI;
+using CharacterNPCJobs;
 
 namespace CharacterNPC.v2
 {
@@ -45,14 +46,25 @@ namespace CharacterNPC.v2
         // [SerializeField] 
         // private CharacterState.StateMachine _StateMachine;
         // public CharacterState.StateMachine StateMachine => _StateMachine;
-
+        
+        /// <summary>
+        /// The state machine that controls the current Animation State of this <see cref="Character"/>.
+        /// </summary>
         [SerializeField]
         private StateMachine<CharacterState>.WithDefault _StateMachine;
         public StateMachine<CharacterState>.WithDefault StateMachine => _StateMachine;
 
+        /// <summary>
+        /// The state machine that controls the current <see cref="JobState"/> of this <see cref="Character"/>.
+        /// </summary>
+        [SerializeField]
+        private StateMachine<JobState>.WithDefault _JobStateMachine;
+        public StateMachine<JobState>.WithDefault JobStateMachine => _JobStateMachine;
+
         protected virtual void Awake()
         {
             _StateMachine.InitializeAfterDeserialize();
+            _JobStateMachine.InitializeAfterDeserialize();
         }
 
         /************************************************************************************************************************/
@@ -75,9 +87,9 @@ namespace CharacterNPC.v2
         // Used in the Weapons sample.
         /************************************************************************************************************************/
 
-        // [SerializeField]
-        // private Equipment _Equipment;
-        // public Equipment Equipment => _Equipment;
+        [SerializeField]
+        private Equipment _Equipment;
+        public Equipment Equipment => _Equipment;
 
         /************************************************************************************************************************/
 

@@ -5,6 +5,7 @@
 using Animancer.Units;
 using UnityEngine;
 using Animancer;
+using Unity.Entities.UniversalDelegates;
 
 namespace CharacterNPC.v2
 {
@@ -18,13 +19,18 @@ namespace CharacterNPC.v2
         [SerializeField] private TransitionAsset _Animation;
         [SerializeField] private TransitionAsset _AnimationWalking;
         [SerializeField] private TransitionAsset _AnimationCrouching;
-        [SerializeField] private StringAsset _SpeedParameter;
-        [SerializeField] private float _WalkParameterValue = 0.5f;
-        [SerializeField] private float _RunParameterValue = 1;
-        [SerializeField, Seconds] private float _ParameterSmoothTime = 0.15f;
-        [SerializeField, DegreesPerSecond] private float _TurnSpeed = 360;
 
-        private SmoothedFloatParameter _Speed;
+        [SerializeField] private StringAsset _SpeedParameter;
+
+        // [SerializeField] private TransitionAssetBase _DirectionalMovementTransition;
+        // [SerializeField] private float _WalkParameterValue = 0.5f;
+        // [SerializeField] private float _RunParameterValue = 1;
+        // [SerializeField, Seconds] private float _ParameterSmoothTime = 0.15f;
+        // [SerializeField, DegreesPerSecond] private float _TurnSpeed = 360;
+
+        // private SmoothedFloatParameter _Speed;
+
+        // [SerializeField] public bool _UseDirectional = false;
 
         /************************************************************************************************************************/
 
@@ -48,46 +54,99 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        protected virtual void Awake()
-        {
-            _Speed = new SmoothedFloatParameter(
-                Character.Animancer,
-                _SpeedParameter,
-                _ParameterSmoothTime);
-        }
+        // protected virtual void Awake()
+        // {
+        //     _Speed = new SmoothedFloatParameter(
+        //         Character.Animancer,
+        //         _SpeedParameter,
+        //         _ParameterSmoothTime);
+        // }
 
         /************************************************************************************************************************/
 
         protected virtual void OnEnable()
         {
-            Character.Animancer.Play(_Animation);
-            if (Character.Parameters != null){
-                if (Character.Parameters.IsCrouching == true)
-                {
-                    // Character.Animancer.Play(_AnimationCrouching);
+            // if (_UseDirectional)
+            // {
+            //     Character.AnimationManager.PlayBase(
+            //         transition: _DirectionalMovementTransition, 
+            //         canPlayActionFullBody: false
+            //     );
+            //     return;
+            // }
+
+
+            switch (Character.Parameters.Posture.DesiredPosture)
+            {
+
+                // Crouching
+                case CharacterParametersPosture.CharacterPostureState.Crouching: 
                     Character.AnimationManager.PlayBase(
                         transition: _AnimationCrouching, 
                         canPlayActionFullBody: false
                     );
-                }
-                else
-                {
-                    // Character.Animancer.Play(_AnimationWalking);
+                    Character.Parameters.Posture.CurrentPosture = 
+                        CharacterParametersPosture.CharacterPostureState.Crouching;
+                    break;
+
+                // Standing
+                case CharacterParametersPosture.CharacterPostureState.Standing: 
                     Character.AnimationManager.PlayBase(
                         transition: _AnimationWalking, 
                         canPlayActionFullBody: false
                     );
-                }
+                    Character.Parameters.Posture.CurrentPosture = 
+                        CharacterParametersPosture.CharacterPostureState.Standing;
+                    break;
+
+                // Sitting
+                case CharacterParametersPosture.CharacterPostureState.Sitting: 
+                    Character.AnimationManager.PlayBase(
+                        transition: _AnimationWalking, 
+                        canPlayActionFullBody: false
+                    );
+                    Character.Parameters.Posture.CurrentPosture = 
+                        CharacterParametersPosture.CharacterPostureState.Sitting;
+                    break;
                 
-            } else
-            {
-                // Character.Animancer.Play(_Animation);
-                Character.AnimationManager.PlayBase(
-                    transition: _AnimationWalking, 
-                    canPlayActionFullBody: false
-                );
-                // Character.Animancer.Play(_AnimationWalking);
+                // LayingDown
+                case CharacterParametersPosture.CharacterPostureState.LayingDown: 
+                    Character.AnimationManager.PlayBase(
+                        transition: _AnimationWalking, 
+                        canPlayActionFullBody: false
+                    );
+                    Character.Parameters.Posture.CurrentPosture = 
+                        CharacterParametersPosture.CharacterPostureState.LayingDown;
+                    break;
+                
+                default:
+                    break;
             }
+
+            // Character.Animancer.Play(_Animation);
+            // if (Character.Parameters != null){
+            //     if (Character.Parameters.Posture.IsCrouching == true)
+            //     {
+            //         Character.AnimationManager.PlayBase(
+            //             transition: _AnimationCrouching, 
+            //             canPlayActionFullBody: false
+            //         );
+            //     }
+            //     else
+            //     {
+            //         Character.AnimationManager.PlayBase(
+            //             transition: _AnimationWalking, 
+            //             canPlayActionFullBody: false
+            //         );
+            //     }
+                
+            // } else
+            // {
+            //     Character.AnimationManager.PlayBase(
+            //         transition: _AnimationWalking, 
+            //         canPlayActionFullBody: false
+            //     );
+            // }
             
         }
 
@@ -95,46 +154,41 @@ namespace CharacterNPC.v2
 
         protected virtual void Update()
         {
-            UpdateSpeed();
-            UpdateTurning();
+            
+            Character.Movement.UpdateDistanceFromDestination();
+            Character.Movement.UpdateMovementDirection();
+            Character.Movement.UpdateSpeed();
+            Character.Movement.UpdateTurning();
+            
+            
+            // if (_UseDirectional)
+            // {
+            //     // Character.Movement.UpdateDirectionalMovement();
+            // }
+            // else
+            // {
+            //     Character.Movement.UpdateTurning();
+            // }
         }
 
         /************************************************************************************************************************/
+        public void UseDirectionalMovement(){
+        // Calculate the movement direction.
+            // Vector3 movementDirection = GetMovementDirection();
 
-        private void UpdateSpeed()
-        {
-            _Speed.TargetValue = Character.Parameters.WantsToRun
-                ? _RunParameterValue
-                : _WalkParameterValue;
+            // The movement direction is in world space,
+            // so we need to convert it to the character's local space
+            // to be appropriate for their current rotation.
+            // Vector3 localDirection = transform.InverseTransformDirection(
+                // movementDirection
+            // );
+
+            // Then set the target value for the parameters to move towards:
+            // - Parameter X towards Direction X (right/left).
+            // - Parameter Y towards Direction Z (forwards/backwards).
+            // - Ignore Direction Y because the Mixer is only 2D.
+            // _SmoothedParameters.TargetValue = new Vector2(localDirection.x, localDirection.z);
+
         }
-
-        /************************************************************************************************************************/
-
-        private void UpdateTurning()
-        {
-            // Don't turn if we aren't trying to move.
-            Vector3 movement = Character.Parameters.MovementDirection;
-            if (movement == Vector3.zero)
-                return;
-
-            // Determine the angle we want to turn towards.
-            // Without going into the maths behind it, Atan2 gives us the angle of a vector in radians.
-            // So we just feed in the x and z values because we want an angle around the y axis,
-            // then convert the result to degrees because Transform.eulerAngles uses degrees.
-            float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
-
-            // Determine how far we can turn this frame (in degrees).
-            float turnDelta = _TurnSpeed * Time.deltaTime;
-
-            // Get the current rotation, move its y value towards the target, and apply it back to the Transform.
-            Transform transform = Character.Animancer.transform;
-            Vector3 eulerAngles = transform.eulerAngles;
-            eulerAngles.y = Mathf.MoveTowardsAngle(eulerAngles.y, targetAngle, turnDelta);
-            transform.eulerAngles = eulerAngles;
-        }
-
-        
-
-        /************************************************************************************************************************/
     }
 }

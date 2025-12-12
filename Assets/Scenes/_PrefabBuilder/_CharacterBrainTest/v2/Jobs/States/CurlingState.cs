@@ -2,15 +2,15 @@
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
-using Animancer.FSM;
+using Animancer.Units;
 using UnityEngine;
 using Animancer;
-using UnityEngine.AI;
+using CharacterNPC.v2;
 
 namespace CharacterNPCJobs
 {
-
-    public class CurlingState : MonoBehaviour
+    // [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Drink State")]
+    public class CurlingState : JobState
     {
     }
         

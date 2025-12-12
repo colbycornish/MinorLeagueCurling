@@ -67,6 +67,17 @@ namespace AnimalNPC
         private bool _IsDead = false;
         public ref bool IsDead => ref _IsDead;
 
+        /************************************************************************************************************************/
+
+        [SerializeField]
+        private bool _IsWaiting = false;
+        public ref bool IsWaiting => ref _IsWaiting;
+
+        [SerializeField]
+        private float _TimeSpentWaiting = 0f;
+        public ref float TimeSpentWaiting => ref _TimeSpentWaiting;
+
+        /************************************************************************************************************************/
         
     }
 }
