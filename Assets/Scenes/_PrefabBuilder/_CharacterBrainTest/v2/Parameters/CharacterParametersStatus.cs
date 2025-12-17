@@ -14,6 +14,10 @@ namespace CharacterNPC.v2
     {
         
         [SerializeField]
+        private bool _IsCurling;
+        public ref bool IsCurling => ref _IsCurling;
+
+        [SerializeField]
         private bool _IsPatrolling;
         public ref bool IsPatrolling => ref _IsPatrolling;
 
@@ -51,7 +55,7 @@ namespace CharacterNPC.v2
 
         [SerializeField]
         private float _WantsToWanderLevel = 0f;
-        public ref float WantsToWanderLevel => ref _WantsToPatrolLevel;
+        public ref float WantsToWanderLevel => ref _WantsToWanderLevel;
 
     }
 }

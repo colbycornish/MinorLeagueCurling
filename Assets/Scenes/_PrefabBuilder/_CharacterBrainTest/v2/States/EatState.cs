@@ -6,6 +6,24 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is hungry, and really wants to eat.
+  
+  Extensions:
+  - Should have a meal equiped or be range of a meal they can eat?
+  - That meal should "belong" to the NPC (i.e. no eating someone elses meal)
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Eat State")]
@@ -31,7 +49,8 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
 
         public override bool CanExitState => 
-            _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime;
+            _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime &&
+            Character.Parameters.Status.HungerLevel < 0.4;
 
         /************************************************************************************************************************/
 
@@ -39,7 +58,9 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => Character.Parameters.Posture.IsSitting == true; //Character.Movement.IsGrounded;
+        public override bool CanEnterState => 
+            Character.Parameters.Status.HungerLevel > 0.8 && 
+            Character.Parameters.Posture.CurrentPosture == CharacterParametersPosture.CharacterPostureState.Sitting; 
 
         /************************************************************************************************************************/
 
@@ -69,6 +90,26 @@ namespace CharacterNPC.v2
 
             return _Animations[_CurrentAnimationIndex];
         }
+
+        /************************************************************************************************************************/
+
+        protected virtual void Update()
+        {
+            UpdateParameterLevels();
+        }
+
+        protected virtual void UpdateParameterLevels()
+        {
+            if (Character.StateMachine.CurrentState == this)
+            {
+                Character.Parameters.Status.HungerLevel -= Time.deltaTime * 0.08f;
+                Character.Parameters.Status.HungerLevel = Mathf.Clamp01(
+                    Character.Parameters.Status.HungerLevel
+                );
+            }
+        }
+
+
 
     }
 }

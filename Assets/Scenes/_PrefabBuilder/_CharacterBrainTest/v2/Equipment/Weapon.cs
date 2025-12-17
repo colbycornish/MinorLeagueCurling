@@ -21,7 +21,7 @@ namespace CharacterNPC.v2
     /// 
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.StateMachines/Weapon
     /// 
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Weapons - Weapon")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Weapon")]
     // [AnimancerHelpUrl(typeof(Weapon))]
     public class Weapon : MonoBehaviour
     {
@@ -40,6 +40,10 @@ namespace CharacterNPC.v2
         [SerializeField]
         private TransitionAsset _UnequipAnimation;
         public TransitionAsset UnequipAnimation => _UnequipAnimation;
+
+        [SerializeField]
+        private bool _IsTwoHanded;
+        public bool IsTwoHanded => _IsTwoHanded;
 
         /************************************************************************************************************************/
     }

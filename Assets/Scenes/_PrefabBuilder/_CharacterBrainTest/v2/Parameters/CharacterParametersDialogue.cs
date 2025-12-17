@@ -30,6 +30,8 @@ namespace CharacterNPC.v2
         [SerializeField]
         private bool _WantsToShout = false;
         public ref bool WantsToShout => ref _WantsToShout;
+
+        
         
     }
 }

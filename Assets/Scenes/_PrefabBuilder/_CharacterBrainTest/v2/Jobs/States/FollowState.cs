@@ -6,6 +6,23 @@ using Animancer.FSM;
 using UnityEngine;
 using Animancer;
 using UnityEngine.AI;
+using CharacterNPC.v2;
+
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+This Job state represents when:
+- This NPC is tasked with following something (and needs to have the position of that
+thing updated).
+
+Extensions:
+- Allowing multiple action states to occur while following?
+
+/************************************************************************************************************************/
+
 
 namespace CharacterNPCJobs
 {
@@ -39,6 +56,11 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
+        public override JobStateType JobType => 
+            JobStateType.Wander;
+
+        /************************************************************************************************************************/
+
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
@@ -51,6 +73,7 @@ namespace CharacterNPCJobs
             _OnStart.Invoke();
             Debug.Log("PatrolState OnEnable - Setting first patrol location");
             Character.Parameters.Status.IsFollowing = true;
+            Character.Parameters.Jobs.CurrentJob = JobStateType.Follow;
             SetNextPatrolLocation();
         }
 

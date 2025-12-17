@@ -55,12 +55,12 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
 
         // [Header("Directional Movement Settings")]
-        // [SerializeField] private StringAsset _DirectionalParameterX;
-        // [SerializeField] private StringAsset _DirectionalParameterY;
-        // [SerializeField, Seconds] private float _DirectionalParameterSmoothTime = 0.15f;
-        // [SerializeField, Meters] private float _DirectionalStopProximity = 0.0001f;
+        [SerializeField] private StringAsset _DirectionalParameterX;
+        [SerializeField] private StringAsset _DirectionalParameterY;
+        [SerializeField, Seconds] private float _DirectionalParameterSmoothTime = 0.15f;
+        [SerializeField, Meters] private float _DirectionalStopProximity = 0.0001f;
 
-        // private SmoothedVector2Parameter _DirectionalSmoothedParameters;
+        private SmoothedVector2Parameter _DirectionalSmoothedParameters;
 
         /************************************************************************************************************************/
 
@@ -72,41 +72,6 @@ namespace CharacterNPC.v2
         private float _WalkSpeed = 3.5f;
         public float WalkSpeed => _WalkSpeed;
 
-        // [SerializeField, MetersPerSecond(Rule = Value.IsNotNegative)]
-        // private float _MaxSpeed = 8;
-        // public float MaxSpeed => _MaxSpeed;
-
-        // [SerializeField, MetersPerSecondPerSecond(Rule = Value.IsNotNegative)]
-        // private float _Acceleration = 20;
-        // public float Acceleration => _Acceleration;
-
-        // [SerializeField, MetersPerSecondPerSecond(Rule = Value.IsNotNegative)]
-        // private float _Deceleration = 25;
-        // public float Deceleration => _Deceleration;
-
-        // [SerializeField, DegreesPerSecond(Rule = Value.IsNotNegative)]
-        // private float _MinTurnSpeed = 400;
-        // public float MinTurnSpeed => _MinTurnSpeed;
-
-        // [SerializeField, DegreesPerSecond(Rule = Value.IsNotNegative)]
-        // private float _MaxTurnSpeed = 1200;
-        // public float MaxTurnSpeed => _MaxTurnSpeed;
-
-        // [SerializeField, MetersPerSecondPerSecond(Rule = Value.IsNotNegative)]
-        // private float _Gravity = 20;
-        // public float Gravity => _Gravity;
-
-        // [SerializeField, Multiplier(Rule = Value.IsNotNegative)]
-        // private float _StickingGravityProportion = 0.3f;
-        // public float StickingGravityProportion => _StickingGravityProportion;
-
-        /************************************************************************************************************************/
-
-        // public bool IsGrounded { get; private set; }
-        // public Material GroundMaterial { get; private set; }
-
-        /************************************************************************************************************************/
-        // new
         protected virtual void Awake()
         {
             _Character.NavAgent.updatePosition = false;
@@ -118,29 +83,54 @@ namespace CharacterNPC.v2
                 _ParameterSmoothTime);
 
             // Directional
-            // _DirectionalSmoothedParameters = new SmoothedVector2Parameter(
-            //     _Character.Animancer,
-            //     _DirectionalParameterX,
-            //     _DirectionalParameterY,
-            //     _DirectionalParameterSmoothTime
-            // );
+            _DirectionalSmoothedParameters = new SmoothedVector2Parameter(
+                _Character.Animancer,
+                _DirectionalParameterX,
+                _DirectionalParameterY,
+                _DirectionalParameterSmoothTime
+            );
         }
 
-        /************************************************************************************************************************/
+            /************************************************************************************************************************/
+        public void UpdateMovementParameters()
+        {
+            _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
+            if (!_Character.Parameters.Movement.IsStopped)
+            {
+                _Character.Parameters.Movement.IsMoving = false;
+                _Speed.TargetValue = 0f;
+            }
+            // if the agent is not stopped
+            // and if the character has a destination
+            // and if the character has a movement direction
+            if (!_Character.Parameters.Movement.IsStopped)
+            {
+                
+            }
+            UpdateDistanceFromDestination();
+        }
+
+        public void StopMovement()
+        {
+            _Speed.TargetValue = 0f;
+            _Character.NavAgent.isStopped = true;
+            _Character.Parameters.Movement.IsStopped = true;
+            _Character.Parameters.Movement.IsMoving = false;
+        }
+
+        public void UpdateDistanceFromDestination()
+        {
+            // Character.NavAgent.SetDestination(_PatrolPoints[_CurrentPatrolIndex].position);
+            _Character.Parameters.Movement.DistanceFromDestination = 
+                _Character.NavAgent.remainingDistance;
+        }
+        
         // new
         public void UpdateSpeed()
         {
-            // TODO: Need a parameter to set the speed to zero when not moving.
-            // this includes setting the NavAgent speed to zero when no movement is allowed.
-            
-            // _Speed.TargetValue = _Character.NavAgent.velocity.magnitude < 0.1f
-            //     ? 0f
-            //     : 
-            // if (_Character.StateMachine.CurrentState.FullMovementControl != true)
-            // {
-            // }
             _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
             
+            // if at the destination, has no destination, or has no movement direction, speed is zero
             if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
                 _Character.Parameters.Movement.CurrentDestination == null || 
                 _Character.Parameters.Movement.DistanceFromDestination < 0.1f
@@ -148,39 +138,38 @@ namespace CharacterNPC.v2
             {
                 _Speed.TargetValue = 0f;
                 _Character.Parameters.Movement.IsMoving = false;
+
                 return;
             } else {
-                _Character.Parameters.Movement.IsMoving = true;
+                
                 _Speed.TargetValue = _Character.Parameters.Movement.WantsToRun
                     ? _RunParameterValue
                     : _WalkParameterValue;
+
+                _Character.Parameters.Movement.IsMoving = true;
             }
             
-            _Character.NavAgent.speed = _Speed.TargetValue * 7f; // Animation walk is 0.5
-            _Character.Parameters.Movement.ForwardSpeed = _Speed.TargetValue * 7f;
+            _Character.NavAgent.speed = WalkSpeed; // Animation walk is 0.5
+            _Character.Parameters.Movement.ForwardSpeed = WalkSpeed; //7f;
             
+            //     Vector3 movement = _Character.Parameters.MovementDirection;
+
+            //     _Character.Parameters.DesiredForwardSpeed = movement.magnitude * MaxSpeed;
+
+            //     float deltaSpeed = movement != Vector3.zero ? Acceleration : Deceleration;
+            //     _Character.Parameters.ForwardSpeed = Mathf.MoveTowards(
+            //         _Character.Parameters.ForwardSpeed,
+            //         _Character.Parameters.DesiredForwardSpeed,
+            //         deltaSpeed * Time.deltaTime);
         }
         
-        // old
-        public void UpdateSpeedControl()
-        {
-        //     Vector3 movement = _Character.Parameters.MovementDirection;
-
-        //     _Character.Parameters.DesiredForwardSpeed = movement.magnitude * MaxSpeed;
-
-        //     float deltaSpeed = movement != Vector3.zero ? Acceleration : Deceleration;
-        //     _Character.Parameters.ForwardSpeed = Mathf.MoveTowards(
-        //         _Character.Parameters.ForwardSpeed,
-        //         _Character.Parameters.DesiredForwardSpeed,
-        //         deltaSpeed * Time.deltaTime);
-        }
-
         public void UpdateMovementDirection()
         {
-            if (_Character.NavAgent.velocity.magnitude < 0.1f)
+
+            if (_Character.NavAgent.velocity.magnitude < 0.1f) 
             {
                 _Character.Parameters.Movement.MovementDirection = Vector3.zero;
-                // navMeshAgent.speed = 0
+                
                 return; // Let the NavMeshAgent control movement.
             } else {
                 // Convert the input to 3D in the XZ plane.
@@ -194,11 +183,31 @@ namespace CharacterNPC.v2
             }
         }
 
-        public void UpdateDistanceFromDestination()
+        public void UpdateMovementDirectionDirectional()
         {
-            _Character.Parameters.Movement.DistanceFromDestination = _Character.NavAgent.remainingDistance;
+            Vector3 currentPos = _Character.transform.position; //_Character.transform.position; // Or agent.nextPosition if updatePosition is false
+            Vector3 targetPos = _Character.NavAgent.nextPosition;
+            Vector3 direction = targetPos - currentPos;
+            
+            // Calculate Rotation
+            direction.Normalize(); // Get unit vector for direction
+            // Debug.Log("Should move to:" + direction);
+            _Character.Parameters.Movement.MovementDirection = direction;
+            
+            // Quaternion targetRotation = Quaternion.LookRotation(direction);
+            // transform.rotation = Quaternion.Slerp(
+            //     transform.rotation, 
+            //     targetRotation, 
+            //     Time.deltaTime * 120f //rotationSpeed
+            // );
+
+            // Apply Movement
+            // _Character.Animancer.transform.position += _Character.NavAgent.speed * Time.deltaTime * direction;
+
         }
 
+     
+    
         // /************************************************************************************************************************/
 
         public void UpdateTurning()
@@ -224,83 +233,68 @@ namespace CharacterNPC.v2
             transform.eulerAngles = eulerAngles;
         }
 
-        /************************************************************************************************************************/
 
-        
+         // /************************************************************************************************************************/
 
-        // public float CurrentTurnSpeed
-        //     => Mathf.Lerp(
-        //         MaxTurnSpeed,
-        //         MinTurnSpeed,
-        //         _Character.Parameters.ForwardSpeed / _Character.Parameters.DesiredForwardSpeed);
-                
-        /************************************************************************************************************************/
 
-        // public bool GetTurnAngles(Vector3 direction, out float currentAngle, out float targetAngle)
-        // {
-        //     if (direction == Vector3.zero)
-        //     {
-        //         currentAngle = float.NaN;
-        //         targetAngle = float.NaN;
-        //         return false;
-        //     }
+        public void UpdateDirectionalMovement()
+        {
+            //new Vector3(-1,0,0);//
+            // Debug.Log("update dirm");
+            Vector3 direction = _Character.Parameters.Movement.MovementDirection;
+            // Vector3 movementDirection = direction;
 
-        //     currentAngle = transform.eulerAngles.y;
-        //     targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        //     return true;
-        // }
-        
-        /************************************************************************************************************************/
+            // float squaredDistance = direction.sqrMagnitude;
+            // if (squaredDistance <= _DirectionalStopProximity * _DirectionalStopProximity)
+            // {
+            //     movementDirection = Vector3.zero;
+            // }
+            // else
+            // {
+            //     // Otherwise normalize the direction so that we don't change speed based on distance.
+            //     // Calling direction.Normalize() would do the same thing, but would calculate the magnitude again.
+            //     movementDirection = direction / Mathf.Sqrt(squaredDistance);
+            // }
+            // float dirX = direction.x == 0f
+            //     ? 0f
+            //     : direction.x > 0f 
+            //         ? 1f
+            //         : -1f;
 
-        // public void TurnTowards(float currentAngle, float targetAngle, float speed)
-        // {
-        //     currentAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, speed * Time.deltaTime);
+            // float dirZ = direction.z == 0f
+            //     ? 0f
+            //     : direction.z > 0f 
+            //         ? 1f
+            //         : -1f;
 
-        //     transform.eulerAngles = new(0, currentAngle, 0);
-        // }
+            // Vector3 localDirection = _Character.gameObject.transform.InverseTransformDirection(movementDirection);
 
-        // public void TurnTowards(Vector3 direction, float speed)
-        // {
-        //     if (GetTurnAngles(direction, out float currentAngle, out float targetAngle))
-        //         TurnTowards(currentAngle, targetAngle, speed);
-        // }
-        
-        /************************************************************************************************************************/
+            // Then set the target value for the parameters to move towards:
+            // - Parameter X towards Direction X (right/left).
+            // - Parameter Y towards Direction Z (forwards/backwards).
+            // - Ignore Direction Y because the Mixer is only 2D.
+            
 
+            _DirectionalSmoothedParameters.TargetValue = new Vector2(
+                direction.x, 
+                direction.z
+            );
+        }
+
+      
         protected virtual void OnAnimatorMove()
         {
             Vector3 movement = GetRootMotion();
+
+
             // Debug.Log("Root Motion: " + movement);
             // CheckGround(ref movement);
             // UpdateGravity(ref movement);
             // _CharacterController.Move(movement);
             // _Character.Animancer.Animator.SetFloat("ForwardSpeed", Mathf.Abs(_Speed.TargetValue));
             // _Character.NavAgent.nextPosition = transform.position + _Character.Animancer.Animator.deltaPosition;
+            
             _Character.gameObject.transform.position = _Character.NavAgent.nextPosition;
-            // _Character.gameObject.
-            // transform.rotation = _Character.NavAgent.transform.rotation * _Character.Animancer.Animator.deltaRotation;
-            // IsGrounded = _CharacterController.isGrounded;
-
-            // _Character.gameObject.transform.rotation *= _Character.Animancer.Animator.deltaRotation;
-            // if (_Character.NavAgent != null && _Character.NavAgent.velocity.magnitude > 0.1f)
-            // {
-            //     // Calculate the direction to the immediate steering target
-            //     // Use steeringTarget instead of destination for smoother immediate turns
-            //     Vector3 direction = (_Character.NavAgent.steeringTarget - _Character.gameObject.transform.position).normalized;
-                
-            //     // Ensure the rotation is only on the Y-axis (for a typical character)
-            //     direction.y = 0;
-
-            //     // If there is a valid direction to look at
-            //     if (direction != Vector3.zero)
-            //     {
-            //         // Create a rotation looking in that direction
-            //         Quaternion lookRotation = Quaternion.LookRotation(direction);
-            //         float rotationSpeed = 5f;
-            //         // Smoothly rotate the agent towards the calculated rotation using Slerp
-            //         _Character.gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-            //     }
-            // }
         }
 
         /************************************************************************************************************************/
@@ -334,7 +328,12 @@ namespace CharacterNPC.v2
             return Vector3.Lerp(rawMotion, controlledMotion, magnitude);
         }
 
-        /************************************************************************************************************************/
+     
+    }
+}
+
+
+   /************************************************************************************************************************/
 
         // private void CheckGround(ref Vector3 movement)
         // {
@@ -419,49 +418,46 @@ namespace CharacterNPC.v2
 // #endif
         /************************************************************************************************************************/
 
-    }
-}
 
+  /************************************************************************************************************************/
 
+        
 
-// public void UpdateDirectionalMovement()
-//         {
-//             //new Vector3(-1,0,0);//
-//             Vector3 direction = _Character.Parameters.Movement.MovementDirection;
-//             // Vector3 movementDirection = direction;
+        // public float CurrentTurnSpeed
+        //     => Mathf.Lerp(
+        //         MaxTurnSpeed,
+        //         MinTurnSpeed,
+        //         _Character.Parameters.ForwardSpeed / _Character.Parameters.DesiredForwardSpeed);
+                
+        /************************************************************************************************************************/
 
-//             // float squaredDistance = direction.sqrMagnitude;
-//             // if (squaredDistance <= _DirectionalStopProximity * _DirectionalStopProximity)
-//             // {
-//             //     movementDirection = Vector3.zero;
-//             // }
-//             // else
-//             // {
-//             //     // Otherwise normalize the direction so that we don't change speed based on distance.
-//             //     // Calling direction.Normalize() would do the same thing, but would calculate the magnitude again.
-//             //     movementDirection = direction / Mathf.Sqrt(squaredDistance);
-//             // }
-//             float dirX = direction.x == 0f
-//                 ? 0f
-//                 : direction.x > 0f 
-//                     ? 1f
-//                     : -1f;
+        // public bool GetTurnAngles(Vector3 direction, out float currentAngle, out float targetAngle)
+        // {
+        //     if (direction == Vector3.zero)
+        //     {
+        //         currentAngle = float.NaN;
+        //         targetAngle = float.NaN;
+        //         return false;
+        //     }
 
-//             float dirZ = direction.z == 0f
-//                 ? 0f
-//                 : direction.z > 0f 
-//                     ? 1f
-//                     : -1f;
+        //     currentAngle = transform.eulerAngles.y;
+        //     targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        //     return true;
+        // }
+        
+        /************************************************************************************************************************/
 
-//             // Vector3 localDirection = _Character.gameObject.transform.InverseTransformDirection(movementDirection);
+        // public void TurnTowards(float currentAngle, float targetAngle, float speed)
+        // {
+        //     currentAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, speed * Time.deltaTime);
 
-//             // Then set the target value for the parameters to move towards:
-//             // - Parameter X towards Direction X (right/left).
-//             // - Parameter Y towards Direction Z (forwards/backwards).
-//             // - Ignore Direction Y because the Mixer is only 2D.
-            
-//             _DirectionalSmoothedParameters.TargetValue = new Vector2(
-//                 dirX, 
-//                 dirZ
-//             );
-//         }
+        //     transform.eulerAngles = new(0, currentAngle, 0);
+        // }
+
+        // public void TurnTowards(Vector3 direction, float speed)
+        // {
+        //     if (GetTurnAngles(direction, out float currentAngle, out float targetAngle))
+        //         TurnTowards(currentAngle, targetAngle, speed);
+        // }
+        
+        /************************************************************************************************************************/

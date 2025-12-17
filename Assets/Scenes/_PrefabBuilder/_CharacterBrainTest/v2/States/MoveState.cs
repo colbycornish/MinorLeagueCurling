@@ -7,6 +7,23 @@ using UnityEngine;
 using Animancer;
 using Unity.Entities.UniversalDelegates;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is moving. 
+  - The NPC is changing postures.
+  
+  Extensions:
+  - 
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
 
@@ -22,7 +39,7 @@ namespace CharacterNPC.v2
 
         [SerializeField] private StringAsset _SpeedParameter;
 
-        // [SerializeField] private TransitionAssetBase _DirectionalMovementTransition;
+        [SerializeField] private TransitionAssetBase _DirectionalMovementTransition;
         // [SerializeField] private float _WalkParameterValue = 0.5f;
         // [SerializeField] private float _RunParameterValue = 1;
         // [SerializeField, Seconds] private float _ParameterSmoothTime = 0.15f;
@@ -30,7 +47,7 @@ namespace CharacterNPC.v2
 
         // private SmoothedFloatParameter _Speed;
 
-        // [SerializeField] public bool _UseDirectional = false;
+        [SerializeField] public bool _UseDirectional = false;
 
         /************************************************************************************************************************/
 
@@ -66,14 +83,22 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
-            // if (_UseDirectional)
-            // {
-            //     Character.AnimationManager.PlayBase(
-            //         transition: _DirectionalMovementTransition, 
-            //         canPlayActionFullBody: false
-            //     );
-            //     return;
-            // }
+            PlayBase();
+            Character.Parameters.Movement.IsBaseFromIdleState = false;
+            Character.Parameters.Movement.IsBaseFromMoveState = true;
+        }
+
+        /************************************************************************************************************************/
+        public void PlayBase()
+        {
+            if (_UseDirectional)
+            {
+                Character.AnimationManager.PlayBase(
+                    transition: _DirectionalMovementTransition, 
+                    canPlayActionFullBody: false
+                );
+                return;
+            }
 
 
             switch (Character.Parameters.Posture.DesiredPosture)
@@ -122,38 +147,16 @@ namespace CharacterNPC.v2
                 default:
                     break;
             }
-
-            // Character.Animancer.Play(_Animation);
-            // if (Character.Parameters != null){
-            //     if (Character.Parameters.Posture.IsCrouching == true)
-            //     {
-            //         Character.AnimationManager.PlayBase(
-            //             transition: _AnimationCrouching, 
-            //             canPlayActionFullBody: false
-            //         );
-            //     }
-            //     else
-            //     {
-            //         Character.AnimationManager.PlayBase(
-            //             transition: _AnimationWalking, 
-            //             canPlayActionFullBody: false
-            //         );
-            //     }
-                
-            // } else
-            // {
-            //     Character.AnimationManager.PlayBase(
-            //         transition: _AnimationWalking, 
-            //         canPlayActionFullBody: false
-            //     );
-            // }
-            
         }
 
-        /************************************************************************************************************************/
 
         protected virtual void Update()
         {
+            // Character.Movement.UpdateMovementAll();
+            // Character.Movement.UpdateDistanceFromDestination();
+            // Character.Movement.UpdateSpeed();
+            // Character.Movement.UpdateDirectionalMovement();
+
             
             Character.Movement.UpdateDistanceFromDestination();
             Character.Movement.UpdateMovementDirection();
@@ -173,7 +176,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
         public void UseDirectionalMovement(){
-        // Calculate the movement direction.
+            // Calculate the movement direction.
             // Vector3 movementDirection = GetMovementDirection();
 
             // The movement direction is in world space,

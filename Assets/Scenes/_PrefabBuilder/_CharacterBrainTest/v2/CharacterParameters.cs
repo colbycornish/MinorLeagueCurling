@@ -30,6 +30,10 @@ namespace CharacterNPC.v2
         public CharacterParametersStatus Status => _Status; 
 
         [SerializeField]
+        private CharacterParametersJobs _Jobs;
+        public CharacterParametersJobs Jobs => _Jobs;
+
+        [SerializeField]
         private CharacterParametersSurroundings _Surroundings;
         public CharacterParametersSurroundings Surroundings => _Surroundings;  
 

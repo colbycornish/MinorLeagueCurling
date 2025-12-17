@@ -6,17 +6,32 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is trying to get the Players attention.
+  
+  Extensions:
+  - 
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     /// <summary>A <see cref="CharacterState"/> which plays a series of "attack" animations.</summary>
     /// 
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Pose State")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Wave State")]
     public class WaveState : CharacterState
     {
         /************************************************************************************************************************/
 
-
-        // [SerializeField] private UnityEvent _SetWeaponOwner;// See the Read Me.
+        // [SerializeField] private UnityEvent _SetWeaponOwner; // See the Read Me.
         
         [SerializeField] private ClipTransition[] _Animations;
 
@@ -27,8 +42,8 @@ namespace CharacterNPC.v2
 
         public override bool CanInterruptSelf => true;
 
-        [SerializeField] private UnityEvent _OnStart;// See the Read Me.
-        [SerializeField] private UnityEvent _OnEnd;// See the Read Me.
+        [SerializeField] private UnityEvent _OnStart; // See the Read Me.
+        [SerializeField] private UnityEvent _OnEnd; // See the Read Me.
 
         /************************************************************************************************************************/
 
@@ -69,10 +84,14 @@ namespace CharacterNPC.v2
         /// </summary>
         protected virtual void OnEnable()
         {
+            _OnStart.Invoke();
             _CurrentAnimation = SelectAnimationToPlay();
             Character.AnimationManager.PlayAction(_CurrentAnimation);
+
+            AnimancerState state = Character.Animancer.Layers[1].CurrentState;
+            state.Events(this).OnEnd ??= Character.StateMachine.ForceSetDefaultState;
             // Character.Parameters.Movement.ForwardSpeed = 0;
-            _OnStart.Invoke();
+            
         }
 
         private ClipTransition SelectAnimationToPlay()
@@ -94,6 +113,7 @@ namespace CharacterNPC.v2
 
         protected virtual void OnDisable()
         {
+            Character.AnimationManager.FadeOutAction();
             _OnEnd.Invoke();
         }
 

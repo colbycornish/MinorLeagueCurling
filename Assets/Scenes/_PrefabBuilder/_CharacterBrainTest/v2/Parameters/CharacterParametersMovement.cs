@@ -12,10 +12,7 @@ namespace CharacterNPC.v2
     [Serializable]
     public class CharacterParametersMovement
     {
-        [SerializeField]
-        private bool _IsMoving = false;
-        public ref bool IsMoving => ref _IsMoving;
-        
+    
         [SerializeField]
         private Vector3 _MovementDirection;
         public Vector3 MovementDirection
@@ -48,6 +45,22 @@ namespace CharacterNPC.v2
         [SerializeField]
         private bool _IsStopped = false;
         public ref bool IsStopped => ref _IsStopped;
+
+        [SerializeField]
+        private bool _IsMoving = false;
+        public ref bool IsMoving => ref _IsMoving;
+
+        [SerializeField]
+        private bool _IsIdle = false;
+        public ref bool IsIdle => ref _IsIdle;
+
+        [SerializeField]
+        private bool _IsBaseFromIdleState = true;
+        public ref bool IsBaseFromIdleState => ref _IsBaseFromIdleState;
+
+        [SerializeField]
+        private bool _IsBaseFromMoveState = false;
+        public ref bool IsBaseFromMoveState => ref _IsBaseFromMoveState;
        
     }
 }

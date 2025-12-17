@@ -6,6 +6,23 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+SPECIFIC STATE
+(will NOT be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC has something to clean.
+  
+  Extensions:
+  - The dirty location they are in should subsequently be labelled as clean.
+  - The dirty location should be marked as "cleaning in progress"
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     /// <summary>A <see cref="CharacterState"/> which plays a series of "attack" animations.</summary>

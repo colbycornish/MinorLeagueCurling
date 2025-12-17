@@ -6,6 +6,23 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC needs to pose for something.
+  - Most likely during a cinematic.
+  
+  Extensions:
+  - The pose should be able to have a "Hold here" marker?
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     /// <summary>A <see cref="CharacterState"/> which plays a series of "attack" animations.</summary>

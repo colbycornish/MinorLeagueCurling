@@ -76,7 +76,7 @@ Estimated 2–5 hours per playthrough, with replayability through team-building,
 Inspiration & references: 
 - Mario Kart
 - Wii / Switch Bowling
-- 
+- Disco Elysium
 
 
 Inspiration & references: 
@@ -88,4 +88,12 @@ Inspiration & references:
 
 # Requirements
 
-- Unity (v6>)
+Platform:
+- Unity (v6.2)
+
+Unity Plugins:
+- Animancer (for code-based animation control)
+- Cozy Weather (Weather System)
+- Pixel Crusher's Dialogue Manager (Dialogue, Quests)
+- EZ Save (Saving)
+- MoreMountains Feel (GameFeel)

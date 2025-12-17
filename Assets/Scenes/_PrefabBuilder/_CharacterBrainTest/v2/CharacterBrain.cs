@@ -11,6 +11,7 @@ using Animancer.Samples;
 using Unity.Entities.UniversalDelegates;
 using static Animancer.Validate;
 using Unity.VisualScripting;
+using CharacterNPCJobs;
 
 
 namespace CharacterNPC.v2
@@ -23,6 +24,8 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
 
         [SerializeField] private Character _Character;
+
+        [Header("Basic States")]
         [SerializeField] private CharacterState _Idle;
         [SerializeField] private CharacterState _Talk;
         [SerializeField] private CharacterState _Pose;
@@ -30,12 +33,19 @@ namespace CharacterNPC.v2
         [SerializeField] private CharacterState _Drink;
         [SerializeField] private CharacterState _Eat;
         [SerializeField] private CharacterState _Move;
-        [SerializeField] private CharacterState _Equip;
+        [SerializeField] private EquipState _Equip;
         [SerializeField] private CharacterState _Sweep;
+
+        [Header("Extra States")]
+        [SerializeField] private CharacterState _Cook;
+        [SerializeField] private CharacterState _Dance;
+        
 
         [SerializeField]
         [Seconds(Rule = Value.IsNotNegative)]
         private float _AttackInputTimeOut = 0.5f;
+
+        [SerializeField] private Weapon[] _Weapons;
 
         private StateMachine<CharacterState>.InputBuffer _InputBuffer;
 
@@ -50,6 +60,7 @@ namespace CharacterNPC.v2
 
         protected virtual void Update()
         {
+            UpdateEquip();
             if (Input.GetKeyDown(KeyCode.T))
             {
                 UpdatePosture();
@@ -58,41 +69,133 @@ namespace CharacterNPC.v2
             {
                 _Character.Parameters.Movement.WantsToRun = !_Character.Parameters.Movement.WantsToRun;
             }
-            if (_Character.StateMachine.CurrentState.FullMovementControl != true || 
+
+            if (_Character.Parameters.Posture.CurrentPosture != 
+                    CharacterParametersPosture.CharacterPostureState.Sitting &&
+                (_Character.StateMachine.CurrentState.FullMovementControl == false || 
                 _Character.StateMachine.CurrentState == _Move)
+            )
             {
                 UpdateMovement();    
             }
+            
             UpdateActions();
+            UpdateActionsManually();
 
-            
-            
         }
 
         /************************************************************************************************************************/
 
         private void UpdateMovement()
         {
+            // if (_Character.StateMachine.CurrentState != _Idle){
+            //     Debug.Log("->> Enter Idle State");
+            //     _Character.StateMachine.TrySetState(_Idle);
+            // }
             _Character.Movement.UpdateMovementDirection();
-            _Character.Movement.UpdateDistanceFromDestination();
-            _Character.Movement.UpdateSpeed();
-            // _Character.Movement.UpdateDirectionalMovement();
-            _Character.Movement.UpdateTurning();
-            if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
-                _Character.Parameters.Movement.IsMoving == false
+            
+            if (_Character.Parameters.Movement.CurrentDestination == null && 
+                _Character.Parameters.Movement.MovementDirection == Vector3.zero && 
+                _Character.StateMachine.CurrentState != _Idle &&
+                _Character.StateMachine.CurrentState != _Idle != _Character.StateMachine.DefaultState
             )
             {
-                _Character.StateMachine.TrySetState(_Idle);
-                return;
-            } else
+                
+                if (_Character.Parameters.Movement.IsBaseFromIdleState == false){
+                    Debug.Log("->> Enter Idle State");
+                    _Character.StateMachine.TrySetState(_Idle);
+                }
+            } else if (
+                _Character.Parameters.Movement.MovementDirection != Vector3.zero &&
+                _Character.Parameters.Movement.IsStopped == false &&
+                _Character.StateMachine.CurrentState != _Move
+            )
             {
-                _Character.StateMachine.TrySetState(_Move);
+                if (_Character.Parameters.Movement.IsBaseFromMoveState == false){
+                    Debug.Log("->> Enter Movement State");
+                    _Character.StateMachine.TrySetState(_Move);
+                }
+                _Character.Movement.UpdateDistanceFromDestination();
+                _Character.Movement.UpdateSpeed();
+                // // _Character.Movement.UpdateDirectionalMovement(); 
+                _Character.Movement.UpdateTurning();
             }
+            
+            // _Character.Movement.UpdateDistanceFromDestination();
+            // _Character.Movement.UpdateSpeed();
+            
+            // // _Character.Movement.UpdateDirectionalMovement(); 
+            // _Character.Movement.UpdateTurning();
+
+            // if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
+            //     _Character.Parameters.Movement.IsMoving == false
+            // )
+            // {
+            //     _Character.StateMachine.TrySetState(_Idle);
+            //     return;
+            // } else
+            // {
+
+            //     _Character.StateMachine.TrySetState(_Move);
+            // }
         }
 
         /************************************************************************************************************************/
 
         private void UpdateActions()
+        {
+            /// COOK
+            if (_Character.JobStateMachine.CurrentState.JobType == JobStateType.Cook)
+            {
+                if (_Character.StateMachine.CurrentState != _Cook){
+                    Debug.Log("-> Update Action: Cook state");
+                    _Character.StateMachine.TrySetState(_Cook);
+                }
+            }
+
+            /// DANCE
+            else if (_Character.JobStateMachine.CurrentState.JobType == JobStateType.Dance)
+            {
+                if (_Character.StateMachine.CurrentState != _Dance){
+                    Debug.Log("-> Update Action: Dance state");
+                    _Character.StateMachine.TrySetState(_Dance);
+                }
+            }
+
+            /// PARTY STATE
+            else if (_Character.JobStateMachine.CurrentState.JobType == JobStateType.Party)
+            {
+                if (_Character.Parameters.Status.HungerLevel > 0.8 && 
+                    _Character.StateMachine.CurrentState != _Eat &&
+                    _Character.StateMachine.CurrentState.CanExitState
+                )
+                {
+                    Debug.Log("-> Update Action: Eat state");
+                    _Character.StateMachine.TrySetState(_Eat);
+                }
+
+                if (_Character.Parameters.Status.ThirstynessLevel > 0.8 && 
+                    _Character.StateMachine.CurrentState != _Drink &&
+                    _Character.StateMachine.CurrentState.CanExitState
+                )
+                {
+                    Debug.Log("-> Update Action: Drink state");
+                    _Character.StateMachine.TrySetState(_Drink);
+                }
+                
+            }
+            else
+            {
+
+                // if (_Character.StateMachine.CurrentState != _Idle){
+                //     Debug.Log("-> Update Action: Idle state");
+                //     _Character.StateMachine.TrySetState(_Idle);   
+                // }
+            }
+
+        }
+
+        private void UpdateActionsManually()
         {
             // Jump gets priority for better platforming.
             // Character Wants To Pose && is not posing
@@ -124,40 +227,62 @@ namespace CharacterNPC.v2
             {
                 _InputBuffer.Buffer(_Drink, _AttackInputTimeOut);
             }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                _InputBuffer.Buffer(_Sweep, _AttackInputTimeOut);
+            }
             // Character Wants To Idle && is not Idling
             
             
             _InputBuffer.Update();
         }
 
+        /************************************************************************************************************************/
+
+        private void UpdateEquip()
+        {
+            if (SampleInput.RightMouseDown)
+            {
+                int equippedWeaponIndex = Array.IndexOf(_Weapons, _Character.Equipment.Weapon);
+
+                equippedWeaponIndex++;
+                if (equippedWeaponIndex >= _Weapons.Length)
+                    equippedWeaponIndex = 0;
+
+                _Equip.NextWeapon = _Weapons[equippedWeaponIndex];
+                _InputBuffer.Buffer(_Equip, _AttackInputTimeOut);
+            }
+        }
+
+
+        /************************************************************************************************************************/
+
         private void UpdatePosture()
         {
+            // if (_Character.Parameters.Posture.CurrentPosture ==
+            //     CharacterParametersPosture.CharacterPostureState.Standing)
+            // {
+            //     _Character.Parameters.Posture.DesiredPosture =
+            //         CharacterParametersPosture.CharacterPostureState.Crouching;
+            // }
+            // else if (_Character.Parameters.Posture.CurrentPosture ==
+            //     CharacterParametersPosture.CharacterPostureState.Crouching)
+            // {
+            //     _Character.Parameters.Posture.DesiredPosture =
+            //         CharacterParametersPosture.CharacterPostureState.Sitting;
 
+            // } else if (_Character.Parameters.Posture.CurrentPosture ==
+            //     CharacterParametersPosture.CharacterPostureState.Sitting)
+            // {
+            //     _Character.Parameters.Posture.DesiredPosture =
+            //         CharacterParametersPosture.CharacterPostureState.LayingDown;
 
-            if (_Character.Parameters.Posture.CurrentPosture ==
-                CharacterParametersPosture.CharacterPostureState.Standing)
-            {
-                _Character.Parameters.Posture.DesiredPosture =
-                    CharacterParametersPosture.CharacterPostureState.Crouching;
-            }
-            else if (_Character.Parameters.Posture.CurrentPosture ==
-                CharacterParametersPosture.CharacterPostureState.Crouching)
-            {
-                _Character.Parameters.Posture.DesiredPosture =
-                    CharacterParametersPosture.CharacterPostureState.Sitting;
-
-            } else if (_Character.Parameters.Posture.CurrentPosture ==
-                CharacterParametersPosture.CharacterPostureState.Sitting)
-            {
-                _Character.Parameters.Posture.DesiredPosture =
-                    CharacterParametersPosture.CharacterPostureState.LayingDown;
-
-            } else if (_Character.Parameters.Posture.CurrentPosture ==
-                CharacterParametersPosture.CharacterPostureState.LayingDown)
-            {
-                _Character.Parameters.Posture.DesiredPosture =
-                    CharacterParametersPosture.CharacterPostureState.Standing;
-            }
+            // } else if (_Character.Parameters.Posture.CurrentPosture ==
+            //     CharacterParametersPosture.CharacterPostureState.LayingDown)
+            // {
+            //     _Character.Parameters.Posture.DesiredPosture =
+            //         CharacterParametersPosture.CharacterPostureState.Standing;
+            // }
 
             if (_Character.Parameters.Posture.DesiredPosture !=
                 _Character.Parameters.Posture.CurrentPosture)
@@ -171,64 +296,13 @@ namespace CharacterNPC.v2
                     _Character.StateMachine.TryResetState(_Move);
                 }
             }
-            // if (_Character.Parameters.Posture.WantsToStand == true && 
-            //     _Character.Parameters.Posture.IsStanding == false
-            // )
-            // {
-                
-            // }
-            // if (_Character.Parameters.Posture.WantsToSit == true && 
-            //     _Character.Parameters.Posture.IsSitting == false
-            // )
-            // {
-                
-            // }
-            // if (_Character.Parameters.Posture.WantsToCrouch == true && 
-            //     _Character.Parameters.Posture.IsCrouching == false
-            // )
-            // {
-                
-            // }
-            // if (_Character.Parameters.Posture.WantsToLayDown == true && 
-            //     _Character.Parameters.Posture.IsLayingDown == false
-            // )
-            // {
-                
-            // }
-          
             
-            // if (_Character.Parameters.Posture.IsStanding == true)
-            // {
-            //     _Character.Parameters.Posture.IsStanding = false;
-            //     _Character.Parameters.Posture.IsCrouching = true;
-            // }
-            // else if (_Character.Parameters.Posture.IsCrouching == true)
-            // {
-            //     _Character.Parameters.Posture.IsCrouching = false;
-            //     _Character.Parameters.Posture.IsSitting = true;
-            // }
-            // else if (_Character.Parameters.Posture.IsSitting == true)
-            // {
-            //     _Character.Parameters.Posture.IsSitting = false;
-            //     _Character.Parameters.Posture.IsStanding = true;
-            // } else
-            // {
-            //     _Character.Parameters.Posture.IsStanding = true;
-            //     _Character.Parameters.Posture.IsCrouching = false;
-            //     _Character.Parameters.Posture.IsSitting = false;
-            // }
-
-            // if(_Character.StateMachine.CurrentState == _Idle)
-            // {
-            //     _Character.StateMachine.TryResetState(_Idle);
-            // }
-            // else if(_Character.StateMachine.CurrentState == _Move)
-            // {
-            //     _Character.StateMachine.TryResetState(_Move);
-            // }
 
 
         }
+
+
+        
     }
 }
 

@@ -8,6 +8,20 @@ using Animancer;
 using CharacterNPC.v2;
 
 
+/************************************************************************************************************************/
+/*
+
+A Job state represents a specific activity that an NPC is engaged in, which
+can involve chaining together a multitude of tasks. 
+
+It is responsible for updating the associated Character Parameters
+that subsequently tell the Characters Brain how to direct the animation flows,
+and can lock/unlock various aspects. 
+  
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPCJobs
 {
 
@@ -62,6 +76,9 @@ namespace CharacterNPCJobs
                     return nextState.Priority > Priority;
             }
         }
+
+        public virtual JobStateType JobType => 
+            JobStateType.None;
 
         // public virtual bool FullMovementControl => true;
     }

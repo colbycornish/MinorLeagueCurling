@@ -5,6 +5,25 @@
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is idling. 
+  - The NPC is changing postures.
+  - The NPC is thinking.
+  - The NPC is not moving.
+  
+  Extensions:
+  - Should have multiple varieties of idling collections (looking)
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Idle State")]
@@ -17,6 +36,7 @@ namespace CharacterNPC.v2
         [SerializeField] private TransitionAsset _AnimationStanding;
         [SerializeField] private TransitionAsset _AnimationSitting;
         [SerializeField] private TransitionAsset _AnimationCrouching;
+        [SerializeField] private TransitionAsset _AnimationSweeperIdle;
         // [SerializeField] private TransitionAsset _AnimationLayingDown;
 
 
@@ -40,100 +60,105 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        protected virtual void OnDisable()
+        {
+            Character.Parameters.Movement.IsIdle = false;
+        }
+
         protected virtual void OnEnable()
         {
-            Debug.Log("CB - IdleState OnEnable");
+            Character.Parameters.Movement.IsBaseFromIdleState = true;
+            Character.Parameters.Movement.IsBaseFromMoveState = false;
+            PlayBase();
+        }
+
+        protected virtual void Update()
+        {
+            if (Character.Parameters.Movement.IsBaseFromIdleState == false || 
+                Character.Parameters.Movement.IsBaseFromMoveState == true
+            )
+            {
+                Character.Parameters.Movement.IsBaseFromIdleState = true;
+                Character.Parameters.Movement.IsBaseFromMoveState = false;
+            }
+        }
+
+
+        private void PlayBase()
+        {
+            
+            // If they are holding a broom two handed...
+            if (Character.Equipment.Weapon != null && 
+                Character.Equipment.Weapon.gameObject.GetComponent<CurlingBroom>() != null)
+            {
+                Character.AnimationManager.PlayBase(
+                    transition: _AnimationSweeperIdle, 
+                    canPlayActionFullBody: false
+                );
+                return;
+            }
+
+            // Else adjust their basic posture
             switch (Character.Parameters.Posture.DesiredPosture)
             {
                 // Sitting
                 case CharacterParametersPosture.CharacterPostureState.Sitting: 
-                    Character.AnimationManager.PlayBase(
-                        transition: _AnimationSitting, 
-                        canPlayActionFullBody: false
-                    );
-                    Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.Sitting;
+                    PlaySitting();
                     break;
                 // Crouching
                 case CharacterParametersPosture.CharacterPostureState.Crouching: 
-                    Character.AnimationManager.PlayBase(
-                        transition: _AnimationCrouching, 
-                        canPlayActionFullBody: false
-                    );
-                    Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.Crouching;
+                    PlayCrouching();
                     break;
                 // LayingDown
                 case CharacterParametersPosture.CharacterPostureState.LayingDown: 
-                    Character.AnimationManager.PlayBase(
-                        transition: _AnimationSitting, 
-                        canPlayActionFullBody: false
-                    );
-                    Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.LayingDown;
+                    PlayLayingDown();
                     break;
                 // Standing
                 case CharacterParametersPosture.CharacterPostureState.Standing: 
-                    Character.AnimationManager.PlayBase(
-                        transition: _AnimationStanding, 
-                        canPlayActionFullBody: false
-                    );
-                    Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.Standing;
-                    break;
                 default:
+                    PlayStanding();
                     break;
             }
-                
+        }
 
+        private void PlayStanding()
+        {
+            Character.AnimationManager.PlayBase(
+                transition: _AnimationStanding, 
+                canPlayActionFullBody: false
+            );
+            Character.Parameters.Posture.CurrentPosture = 
+                CharacterParametersPosture.CharacterPostureState.Standing;
+        }
 
-            
+        private void PlayCrouching()
+        {
+            Character.AnimationManager.PlayBase(
+                transition: _AnimationCrouching, 
+                canPlayActionFullBody: false
+            );
+            Character.Parameters.Posture.CurrentPosture = 
+                CharacterParametersPosture.CharacterPostureState.Crouching;
+        }
 
-            // if (Character.Parameters.Posture.DesiredPosture == )
-            // {
-                
-            // }
-            
-            // if (Character.Parameters.Posture.IsSitting == true)
-            // {
-            //     Character.AnimationManager.PlayBase(
-            //         transition: _AnimationSitting, 
-            //         canPlayActionFullBody: false
-            //     );
-            //     Character.Parameters.Posture.IsSitting = true;
-            // }
-            // else if (Character.Parameters.Posture.IsCrouching == true)
-            // {
-            //     Character.AnimationManager.PlayBase(
-            //         transition: _AnimationCrouching, 
-            //         canPlayActionFullBody: false
-            //     );
-                
-            //     Character.Parameters.Posture.IsStanding = true;
-            //     Character.Parameters.Posture.IsCrouching = false;
-            //     Character.Parameters.Posture.IsSitting = false;
-            //     Character.Parameters.Posture.IsLayingDown = false;
-            // }
-            // // else if (Character.Parameters.IsLayingDown == true)
-            // // {
-            // //     // Character.Animancer.Play(_AnimationLayingDown);
-            // //     Character.AnimationManager.PlayBase(
-            // //         transition: _AnimationLayingDown, 
-            // //         canPlayActionFullBody: false
-            // //     );
-            // // }
-            // else
-            // {
-            //     // Character.Animancer.Play(_AnimationStanding);
-            //     Character.AnimationManager.PlayBase(
-            //         transition: _AnimationStanding, 
-            //         canPlayActionFullBody: true
-            //     );
-            //     Character.Parameters.Posture.IsStanding = true;
-            //     Character.Parameters.Posture.IsCrouching = false;
-            //     Character.Parameters.Posture.IsSitting = false;
-            //     Character.Parameters.Posture.IsLayingDown = false;
-            // }
+        private void PlaySitting()
+        {
+            Character.AnimationManager.PlayBase(
+                transition: _AnimationSitting, 
+                canPlayActionFullBody: false
+            );
+            Character.Parameters.Posture.CurrentPosture = 
+                CharacterParametersPosture.CharacterPostureState.Sitting;
+        }
+
+        private void PlayLayingDown()
+        {
+            Character.AnimationManager.PlayBase(
+                transition: _AnimationSitting, 
+                canPlayActionFullBody: false
+            );
+            Character.Parameters.Posture.CurrentPosture = 
+                CharacterParametersPosture.CharacterPostureState.LayingDown;
         }
 
         /************************************************************************************************************************/

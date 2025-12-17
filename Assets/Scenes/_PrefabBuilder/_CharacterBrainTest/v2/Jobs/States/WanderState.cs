@@ -7,6 +7,27 @@ using UnityEngine;
 using Animancer;
 using UnityEngine.AI;
 using System.Linq.Expressions;
+using CharacterNPC.v2;
+
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Job state represents when:
+  - The NPC is simply supposed to wander around a pre-designated zone.
+  - Exact points are not apart of this, but an exact destination will be set.
+  - Needs to stop at each point. 
+
+  Extensions:
+  - when at a specific point,
+  they should be able to pause and reconsider what to do next (cooldown re-entry)
+  - They should be able to do more actions?
+
+*/
+/************************************************************************************************************************/
+
 
 namespace CharacterNPCJobs
 {
@@ -40,6 +61,11 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
+        public override JobStateType JobType => 
+            JobStateType.Wander;
+
+        /************************************************************************************************************************/
+
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
@@ -48,6 +74,7 @@ namespace CharacterNPCJobs
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
+            Character.Parameters.Jobs.CurrentJob = JobStateType.Wander;
         }
 
         protected virtual void Update()

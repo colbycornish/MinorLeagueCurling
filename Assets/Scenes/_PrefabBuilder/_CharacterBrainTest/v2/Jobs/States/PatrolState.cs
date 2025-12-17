@@ -9,6 +9,25 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using CharacterNPC.v2;
 
+
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Job state represents when:
+  - The NPC is simply supposed to walk around a pre-designated path.
+  - The NPC should have a stamina associated with it to determine 
+  when a patrol can be stopped 
+
+  Extensions:
+  - when at a patrol point,
+  they should be able to pause and reconsider what to do next (cooldown re-entry)
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPCJobs
 {
 
@@ -41,6 +60,11 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
+        public override JobStateType JobType => 
+            JobStateType.Patrol;
+
+        /************************************************************************************************************************/
+
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
@@ -55,6 +79,7 @@ namespace CharacterNPCJobs
         {
             _OnStart.Invoke();
             Debug.Log("PatrolState OnEnable");
+            Character.Parameters.Jobs.CurrentJob = JobStateType.Patrol;
             Character.NavAgent.isStopped = false;
             Character.Parameters.Status.IsPatrolling = true;
             SetNextPatrolLocation();

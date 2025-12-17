@@ -6,6 +6,22 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is thirsty, and really wants to drink.
+  
+  Extensions:
+  - Should have a drink equiped?
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Drink State")]
@@ -31,7 +47,8 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
 
         public override bool CanExitState => 
-            _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime;
+            _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime &&
+            Character.Parameters.Status.ThirstynessLevel < 0.2;
         // TODO: if character is no longer thirsty and has equipped a drink item,
 
         /************************************************************************************************************************/
@@ -40,7 +57,9 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => Character.Parameters.Posture.IsSitting == true; //Character.Movement.IsGrounded;
+        public override bool CanEnterState => 
+            Character.Parameters.Status.ThirstynessLevel > 0.8 && 
+            Character.Parameters.Posture.CurrentPosture == CharacterParametersPosture.CharacterPostureState.Sitting;
         // TODO: if character has equipped a drink item, can enter drink state
 
         /************************************************************************************************************************/
@@ -53,6 +72,31 @@ namespace CharacterNPC.v2
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
+            PlayDrinkAnimation();
+        }
+
+        
+
+        /************************************************************************************************************************/
+
+        protected virtual void Update()
+        {
+            UpdateParameterLevels();
+        }
+
+        protected virtual void UpdateParameterLevels()
+        {
+            if (Character.StateMachine.CurrentState == this)
+            {
+                Character.Parameters.Status.ThirstynessLevel -= Time.deltaTime * 0.09f;
+                Character.Parameters.Status.ThirstynessLevel = Mathf.Clamp01(
+                    Character.Parameters.Status.ThirstynessLevel
+                );
+            }
+        }
+
+        private void PlayDrinkAnimation()
+        {
             _CurrentAnimation = SelectAnimationToPlay();
             Character.AnimationManager.PlayAction(_CurrentAnimation);
         }
@@ -71,6 +115,7 @@ namespace CharacterNPC.v2
 
             return _Animations[_CurrentAnimationIndex];
         }
+
 
     }
 }

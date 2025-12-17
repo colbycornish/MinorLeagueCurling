@@ -6,6 +6,22 @@ using Animancer.FSM;
 using UnityEngine;
 using Animancer;
 using UnityEngine.AI;
+using CharacterNPC.v2;
+
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Job state represents when:
+  - The NPC has nothing really important to do.
+  
+  Extensions:
+
+*/
+/************************************************************************************************************************/
+
 
 namespace CharacterNPCJobs
 {
@@ -32,6 +48,11 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
+        public override JobStateType JobType => 
+            JobStateType.Idle;
+
+        /************************************************************************************************************************/
+
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
@@ -42,6 +63,7 @@ namespace CharacterNPCJobs
         {
             _OnStart.Invoke();
             Debug.Log("IdleJob OnEnable");
+            Character.Parameters.Jobs.CurrentJob = JobStateType.Idle;
         }
     }
         

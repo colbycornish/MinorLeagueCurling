@@ -6,6 +6,22 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is talking.
+  
+  Extensions:
+  - Should they be listening here too?
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Talk State")]

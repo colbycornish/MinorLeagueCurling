@@ -6,6 +6,23 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC needs to equip a specific item
+  - Will need additional parameters to make this work.
+  
+  Extensions:
+  - Parameter upgrades
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     /// <summary>A <see cref="CharacterState"/> which managed the currently equipped <see cref="CurrentWeapon"/>.</summary>
@@ -18,7 +35,7 @@ namespace CharacterNPC.v2
     /// 
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.StateMachines/EquipState
     /// 
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Weapons - Equip State")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Equip State")]
     // [AnimancerHelpUrl(typeof(EquipState))]
     public class EquipState : CharacterState
     {

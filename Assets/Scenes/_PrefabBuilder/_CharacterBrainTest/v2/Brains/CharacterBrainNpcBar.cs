@@ -132,63 +132,6 @@ namespace CharacterNPC.v2
         private void UpdatePosture()
         {
 
-            // if (_Character.Parameters.Posture.WantsToStand == true && 
-            //     _Character.Parameters.Posture.IsStanding == false
-            // )
-            // {
-                
-            // }
-            // if (_Character.Parameters.Posture.WantsToSit == true && 
-            //     _Character.Parameters.Posture.IsSitting == false
-            // )
-            // {
-                
-            // }
-            // if (_Character.Parameters.Posture.WantsToCrouch == true && 
-            //     _Character.Parameters.Posture.IsCrouching == false
-            // )
-            // {
-                
-            // }
-            // if (_Character.Parameters.Posture.WantsToLayDown == true && 
-            //     _Character.Parameters.Posture.IsLayingDown == false
-            // )
-            // {
-                
-            // }
-          
-            
-            if (_Character.Parameters.Posture.IsStanding == true)
-            {
-                _Character.Parameters.Posture.IsStanding = false;
-                _Character.Parameters.Posture.IsCrouching = true;
-            }
-            else if (_Character.Parameters.Posture.IsCrouching == true)
-            {
-                _Character.Parameters.Posture.IsCrouching = false;
-                _Character.Parameters.Posture.IsSitting = true;
-            }
-            else if (_Character.Parameters.Posture.IsSitting == true)
-            {
-                _Character.Parameters.Posture.IsSitting = false;
-                _Character.Parameters.Posture.IsStanding = true;
-            } else
-            {
-                _Character.Parameters.Posture.IsStanding = true;
-                _Character.Parameters.Posture.IsCrouching = false;
-                _Character.Parameters.Posture.IsSitting = false;
-            }
-
-            if(_Character.StateMachine.CurrentState == _Idle)
-            {
-                _Character.StateMachine.TryResetState(_Idle);
-            }
-            else if(_Character.StateMachine.CurrentState == _Move)
-            {
-                _Character.StateMachine.TryResetState(_Move);
-            }
-
-
         }
     }
 }

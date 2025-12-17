@@ -7,6 +7,25 @@ using UnityEngine;
 using Animancer;
 using TMPro;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC dies.
+  
+  Notes:
+  - For this game, it's more applicable to animals than people.
+  
+  Extensions:
+  - Revival conditions?
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Eat State")]

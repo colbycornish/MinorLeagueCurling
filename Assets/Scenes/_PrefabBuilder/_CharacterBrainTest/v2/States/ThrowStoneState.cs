@@ -6,9 +6,27 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 
+/************************************************************************************************************************/
+/*
+
+BASIC STATE
+(will be included by default on all characters)
+
+  This Animation state represents when:
+  - The NPC is curling
+  - The NPC is a thrower
+  - It's their turn
+  
+  Extensions:
+  - 
+
+*/
+/************************************************************************************************************************/
+
+
 namespace CharacterNPC.v2
 {
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Drink State")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Throw Stone State")]
     // [AnimancerHelpUrl(typeof(IdleState))]
     public class ThrowStoneState : CharacterState
     {
@@ -40,7 +58,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => Character.Parameters.Posture.IsSitting == true; //Character.Movement.IsGrounded;
+        public override bool CanEnterState => true; //Character.Movement.IsGrounded;
         // TODO: if character has equipped a drink item, can enter drink state
 
         /************************************************************************************************************************/

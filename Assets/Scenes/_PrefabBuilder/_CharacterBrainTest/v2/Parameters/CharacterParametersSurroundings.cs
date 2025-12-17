@@ -25,5 +25,8 @@ namespace CharacterNPC.v2
         private bool _IsPlayerInRangeToInteractWith = false;
         public ref bool IsPlayerInRangeToInteractWith => ref _IsPlayerInRangeToInteractWith;
         
+        [SerializeField]
+        private bool _IsEngagedInDialogueWithPlayer = false;
+        public ref bool IsEngagedInDialogueWithPlayer => ref _IsEngagedInDialogueWithPlayer;
     }
 }
