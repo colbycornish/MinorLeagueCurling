@@ -55,6 +55,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Drill;
         public override bool FullMovementControl => true;
 
         /************************************************************************************************************************/
@@ -71,6 +72,7 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _OnStart.Invoke();
             // _CurrentAnimation = SelectAnimationToPlay();
             PlayDancingAnimation();

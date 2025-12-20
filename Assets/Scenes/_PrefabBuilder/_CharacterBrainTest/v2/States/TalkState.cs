@@ -49,6 +49,7 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             Character.AnimationManager.PlayAction(_Animation);
         }
 
@@ -64,6 +65,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Talk;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/

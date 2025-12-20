@@ -76,6 +76,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Pose;
         public override bool FullMovementControl => true;
 
         /************************************************************************************************************************/
@@ -87,6 +88,7 @@ namespace CharacterNPC.v2
         protected virtual void OnEnable()
         {
             _CurrentAnimation = SelectAnimationToPlay();
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             Character.AnimationManager.PlayBase(
                 transition: _CurrentAnimation,
                 canPlayActionFullBody: true

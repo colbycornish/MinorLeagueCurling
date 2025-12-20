@@ -73,6 +73,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.CurlSweep;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
@@ -83,13 +84,13 @@ namespace CharacterNPC.v2
         /// </summary>
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _CurrentAnimation = SelectAnimationToPlay();
             
             Character.AnimationManager.PlayAction(_CurrentAnimation);
             _OnStart.Invoke();
 
             AnimancerState state = Character.Animancer.Layers[1].CurrentState;
-            
             state.Events(this).OnEnd ??= Character.StateMachine.ForceSetDefaultState;
             
         }

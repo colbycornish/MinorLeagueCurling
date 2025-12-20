@@ -55,6 +55,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Cook;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
@@ -71,6 +72,7 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _OnStart.Invoke();
             PlayCookingAnimation();
             // _CurrentAnimation = SelectAnimationToPlay();

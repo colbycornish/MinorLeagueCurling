@@ -56,6 +56,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Idle;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
@@ -69,6 +70,7 @@ namespace CharacterNPC.v2
         {
             Character.Parameters.Movement.IsBaseFromIdleState = true;
             Character.Parameters.Movement.IsBaseFromMoveState = false;
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             PlayBase();
         }
 

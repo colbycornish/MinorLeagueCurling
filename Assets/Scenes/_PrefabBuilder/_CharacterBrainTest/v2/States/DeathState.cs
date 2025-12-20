@@ -59,6 +59,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Die;
         public override bool CanEnterState => Character.Parameters.Status.IsDead == true;
 
         /************************************************************************************************************************/
@@ -70,6 +71,7 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _OnStart.Invoke();
             _CurrentAnimation = SelectAnimationToPlay();
             Character.AnimationManager.PlayAction(_CurrentAnimation);

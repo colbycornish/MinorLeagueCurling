@@ -49,6 +49,7 @@ namespace CharacterNPC.v2
         public override CharacterStatePriority Priority
             => CharacterStatePriority.Medium;
 
+        public override ActionType StateActionType => ActionType.Equip;
         /************************************************************************************************************************/
 
         protected virtual void Awake()
@@ -66,6 +67,7 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             if (CurrentWeapon.UnequipAnimation.IsValid())
             {
                 AnimancerState state = Character.Animancer.Play(CurrentWeapon.UnequipAnimation);
@@ -95,5 +97,7 @@ namespace CharacterNPC.v2
         }
 
         /************************************************************************************************************************/
+
+        
     }
 }

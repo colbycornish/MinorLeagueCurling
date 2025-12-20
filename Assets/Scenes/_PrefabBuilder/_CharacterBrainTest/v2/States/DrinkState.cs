@@ -53,6 +53,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.Drink;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
@@ -72,6 +73,7 @@ namespace CharacterNPC.v2
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             PlayDrinkAnimation();
         }
 

@@ -67,6 +67,9 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        // TODO: The player can perform actions while moving. This should not override the 
+        // existing action state.
+        // public override ActionType StateActionType => ActionType.None;
         public override bool FullMovementControl => true;
 
         /************************************************************************************************************************/

@@ -16,6 +16,8 @@ namespace CharacterNPCJobs
         Drink,
         Eat,
         Follow,
+        Forage,
+        Mailman,
         Patrol,
         Party,
         Talk,

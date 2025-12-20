@@ -73,15 +73,16 @@ namespace CharacterNPCJobs
             _OnStart.Invoke();
             Debug.Log("Cooking OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Cook;
+            Character.Parameters.Jobs.DesiredAction = ActionType.Cook;
         }
 
-        protected virtual void Update()
-        {
-            if (Character.JobStateMachine.CurrentState == this)
-            {
-                // UpdateDestination();
-            }
-        }
+        // protected virtual void Update()
+        // {
+        //     if (Character.JobStateMachine.CurrentState == this)
+        //     {
+        //         // UpdateDestination();
+        //     }
+        // }
     }
         
 }

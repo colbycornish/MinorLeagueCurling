@@ -73,9 +73,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-
-        /************************************************************************************************************************/
-
+        public override ActionType StateActionType => ActionType.Clean;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
@@ -86,6 +84,7 @@ namespace CharacterNPC.v2
         /// </summary>
         protected virtual void OnEnable()
         {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _CurrentAnimation = SelectAnimationToPlay();
             Character.AnimationManager.PlayAction(_CurrentAnimation);
             // Character.Parameters.Movement.ForwardSpeed = 0;

@@ -16,12 +16,11 @@ SPECIFIC STATE
 (will NOT be included by default on all characters)
 
   This Job state represents when:
-  - This NPC is engaged in Cooking activities. 
+  - This NPC is engaged in Dancing activities. 
   
   Extensions:
-  - Needing to fetch more ingrediants
-  - Needing to serve/deliver a meal
-  - 
+  - Factor in Stamina
+
 
 /************************************************************************************************************************/
 
@@ -32,8 +31,6 @@ namespace CharacterNPCJobs
     public class DanceState : JobState
     {
         /************************************************************************************************************************/
-
-        // [SerializeField] private GameObject _CurlingStone;// = new List<Transform>();
 
         [SerializeField] private UnityEvent _OnStart; // See the Read Me.
         [SerializeField] private UnityEvent _OnEnd; // See the Read Me.
@@ -73,15 +70,16 @@ namespace CharacterNPCJobs
             _OnStart.Invoke();
             Debug.Log("Dance OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Dance;
+            Character.Parameters.Jobs.DesiredAction = ActionType.Dance;
         }
 
-        protected virtual void Update()
-        {
-            if (Character.JobStateMachine.CurrentState == this)
-            {
-                // UpdateDestination();
-            }
-        }
+        // protected virtual void Update()
+        // {
+        //     if (Character.JobStateMachine.CurrentState == this)
+        //     {
+        //         // UpdateDestination();
+        //     }
+        // }
     }
         
 }

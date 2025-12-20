@@ -28,5 +28,7 @@ namespace CharacterNPC.v2
         [SerializeField]
         private bool _IsEngagedInDialogueWithPlayer = false;
         public ref bool IsEngagedInDialogueWithPlayer => ref _IsEngagedInDialogueWithPlayer;
+    
+    
     }
 }

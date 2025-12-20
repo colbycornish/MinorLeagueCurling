@@ -11,21 +11,23 @@ using Animancer.Samples;
 using Unity.Entities.UniversalDelegates;
 using static Animancer.Validate;
 using CharacterNPC.v2;
+using System.Collections.Generic;
 
 namespace CharacterNPCJobs
 {
 
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Jobs - Brain")]
-    // [AnimancerHelpUrl(typeof(WeaponsCharacterBrain))]
     public class JobBrain : MonoBehaviour
     {
         /************************************************************************************************************************/
 
         [SerializeField] private CharacterNPC.v2.Character _Character;
-        [Header("Standard Jobs")]
+        [Header("Immediate Interrupt Jobs")]
         [SerializeField] private JobState _Curling;
-        [SerializeField] private JobState _Cooking;
         [SerializeField] private JobState _Dialogue;
+        [SerializeField] private JobState _GetPlayerAttention;
+        
+        [Header("Standard Jobs")]
         [SerializeField] private JobState _Follow;
         [SerializeField] private JobState _Idle;
         [SerializeField] private JobState _Patrol;
@@ -33,8 +35,12 @@ namespace CharacterNPCJobs
 
         [Header("Extra Jobs")]
         [SerializeField] private JobState _Dance;
-
+        [SerializeField] private JobState _Cooking;
         [SerializeField] private JobState _Party;
+        [SerializeField] private JobState _Forage;
+        [SerializeField] private JobState _Mailman;
+
+        [SerializeField] private List<JobState> _ListOfJobStates;
 
         [Header("Settings")]
         [SerializeField]
@@ -49,7 +55,6 @@ namespace CharacterNPCJobs
         {
             Debug.Log("JobBrain Active");
             _InputBuffer = new(_Character.JobStateMachine);
-            // _Character.JobStateMachine.TrySetDefaultState();
         }
 
         /************************************************************************************************************************/
@@ -59,6 +64,7 @@ namespace CharacterNPCJobs
             // UpdateMovement();
             // UpdateActions();
             UpdateJob();
+            UpdateJobManually();
         }
 
         /************************************************************************************************************************/
@@ -77,16 +83,28 @@ namespace CharacterNPCJobs
             )
             {
                 _Character.JobStateMachine.TrySetState(_Dialogue);
+                return;
             }
 
-            // Get a players attention
+            // Curling Interrupt
+            // else if (_Character.Parameters.Surroundings.IsCurling && 
+            //     _Character.JobStateMachine.CurrentState != _Curling
+            // )
+            // {
+            //     _Character.JobStateMachine.TrySetState(_Curling);
+            //      return;
+            // }
+
+            // Get a players attention Interrupt
             // if (_Character.Parameters.Surroundings.IsPlayerInView && 
             //     _Character.Parameters.Surroundings.IsPlayerInRange && 
             //     _Character.JobStateMachine.CurrentState != _GetPlayersAttention
             // )
             // {
             //     _Character.JobStateMachine.TrySetState(_GetPlayersAttention);
+            //     return;
             // }
+            
 
             /************************************************************/
             // Second, let's see if we can exit our current state. If we can,
@@ -104,19 +122,23 @@ namespace CharacterNPCJobs
                 if (_Character.Parameters.Jobs.CurrentJob != _Character.Parameters.Jobs.DesiredJob)
                 {
                     ChangeJobs();
-                }
-            
-                
+                }    
             }
 
             /************************************************************/
             // Lastly, let's examine our base job states, and see if there's
             // something to fallback on.
             /************************************************************/
+            
+        }
+
+        /************************************************************************************************************************/
+
+        private void UpdateJobManually()
+        {
             if (Input.GetKeyDown(KeyCode.P))
             {
                 Debug.Log("JobBrain - Trying to set Patrol State");
-                // _InputBuffer.Buffer(_Patrol, _AttackInputTimeOut);
                 _Character.JobStateMachine.TrySetState(_Patrol);
             }
 
@@ -142,9 +164,9 @@ namespace CharacterNPCJobs
             if (Input.GetKeyDown(KeyCode.I))
             {
                 Debug.Log("JobBrain - Trying to set Idle State");
-                // _InputBuffer.Buffer(_Patrol, _AttackInputTimeOut);
                 _Character.JobStateMachine.TrySetState(_Idle);
             }
+
         }
 
         /************************************************************************************************************************/
@@ -152,6 +174,17 @@ namespace CharacterNPCJobs
         private void ChangeJobs()
         {
             
+            /// use a larger list of states to sort through
+            foreach (JobState jobStateOption in _ListOfJobStates)
+            {
+                if (jobStateOption.JobType == _Character.Parameters.Jobs.DesiredJob)
+                {
+                    _Character.JobStateMachine.TrySetState(jobStateOption);
+                    return;
+                }
+            }
+
+            // fallback to basic states
             switch (_Character.Parameters.Jobs.DesiredJob) {
                 case JobStateType.Cook:
                     _Character.JobStateMachine.TrySetState(_Cooking);
@@ -171,12 +204,14 @@ namespace CharacterNPCJobs
                 case JobStateType.Talk:
                     _Character.JobStateMachine.TrySetState(_Dialogue);
                     break;
+                case JobStateType.Forage:
+                    _Character.JobStateMachine.TrySetState(_Forage);
+                    break;
                 case JobStateType.Wander:
                     _Character.JobStateMachine.TrySetState(_Wander);
                     break;
-
                 case JobStateType.Clean:
-                    // _Character.JobStateMachine.TrySetState(_Eating);
+                    // _Character.JobStateMachine.TrySetState(_Clean);
                     break;
                 case JobStateType.Drink:
                     break;
@@ -188,8 +223,10 @@ namespace CharacterNPCJobs
                     _Character.JobStateMachine.TrySetState(_Idle);
                     break;
             }
+            
         }
 
+        // TODO: fix to look at some relevant parameters
         private void UpdateMostDesiredJob()
         {
 

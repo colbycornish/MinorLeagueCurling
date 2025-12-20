@@ -95,74 +95,19 @@ namespace CharacterNPC.v2
         public void UpdateMovementParameters()
         {
             _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
-            if (!_Character.Parameters.Movement.IsStopped)
-            {
-                _Character.Parameters.Movement.IsMoving = false;
-                _Speed.TargetValue = 0f;
-            }
-            // if the agent is not stopped
-            // and if the character has a destination
-            // and if the character has a movement direction
-            if (!_Character.Parameters.Movement.IsStopped)
-            {
-                
-            }
+            UpdateMovementDirection();
             UpdateDistanceFromDestination();
+            UpdateSpeed();
         }
 
-        public void StopMovement()
-        {
-            _Speed.TargetValue = 0f;
-            _Character.NavAgent.isStopped = true;
-            _Character.Parameters.Movement.IsStopped = true;
-            _Character.Parameters.Movement.IsMoving = false;
-        }
+        
 
         public void UpdateDistanceFromDestination()
         {
-            // Character.NavAgent.SetDestination(_PatrolPoints[_CurrentPatrolIndex].position);
             _Character.Parameters.Movement.DistanceFromDestination = 
                 _Character.NavAgent.remainingDistance;
         }
-        
-        // new
-        public void UpdateSpeed()
-        {
-            _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
-            
-            // if at the destination, has no destination, or has no movement direction, speed is zero
-            if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
-                _Character.Parameters.Movement.CurrentDestination == null || 
-                _Character.Parameters.Movement.DistanceFromDestination < 0.1f
-            )
-            {
-                _Speed.TargetValue = 0f;
-                _Character.Parameters.Movement.IsMoving = false;
 
-                return;
-            } else {
-                
-                _Speed.TargetValue = _Character.Parameters.Movement.WantsToRun
-                    ? _RunParameterValue
-                    : _WalkParameterValue;
-
-                _Character.Parameters.Movement.IsMoving = true;
-            }
-            
-            _Character.NavAgent.speed = WalkSpeed; // Animation walk is 0.5
-            _Character.Parameters.Movement.ForwardSpeed = WalkSpeed; //7f;
-            
-            //     Vector3 movement = _Character.Parameters.MovementDirection;
-
-            //     _Character.Parameters.DesiredForwardSpeed = movement.magnitude * MaxSpeed;
-
-            //     float deltaSpeed = movement != Vector3.zero ? Acceleration : Deceleration;
-            //     _Character.Parameters.ForwardSpeed = Mathf.MoveTowards(
-            //         _Character.Parameters.ForwardSpeed,
-            //         _Character.Parameters.DesiredForwardSpeed,
-            //         deltaSpeed * Time.deltaTime);
-        }
-        
         public void UpdateMovementDirection()
         {
 
@@ -182,6 +127,55 @@ namespace CharacterNPC.v2
                 _Character.Parameters.Movement.MovementDirection = movementDirection;
             }
         }
+        
+        // new
+        public void UpdateSpeed()
+        {
+            _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
+            
+            // if at the destination, has no destination, or has no movement direction, speed is zero
+            if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
+                _Character.Parameters.Movement.CurrentDestination == null || 
+                _Character.Parameters.Movement.DistanceFromDestination < 0.1f ||
+                _Character.Parameters.Movement.IsStopped
+            )
+            {
+                _Speed.TargetValue = 0f;
+                // _Character.Parameters.Movement.IsMoving = false;
+
+                return;
+            } else {
+                
+                _Speed.TargetValue = _Character.Parameters.Movement.WantsToRun
+                    ? _RunParameterValue
+                    : _WalkParameterValue;
+
+                // _Character.Parameters.Movement.IsMoving = true;
+            }
+            
+            _Character.NavAgent.speed = WalkSpeed; // Animation walk is 0.5
+            _Character.Parameters.Movement.ForwardSpeed = WalkSpeed; //7f;
+            
+            //     Vector3 movement = _Character.Parameters.MovementDirection;
+
+            //     _Character.Parameters.DesiredForwardSpeed = movement.magnitude * MaxSpeed;
+
+            //     float deltaSpeed = movement != Vector3.zero ? Acceleration : Deceleration;
+            //     _Character.Parameters.ForwardSpeed = Mathf.MoveTowards(
+            //         _Character.Parameters.ForwardSpeed,
+            //         _Character.Parameters.DesiredForwardSpeed,
+            //         deltaSpeed * Time.deltaTime);
+        }
+
+        // public void StopMovement()
+        // {
+        //     _Speed.TargetValue = 0f;
+        //     _Character.NavAgent.isStopped = true;
+        //     _Character.Parameters.Movement.IsStopped = true;
+        //     _Character.Parameters.Movement.IsMoving = false;
+        // }
+        
+        
 
         public void UpdateMovementDirectionDirectional()
         {

@@ -54,6 +54,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+        public override ActionType StateActionType => ActionType.CurlThrow;
         public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
@@ -71,6 +72,7 @@ namespace CharacterNPC.v2
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _CurrentAnimation = SelectAnimationToPlay();
             Character.AnimationManager.PlayAction(_CurrentAnimation);
         }
