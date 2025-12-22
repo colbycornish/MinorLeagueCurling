@@ -20,6 +20,7 @@ namespace CharacterNPCJobs
         Mailman,
         Patrol,
         Party,
+        ShopKeeper,
         Talk,
         Wander
     }

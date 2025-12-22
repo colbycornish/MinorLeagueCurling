@@ -91,21 +91,13 @@ namespace CharacterNPC.v2
             );
         }
 
-            /************************************************************************************************************************/
+        /************************************************************************************************************************/
         public void UpdateMovementParameters()
         {
             _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
             UpdateMovementDirection();
             UpdateDistanceFromDestination();
             UpdateSpeed();
-        }
-
-        
-
-        public void UpdateDistanceFromDestination()
-        {
-            _Character.Parameters.Movement.DistanceFromDestination = 
-                _Character.NavAgent.remainingDistance;
         }
 
         public void UpdateMovementDirection()
@@ -127,12 +119,16 @@ namespace CharacterNPC.v2
                 _Character.Parameters.Movement.MovementDirection = movementDirection;
             }
         }
+
+        public void UpdateDistanceFromDestination()
+        {
+            _Character.Parameters.Movement.DistanceFromDestination = 
+                _Character.NavAgent.remainingDistance;
+        }
         
         // new
         public void UpdateSpeed()
         {
-            _Character.Parameters.Movement.IsStopped = _Character.NavAgent.isStopped;
-            
             // if at the destination, has no destination, or has no movement direction, speed is zero
             if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
                 _Character.Parameters.Movement.CurrentDestination == null || 
@@ -142,7 +138,6 @@ namespace CharacterNPC.v2
             {
                 _Speed.TargetValue = 0f;
                 // _Character.Parameters.Movement.IsMoving = false;
-
                 return;
             } else {
                 
