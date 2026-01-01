@@ -1186,16 +1186,19 @@ MonoBehaviour:
   _Wave: {fileID: 3119346240701233850}
   _Drink: {fileID: 3587385612518222579}
   _Eat: {fileID: 4360791999403821290}
-  _Move: {fileID: 6938701793926359745}
-  _Equip: {fileID: 452440648082368304}
   _Sweep: {fileID: 5056950983830223334}
+  _Move: {fileID: 6938701793926359745}
   _Cook: {fileID: 5266481669289953566}
   _Dance: {fileID: 7444542725610294575}
-  _AttackInputTimeOut: 0.5
+  _Forage: {fileID: 0}
+  _DeliverMail: {fileID: 0}
+  _ListOfCharacterStates: []
+  _Equip: {fileID: 452440648082368304}
   _Weapons:
   - {fileID: 7222239948912045127}
   - {fileID: 5299993634886256510}
   - {fileID: 3219197293081337861}
+  _AttackInputTimeOut: 0.5
 --- !u!114 &2394085523237355518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,6 +1852,7 @@ GameObject:
   - component: {fileID: 3021468299007006210}
   - component: {fileID: 3904062831161791167}
   - component: {fileID: 201472277300349221}
+  - component: {fileID: 3578566819675162649}
   m_Layer: 0
   m_Name: Jobs
   m_TagString: Untagged
@@ -1885,14 +1889,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.JobBrain
   _Character: {fileID: 8281358627218821516}
   _Curling: {fileID: 7223945971989871787}
-  _Cooking: {fileID: 3021468299007006210}
-  _Dialogue: {fileID: 0}
+  _Dialogue: {fileID: 3578566819675162649}
+  _GetPlayerAttention: {fileID: 0}
   _Follow: {fileID: 0}
   _Idle: {fileID: 37805874765643805}
   _Patrol: {fileID: 4756178129997083094}
   _Wander: {fileID: 0}
   _Dance: {fileID: 3904062831161791167}
+  _Cooking: {fileID: 3021468299007006210}
   _Party: {fileID: 201472277300349221}
+  _Forage: {fileID: 0}
+  _Mailman: {fileID: 0}
+  _ListOfJobStates: []
   _AttackInputTimeOut: 0.5
 --- !u!114 &37805874765643805
 MonoBehaviour:
@@ -2016,6 +2024,25 @@ MonoBehaviour:
   _OnEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3578566819675162649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4530802143608657984}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27ec1cf509db41dc8b732a791ec6a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DialogueState
+  _Character: {fileID: 8281358627218821516}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4582072333556737048
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,7 +2104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4654061256857950633}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 67.240005, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
@@ -2211,12 +2238,16 @@ MonoBehaviour:
       _HungerLevel: 0
       _ThirstynessLevel: 0
       _SleepinessLevel: 0
+      _WantsToTalkLevel: 0
       _WantsToPatrolLevel: 0
       _WantsToWanderLevel: 0
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 12
-      _AvailableJobStates: 0c00000000000000
+      _AvailableJobStates: 0c0000000000000010000000
+      _CurrentAction: 0
+      _DesiredAction: 0
+      _AvailableActions: 000000000b0000000d0000002000000022000000110000001e000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0

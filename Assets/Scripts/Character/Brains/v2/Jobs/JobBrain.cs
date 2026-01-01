@@ -78,13 +78,20 @@ namespace CharacterNPCJobs
             
             /************************************************************/
             // Character is talking to the player
-            if (_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer && 
-                _Character.JobStateMachine.CurrentState != _Dialogue
-            )
-            {
-                _Character.JobStateMachine.TrySetState(_Dialogue);
-                return;
-            }
+            // if (_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer && 
+            //     _Character.Parameters.Jobs.DesiredJob != JobStateType.Talk &&
+            //     _Character.JobStateMachine.CurrentState != _Dialogue
+            // )
+            // {
+            //     _Character.Parameters.Jobs.DesiredJob = JobStateType.Talk;
+            //     // _Character.JobStateMachine.TrySetState(_Dialogue);
+            //     // return;
+            // }
+            // else
+            // {
+            //     UpdateMostDesiredJob();
+            // }
+            UpdateMostDesiredJob();
 
             // Curling Interrupt
             // else if (_Character.Parameters.Surroundings.IsCurling && 
@@ -116,9 +123,9 @@ namespace CharacterNPCJobs
             //
             /************************************************************/
 
-            else if (_Character.JobStateMachine.CurrentState.CanExitState == true)
+            if (_Character.JobStateMachine.CurrentState.CanExitState == true)
             {
-                UpdateMostDesiredJob();
+                
                 if (_Character.Parameters.Jobs.CurrentJob != _Character.Parameters.Jobs.DesiredJob)
                 {
                     ChangeJobs();
@@ -229,6 +236,11 @@ namespace CharacterNPCJobs
         // TODO: fix to look at some relevant parameters
         private void UpdateMostDesiredJob()
         {
+            if (_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
+            {
+                _Character.Parameters.Jobs.DesiredJob = JobStateType.Talk;
+                return;
+            }
 
             foreach (JobStateType jobType in _Character.Parameters.Jobs.AvailableJobStates)
             {

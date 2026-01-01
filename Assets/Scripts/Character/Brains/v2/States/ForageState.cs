@@ -27,9 +27,9 @@ SPECIFIC STATE
 
 namespace CharacterNPC.v2
 {
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Dance State")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Forage State")]
     // [AnimancerHelpUrl(typeof(IdleState))]
-    public class DrillState : CharacterState
+    public class ForageState : CharacterState
     {
         /************************************************************************************************************************/
 
@@ -55,8 +55,8 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        public override ActionType StateActionType => ActionType.Drill;
-        public override bool FullMovementControl => true;
+        public override ActionType StateActionType => ActionType.Forage;
+        public override bool FullMovementControl => false;
 
         /************************************************************************************************************************/
 
@@ -72,10 +72,9 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
-            Character.Parameters.Jobs.CurrentAction = StateActionType;
             _OnStart.Invoke();
-            // _CurrentAnimation = SelectAnimationToPlay();
-            PlayDancingAnimation();
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
+            PlayAnimation();
             
 
             // AnimancerState state = Character.Animancer.Layers[0].CurrentState;
@@ -89,11 +88,11 @@ namespace CharacterNPC.v2
                 _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime + 0.1
             )
             {
-                PlayDancingAnimation();
+                PlayAnimation();
             }
         }
 
-        protected virtual void PlayDancingAnimation()
+        protected virtual void PlayAnimation()
         {
             _CurrentAnimation = SelectAnimationToPlay();
             Character.AnimationManager.PlayBase(

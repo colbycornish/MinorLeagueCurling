@@ -27,15 +27,18 @@ SPECIFIC STATE
 
 namespace CharacterNPC.v2
 {
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Forage State")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Drill State")]
     // [AnimancerHelpUrl(typeof(IdleState))]
-    public class ForageState : CharacterState
+    public class DrillState : CharacterState
     {
         /************************************************************************************************************************/
 
-        [SerializeField] private ClipTransition[] _Animations;
+        // [SerializeField] private ClipTransition[] _Animations;
+        [SerializeField] private ClipTransition _StartAnimation;
+        [SerializeField] private ClipTransition _LoopingAnimation;
+        [SerializeField] private ClipTransition _EndAnimation;
 
-        private int _CurrentAnimationIndex = int.MaxValue;
+        // private int _CurrentAnimationIndex = int.MaxValue;
         private ClipTransition _CurrentAnimation;
 
         [SerializeField] private UnityEvent _OnStart;// See the Read Me.
@@ -55,8 +58,8 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        public override ActionType StateActionType => ActionType.Forage;
-        public override bool FullMovementControl => false;
+        public override ActionType StateActionType => ActionType.Drill;
+        public override bool FullMovementControl => true;
 
         /************************************************************************************************************************/
 
@@ -72,9 +75,9 @@ namespace CharacterNPC.v2
 
         protected virtual void OnEnable()
         {
-            _OnStart.Invoke();
             Character.Parameters.Jobs.CurrentAction = StateActionType;
-            PlayDancingAnimation();
+            _OnStart.Invoke();
+            PlayStartAnimation();
             
 
             // AnimancerState state = Character.Animancer.Layers[0].CurrentState;
@@ -84,37 +87,75 @@ namespace CharacterNPC.v2
 
         protected virtual void Update()
         {
-            if (_CurrentAnimation == null ||
-                _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime + 0.1
+            if (_CurrentAnimation == _StartAnimation &&
+                _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime
             )
             {
-                PlayDancingAnimation();
+                PlayLoopingAnimation();
+            }
+            if (_CurrentAnimation == _LoopingAnimation &&
+                _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime * 5
+            )
+            {
+                PlayEndAnimation();
             }
         }
 
-        protected virtual void PlayDancingAnimation()
+        protected virtual void PlayStartAnimation()
         {
-            _CurrentAnimation = SelectAnimationToPlay();
+            _CurrentAnimation = _StartAnimation;
             Character.AnimationManager.PlayBase(
                 transition: _CurrentAnimation, 
                 canPlayActionFullBody: true
             );
         }
 
-        private ClipTransition SelectAnimationToPlay()
+        protected virtual void PlayLoopingAnimation()
         {
-            if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
-                _Animations[_CurrentAnimationIndex].State.Weight == 0)
-            {
-                _CurrentAnimationIndex = 0;
-            }
-            else
-            {
-                _CurrentAnimationIndex++;
-            }
-
-            return _Animations[_CurrentAnimationIndex];
+            _CurrentAnimation = _LoopingAnimation;
+            Character.AnimationManager.PlayBase(
+                transition: _CurrentAnimation, 
+                canPlayActionFullBody: true
+            );
         }
+
+        protected virtual void PlayEndAnimation()
+        {
+            _CurrentAnimation = _EndAnimation;
+            Character.AnimationManager.PlayBase(
+                transition: _CurrentAnimation, 
+                canPlayActionFullBody: true
+            );
+
+            AnimancerState state = Character.Animancer.Layers[0].CurrentState;
+            state.Events(this).OnEnd ??= Character.StateMachine.ForceSetDefaultState;
+        }
+
+       
 
     }
 }
+
+// protected virtual void PlayAnimation()
+//         {
+//             _CurrentAnimation = SelectAnimationToPlay();
+//             Character.AnimationManager.PlayBase(
+//                 transition: _CurrentAnimation, 
+//                 canPlayActionFullBody: true
+//             );
+//         }
+
+ // private ClipTransition SelectAnimationToPlay()
+        // {
+        //     if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
+        //         _Animations[_CurrentAnimationIndex].State.Weight == 0)
+        //     {
+        //         _CurrentAnimationIndex = 0;
+        //     }
+        //     else
+        //     {
+        //         _CurrentAnimationIndex++;
+        //     }
+
+        //     return _Animations[_CurrentAnimationIndex];
+        // }

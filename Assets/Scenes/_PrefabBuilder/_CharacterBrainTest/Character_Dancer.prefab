@@ -699,6 +699,7 @@ GameObject:
   - component: {fileID: 6657928930024068207}
   - component: {fileID: 9125303173241283664}
   - component: {fileID: 3307460549281173223}
+  - component: {fileID: 4365493029058502818}
   m_Layer: 0
   m_Name: Jobs
   m_TagString: Untagged
@@ -735,14 +736,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.JobBrain
   _Character: {fileID: 2401212605812863888}
   _Curling: {fileID: 6657928930024068207}
-  _Cooking: {fileID: 9125303173241283664}
-  _Dialogue: {fileID: 0}
+  _Dialogue: {fileID: 4365493029058502818}
+  _GetPlayerAttention: {fileID: 0}
   _Follow: {fileID: 0}
   _Idle: {fileID: 1392246880051170744}
   _Patrol: {fileID: 8549141226123685505}
   _Wander: {fileID: 0}
   _Dance: {fileID: 3307460549281173223}
+  _Cooking: {fileID: 9125303173241283664}
   _Party: {fileID: 0}
+  _Forage: {fileID: 0}
+  _Mailman: {fileID: 0}
+  _ListOfJobStates:
+  - {fileID: 3307460549281173223}
+  - {fileID: 9125303173241283664}
   _AttackInputTimeOut: 0.5
 --- !u!114 &1392246880051170744
 MonoBehaviour:
@@ -847,6 +854,25 @@ MonoBehaviour:
   _OnEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4365493029058502818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096789611941197576}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27ec1cf509db41dc8b732a791ec6a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DialogueState
+  _Character: {fileID: 2401212605812863888}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2130503457236269477
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,16 +936,19 @@ MonoBehaviour:
   _Wave: {fileID: 2599937061738580405}
   _Drink: {fileID: 6963579622681626645}
   _Eat: {fileID: 7209665471569536883}
-  _Move: {fileID: 7004302447229287237}
-  _Equip: {fileID: 6133465448524254213}
   _Sweep: {fileID: 6536366025151490275}
+  _Move: {fileID: 7004302447229287237}
   _Cook: {fileID: 7511675426823829779}
   _Dance: {fileID: 4690634364498940650}
-  _AttackInputTimeOut: 0.5
+  _Forage: {fileID: 0}
+  _DeliverMail: {fileID: 0}
+  _ListOfCharacterStates: []
+  _Equip: {fileID: 6133465448524254213}
   _Weapons:
   - {fileID: 7912170811357002799}
   - {fileID: 7564882085371394813}
   - {fileID: 1962731259995446415}
+  _AttackInputTimeOut: 0.5
 --- !u!114 &3664551441408231915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,6 +1144,22 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 2b03cb0fb56e0405d85de199bb3f38f7, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 5753f440daef44333bd8375a20788822, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c56feba77b7414804b1fb0c39508179f, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -3079,7 +3124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6639533956369863155}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 62.9, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
@@ -3213,12 +3258,16 @@ MonoBehaviour:
       _HungerLevel: 0
       _ThirstynessLevel: 0
       _SleepinessLevel: 0
+      _WantsToTalkLevel: 0
       _WantsToPatrolLevel: 0
       _WantsToWanderLevel: 0
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 5
-      _AvailableJobStates: 0500000000000000
+      _AvailableJobStates: 050000001000000000000000
+      _CurrentAction: 0
+      _DesiredAction: 0
+      _AvailableActions: 00000000080000002000000022000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0

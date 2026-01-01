@@ -38,6 +38,8 @@ namespace CharacterNPC.v2
         Sing,
         Sleep,
         Talk,
+        UseComputer,
+        Vomit,
         Wander,
         Wave,
         None,

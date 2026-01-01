@@ -93,15 +93,15 @@ namespace CharacterNPCJobs
             )
             {
                 Debug.Log("Stopping Patrol");
-                // StopPatrolling();
-                Character.Parameters.Status.IsPatrolling = false;
-                Character.NavAgent.ResetPath();
-                Character.NavAgent.isStopped = true;
-                Character.Parameters.Movement.CurrentDestination = null;
+                StopPatrolling();
+                // Character.Parameters.Status.IsPatrolling = false;
+                // Character.NavAgent.ResetPath();
+                // Character.NavAgent.isStopped = true;
+                // Character.Parameters.Movement.CurrentDestination = null;
 
-                // StartForaging();
-                Character.Parameters.Jobs.DesiredAction = ActionType.Forage;
-                _TimeSpentForaging = 0.0f;
+                StartForaging();
+                // Character.Parameters.Jobs.DesiredAction = ActionType.Forage;
+                // _TimeSpentForaging = 0.0f;
 
             } else if (Character.StateMachine.CurrentState.StateActionType == ActionType.Forage && 
                 _TimeSpentForaging < _TimeToSpendForaging
@@ -115,9 +115,9 @@ namespace CharacterNPCJobs
             )
             {
                 
-                // StopForaging();
-                Character.Parameters.Jobs.DesiredAction = ActionType.Idle;
-
+                StopForaging();
+                // Character.Parameters.Jobs.DesiredAction = ActionType.Idle;
+                
                 // StartPatrolling()
                 SetNextPatrolLocation();
             } else if (Character.NavAgent.isStopped == true && 
@@ -138,6 +138,8 @@ namespace CharacterNPCJobs
         {
             _TimeSpentForaging = 0f;
             Character.Parameters.Jobs.DesiredAction = ActionType.Forage;
+
+            
             
         }
 
@@ -145,8 +147,6 @@ namespace CharacterNPCJobs
         {
             Character.Parameters.Jobs.DesiredAction = ActionType.Idle;
         }
-
-
 
         /// <summary>
         /// Patrolling
@@ -168,6 +168,7 @@ namespace CharacterNPCJobs
             Character.NavAgent.ResetPath();
             Character.NavAgent.isStopped = true;
             Character.Parameters.Movement.CurrentDestination = null;
+            
         }
 
 

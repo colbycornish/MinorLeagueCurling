@@ -72,14 +72,21 @@ namespace CharacterNPC.v2
 
         protected virtual void Update()
         {
+            // Equip takes priority
             UpdateEquip();
+
+            // Posture changes can affect the availability of 
+            // any subsequent choices of movement or action
             UpdatePosture();
 
+            // RUN COMMAND
+            // needs to be moved and automated?
             if (Input.GetKeyDown(KeyCode.R))
             {
                 _Character.Parameters.Movement.WantsToRun = !_Character.Parameters.Movement.WantsToRun;
             }
 
+            // Updating movement
             if (_Character.Parameters.Posture.CurrentPosture != 
                     CharacterParametersPosture.CharacterPostureState.Sitting &&
                 (_Character.StateMachine.CurrentState.FullMovementControl == false || 
@@ -89,7 +96,10 @@ namespace CharacterNPC.v2
                 UpdateMovement();    
             }
             
+            // Update the action a character is doing
             UpdateActions();
+
+            // Manual Check here for testing
             UpdateActionsManually();
 
         }
@@ -100,36 +110,6 @@ namespace CharacterNPC.v2
         {
             // _Character.Movement.UpdateMovementDirection();
             _Character.Movement.UpdateMovementParameters();
-
-            // if (_Character.Parameters.Movement.IsBaseFromIdleState && 
-            //     _Character.Parameters.Movement.MovementDirection != Vector3.zero &&
-            //     _Character.Parameters.Movement.IsStopped == false
-            // )
-            // {
-            //         Debug.Log("->> Enter Movement State");
-            //         _Character.StateMachine.TrySetState(_Move);
-            // }
-            // else if (
-            //     _Character.Parameters.Movement.IsBaseFromMoveState
-            // ){
-            //     _Character.Movement.UpdateMovementParameters();
-            //     _Character.Movement.UpdateTurning();
-
-            //     if (_Character.Parameters.Movement.CurrentDestination == null && 
-            //         _Character.Parameters.Movement.MovementDirection == Vector3.zero && 
-            //         _Character.StateMachine.CurrentState != _Idle &&
-            //         _Character.StateMachine.CurrentState != _Character.StateMachine.DefaultState
-            //     )
-            //     {
-                    
-            //         if (_Character.Parameters.Movement.IsBaseFromIdleState == false){
-            //             Debug.Log("->> Enter Idle State");
-            //             _Character.StateMachine.TrySetState(_Idle);
-            //         }
-            //     } 
-
-            // }
-
             
             if (_Character.Parameters.Movement.CurrentDestination == null && 
                 _Character.Parameters.Movement.MovementDirection == Vector3.zero && 
@@ -204,11 +184,32 @@ namespace CharacterNPC.v2
 
         private void UpdateActions()
         {
+            /// NOTE: This may be incorrect, since some actions can be overridden
+            /// only by other actions
             if (!_Character.StateMachine.CurrentState.CanExitState)
             {
                 return;
             }
 
+            // Action Override to Get Player Attention
+            if (_Character.Parameters.Surroundings.IsPlayerInRangeToInteractWith && 
+                !_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
+            {
+                UpdateActionsToGetPlayerAttention();
+                return;
+            }
+
+            // Is talking to player
+            if (_Character.Parameters.Surroundings.IsPlayerInRangeToInteractWith && 
+                _Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
+            {
+                UpdateActionsToTalkToPlayer();
+                return;
+            }
+
+            
+
+            /// Job Based Action Trees
             switch (_Character.JobStateMachine.CurrentState.JobType)
             {
                 case JobStateType.Cook:
@@ -228,6 +229,24 @@ namespace CharacterNPC.v2
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void UpdateActionsToGetPlayerAttention()
+        {
+            if (_Character.StateMachine.CurrentState != _Wave)
+            {
+                Debug.Log("-> Update Action: Wave state");
+                _Character.StateMachine.TrySetState(_Wave);
+            }
+        }
+
+        private void UpdateActionsToTalkToPlayer()
+        {
+            if (_Character.StateMachine.CurrentState != _Talk)
+            {
+                Debug.Log("-> Update Action: Talk state");
+                _Character.StateMachine.TrySetState(_Talk);
             }
         }
 
@@ -282,13 +301,22 @@ namespace CharacterNPC.v2
             }
 
             // if _Drink.CanEnterState
-            if (_Character.Parameters.Status.ThirstynessLevel > 0.8 && 
+            if (_Character.Parameters.Status.ThirstynessLevel > 0.7 && 
                 _Character.StateMachine.CurrentState != _Drink &&
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
                 Debug.Log("-> Update Action: Drink state");
                 _Character.StateMachine.TrySetState(_Drink);
+            }
+
+            if (_Character.Parameters.Status.WantsToTalkLevel > 0.6 && 
+                _Character.StateMachine.CurrentState != _Talk &&
+                _Character.StateMachine.CurrentState.CanExitState
+            )
+            {
+                Debug.Log("-> Update Action: Drink state");
+                _Character.StateMachine.TrySetState(_Talk);
             }
 
         }
@@ -390,3 +418,33 @@ namespace CharacterNPC.v2
     //     _Character.StateMachine.TrySetState(_Move);
     // }
 // }
+
+
+// if (_Character.Parameters.Movement.IsBaseFromIdleState && 
+            //     _Character.Parameters.Movement.MovementDirection != Vector3.zero &&
+            //     _Character.Parameters.Movement.IsStopped == false
+            // )
+            // {
+            //         Debug.Log("->> Enter Movement State");
+            //         _Character.StateMachine.TrySetState(_Move);
+            // }
+            // else if (
+            //     _Character.Parameters.Movement.IsBaseFromMoveState
+            // ){
+            //     _Character.Movement.UpdateMovementParameters();
+            //     _Character.Movement.UpdateTurning();
+
+            //     if (_Character.Parameters.Movement.CurrentDestination == null && 
+            //         _Character.Parameters.Movement.MovementDirection == Vector3.zero && 
+            //         _Character.StateMachine.CurrentState != _Idle &&
+            //         _Character.StateMachine.CurrentState != _Character.StateMachine.DefaultState
+            //     )
+            //     {
+                    
+            //         if (_Character.Parameters.Movement.IsBaseFromIdleState == false){
+            //             Debug.Log("->> Enter Idle State");
+            //             _Character.StateMachine.TrySetState(_Idle);
+            //         }
+            //     } 
+
+            // }

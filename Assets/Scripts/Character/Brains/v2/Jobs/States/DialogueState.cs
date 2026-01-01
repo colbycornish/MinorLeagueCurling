@@ -6,39 +6,36 @@ using Animancer.FSM;
 using UnityEngine;
 using Animancer;
 using UnityEngine.AI;
-using System.Collections.Generic;
 using CharacterNPC.v2;
 
 /************************************************************************************************************************/
 /*
 
-SPECIFIC STATE 
-(will NOT be included by default on all characters)
+BASIC STATE
+(will be included by default on all characters)
 
   This Job state represents when:
-  - This NPC is engaged in Cooking activities. 
+  - the Player Character (PC) is engaged in some kind of dialogue with this NPC, 
+  - the PC is engaged in a dialogue with a group that this NPC is a part of.
   
-  Extensions:
-  - Needing to fetch more ingrediants
-  - Needing to serve/deliver a meal
-  - 
+  Extentions:
+  - NPC is engaged in an NPC to NPC dialgue (background talking). For simplicity,
+  this may need to be a seperate state, since it would involve different entry, exit, 
+  and ongoing parameters
 
 /************************************************************************************************************************/
 
 
 namespace CharacterNPCJobs
 {
-    // [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Drink State")]
-    public class PartyState : JobState
-    {
-        /************************************************************************************************************************/
 
-        // [SerializeField] private GameObject _CurlingStone;// = new List<Transform>();
+    public class DialogueState : JobState
+    {
 
         [SerializeField] private UnityEvent _OnStart; // See the Read Me.
         [SerializeField] private UnityEvent _OnEnd; // See the Read Me.
 
-        public override JobStatePriority Priority => JobStatePriority.Low;
+        public override JobStatePriority Priority => JobStatePriority.High;
 
         /************************************************************************************************************************/
 
@@ -50,14 +47,12 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => Character.Parameters.Jobs.AvailableJobStates.Contains(
-            JobStateType.Party
-        ); 
+        public override bool CanEnterState => true; //_CurlingStone != null; 
 
         /************************************************************************************************************************/
 
         public override JobStateType JobType => 
-            JobStateType.Party;
+            JobStateType.Talk;
 
         /************************************************************************************************************************/
 
@@ -65,41 +60,27 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("Cooking OnDisable");
+            Debug.Log("Dialogue Job OnDisable");
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("Cooking OnEnable");
-            Character.Parameters.Jobs.CurrentJob = JobStateType.Party;
+            Debug.Log("Dialogue Job OnEnable");
+            Character.Parameters.Jobs.CurrentJob = JobStateType.Talk;
+            
         }
 
         protected virtual void Update()
         {
             if (Character.JobStateMachine.CurrentState == this)
             {
-                Character.Parameters.Status.HungerLevel += Time.deltaTime * 0.01f;
-                Character.Parameters.Status.HungerLevel = Mathf.Clamp01(
-                    Character.Parameters.Status.HungerLevel
-                );
-
-                Character.Parameters.Status.ThirstynessLevel += Time.deltaTime * 0.005f;
-                Character.Parameters.Status.ThirstynessLevel = Mathf.Clamp01(
-                    Character.Parameters.Status.ThirstynessLevel
-                );
+                // UpdateDestination();
             }
-
-            // if (Character.StateMachine.CurrentState != _Eat)
-            // {
-                
-            // }
-            // Update sleepiness level over time
-            // if (_Animal.StateMachine.CurrentState != _Sleep)
-            // {
-                
-            // }
         }
+
+        
+        
     }
         
 }

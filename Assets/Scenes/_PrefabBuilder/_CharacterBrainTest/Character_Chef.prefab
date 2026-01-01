@@ -1578,6 +1578,7 @@ GameObject:
   - component: {fileID: 6452528107392686868}
   - component: {fileID: 465578395148210495}
   - component: {fileID: 2075575003597008058}
+  - component: {fileID: 974066983432820038}
   m_Layer: 0
   m_Name: Jobs
   m_TagString: Untagged
@@ -1614,14 +1615,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.JobBrain
   _Character: {fileID: 1393730191164531741}
   _Curling: {fileID: 465578395148210495}
-  _Cooking: {fileID: 2075575003597008058}
-  _Dialogue: {fileID: 0}
+  _Dialogue: {fileID: 974066983432820038}
+  _GetPlayerAttention: {fileID: 0}
   _Follow: {fileID: 0}
   _Idle: {fileID: 9138086852074208842}
   _Patrol: {fileID: 6452528107392686868}
   _Wander: {fileID: 0}
   _Dance: {fileID: 0}
+  _Cooking: {fileID: 2075575003597008058}
   _Party: {fileID: 0}
+  _Forage: {fileID: 0}
+  _Mailman: {fileID: 0}
+  _ListOfJobStates: []
   _AttackInputTimeOut: 0.5
 --- !u!114 &9138086852074208842
 MonoBehaviour:
@@ -1700,6 +1705,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adcdd1c0c3f4d49c1833fd8426391d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CookingState
+  _Character: {fileID: 1393730191164531741}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &974066983432820038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4743118689382778656}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27ec1cf509db41dc8b732a791ec6a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DialogueState
   _Character: {fileID: 1393730191164531741}
   _OnStart:
     m_PersistentCalls:
@@ -2397,16 +2421,19 @@ MonoBehaviour:
   _Wave: {fileID: 7253685525369462998}
   _Drink: {fileID: 7070153816832315621}
   _Eat: {fileID: 3784959743080980702}
-  _Move: {fileID: 844186497180625119}
-  _Equip: {fileID: 1557593597444831275}
   _Sweep: {fileID: 3630342166770883325}
+  _Move: {fileID: 844186497180625119}
   _Cook: {fileID: 7370120961289307184}
   _Dance: {fileID: 5469712134546798040}
-  _AttackInputTimeOut: 0.5
+  _Forage: {fileID: 0}
+  _DeliverMail: {fileID: 0}
+  _ListOfCharacterStates: []
+  _Equip: {fileID: 1557593597444831275}
   _Weapons:
   - {fileID: 6188896237020196953}
   - {fileID: 5267695391758541040}
   - {fileID: 2969896311103323034}
+  _AttackInputTimeOut: 0.5
 --- !u!114 &4372149090914109007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3851,12 +3878,16 @@ MonoBehaviour:
       _HungerLevel: 0
       _ThirstynessLevel: 0
       _SleepinessLevel: 0
+      _WantsToTalkLevel: 0
       _WantsToPatrolLevel: 0
       _WantsToWanderLevel: 0
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 3
-      _AvailableJobStates: 0300000000000000
+      _AvailableJobStates: 030000000000000010000000
+      _CurrentAction: 0
+      _DesiredAction: 0
+      _AvailableActions: 
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0

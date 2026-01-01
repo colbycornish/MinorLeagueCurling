@@ -1,0 +1,162 @@
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
+
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
+
+using Animancer.Units;
+using UnityEngine;
+using Animancer;
+using Animancer.TransitionLibraries;
+
+/************************************************************************************************************************/
+/*
+
+SPECIFIC STATE
+(will NOT be included by default on all characters)
+
+  This Animation state represents when:
+  
+  Extensions:
+  
+
+*/
+/************************************************************************************************************************/
+
+
+namespace CharacterNPC.v2
+{
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Emotion State")]
+    // [AnimancerHelpUrl(typeof(IdleState))]
+    public class EmotionState : CharacterState
+    {
+        /************************************************************************************************************************/
+
+        [SerializeField] private TransitionLibraryAsset _ExcitedAnimations;
+        [SerializeField] private TransitionLibraryAsset _FrustratedAnimations;
+        [SerializeField] private TransitionLibraryAsset _SadAnimations;
+        [SerializeField] private TransitionLibraryAsset _ThisGuyAnimations;
+        [SerializeField] private ClipTransition _StartAnimation;
+        [SerializeField] private ClipTransition _LoopingAnimation;
+        [SerializeField] private ClipTransition _EndAnimation;
+
+        // private int _CurrentAnimationIndex = int.MaxValue;
+        private ClipTransition _CurrentAnimation;
+
+        [SerializeField] private UnityEvent _OnStart;// See the Read Me.
+        [SerializeField] private UnityEvent _OnEnd;// See the Read Me.
+
+        public override CharacterStatePriority Priority => CharacterStatePriority.Low;
+
+        /************************************************************************************************************************/
+
+        public override bool CanInterruptSelf => true;
+
+        /************************************************************************************************************************/
+
+        public override bool CanExitState => 
+            _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime;
+        // TODO: if character is no longer thirsty and has equipped a drink item,
+
+        /************************************************************************************************************************/
+
+        public override ActionType StateActionType => ActionType.Emote;
+        public override bool FullMovementControl => true;
+
+        /************************************************************************************************************************/
+
+        public override bool CanEnterState => true; //Character.Movement.IsGrounded;
+        // TODO: if character has equipped a drink item, can enter drink state
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnDisable()
+        {
+            _OnEnd.Invoke();
+        }
+
+        protected virtual void OnEnable()
+        {
+            Character.Parameters.Jobs.CurrentAction = StateActionType;
+            _OnStart.Invoke();
+            // PlayStartAnimation();
+            
+
+            // AnimancerState state = Character.Animancer.Layers[0].CurrentState;
+            // state.Events(this).OnEnd ??= Character.StateMachine.ForceSetDefaultState;
+            
+        }
+
+        protected virtual void Update()
+        {
+            // if (_CurrentAnimation == _StartAnimation &&
+            //     _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime
+            // )
+            // {
+            //     PlayLoopingAnimation();
+            // }
+            // if (_CurrentAnimation == _LoopingAnimation &&
+            //     _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime * 5
+            // )
+            // {
+            //     PlayEndAnimation();
+            // }
+        }
+
+        protected virtual void PlayExcitedAnimation()
+        {
+            // TransitionAsset list = _ExcitedAnimations.Library.;
+            _CurrentAnimation = _StartAnimation;
+            // Character.AnimationManager.PlayBase(
+            //     transition: _CurrentAnimation, 
+            //     canPlayActionFullBody: true
+            // );
+        }
+
+        protected virtual void PlayFrustratedAnimation()
+        {
+            _CurrentAnimation = _LoopingAnimation;
+            // Character.AnimationManager.PlayBase(
+            //     transition: _CurrentAnimation, 
+            //     canPlayActionFullBody: true
+            // );
+        }
+
+        protected virtual void PlaySadAnimation()
+        {
+            _CurrentAnimation = _EndAnimation;
+            // Character.AnimationManager.PlayBase(
+                // transition: _CurrentAnimation, 
+                // canPlayActionFullBody: true
+            // );
+
+            // AnimancerState state = Character.Animancer.Layers[0].CurrentState;
+            // state.Events(this).OnEnd ??= Character.StateMachine.ForceSetDefaultState;
+        }
+
+       
+
+    }
+}
+
+// protected virtual void PlayAnimation()
+//         {
+//             _CurrentAnimation = SelectAnimationToPlay();
+//             Character.AnimationManager.PlayBase(
+//                 transition: _CurrentAnimation, 
+//                 canPlayActionFullBody: true
+//             );
+//         }
+
+ // private ClipTransition SelectAnimationToPlay()
+        // {
+        //     if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
+        //         _Animations[_CurrentAnimationIndex].State.Weight == 0)
+        //     {
+        //         _CurrentAnimationIndex = 0;
+        //     }
+        //     else
+        //     {
+        //         _CurrentAnimationIndex++;
+        //     }
+
+        //     return _Animations[_CurrentAnimationIndex];
+        // }

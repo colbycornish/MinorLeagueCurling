@@ -78,7 +78,8 @@ namespace PlayerControls.v3
             float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
             cameraHolder.gameObject.GetComponent<CinemachineRotationComposer>();
 
-            Mathf.Clamp(cc_tpf_y_start, cc_tpf_y_start-2, cc_tpf_y_start+2);
+            Mathf.Clamp(cc_tpf_y_cur, cc_tpf_y_start-2, cc_tpf_y_start+2);
+            
             // playerBody.Rotate(Vector3.up * mouseX);
             
         }

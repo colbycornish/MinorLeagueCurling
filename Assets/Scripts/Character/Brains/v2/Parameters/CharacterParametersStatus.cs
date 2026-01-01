@@ -50,6 +50,10 @@ namespace CharacterNPC.v2
         public ref float SleepinessLevel => ref _SleepinessLevel;
 
         [SerializeField]
+        private float _WantsToTalkLevel = 0f;
+        public ref float WantsToTalkLevel => ref _WantsToTalkLevel;
+
+        [SerializeField]
         private float _WantsToPatrolLevel = 0f;
         public ref float WantsToPatrolLevel => ref _WantsToPatrolLevel;
 
