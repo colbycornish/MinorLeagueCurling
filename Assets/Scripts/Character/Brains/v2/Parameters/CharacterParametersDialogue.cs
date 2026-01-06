@@ -13,6 +13,23 @@ namespace CharacterNPC.v2
     public class CharacterParametersDialogue
     {
         
+        public enum CharacterDialogueState
+        {
+            None,
+            Listening, 
+            Shouting,
+            Talking
+        }
+
+        [SerializeField]
+        private CharacterDialogueState _CurrentState;
+        public ref CharacterDialogueState CurrentState => ref _CurrentState;
+
+        [SerializeField]
+        private CharacterDialogueState _DesiredState;
+        public ref CharacterDialogueState DesiredState => ref _DesiredState;
+
+
         // Talking
         [SerializeField]
         private bool _IsTalking = false;

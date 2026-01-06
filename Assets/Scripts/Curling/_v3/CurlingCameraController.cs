@@ -47,6 +47,18 @@ namespace CurlingManagersV3
         public void SwitchToStoneCamera(){
             stoneCamera.GetComponent<CinemachineCamera>().Follow = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone.transform;
         }
+
+        public void SwitchToAnnouncerCamera(){
+            // stoneCamera.GetComponent<CinemachineCamera>().Follow = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone.transform;
+        }
+
+        public void SwitchToTargetZoneCamera(){
+            // stoneCamera.GetComponent<CinemachineCamera>().Follow = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone.transform;
+        }
+
+        public void SwitchToTeamReactionCamera(){
+            // stoneCamera.GetComponent<CinemachineCamera>().Follow = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone.transform;
+        }
         // 
 
         public void Reset(){

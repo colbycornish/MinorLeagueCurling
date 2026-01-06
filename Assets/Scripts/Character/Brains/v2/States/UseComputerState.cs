@@ -26,7 +26,7 @@ namespace CharacterNPC.v2
 {
     /// <summary>A <see cref="CharacterState"/> which plays a series of "attack" animations.</summary>
     /// 
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Vomit State")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Use Computer State")]
     public class UseComputerState : CharacterState
     {
         /************************************************************************************************************************/
