@@ -22,6 +22,7 @@ namespace AnimalNPC
 
         [SerializeField] private Animal _Animal;
         [SerializeField] private AnimalState _Move;
+        [SerializeField] private AnimalState _Idle;
         [SerializeField] private AnimalState _Patrol;
         [SerializeField] private AnimalState _Eat;
         [SerializeField] private AnimalState _Sleep;
@@ -119,46 +120,11 @@ namespace AnimalNPC
         }
 
 
-        private void DecideWhatToDoNext()
-        {
-            Debug.Log("Animal is deciding what to do next...");
-            if (_Animal.Parameters.HungerLevel >= 0.8f)
-            {
-                _InputBuffer.Buffer(_Eat, _InputTimeOut);
-                _Animal.StateMachine.TrySetState(_Eat);
-                Debug.Log("Animal is hungry, switching to Eat State");
-                return;
-            }
-            else if (_Animal.Parameters.SleepinessLevel >= 0.8f)
-            {
-                _InputBuffer.Buffer(_Sleep, _InputTimeOut);
-                _Animal.StateMachine.TrySetState(_Sleep);
-                Debug.Log("Animal is sleepy, switching to Sleep State");
-                return;
-            }
-            else if (
-                // _Animal.Parameters.DistanceFromDestination > 10f ||
-                _Animal.Parameters.CurrentDestination == null
-            )
-            {
-                Debug.Log("SEND THE ANIMAL ON PATROL!");
-                // ReturnToIdleState();
-                _InputBuffer.Buffer(_Patrol, _InputTimeOut);
-                _Animal.StateMachine.TrySetState(_Patrol);
-                //     Debug.Log("Animal is far from destination, switching to Patrol State");
-                return;
-            }
-            else
-            {
 
-                ReturnToIdleState();
-                // _InputBuffer.Buffer(_Patrol, _InputTimeOut);
-                // _Animal.StateMachine.TrySetState(_Patrol);
-                // Debug.Log("Animal is patrolling, switching to Patrol State");
-            }
 
-            return;
-        }
+
+
+
         
         private void ReturnToIdleState()
         {
@@ -175,21 +141,6 @@ namespace AnimalNPC
 
         private void UpdateMovement()// This method is identical to the one in MovingCharacterBrain.
         {
-            
-            // if (_Animal.NavAgent.path.corners.Length > 0) {
-            //     Vector3 direction = (_Animal.NavAgent.path.corners[0] - transform.position).normalized;
-            //     // Use the direction here
-
-            //     if (direction != Vector3.zero)
-            //     {
-            //         // Apply the camera's rotation and set the parameter.
-            //         _Animal.Parameters.MovementDirection = direction;
-
-            //         // Enter the locomotion state if we aren't already in it.
-            //         _Animal.StateMachine.TrySetState(_Move);
-            //     }
-                
-            // }
 
             Vector2 input = SampleInput.WASD;
             if (input != Vector2.zero)
@@ -211,23 +162,6 @@ namespace AnimalNPC
 
             // Indicate whether the character wants to run or not.
             _Animal.Parameters.WantsToRun = SampleInput.LeftShiftHold;
-        }
-
-        /************************************************************************************************************************/
-
-        private void UpdateEquip()
-        {
-            // if (SampleInput.RightMouseDown)
-            // {
-            //     int equippedWeaponIndex = Array.IndexOf(_Weapons, _Animal.Equipment.Weapon);
-
-            //     equippedWeaponIndex++;
-            //     if (equippedWeaponIndex >= _Weapons.Length)
-            //         equippedWeaponIndex = 0;
-
-            //     _Equip.NextWeapon = _Weapons[equippedWeaponIndex];
-            //     _InputBuffer.Buffer(_Equip, _InputTimeOut);
-            // }
         }
 
         /************************************************************************************************************************/
@@ -270,5 +204,47 @@ namespace AnimalNPC
         }
 
         /************************************************************************************************************************/
+
+
+        private void DecideWhatToDoNext()
+        {
+            Debug.Log("Animal is deciding what to do next...");
+            if (_Animal.Parameters.HungerLevel >= 0.8f)
+            {
+                _InputBuffer.Buffer(_Eat, _InputTimeOut);
+                _Animal.StateMachine.TrySetState(_Eat);
+                Debug.Log("Animal is hungry, switching to Eat State");
+                return;
+            }
+            else if (_Animal.Parameters.SleepinessLevel >= 0.8f)
+            {
+                _InputBuffer.Buffer(_Sleep, _InputTimeOut);
+                _Animal.StateMachine.TrySetState(_Sleep);
+                Debug.Log("Animal is sleepy, switching to Sleep State");
+                return;
+            }
+            else if (
+                // _Animal.Parameters.DistanceFromDestination > 10f ||
+                _Animal.Parameters.CurrentDestination == null
+            )
+            {
+                Debug.Log("SEND THE ANIMAL ON PATROL!");
+                // ReturnToIdleState();
+                _InputBuffer.Buffer(_Patrol, _InputTimeOut);
+                _Animal.StateMachine.TrySetState(_Patrol);
+                //     Debug.Log("Animal is far from destination, switching to Patrol State");
+                return;
+            }
+            else
+            {
+
+                ReturnToIdleState();
+                // _InputBuffer.Buffer(_Patrol, _InputTimeOut);
+                // _Animal.StateMachine.TrySetState(_Patrol);
+                // Debug.Log("Animal is patrolling, switching to Patrol State");
+            }
+
+            return;
+        }
     }
 }

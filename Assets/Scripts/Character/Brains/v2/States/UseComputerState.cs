@@ -54,7 +54,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => true; //Character.Movement.IsGrounded;
+        public override bool CanEnterState => Character.Parameters.Posture.CurrentPosture == CharacterParametersPosture.CharacterPostureState.Sitting; //Character.Movement.IsGrounded;
 
         /************************************************************************************************************************/
 

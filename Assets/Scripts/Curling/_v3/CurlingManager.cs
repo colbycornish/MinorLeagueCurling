@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using Curling.Rules;
+
+
 /// <summary>
 /// This is the high-level game manager for a curling game.
 /// It orchestrates the flow of the game, including starting new ends,
@@ -63,7 +66,6 @@ namespace CurlingManagersV3
 
         [Header("Rules & Settings")]
         public CurlingRules rules;
-        // public CurlingRules settings;
 
         [Header("Canvas Objects")]
         public PowerMeterController powerMeterController;

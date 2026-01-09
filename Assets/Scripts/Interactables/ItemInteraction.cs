@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// Teleports the player to a target scene and spawn ID, using a validated dropdown from a spawn database.
+/// Display's information about an item.
 /// </summary>
 public class ItemInteraction : MonoBehaviour
 {

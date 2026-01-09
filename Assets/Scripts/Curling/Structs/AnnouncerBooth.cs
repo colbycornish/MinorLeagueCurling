@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 namespace CurlingObjects
 {
@@ -13,6 +14,9 @@ namespace CurlingObjects
         public Transform spawnLocation2;
         public List<GameObject> lights;
         public List<GameObject> cameras;
+
+        [Header("Cinematics")]
+        public PlayableDirector announcerCommentaryTimeline;
 
         public AnnouncerBooth(
             int id,

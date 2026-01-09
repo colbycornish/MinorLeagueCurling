@@ -57,5 +57,13 @@ namespace AnimalNPC
         }
 
         /************************************************************************************************************************/
+
+        public virtual bool FullMovementControl => true;
+
+        public virtual Vector3 RootMotion => _Animal.Animancer.Animator.deltaPosition;
+
+        /************************************************************************************************************************/
+
+
     }
 }

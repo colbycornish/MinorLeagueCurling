@@ -12,6 +12,11 @@ namespace AnimalNPC
     [Serializable]
     public class AnimalParameters
     {
+
+        [SerializeField]
+        private AnimalParametersMovement _Movement;
+        public AnimalParametersMovement Movement => _Movement;
+
         /************************************************************************************************************************/
 
         [SerializeField]

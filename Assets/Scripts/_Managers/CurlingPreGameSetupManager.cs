@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Curling.Rules;
 
 public class CurlingPreGameSetupManager : MonoBehaviour
 {
@@ -250,9 +251,6 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     public bool IsCurlingRulesSet()
     {
         bool isCurlingRulesCompleted = true;
-        // if (curlingRules != null){
-        //     isCurlingRulesCompleted = true;
-        // } 
         return isCurlingRulesCompleted;
     }
 

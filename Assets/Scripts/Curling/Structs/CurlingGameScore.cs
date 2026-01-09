@@ -1,16 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum CurlingGameScoreType
-{
-    /// Should only be used at the start
-    RollingTotal, // scores cumulate every turn
-    WinnerTakeAll, // after all stones are thrown, only the closest player scores
-    HouseParty, // points are only scored if the stone is within the target zone
-    Skins, // Last thrower must score at least two points to win.
-    HotShot // Trick shot points based on the situation
-}
-
+// public enum CurlingGameScoreType
+// {
+//     /// Should only be used at the start
+//     RollingTotal, // scores cumulate every turn
+//     WinnerTakeAll, // after all stones are thrown, only the closest player scores
+//     HouseParty, // points are only scored if the stone is within the target zone
+//     Skins, // Last thrower must score at least two points to win.
+//     HotShot // Trick shot points based on the situation
+// }
 
 public struct CurlingGameScore
 {

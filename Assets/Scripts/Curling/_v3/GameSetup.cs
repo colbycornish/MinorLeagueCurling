@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using Curling.Rules;
+
 /// <summary>
 /// This is the high-level game manager for a curling game.
 /// It orchestrates the flow of the game, including starting new ends,
@@ -110,37 +112,6 @@ namespace CurlingManagersV3
 
         
 
-
-        // public void SetupScene(){
-            
-        // }
-
-        // public void SetupRules(CurlingRules rulesData){
-            
-        // }
-
-        // public void SetupCourse(CurlingCourseData courseData){
-        //     // CurlingManager._instance.courseData_tmp = courseData;
-
-        // }
-
-        // public void SetupTeams(
-        //     CurlingCourseData courseData,
-        //     CurlingTeam teamHome,
-        //     CurlingTeam teamAway
-        // ){
-        //     // CurlingManager._instance.players.Setup(
-        //     //    teamHome: teamHome,
-        //     //    teamAway: teamAway,
-        //     //    curlingCourse: CurlingManager._instance.courseData_tmp
-        //     // );
-        // }
-
-        // public void SetupStones(){
-            
-        // }
-
-        
 
     }
 }

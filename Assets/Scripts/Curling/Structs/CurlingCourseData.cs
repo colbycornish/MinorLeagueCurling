@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using CurlingObjects;
+using UnityEngine.Playables;
 
 public class CurlingCourseData : MonoBehaviour
 {
@@ -36,6 +37,12 @@ public class CurlingCourseData : MonoBehaviour
 
     [Header("Post Game Spawn")]
     public Transform afterGameSpawnLocation;
+
+    [Header("Cinematics")]
+    public PlayableDirector courseFullTimeline;
+    public PlayableDirector targetZoneTimeline;
+    public PlayableDirector teamHomeIntroTimeline;
+    public PlayableDirector teamAwayIntroTimeline;
 
     private void Awake()
     {

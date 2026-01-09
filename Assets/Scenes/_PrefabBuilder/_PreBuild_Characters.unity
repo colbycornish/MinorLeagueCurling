@@ -5501,6 +5501,7 @@ MonoBehaviour:
   _Dance: {fileID: 197364075}
   _Forage: {fileID: 197364074}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates:
   - {fileID: 197364078}
   - {fileID: 197364075}
@@ -6413,6 +6414,7 @@ MonoBehaviour:
   _Dance: {fileID: 216152380}
   _Forage: {fileID: 216152379}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates:
   - {fileID: 216152381}
   - {fileID: 216152380}
@@ -10742,6 +10744,7 @@ MonoBehaviour:
   _Dance: {fileID: 397221032}
   _Forage: {fileID: 397221031}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates:
   - {fileID: 397221033}
   - {fileID: 397221032}
@@ -51021,7 +51024,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 136.61557, y: 136.61557, z: 136.61557}
+  m_LocalScale: {x: 48.824947, y: 48.824947, z: 48.824947}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1305011322}
@@ -60672,6 +60675,16 @@ MonoBehaviour:
     _CurrentState: {fileID: 0}
     _DefaultState: {fileID: 0}
   _Parameters:
+    _Movement:
+      _MovementDirection: {x: 0, y: 0, z: 0}
+      _CurrentDestination: {fileID: 0}
+      _DistanceFromDestination: 0
+      _WantsToRun: 0
+      _IsStopped: 0
+      _IsMoving: 0
+      _IsIdle: 0
+      _IsBaseFromIdleState: 1
+      _IsBaseFromMoveState: 0
     _MovementDirection: {x: 0, y: 0, z: 0}
     _CurrentDestination: {fileID: 0}
     _DistanceFromDestination: 0
@@ -61251,11 +61264,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0.000000059604645, y: 0, z: 0}
---- !u!1 &1366570057 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6639533956369863155, guid: c4340c88669a041ecbef288669f44072, type: 3}
-  m_PrefabInstance: {fileID: 3104261165707892611}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1375746890
 GameObject:
   m_ObjectHideFlags: 0
@@ -67193,6 +67201,7 @@ MonoBehaviour:
   _Dance: {fileID: 1561701643}
   _Forage: {fileID: 1561701642}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates:
   - {fileID: 1561701644}
   - {fileID: 1561701643}
@@ -75311,7 +75320,7 @@ Transform:
   m_GameObject: {fileID: 1702002797}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0000000037252899, y: -0, z: -0.0000000074505797, w: 1}
-  m_LocalPosition: {x: 71.37071, y: 10.923861, z: 28.174637}
+  m_LocalPosition: {x: 509.12918, y: 19.948689, z: 374.03552}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -79957,6 +79966,7 @@ MonoBehaviour:
   _Dance: {fileID: 1810267408}
   _Forage: {fileID: 1810267407}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates:
   - {fileID: 1810267409}
   - {fileID: 1810267408}
@@ -100163,6 +100173,7 @@ MonoBehaviour:
   _Dance: {fileID: 2092663953}
   _Forage: {fileID: 2092663952}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates:
   - {fileID: 2092663954}
   - {fileID: 2092663953}
@@ -110981,35 +110992,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2401212605812863888, guid: c4340c88669a041ecbef288669f44072, type: 3}
   m_PrefabInstance: {fileID: 3104261165707892611}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366570057}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21241965fef464f078f1af3170c282c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.Character
---- !u!136 &1638761323984892964
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366570057}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 4.68
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1647951692280378912
 Transform:
   m_ObjectHideFlags: 0
@@ -115053,10 +115041,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6639533956369863155, guid: c4340c88669a041ecbef288669f44072, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1638761323984892964}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4340c88669a041ecbef288669f44072, type: 3}
 --- !u!4 &3105869690506907377
 Transform:
@@ -118572,6 +118557,7 @@ MonoBehaviour:
   _Dance: {fileID: 0}
   _Forage: {fileID: 0}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates: []
   _Equip: {fileID: 0}
   _Weapons: []
@@ -129097,6 +129083,7 @@ MonoBehaviour:
   _Dance: {fileID: 8798961859179661634}
   _Forage: {fileID: 0}
   _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
   _ListOfCharacterStates: []
   _Equip: {fileID: 2589272489188403704}
   _Weapons:

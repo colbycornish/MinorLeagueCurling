@@ -47,6 +47,7 @@ namespace CharacterNPC.v2
         [SerializeField] private CharacterState _Dance;
         [SerializeField] private CharacterState _Forage;
         [SerializeField] private CharacterState _DeliverMail;
+        [SerializeField] private CharacterState _UseComputer;
         [SerializeField] private List<CharacterState> _ListOfCharacterStates;
 
 
@@ -227,6 +228,12 @@ namespace CharacterNPC.v2
                 case JobStateType.Mailman:
                     UpdateActionsForMailmanJob();
                     break;
+                // case JobStateType.Shopkeeper:
+                    // UpdateActionsForMailmanJob();
+                    // break;
+                // case JobStateType.Hospital:
+                    // UpdateActionsForMailmanJob();
+                    // break;
                 default:
                     break;
             }
@@ -263,6 +270,14 @@ namespace CharacterNPC.v2
             if (_Character.StateMachine.CurrentState != _Dance){
                 Debug.Log("-> Update Action: Dance state");
                 _Character.StateMachine.TrySetState(_Dance);
+            }
+        }
+
+        private void UpdateActionsForDeskJob()
+        {
+            if (_Character.StateMachine.CurrentState.StateActionType != ActionType.UseComputer){
+                Debug.Log("-> Update Action: Use Computer state");
+                _Character.StateMachine.TrySetState(_UseComputer);
             }
         }
 
@@ -315,7 +330,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
-                Debug.Log("-> Update Action: Drink state");
+                Debug.Log("-> Update Action: Talk state");
                 _Character.StateMachine.TrySetState(_Talk);
             }
 

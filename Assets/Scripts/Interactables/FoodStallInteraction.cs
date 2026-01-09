@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Teleports the player to a target scene and spawn ID, using a validated dropdown from a spawn database.
+/// Triggers an interaction with the shop keeper. 
 /// </summary>
 public class FoodStallInteraction : MonoBehaviour
 {

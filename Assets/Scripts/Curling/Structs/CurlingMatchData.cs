@@ -1,34 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-/*
-Match Structure
-    - String: Match ID
-    - String: Match Name
-    - String: Match Type (e.g., "Friendly", "Tournament")
-    - List<GameObject>: Teams
-    - Match_Settings
-        - Int: Max Games
-        - Int: Max Rounds Per Game
-        - Int: Max Turns Per Round
-        - bool: isPracticeMode
-        - bool: isTimedMode
-        - float: timeLimit (if timed mode)    
-    - Match Score
-        - Int: Team 1 Total Score
-        - Int: Team 2 Total Score
-        - bool: isFinal
-        - bool: hasStarted
-        - bool: hasEnded
-        - bool: hasPaused
-        - List<GameObject>: Game Results
-            - Game Result Structure
-                - String: Game ID
-                - Int: Team 1 Score
-                - Int: Team 2 Score
-                - bool: isFinal
-
-*/
 
 public struct CurlingMatchData {
     //Variable declaration
@@ -121,7 +93,9 @@ public struct CurlingMatchData {
     }
 
     public void AddGame(CurlingGameData game) {
+
         CurlingGameData newGame = new CurlingGameData();
+
         newGame.SetGameData(
             gameId: "test_game_001",
             hasStarted: false,
@@ -130,8 +104,8 @@ public struct CurlingMatchData {
             roundCurrent: 1,
             turnCurrent: 0
         );
-
         games.Add(game);
+        
     }
 
     public void ResetMatch() {

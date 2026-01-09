@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 
 
 /// <summary>
-/// Teleports the player to a target scene and spawn ID, using a validated dropdown from a spawn database.
+/// Triggers the beginning of a curling encounter!
 /// </summary>
 public class CurlingEncounter : MonoBehaviour
 {
