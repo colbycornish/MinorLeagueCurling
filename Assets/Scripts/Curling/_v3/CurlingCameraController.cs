@@ -3,9 +3,6 @@ using UnityEngine;
 using Unity.Cinemachine;
 
 /// <summary>
-/// This is the high-level game manager for a curling game.
-/// It orchestrates the flow of the game, including starting new ends,
-/// managing player turns, and handling the end of the game.
 /// </summary>
 
 namespace CurlingManagersV3
@@ -45,7 +42,8 @@ namespace CurlingManagersV3
         }
 
         public void SwitchToStoneCamera(){
-            stoneCamera.GetComponent<CinemachineCamera>().Follow = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone.transform;
+            stoneCamera.GetComponent<CinemachineCamera>().Follow = 
+                CurlingManager._instance.Parameters.Stones.currentStone.transform;
         }
 
         public void SwitchToAnnouncerCamera(){

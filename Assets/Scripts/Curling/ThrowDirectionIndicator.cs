@@ -54,7 +54,7 @@ public class ThrowDirectionIndicator : MonoBehaviour
             // }
             if (CurlingManagersV3.CurlingManager._instance != null){
                 SetCurlAmount(
-                    CurlingManagersV3.CurlingManager._instance.aiming.curlAmountInitial
+                    CurlingManagersV3.CurlingManager._instance.Parameters.Aiming.CurlAmountInitial
                 );
                 Spin();
             }

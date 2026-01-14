@@ -3,42 +3,14 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// This is the high-level game manager for a curling game.
-/// It orchestrates the flow of the game, including starting new ends,
-/// managing player turns, and handling the end of the game.
 /// </summary>
 
 namespace CurlingManagersV3
 {
 
     public class Players : MonoBehaviour
-    {
-        // public int totalStonesPerEnd = 10;
-        // public List<CurlingTeamData> teams = new List<CurlingTeamData>();
-        [Header("Teams and Players")]
-        public List<CurlingTeam> teams = new List<CurlingTeam>();
-        public CurlingTeam teamHome;
-        public CurlingTeam teamAway;
-
-        [Header("Placement Locations")]
-        public Transform throwerStartLocation;
-        public Transform sweeperLStartLocation;
-        public Transform sweeperRStartLocation;
-        public List<Transform> idleLocationsTeamHome;
-        public List<Transform> idleLocationsTeamAway;
-
-        [Header("Team Members")]
-        private GameObject teamHomeThrower;
-        private GameObject teamHomeSweeperL;
-        private GameObject teamHomeSweeperR;
-        private GameObject teamAwayThrower;
-        private GameObject teamAwaySweeperL;
-        private GameObject teamAwaySweeperR;
-
-        [Header("Current Team")]
-        public CurlingTeam currentTeam;
+    {        
         public event Action<List<CurlingTeam>> OnTeamDataChanged;
-
 
         /// <summary>
         /// Setup
@@ -49,7 +21,6 @@ namespace CurlingManagersV3
             CurlingTeam teamAway
         )
         {
-            SetupLocations(curlingCourse);
             SetupTeams(teamHome, teamAway);
             SetupPlayers(teamHome, teamAway, curlingCourse);
 
@@ -59,29 +30,21 @@ namespace CurlingManagersV3
             // );
         }
 
-        public void SetupLocations(CurlingCourseData curlingCourse)
-        {
-            idleLocationsTeamHome = curlingCourse.idleLocationsTeamHome;
-            idleLocationsTeamAway = curlingCourse.idleLocationsTeamAway;
-            //
-            throwerStartLocation = curlingCourse.throwerStartLocation;
-            sweeperLStartLocation = curlingCourse.sweeperLStartLocation;
-            sweeperRStartLocation = curlingCourse.sweeperRStartLocation;
-        }
-
         // assigns the teams.
         public void SetupTeams(
             CurlingTeam teamHome, 
             CurlingTeam teamAway
         )
         {
-            teams.Clear();
-            teams.Add(teamHome);
-            teams.Add(teamAway);
-            this.teamHome = teamHome;
-            this.teamAway = teamAway;
-            Debug.Log($"Teams set: {teamHome.teamName} vs {teamAway.teamName}");
-            OnTeamDataChanged?.Invoke(teams);
+            CurlingManager._instance.Parameters.Teams.CurlingTeams.Clear();
+            CurlingManager._instance.Parameters.Teams.CurlingTeams.Add(teamHome);
+            CurlingManager._instance.Parameters.Teams.CurlingTeams.Add(teamAway);
+
+            CurlingManager._instance.Parameters.Teams.teamHome = teamHome;
+            CurlingManager._instance.Parameters.Teams.teamAway = teamAway;
+
+            OnTeamDataChanged?.Invoke(CurlingManager._instance.Parameters.Teams.CurlingTeams);
+
         }
 
         
@@ -92,21 +55,46 @@ namespace CurlingManagersV3
             CurlingCourseData curlingCourse
         )
         {
-            teamHome.thrower = Instantiate(teamHome.thrower, idleLocationsTeamHome[0].position, Quaternion.identity);
-            teamHome.sweeperLeft = Instantiate(teamHome.sweeperLeft, idleLocationsTeamHome[1].position, Quaternion.identity);
-            teamHome.sweeperRight = Instantiate(teamHome.sweeperRight, idleLocationsTeamHome[2].position, Quaternion.identity);
-            
-            /// away team
-            teamAway.thrower = Instantiate(teamAway.thrower, idleLocationsTeamAway[0].position, Quaternion.identity);
-            teamAway.sweeperLeft = Instantiate(teamAway.sweeperLeft, idleLocationsTeamAway[1].position, Quaternion.identity);
-            teamAway.sweeperRight = Instantiate(teamAway.sweeperRight, idleLocationsTeamAway[2].position, Quaternion.identity);
-            
-            PutTeamOnSidelines(
-                team: teamHome, 
-                idleLocations: idleLocationsTeamHome
+            CurlingManager._instance.Parameters.Teams.teamHome.thrower = Instantiate(
+                CurlingManager._instance.Parameters.Teams.teamHome.thrower, 
+                CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[0].position, 
+                Quaternion.identity
             );
 
-            PutTeamOnIce(team: teamAway);            
+            CurlingManager._instance.Parameters.Teams.teamHome.sweeperLeft = Instantiate(
+                CurlingManager._instance.Parameters.Teams.teamHome.sweeperLeft, 
+                CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[1].position, 
+                Quaternion.identity
+            );
+            CurlingManager._instance.Parameters.Teams.teamHome.sweeperRight = Instantiate(
+                CurlingManager._instance.Parameters.Teams.teamHome.sweeperRight, 
+                CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[2].position, 
+                Quaternion.identity
+            );
+            
+            /// away team
+            CurlingManager._instance.Parameters.Teams.teamAway.thrower = Instantiate(
+                CurlingManager._instance.Parameters.Teams.teamAway.thrower, 
+                CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[0].position, 
+                Quaternion.identity
+            );
+            CurlingManager._instance.Parameters.Teams.teamAway.sweeperLeft = Instantiate(
+                CurlingManager._instance.Parameters.Teams.teamAway.sweeperLeft, 
+                CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[1].position, 
+                Quaternion.identity
+            );
+            CurlingManager._instance.Parameters.Teams.teamAway.sweeperRight = Instantiate(
+                CurlingManager._instance.Parameters.Teams.teamAway.sweeperRight, 
+                CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[2].position, 
+                Quaternion.identity
+            );
+            
+            PutTeamOnSidelines(
+                team: CurlingManager._instance.Parameters.Teams.teamAway, 
+                idleLocations: CurlingManager._instance.Parameters.Course.idleLocationsTeamAway
+            );
+
+            PutTeamOnIce(team: CurlingManager._instance.Parameters.Teams.teamHome);            
         }
 
 
@@ -115,19 +103,15 @@ namespace CurlingManagersV3
         /// </summary>
         public void UpdateCurrentTeam()
         {
-            if (CurlingManager._instance.turnManager.IsItTheHomeTeamsTurn()){
-                Debug.Log("-> Home team is now the current team.");
-                currentTeam = teamHome;
-            }
-            else {
-                Debug.Log("-> Away team is now the current team.");
-                currentTeam = teamAway;
-            }
+            CurlingManager._instance.Parameters.Teams.currentTeam = 
+                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? CurlingManager._instance.Parameters.Teams.teamHome
+                    : CurlingManager._instance.Parameters.Teams.teamAway;
         }
 
         public CurlingTeam GetCurrentTeam()
         {
-            return currentTeam;
+            return CurlingManager._instance.Parameters.Teams.currentTeam;
         }
 
         
@@ -141,37 +125,23 @@ namespace CurlingManagersV3
 
         public void RepositionCharacters()
         {
-            Debug.Log("Players: RepositionCharacters()");
-            if (CurlingManager._instance.turnManager.IsItTheHomeTeamsTurn()){
-                Debug.Log("Players -> Home team to Ice");
-                PutTeamOnIce(team: teamHome);
-                Debug.Log("Players -> Away team to Sidelines");
-                PutTeamOnSidelines(
-                    team: teamAway, 
-                    idleLocations: idleLocationsTeamAway
-                );
-            }
-            else {
-                Debug.Log("Players -> Away team to Ice");
-                PutTeamOnIce(team: teamAway);
-                Debug.Log("Players -> Home team to Sidelines");
-                PutTeamOnSidelines(
-                    team: teamHome, 
-                    idleLocations: idleLocationsTeamHome
-                );
-            }
             
-            /// if turn == Home
-            /// - Move Away players to bench
-            /// - deactivate Away players
-            /// - Move Home players into position
-            /// - activate Home players
-            /// 
-            /// if turn == Away
-            /// - Move Home players to bench
-            /// - deactivate Home players
-            /// - Move Away players into position
-            /// - activate Away players
+            PutTeamOnIce(
+                team: CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home 
+                    ? CurlingManager._instance.Parameters.Teams.teamHome
+                    : CurlingManager._instance.Parameters.Teams.teamAway
+            );
+
+            PutTeamOnSidelines(
+                team: CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home 
+                    ? CurlingManager._instance.Parameters.Teams.teamAway
+                    : CurlingManager._instance.Parameters.Teams.teamHome,
+                idleLocations: CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home 
+                    ? CurlingManager._instance.Parameters.Course.idleLocationsTeamAway
+                    : CurlingManager._instance.Parameters.Course.idleLocationsTeamHome
+            );
+
+
         }
 
         public void PutTeamOnSidelines(
@@ -182,21 +152,22 @@ namespace CurlingManagersV3
             team.sweeperLeft.transform.position = idleLocations[1].position;
             team.sweeperRight.transform.position = idleLocations[2].position;
 
-
             return;
         }
 
         public void PutTeamOnIce(CurlingTeam team){
-            team.thrower.transform.position = throwerStartLocation.position;
-            team.sweeperLeft.transform.position = sweeperLStartLocation.position;
-            team.sweeperRight.transform.position = sweeperRStartLocation.position;
+            team.thrower.transform.position = CurlingManager._instance.Parameters.Course.throwerStartLocation.position;
+            team.sweeperLeft.transform.position = CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position;
+            team.sweeperRight.transform.position = CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position;
 
             // Make Right Sweeper look at Left Sweeper
             team.sweeperRight.transform.LookAt(team.sweeperLeft.transform.position);
             // Make Left Sweeper look at Right Sweeper
             team.sweeperLeft.transform.LookAt(team.sweeperRight.transform.position);
             // Make Thrower look at Target Zone
-            team.thrower.transform.LookAt(CurlingManager._instance.scoring.targetZone.transform.position);
+            team.thrower.transform.LookAt(
+                CurlingManager._instance.Parameters.Course.targetZone.transform.position
+            );
             return;
         }
 
@@ -217,18 +188,20 @@ namespace CurlingManagersV3
         // Ready?
         public bool IsReady()
         {
-            return teams.Count == 2;
+            return CurlingManager._instance.Parameters.Teams.CurlingTeams.Count == 2;
         }
 
         // Reset
         public void Reset()
         {
-            teams.Clear();
-            idleLocationsTeamHome.Clear();
-            idleLocationsTeamAway.Clear();
-            throwerStartLocation = null;
-            sweeperLStartLocation = null;
-            sweeperRStartLocation = null;
+            CurlingManager._instance.Parameters.Teams.CurlingTeams.Clear();
+            CurlingManager._instance.Parameters.Teams.teamHome = null;
+            CurlingManager._instance.Parameters.Teams.teamAway = null;
+            CurlingManager._instance.Parameters.Course.idleLocationsTeamHome.Clear();
+            CurlingManager._instance.Parameters.Course.idleLocationsTeamAway.Clear();
+            CurlingManager._instance.Parameters.Course.throwerStartLocation = null;
+            CurlingManager._instance.Parameters.Course.sweeperLStartLocation = null;
+            CurlingManager._instance.Parameters.Course.sweeperRStartLocation = null;
         }
     }
 }

@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+
 /// <summary>
-/// This is the high-level game manager for a curling game.
-/// It orchestrates the flow of the game, including starting new ends,
-/// managing player turns, and handling the end of the game.
 /// </summary>
 
 namespace CurlingManagersV3
@@ -67,7 +65,7 @@ namespace CurlingManagersV3
             PrepExitLocation();
             CurlingRules rules = new CurlingRules();
             rules.SetDefaultRules();
-            CurlingManager._instance.setup.SetupAll(
+            CurlingManager._instance.Setup.SetupAll(
                 rulesData: rules,
                 courseData: courseData,
                 teamHome: teamHome,
@@ -77,6 +75,7 @@ namespace CurlingManagersV3
                 exitSpawnId: exitSpawnId
             );
 
+            
             // CurlingManager._instance.InitSetupFromDemo(
             //     courseData,
             //     teamHome,
@@ -101,14 +100,14 @@ namespace CurlingManagersV3
         {
             gameData.Reset();
             gameData.settings.SetSettings(
-                5, // roundsPerGame
-                1, // turnsPerTeamPerRound
-                5, // maxStonesPerTeam
-                false, // isPracticeMode
-                false, // isTimedMode
-                0.0f, // timeLimit
-                false, // enableObstaclePlacementByPlayer
-                false // enableObstaclePlacementByEnvironment
+                roundsPerGame: 5, // roundsPerGame
+                turnsPerTeamPerRound: 1, // turnsPerTeamPerRound
+                maxStonesPerTeam: 5, // maxStonesPerTeam
+                isPracticeMode: false, // isPracticeMode
+                isTimedMode: false, // isTimedMode
+                timeLimit: 0.0f, // timeLimit
+                enableObstaclePlacementByPlayer: false, // enableObstaclePlacementByPlayer
+                enableObstaclePlacementByEnvironment: false // enableObstaclePlacementByEnvironment
             );
         }
 

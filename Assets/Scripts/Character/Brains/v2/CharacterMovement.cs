@@ -8,7 +8,6 @@ using Animancer;
 using UnityEngine.AI;
 using Animancer.Units;
 using static Animancer.Validate;
-using Unity.VisualScripting;
 
 namespace CharacterNPC.v2
 {

@@ -50,7 +50,11 @@ public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
         CurlingManagersV3.CurlingManager cm = CurlingManagersV3.CurlingManager._instance;
         if(cm == null) return;
 
-        List<CurlingStone> stones = cm.stoneManager.GetStonesForCurrentTeam();
+        List<CurlingStone> stones = cm.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home 
+            ? cm.Parameters.Stones.stonesTeamHome
+            : cm.Parameters.Stones.stonesTeamAway;
+        
+        
         if(stones == null) return;
 
         listOfCurlingStones.ClearList();

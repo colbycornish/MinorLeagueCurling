@@ -25,16 +25,16 @@ namespace CurlingManagersV3
         private void Update()
         {
             if (!isInputEnabled) return;
-            CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
+            CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
 
             if (Input.GetKeyDown(KeyCode.N))
             {
-                CurlingManagersV3.MatchPhaseManager._instance.TestNextPhase();
+                MatchPhaseManager._instance.TestNextPhase();
             }
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                CurlingManagersV3.CurlingManager._instance.gameEndManager.ExitCurlingGame();
+                CurlingManager._instance.gameEndManager.ExitCurlingGame();
             }
 
             switch (currentPhase)
@@ -83,7 +83,6 @@ namespace CurlingManagersV3
                 case CurlingMatchPhase.FinalResults:
                     HandleFinalResultsInput();
                     break;
-
                 case CurlingMatchPhase.ExitCurlingGame:
                     HandleExitCurlingGameInput();
                     break;
@@ -97,7 +96,7 @@ namespace CurlingManagersV3
         {
             if (Input.GetMouseButtonDown(0))
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.TeamSplash);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.TeamSplash);
             }
         }
 
@@ -105,7 +104,7 @@ namespace CurlingManagersV3
         {
             if (Input.GetMouseButtonDown(0))
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
             }
         }
 
@@ -113,8 +112,7 @@ namespace CurlingManagersV3
         {
             if (Input.GetMouseButtonDown(0))
             {
-                
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
             }
         }
 
@@ -122,7 +120,7 @@ namespace CurlingManagersV3
         {
             if (Input.GetMouseButtonDown(0))
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
             }
         }
 
@@ -130,9 +128,8 @@ namespace CurlingManagersV3
         {
             if (Input.GetKeyDown(confirmKey))
             {
-                // CurlingManagersV3.MatchPhaseManager._instance.OnStoneSelectionConfirmed();
-                CurlingManagersV3.CurlingManager._instance.OnStoneSelectionConfirmed();
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
+                CurlingManager._instance.OnStoneSelectionConfirmed();
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
             }
         }
 
@@ -142,29 +139,29 @@ namespace CurlingManagersV3
             /// Add Left Curl To Throw
             if (Input.GetKeyDown(leftCurlKey))
             {
-                CurlingManagersV3.CurlingManager._instance.aiming.IncreaseLeftCurlAmount();
+                CurlingManager._instance.Aiming.IncreaseLeftCurlAmount();
             }
 
             /// Add Right Curl To Throw
             if (Input.GetKeyDown(rightCurlKey))
             {
-                CurlingManagersV3.CurlingManager._instance.aiming.IncreaseRightCurlAmount();
+                CurlingManager._instance.Aiming.IncreaseRightCurlAmount();
             }
 
             /// Move Aiming Direction Left/Right
             if (Input.GetAxis("Horizontal") != 0f)
             {
                 float input = Input.GetAxis("Horizontal");
-                CurlingManagersV3.CurlingManager._instance.aiming.ChangeDirection(
+                
+                CurlingManager._instance.Aiming.ChangeDirection(
                     input: input
                 );
             }
 
             if (Input.GetKeyDown(confirmKey))
             {
-                CurlingManagersV3.CurlingManager._instance.OnAimingPhaseComplete();
+                CurlingManager._instance.OnAimingPhaseComplete();
             }
-            // Handle inputs specific to the Aim Controls phase
         }
 
         // ❌ Handled by Stone Throw Controller
@@ -174,23 +171,21 @@ namespace CurlingManagersV3
             // Increase Power
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                CurlingManagersV3.CurlingManager._instance.throwing.IncreaseThrowPower();
+                CurlingManager._instance.Throwing.IncreaseThrowPower();
             }
 
             // Decrease Power
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                CurlingManagersV3.CurlingManager._instance.throwing.DecreaseThrowPower();
+                CurlingManager._instance.Throwing.DecreaseThrowPower();
             }
 
             // Confirm Power Selection and Launch Stone
             if (Input.GetKeyDown(confirmKey))
             {
-                CurlingManagersV3.CurlingManager._instance.OnPowerPhaseSelection();
-                CurlingManagersV3.CurlingManager._instance.OnPowerPhaseComplete();
-                // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+                CurlingManager._instance.OnPowerPhaseSelection();
+                CurlingManager._instance.OnPowerPhaseComplete();
             }
-            // Handle inputs specific to the Power Meter phase
         }
 
         // ❌ Handled by Stone Sweep Controller
@@ -206,73 +201,68 @@ namespace CurlingManagersV3
 
         private void HandleCurlingTurnEndInput()
         {
-            // Debug.Log("Handling Curling Sweeper Phase");
-            bool stoneIsMoving = CurlingManagersV3.CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
-            bool stoneIsMovingForward = CurlingManagersV3.CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
+            bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
+            bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
             if (!stoneIsMoving || !stoneIsMovingForward)
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.PostThrowResult);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.PostThrowResult);
             }
-            // Handle inputs specific to the Curling Controls phase
         }
 
         private void HandleCurlingNoSweepZonePhaseInput()
         {
-            bool stoneIsMoving = CurlingManagersV3.CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
-            bool stoneIsMovingForward = CurlingManagersV3.CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
+            bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
+            bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
             if (!stoneIsMoving || !stoneIsMovingForward)
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.PostThrowResult);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.PostThrowResult);
             }
-            // Handle inputs specific to the Curling Controls phase
         }
 
         
 
         private void HandlePostThrowResultInput()
         {
+            // Handle inputs specific to the Post Throw Result phase
             if (Input.GetMouseButtonDown(0))
             {
-                if (!CurlingManagersV3.CurlingManager._instance.gameData.settings.enableObstaclePlacementByPlayer &&
-                    !CurlingManagersV3.CurlingManager._instance.gameData.settings.enableObstaclePlacementByEnvironment
+                if (!CurlingManager._instance.gameData.settings.enableObstaclePlacementByPlayer &&
+                    !CurlingManager._instance.gameData.settings.enableObstaclePlacementByEnvironment
                 )
                 {
                     HandleNextTurn();
                 }
                 else
                 {
-                    CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
+                    MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
                 }
             }
-            // Handle inputs specific to the Post Throw Result phase
         }
 
         private void HandleObstacleSelectionInput()
         {
+            // Handle inputs specific to the Obstacle Placement phase
             if (Input.GetMouseButtonDown(0))
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.ObstaclePlacement);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.ObstaclePlacement);
             }
-            // Handle inputs specific to the Obstacle Placement phase
         }
         private void HandleObstaclePlacementInput()
         {
+            // Handle inputs specific to the Obstacle Placement phase
             if (Input.GetMouseButtonDown(0))
             {
-                // CurlingGameManagerV2.Instance.NextTurn();
                 HandleNextTurn();
-                // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.RoundSplash);
             }
-            // Handle inputs specific to the Obstacle Placement phase
         }
+
         private void HandleFinalResultsInput()
         {
-
-            CurlingManagersV3.CurlingManager._instance.gameEndManager.EndCurlingGame();
+            CurlingManager._instance.gameEndManager.EndCurlingGame();
             /// RESTART?
             if (Input.GetMouseButtonDown(0))
             {
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.RoundSplash);
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.RoundSplash);
             }
         }
 
@@ -282,18 +272,15 @@ namespace CurlingManagersV3
 
         private void HandleNextTurn()
         {
-            // bool gameIsOver = false;
-            // int currentTurnCount = CurlingManagersV3.CurlingManager._instance.turnCurrent;
-            
-            if (!CurlingManagersV3.CurlingManager._instance.turnManager.IsThereAnotherTurnAfterThisOne())
+            if (!CurlingManager._instance.TurnManager.IsThereAnotherTurnAfterThisOne())
             {
-                CurlingManagersV3.CurlingManager._instance.EndCurrentCurlingGame(); // End Curling Game
+                CurlingManager._instance.EndCurrentCurlingGame(); // End Curling Game
             }
             else
             {
-                CurlingManagersV3.CurlingManager._instance.HandleEndOfTurn();
-                CurlingManagersV3.CurlingManager._instance.HandleStartNextTurn();
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
+                CurlingManager._instance.HandleEndOfTurn();
+                CurlingManager._instance.HandleStartNextTurn();
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
             }
         }
 
@@ -301,11 +288,5 @@ namespace CurlingManagersV3
         {
 
         }
-        // public void SetCurrentThrower(CurlingStoneThrowControllerV2 thrower)
-        // {
-        //     // currentThrower = thrower;
-        // }
-
-
     }
 }

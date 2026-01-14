@@ -192,17 +192,25 @@ public class CurlingStone : MonoBehaviour
         // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
         if (isSweepingLeft && !isSweepingRight)
         {
-            Debug.Log("Left Sweep Only Applied");
+            // Debug.Log("Left Sweep Only Applied");
             // applies reduced force in the left direction
             rb.AddForce(-side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else if (!isSweepingLeft && isSweepingRight)
         {
-            Debug.Log("Right Sweep Only Applied");
+            // Debug.Log("Right Sweep Only Applied");
             // applies reduced force in the right direction
             rb.AddForce(side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
+    }
+
+    public void UpdateDistanceFromTarget(GameObject targetZone)
+    {
+        distanceFromTarget = Vector3.Distance(
+            transform.position, 
+            targetZone.transform.position
+        );
     }
 
     public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;

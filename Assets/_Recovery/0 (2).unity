@@ -82144,8 +82144,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787472722}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11791928, y: -0.0000000036545507, z: 4.3396972e-10, w: 0.9930232}
-  m_LocalPosition: {x: -675.875, y: 2.138038, z: -485.68002}
+  m_LocalRotation: {x: 0.216397, y: -0.68019944, z: 0.22154509, w: 0.66439366}
+  m_LocalPosition: {x: -656.465, y: 9.4325, z: -441.15253}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -158872,6 +158872,7 @@ GameObject:
   - component: {fileID: 1533846819}
   - component: {fileID: 1533846818}
   - component: {fileID: 1533846830}
+  - component: {fileID: 1533846829}
   - component: {fileID: 1533846828}
   - component: {fileID: 1533846827}
   - component: {fileID: 1533846826}
@@ -158965,18 +158966,18 @@ MonoBehaviour:
       _LaunchForce: 100
       _SpinStrength: 5
       _LaunchPower: 0
-  _Aiming: {fileID: 1533846830}
-  _Players: {fileID: 1533846828}
-  _Scoring: {fileID: 1533846827}
+  _Aiming: {fileID: 0}
+  _Players: {fileID: 0}
+  _Scoring: {fileID: 0}
   stoneManager: {fileID: 1533846826}
-  _Sweeping: {fileID: 1533846825}
-  _Throwing: {fileID: 1533846824}
-  demo: {fileID: 1533846823}
+  _Sweeping: {fileID: 0}
+  _Throwing: {fileID: 0}
+  demo: {fileID: 0}
   cameraController: {fileID: 1533846832}
   curlingInputManager: {fileID: 1533846831}
-  _Setup: {fileID: 1533846822}
-  _TurnManager: {fileID: 1533846821}
-  gameEndManager: {fileID: 1533846820}
+  _Setup: {fileID: 0}
+  _TurnManager: {fileID: 0}
+  gameEndManager: {fileID: 0}
   stoneCamera: {fileID: 1933552224}
 --- !u!4 &1533846819
 Transform:
@@ -159123,6 +159124,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85f2ede64e3174e459e22c17cb88b58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1533846829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533846817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c58c4e8b136e441e81936186bedf511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1533846830

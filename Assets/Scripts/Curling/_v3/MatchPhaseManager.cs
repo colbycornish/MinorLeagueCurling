@@ -3,9 +3,6 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// This is the high-level game manager for a curling game.
-/// It orchestrates the flow of the game, including starting new ends,
-/// managing player turns, and handling the end of the game.
 /// </summary>
 
 
@@ -60,11 +57,11 @@ namespace CurlingManagersV3
 
         public void SetPhase(CurlingMatchPhase newPhase)
         {
-            Debug.Log($"[MatchPhase] {currentPhase} → {newPhase}");
+            // Debug.Log($"[MatchPhase] {currentPhase} → {newPhase}");
             if (currentPhase == newPhase) return;
 
             currentPhase = newPhase;
-            Debug.Log($"[MatchPhase] {currentPhase} → {newPhase}");
+            // Debug.Log($"[MatchPhase] {currentPhase} → {newPhase}");
             OnPhaseChanged?.Invoke(newPhase);
         }
 

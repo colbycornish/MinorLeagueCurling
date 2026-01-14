@@ -12,6 +12,7 @@ using Unity.Entities.UniversalDelegates;
 using static Animancer.Validate;
 using CharacterNPC.v2;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace CharacterNPCJobs
 {
@@ -130,6 +131,11 @@ namespace CharacterNPCJobs
                 {
                     ChangeJobs();
                 }    
+            }
+
+            if (_Character.JobStateMachine.CurrentState == null)
+            {
+                
             }
 
             /************************************************************/

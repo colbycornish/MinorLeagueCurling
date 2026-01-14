@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using Curling.Rules;
-
+using CurlingManagersV3.Parameters;
 
 /// <summary>
 /// This is the high-level game manager for a curling game.
@@ -11,78 +11,103 @@ using Curling.Rules;
 /// </summary>
 
 
-
-
 namespace CurlingManagersV3
 {
     [RequireComponent(typeof(CurlingManagersV3.Aiming))]
-    [RequireComponent(typeof(CurlingManagersV3.CourseController))]
+    // [RequireComponent(typeof(CurlingManagersV3.CourseController))]
     [RequireComponent(typeof(CurlingManagersV3.Players))]
     [RequireComponent(typeof(CurlingManagersV3.Scoring))]
     [RequireComponent(typeof(CurlingManagersV3.Stones))]
     [RequireComponent(typeof(CurlingManagersV3.Sweeping))]
     [RequireComponent(typeof(CurlingManagersV3.Throwing))]
     //
-    [RequireComponent(typeof(CurlingManagersV3.Demo))]
     [RequireComponent(typeof(CurlingManagersV3.CurlingCameraController))]
     [RequireComponent(typeof(CurlingManagersV3.CurlingInputManager))]
-    [RequireComponent(typeof(CurlingManagersV3.GameSetup))]
     [RequireComponent(typeof(CurlingManagersV3.GameTurn))]
     [RequireComponent(typeof(CurlingManagersV3.GameEnd))]
+    [RequireComponent(typeof(CurlingManagersV3.GameSetup))]
+    [RequireComponent(typeof(CurlingManagersV3.Demo))]
 
     public class CurlingManager : MonoBehaviour
     {
 
         // [HideInInspector] 
         public static CurlingManager _instance { get; private set; }
-        public CurlingManagersV3.Aiming aiming;
-        public CurlingManagersV3.CourseController courseController;
-        public CurlingManagersV3.Players players;
-        public CurlingManagersV3.Scoring scoring;
+
+        [SerializeField]
+        private CurlingParameters _Parameters;
+        public CurlingParameters Parameters => _Parameters;
+
+        [SerializeField]
+        private CurlingManagersV3.Aiming _Aiming;
+        public CurlingManagersV3.Aiming Aiming => _Aiming;
+
+        // public CurlingManagersV3.CourseController courseController;
+        [SerializeField]
+        private CurlingManagersV3.Players _Players;
+        public CurlingManagersV3.Players Players => _Players;
+
+        [SerializeField]
+        private CurlingManagersV3.Scoring _Scoring;
+        public CurlingManagersV3.Scoring Scoring => _Scoring;
+        
         public CurlingManagersV3.Stones stoneManager;
-        public CurlingManagersV3.Sweeping sweeping;
-        public CurlingManagersV3.Throwing throwing;
+
+        [SerializeField]
+        private CurlingManagersV3.Sweeping _Sweeping;
+        public CurlingManagersV3.Sweeping Sweeping => _Sweeping;
+
+        [SerializeField]
+        private CurlingManagersV3.Throwing _Throwing;
+        public CurlingManagersV3.Throwing Throwing => _Throwing;
         
 
         // Helper Managers
         public CurlingManagersV3.Demo demo;
+
+        // [SerializeField]
+        // private CurlingManagersV3.CurlingCameraController _CameraController;
+        // public CurlingManagersV3.CurlingCameraController CameraController => _CameraController;
         public CurlingManagersV3.CurlingCameraController cameraController;
         public CurlingManagersV3.CurlingInputManager curlingInputManager;
-        public CurlingManagersV3.GameSetup setup;
-        public CurlingManagersV3.GameTurn turnManager;
+
+        [SerializeField]
+        private CurlingManagersV3.GameSetup _Setup;
+        public CurlingManagersV3.GameSetup Setup => _Setup;
+
+        [SerializeField]
+        private CurlingManagersV3.GameTurn _TurnManager;
+        public CurlingManagersV3.GameTurn TurnManager => _TurnManager;
+    
         public CurlingManagersV3.GameEnd gameEndManager;
-
-        [Header("Teams")]
-        public CurlingTeam teamHome;
-        public CurlingTeam teamAway;
-
-        [Header("[Data] Player")]
-        CurlingTeam teamHome_tmp; // temporary for storage
-        CurlingTeam teamAway_tmp; // temporary for storage
-
-        [Header("Course")]
-        public CurlingCourseData course; // temporary for storage
-        CurlingCourseData courseData_tmp; // temporary for storage
-
-        [Header("Rules & Settings")]
-        public CurlingRules rules;
-
-        [Header("Canvas Objects")]
-        public PowerMeterController powerMeterController;
-        public GameObject leftSweeperExhaustionBar;
-        public GameObject rightSweeperExhaustionBar;
 
         [Header("[Data] Course")]
         public Camera stoneCamera;
         
-        // [Header("[Data] Exit Information")]
-        // public string exitScene;
-        // public string exitSpawnId;
-
         [Header("[Data] Settings")]
         public CurlingGameData gameData;
-        public int turnsMax = 10;
+        // public int turnsMax = 10;
 
+#if UNITY_EDITOR
+        protected void OnValidate()
+        {
+            // base.OnValidate();
+            _Aiming = GetComponent<CurlingManagersV3.Aiming>();
+            _Players = GetComponent<CurlingManagersV3.Players>();
+            _Scoring = GetComponent<CurlingManagersV3.Scoring>();
+            stoneManager = GetComponent<CurlingManagersV3.Stones>();
+            _Sweeping = GetComponent<CurlingManagersV3.Sweeping>();
+            _Throwing = GetComponent<CurlingManagersV3.Throwing>();
+            //
+            cameraController = GetComponent<CurlingManagersV3.CurlingCameraController>();
+            curlingInputManager = GetComponent<CurlingManagersV3.CurlingInputManager>();
+            _TurnManager = GetComponent<CurlingManagersV3.GameTurn>();
+            gameEndManager = GetComponent<CurlingManagersV3.GameEnd>();
+
+            _Setup = GetComponent<CurlingManagersV3.GameSetup>();
+            demo = GetComponent<CurlingManagersV3.Demo>();
+        }
+#endif
 
         private void Awake()
         {
@@ -97,90 +122,31 @@ namespace CurlingManagersV3
         }
 
         public void Init(){
-            if (aiming == null) aiming = GetComponent<CurlingManagersV3.Aiming>();
-            if (courseController == null) courseController = GetComponent<CurlingManagersV3.CourseController>();
-            if (players == null) players = GetComponent<CurlingManagersV3.Players>();
-            if (scoring == null) scoring = GetComponent<CurlingManagersV3.Scoring>();
+            if (_Aiming == null) _Aiming = GetComponent<CurlingManagersV3.Aiming>();
+            // if (courseController == null) courseController = GetComponent<CurlingManagersV3.CourseController>();
+            if (_Players == null) _Players = GetComponent<CurlingManagersV3.Players>();
+            if (_Scoring == null) _Scoring = GetComponent<CurlingManagersV3.Scoring>();
             if (stoneManager == null) stoneManager = GetComponent<CurlingManagersV3.Stones>();
-            if (sweeping == null) sweeping = GetComponent<CurlingManagersV3.Sweeping>();
-            if (throwing == null) throwing = GetComponent<CurlingManagersV3.Throwing>();
+            if (_Sweeping == null) _Sweeping = GetComponent<CurlingManagersV3.Sweeping>();
+            if (_Throwing == null) _Throwing = GetComponent<CurlingManagersV3.Throwing>();
             //
-            if (demo == null) demo = GetComponent<CurlingManagersV3.Demo>();
             if (cameraController == null) cameraController = GetComponent<CurlingManagersV3.CurlingCameraController>();
             if (curlingInputManager == null) curlingInputManager = GetComponent<CurlingManagersV3.CurlingInputManager>();
-            if (setup == null) setup = GetComponent<CurlingManagersV3.GameSetup>();
-            if (turnManager == null) turnManager = GetComponent<CurlingManagersV3.GameTurn>();
+            if (_TurnManager == null) _TurnManager = GetComponent<CurlingManagersV3.GameTurn>();
             if (gameEndManager == null) gameEndManager = GetComponent<CurlingManagersV3.GameEnd>();
+
+            if (_Setup == null) _Setup = GetComponent<CurlingManagersV3.GameSetup>();
+            if (demo == null) demo = GetComponent<CurlingManagersV3.Demo>();
         }
 
     
         /// <summary>
         /// Setup data
         /// </summary>
-
-      
-
-
-        public void LoadInitialData()
-        {
-            // TODO: Adjust to grab information from a singlular storage spot
-            // CurlingCourseData courseData = dataManager._instance.curlingGame.courseData;
-            // CurlingTeam teamHome = dataManager._instance.curlingGame.teamHome;
-            // CurlingTeam teamAway = dataManager._instance.curlingGame.teamAway;
-
-            CurlingCourseData courseData = courseData_tmp;
-            CurlingTeam teamHome = teamHome_tmp;
-            CurlingTeam teamAway = teamAway_tmp;
-
-            // aiming.Setup(courseData);
-            // players.Setup(
-            //     courseData,
-            //     teamHome,
-            //     teamAway
-            // );
-
-            // scoring.SetTargetZone(courseData.targetZone);
-
-            // stoneManager.Setup(
-            //     courseData,
-            //     teamHome,
-            //     teamAway
-            // );
-
-            StartCurlingGame();
-            // CurlingManager._instance.StartCurlingGame();
-        }
-
-        /// <summary>
-        /// Start Game
-        /// </summary>
-
-        // Starts the curling game.
-        private void StartCurlingGame()
-        {
-            // CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.Loading);
-            // gameData.turnCurrent = 0;
-
-            // // Resets the current game layout, and removes the existing stones
-            // scoring.ResetCurlingGame();
-
-            // // Sets up the stone objects for use in the game
-            // stoneManager.SetupStones();
-
-            // //Sets up the players
-            // players.PreparePlayers();
-
-            // // Sets the initial phase of the match
-            // CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.RoundSplash);
-            // // OnStoneSelectionConfirmed();
-        }
-
         public void HandleEndOfTurn()
         {
             // Called when a stone finishes moving, and is now resting in the target zone.
-            scoring.CalculateScore();
-            // players.UpdateScore(scoring.GetScore());
-            // CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.EndOfTurn);
+            Scoring.CalculateScore();
             SaveCurlingGameResults();
             // HandleNextTurn();
         }
@@ -191,13 +157,13 @@ namespace CurlingManagersV3
         /// </summary>
         public void HandleStartNextTurn()
         {
-            if (!turnManager.IsThereAnotherTurnAfterThisOne()){
+            if (!TurnManager.IsThereAnotherTurnAfterThisOne()){
                 gameEndManager.EndCurrentCurlingGame();
                 return;
             } else {
-                turnManager.NextTurn();
-                players.UpdateCurrentTeam();
-                players.RepositionCharacters();
+                TurnManager.NextTurn();
+                Players.UpdateCurrentTeam();
+                Players.RepositionCharacters();
             }
         }
 
@@ -228,8 +194,9 @@ namespace CurlingManagersV3
             stoneManager.PlaceCurrentStoneInLaunchPosition();
             // change camera
             cameraController.SwitchToStoneCamera();
-            aiming.Reset();
-            sweeping.ResetSweeperExhaustionBars();
+            // aiming.Reset();
+            Aiming.Reset();
+            Sweeping.ResetSweeperExhaustionBars();
             CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
 
 
@@ -240,21 +207,20 @@ namespace CurlingManagersV3
         }
 
         public void OnAimingPhaseComplete(){
-            throwing.ResetPowerMeter();
+            Throwing.ResetPowerMeter();
             CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
         }
 
         public void OnPowerPhaseSelection(){
-            throwing.UpdatePowerFromPowerMeterSelection();
+            Throwing.UpdatePowerFromPowerMeterSelection();
         }
 
         public void OnPowerPhaseComplete(){
-            throwing.LaunchStone(
-                stone: stoneManager.currentStone,
-                launchDirection: aiming.directionPivot.forward,
-                power: throwing.launchPower
+            Throwing.LaunchStone(
+                stone: CurlingManager._instance.Parameters.Stones.currentStone, 
+                launchDirection: Parameters.Course.directionPivot.forward,
+                power: Parameters.Throwing.LaunchPower 
             );
-            // CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
         }
 
 
@@ -280,72 +246,12 @@ namespace CurlingManagersV3
 
         public void ResetCurlingGame()
         {
-            scoring.Reset();
-            players.Reset();
+            Scoring.Reset();
+            Players.Reset();
             stoneManager.Reset();
-            turnManager.Reset();
-            // gameData.turnCurrent = 0;
-            // turn.ResetTurn();
-            // CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.RoundSplash);
+            TurnManager.Reset();
         }
         
 
     }
 }
-
-
-
-        // public void ExitCurlingGame()
-        // {
-        //     // Clear Existing Stones
-        //     // Clear Team People
-        //     // Reset All Necessary Things 
-        //     // GameManager._instance.TeleportToScene(
-        //     //     exitScene,
-        //     //     exitSpawnId
-        //     // );
-        // }
-
-
-        // public void InitSetupFromDemo(
-        //     CurlingCourseData courseData,
-        //     CurlingTeam teamHome,
-        //     CurlingTeam teamAway,
-        //     CurlingGameData data,
-        //     string exitSceneName,
-        //     string exitSpawnIdName
-        // )
-        // {
-        //     // aiming.AdjustPowers();
-        //     // sweeping.AdjustPowers();
-        //     courseData_tmp = courseData;
-        //     teamHome_tmp = teamHome;
-        //     teamAway_tmp = teamAway;
-        //     gameData = data;
-        //     exitScene = exitSceneName;
-        //     exitSpawnId = exitSpawnIdName;
-        //     LoadInitialData();
-        // }
-
-              //     bool gameIsOver = false;
-        //     int currentTurnCount = CurlingGameManagerV2._instance.gameData.currentTurn;
-        //     int maxTurnCount = CurlingGameManagerV2._instance.gameData.turnsMax;
-        //     if ((currentTurnCount + 1) == maxTurnCount)
-        //     {
-        //         CurlingGameManagerV2._instance.EndCurrentCurlingGame(); // End Curling Game
-        //     }
-        //     else
-        //     {
-        //         CurlingGameManagerV2._instance.NextTurn();
-        //         CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
-        //     }
-        // }
-
-        // public void NextTurn()
-        // {
-        //     // players.NextPlayer();
-        //     // gameData.turnCurrent++;
-        //     // // turnCount++;
-        //     // CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
-            
-        // }
