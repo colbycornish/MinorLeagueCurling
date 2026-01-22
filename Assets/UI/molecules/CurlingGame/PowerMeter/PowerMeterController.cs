@@ -29,8 +29,8 @@ public class PowerMeterController : MonoBehaviour
     public float maxPower = 1.0f;
 
     [Header("Variables")]
-    private bool powerSelected = false;
-    private bool isActive = false;
+    // private bool powerSelected = false;/
+    // private bool isActive = false;
 
     public List<string> hexColors;
 

@@ -36,10 +36,10 @@ namespace CharacterNPCJobs
     {
         
         // [SerializeField] private List<Transform> _PatrolPoints;// = new List<Transform>();
-        private int _CurrentPatrolIndex = 0;
+        // private int _CurrentPatrolIndex = 0;
 
-        [SerializeField] private float _stoppingDistance = 5f;
-        [SerializeField] private float _wanderZone = 5f;
+        // [SerializeField] private float _stoppingDistance = 5f;
+        // [SerializeField] private float _wanderZone = 5f;
         
 
         [SerializeField] private UnityEvent _OnStart;

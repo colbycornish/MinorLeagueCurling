@@ -13,6 +13,9 @@ namespace AnimalNPC
     public class AnimalParametersStatus
     {
     
+        [SerializeField]
+        private bool _IsDead;
+        public ref bool IsDead => ref _IsDead;
         
     }
 }

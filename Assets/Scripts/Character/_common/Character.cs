@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
     public void Start()
     {
         BuildRandomCurlingPlayerData();
-        AttachModel();
+        // AttachModel();
     }
 
     public void UseInCanvasDisplayMode(){

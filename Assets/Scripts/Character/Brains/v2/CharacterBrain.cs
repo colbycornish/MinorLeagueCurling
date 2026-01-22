@@ -1,5 +1,3 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
 using Animancer.FSM;
@@ -8,12 +6,9 @@ using Animancer;
 using System;
 using UnityEngine;
 using Animancer.Samples;
-using Unity.Entities.UniversalDelegates;
 using static Animancer.Validate;
-using Unity.VisualScripting;
 using CharacterNPCJobs;
 using System.Collections.Generic;
-using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 
 
 namespace CharacterNPC.v2
@@ -112,6 +107,8 @@ namespace CharacterNPC.v2
             // _Character.Movement.UpdateMovementDirection();
             _Character.Movement.UpdateMovementParameters();
             
+
+
             if (_Character.Parameters.Movement.CurrentDestination == null && 
                 _Character.Parameters.Movement.MovementDirection == Vector3.zero && 
                 _Character.StateMachine.CurrentState != _Idle &&
@@ -141,7 +138,9 @@ namespace CharacterNPC.v2
                 // _Character.Movement.UpdateDistanceFromDestination();
                 // _Character.Movement.UpdateSpeed();
                 // // _Character.Movement.UpdateDirectionalMovement(); 
-                _Character.Movement.UpdateTurning();
+                if (_Character.Parameters.Jobs.CurrentJob != JobStateType.Curl){
+                    _Character.Movement.UpdateTurning();
+                }
             }
         }
 
@@ -193,6 +192,13 @@ namespace CharacterNPC.v2
             }
 
             // Action Override to Get Player Attention
+            if (_Character.Parameters.Status.IsCurling)
+            {
+                UpdateActionsWhileCurling();
+                return;
+            }
+
+            // Action Override to Get Player Attention
             if (_Character.Parameters.Surroundings.IsPlayerInRangeToInteractWith && 
                 !_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
             {
@@ -238,6 +244,16 @@ namespace CharacterNPC.v2
                     break;
             }
         }
+
+        private void UpdateActionsWhileCurling()
+        {
+            // if (_Character.StateMachine.CurrentState != _Sweep)
+            // {
+            //     Debug.Log("-> Update Action: Sweep state");
+            //     _Character.StateMachine.TrySetState(_Sweep);
+            // }
+        }
+
 
         private void UpdateActionsToGetPlayerAttention()
         {

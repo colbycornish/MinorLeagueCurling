@@ -66,7 +66,6 @@ namespace CurlingManagersV3
                     break;
                 case CurlingMatchPhase.CurlingStoneSweepingPhase:
                     HandleCurlingTurnEndInput();
-                    // HandleCurlingStoneSweepingPhaseInput();
                     break;
                 case CurlingMatchPhase.CurlingNoSweepZone:
                     HandleCurlingNoSweepZonePhaseInput();
@@ -219,8 +218,6 @@ namespace CurlingManagersV3
             }
         }
 
-        
-
         private void HandlePostThrowResultInput()
         {
             // Handle inputs specific to the Post Throw Result phase
@@ -230,7 +227,7 @@ namespace CurlingManagersV3
                     !CurlingManager._instance.gameData.settings.enableObstaclePlacementByEnvironment
                 )
                 {
-                    HandleNextTurn();
+                    CurlingManager._instance.HandleNextTurn();
                 }
                 else
                 {
@@ -252,7 +249,7 @@ namespace CurlingManagersV3
             // Handle inputs specific to the Obstacle Placement phase
             if (Input.GetMouseButtonDown(0))
             {
-                HandleNextTurn();
+                CurlingManager._instance.HandleNextTurn();
             }
         }
 
@@ -270,19 +267,19 @@ namespace CurlingManagersV3
         /// Helpers
         /// </summary>
 
-        private void HandleNextTurn()
-        {
-            if (!CurlingManager._instance.TurnManager.IsThereAnotherTurnAfterThisOne())
-            {
-                CurlingManager._instance.EndCurrentCurlingGame(); // End Curling Game
-            }
-            else
-            {
-                CurlingManager._instance.HandleEndOfTurn();
-                CurlingManager._instance.HandleStartNextTurn();
-                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
-            }
-        }
+        // private void HandleNextTurn()
+        // {
+        //     if (!CurlingManager._instance.TurnManager.IsThereAnotherTurnAfterThisOne())
+        //     {
+        //         CurlingManager._instance.EndCurrentCurlingGame(); // End Curling Game
+        //     }
+        //     else
+        //     {
+        //         CurlingManager._instance.HandleEndOfTurn();
+        //         CurlingManager._instance.HandleStartNextTurn();
+        //         MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
+        //     }
+        // }
 
         private void HandleExitCurlingGameInput()
         {

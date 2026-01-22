@@ -33,7 +33,7 @@ namespace CharacterNPCJobs
 
         [SerializeField] private Transform _FollowTarget;// = new List<Transform>();
 
-        [SerializeField] private float _stoppingDistance = 5f;
+        // [SerializeField] private float _stoppingDistance = 5f;
         
 
         [SerializeField] private UnityEvent _OnStart; // See the Read Me.

@@ -85,9 +85,9 @@ namespace CurlingManagersV3
             
 
             // Tell relevant parties that stone has been launched
-            currentStone.isSliding = true;
-            currentStone.isThrown = true;
-            currentStone.isInPlay = true;
+            currentStone.Parameters.Status.IsSliding = true;
+            currentStone.Parameters.Status.IsThrown = true;
+            currentStone.Parameters.Status.IsInPlay = true;
 
             // Add initial spin to the stone
             // float curlAmountInitial = CurlingGameManagerV2.Instance.aimController.curlAmountInitial;

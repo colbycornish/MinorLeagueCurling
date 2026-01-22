@@ -63,8 +63,9 @@ public class SectionTeamSelection : MonoBehaviour
         );
 
         listOfStoneSquareItems.BuildList(
-            CurlingPreGameSetupManager._instance.listOfStones.ToArray()
+            CurlingPreGameSetupManager._instance.listOfStones.ConvertAll(s => s.GetComponent<CurlingStone>()).ToArray()
         );
+        
     }
 
     // private void OnEnable()

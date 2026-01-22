@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
+using CurlingStones;
 
 public class CurlingStone : MonoBehaviour
 {
@@ -9,21 +9,15 @@ public class CurlingStone : MonoBehaviour
     public string title = "Basic Stone";
     public string description = "Just your basic curling stone.";
     public string id = "";
-    public Image avatarImage;
+    public Texture avatarImage;
+    // private RawImage faceRenderTexture;
 
     [Header("Ids")]
     [HideInInspector] public int teamId_i;
     [HideInInspector] public string teamId;
     [HideInInspector] public int stoneIndex;
 
-    [Header("Status")]
-    [HideInInspector] public bool isThrown = false;
-    [HideInInspector] public bool isInPlay = false;
-    [HideInInspector] public bool isSliding = false;
-    [HideInInspector] public bool isInScoringZone = false;
-    
-    [Header("Stats")]
-    public float distanceFromTarget = 1000f;
+
 
     [Header("Spin")]
     /// <summary>
@@ -48,6 +42,8 @@ public class CurlingStone : MonoBehaviour
     [Header("Speed")]
     [HideInInspector] public float speedCurrent = 0f;
 
+    public Vector3 movementDirection;
+
 
     [Header("Model")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
@@ -55,6 +51,10 @@ public class CurlingStone : MonoBehaviour
 
     [Header("Special Abilities")]
     [HideInInspector] public bool hasSpecialAbility = false;
+
+    [SerializeField]
+    private CurlingStoneParameters _Parameters;
+    public CurlingStoneParameters Parameters => _Parameters;
 
     
     private void Awake()
@@ -96,9 +96,10 @@ public class CurlingStone : MonoBehaviour
             Debug.Log($"[Stone Throw] 🌀 Initial spin applied: angularVelocity = {rb.angularVelocity}");
         }
 
-        isThrown = true;
-        isInPlay = true;
-        isSliding = true;
+        Parameters.Status.IsThrown = true;
+        Parameters.Status.IsInPlay = true;
+        Parameters.Status.IsSliding = true;
+        
     }
 
     /// <summary>
@@ -207,10 +208,11 @@ public class CurlingStone : MonoBehaviour
 
     public void UpdateDistanceFromTarget(GameObject targetZone)
     {
-        distanceFromTarget = Vector3.Distance(
+        Parameters.Movement.DistanceFromTarget = Vector3.Distance(
             transform.position, 
             targetZone.transform.position
         );
+
     }
 
     public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;

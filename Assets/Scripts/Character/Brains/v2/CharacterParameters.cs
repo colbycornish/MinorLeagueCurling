@@ -13,6 +13,11 @@ namespace CharacterNPC.v2
     public class CharacterParameters
     {
 
+        
+        [SerializeField]
+        private CharacterParametersCurling _Curling;
+        public CharacterParametersCurling Curling => _Curling;
+
         [SerializeField]
         private CharacterParametersDialogue _Dialogue;
         public CharacterParametersDialogue Dialogue => _Dialogue;

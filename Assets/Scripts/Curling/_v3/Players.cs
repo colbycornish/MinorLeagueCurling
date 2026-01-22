@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using CharacterNPC.v2;
+using UnityEngine.AI;
 
 /// <summary>
 /// </summary>
@@ -71,6 +73,15 @@ namespace CurlingManagersV3
                 CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[2].position, 
                 Quaternion.identity
             );
+
+            CurlingManager._instance.Parameters.Teams.teamHome.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.Thrower;
+            CurlingManager._instance.Parameters.Teams.teamHome.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.SweeperLeft;
+            CurlingManager._instance.Parameters.Teams.teamHome.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.SweeperRight;
+
+            CurlingManager._instance.Parameters.Teams.teamHome.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Status.IsCurling = true;
+            CurlingManager._instance.Parameters.Teams.teamHome.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Status.IsCurling = true;
+            CurlingManager._instance.Parameters.Teams.teamHome.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Status.IsCurling = true;
+            
             
             /// away team
             CurlingManager._instance.Parameters.Teams.teamAway.thrower = Instantiate(
@@ -88,6 +99,14 @@ namespace CurlingManagersV3
                 CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[2].position, 
                 Quaternion.identity
             );
+
+            CurlingManager._instance.Parameters.Teams.teamAway.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Status.IsCurling = true;
+            CurlingManager._instance.Parameters.Teams.teamAway.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Status.IsCurling = true;
+            CurlingManager._instance.Parameters.Teams.teamAway.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Status.IsCurling = true;
+
+            CurlingManager._instance.Parameters.Teams.teamAway.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.Thrower;
+            CurlingManager._instance.Parameters.Teams.teamAway.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.SweeperLeft;
+            CurlingManager._instance.Parameters.Teams.teamAway.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.SweeperRight;
             
             PutTeamOnSidelines(
                 team: CurlingManager._instance.Parameters.Teams.teamAway, 
@@ -125,7 +144,6 @@ namespace CurlingManagersV3
 
         public void RepositionCharacters()
         {
-            
             PutTeamOnIce(
                 team: CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home 
                     ? CurlingManager._instance.Parameters.Teams.teamHome
@@ -140,26 +158,57 @@ namespace CurlingManagersV3
                     ? CurlingManager._instance.Parameters.Course.idleLocationsTeamAway
                     : CurlingManager._instance.Parameters.Course.idleLocationsTeamHome
             );
-
-
         }
 
         public void PutTeamOnSidelines(
             CurlingTeam team, 
             List<Transform> idleLocations
         ){
-            team.thrower.transform.position = idleLocations[0].position;
-            team.sweeperLeft.transform.position = idleLocations[1].position;
-            team.sweeperRight.transform.position = idleLocations[2].position;
+            TeleportPlayer(
+                playerObject: team.thrower,
+                newPosition: idleLocations[0].position
+            );
+            TeleportPlayer(
+                playerObject: team.sweeperLeft,
+                newPosition: idleLocations[1].position
+            );
+            TeleportPlayer(
+                playerObject: team.sweeperRight,
+                newPosition: idleLocations[2].position
+            );
+            // team.thrower.transform.position = idleLocations[0].position;
+            // team.sweeperLeft.transform.position = idleLocations[1].position;
+            // team.sweeperRight.transform.position = idleLocations[2].position;
+
+            team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
+            team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
+            team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
 
             return;
         }
 
         public void PutTeamOnIce(CurlingTeam team){
-            team.thrower.transform.position = CurlingManager._instance.Parameters.Course.throwerStartLocation.position;
-            team.sweeperLeft.transform.position = CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position;
-            team.sweeperRight.transform.position = CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position;
-
+            Debug.Log("Putting Team on Ice");
+            // Debug.Log($"Thrower before position: {team.thrower.transform.position}");
+            // Debug.Log($"Adjusted position: {CurlingManager._instance.Parameters.Course.throwerStartLocation.position}");
+            TeleportPlayer(
+                playerObject: team.thrower,
+                newPosition: CurlingManager._instance.Parameters.Course.throwerStartLocation.position
+            );
+            
+            // team.thrower.transform.position = CurlingManager._instance.Parameters.Course.throwerStartLocation.position;
+            // Debug.Log($"Thrower after position: {team.thrower.transform.position}");
+            TeleportPlayer(
+                playerObject: team.sweeperLeft,
+                newPosition: CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position
+            );
+            TeleportPlayer(
+                playerObject: team.sweeperRight,
+                newPosition: CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position
+            );
+            // team.sweeperLeft.transform.position = CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position;
+            // team.sweeperRight.transform.position = CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position;
+        
             // Make Right Sweeper look at Left Sweeper
             team.sweeperRight.transform.LookAt(team.sweeperLeft.transform.position);
             // Make Left Sweeper look at Right Sweeper
@@ -168,8 +217,86 @@ namespace CurlingManagersV3
             team.thrower.transform.LookAt(
                 CurlingManager._instance.Parameters.Course.targetZone.transform.position
             );
+
+            team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+            team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+            team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+
             return;
         }
+
+        // Call this method to teleport the instantiated object
+        public void TeleportPlayer(
+            GameObject playerObject,
+            Vector3 newPosition
+        )
+        {
+            NavMeshAgent nma = playerObject.GetComponent<NavMeshAgent>();
+            nma.enabled = false;
+            Rigidbody rb = playerObject.GetComponent<Rigidbody>();
+            playerObject.transform.position = newPosition;
+            if (rb != null)
+            {
+                Debug.Log($"Teleporting player to {newPosition}");
+                rb.position = newPosition; // Instantly changes the position
+                // rb.rotation = newRotation; // Instantly changes the rotation
+
+                // Optional: Reset velocity after teleporting
+                // rb.linearVelocity = Vector3.zero;
+                // rb.angularVelocity = Vector3.zero;
+            }
+            nma.enabled = true;
+        }
+
+        public void PrepareSweepersToTrackActiveStone()
+        {
+            Debug.Log("Preparing Sweepers to Track Active Stone");
+            CurlingTeam activeTeam = 
+                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? CurlingManager._instance.Parameters.Teams.teamHome
+                    : CurlingManager._instance.Parameters.Teams.teamAway;
+
+            activeTeam.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
+                CurlingManager._instance.Parameters.Stones.currentStone;
+            activeTeam.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
+                CurlingManager._instance.Parameters.Stones.currentStone;
+            activeTeam.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
+                CurlingManager._instance.Parameters.Stones.currentStone;
+
+
+            activeTeam.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
+                CurlingManager._instance.Parameters.Stones.currentStone.gameObject;
+            activeTeam.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
+                CurlingManager._instance.Parameters.Stones.currentStone.gameObject;
+            activeTeam.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
+                CurlingManager._instance.Parameters.Stones.currentStone.gameObject;
+        }
+
+
+        public void UpdateSweeperStoneTracking(
+            CurlingStone stone,
+            CurlingTeam team
+        )
+        {
+            Debug.Log("Preparing Sweepers to Track Active Stone");
+            
+
+            team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
+                stone;
+            team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
+                stone;
+            team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
+                stone;
+
+            team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
+                stone == null ? null : stone.gameObject;
+            team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
+                stone == null ? null : stone.gameObject;
+            team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
+                stone == null ? null : stone.gameObject;
+        }
+
+
 
 
 

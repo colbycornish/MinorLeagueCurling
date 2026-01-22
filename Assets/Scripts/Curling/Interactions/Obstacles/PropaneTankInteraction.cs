@@ -13,7 +13,7 @@ using UnityEngine;
 [RequireComponent(typeof(CurlingObstacle))]
 public class PropaneTankInteraction : MonoBehaviour
 {
-    private bool stoneInRange = false;
+    // private bool stoneInRange = false;
     // private bool isFlameActive = true;
     private CurlingObstacle obstacle;
 
@@ -29,30 +29,30 @@ public class PropaneTankInteraction : MonoBehaviour
     {
         if (other.CompareTag("stone"))
         {
-            this.stoneInRange = true;
+            // this.stoneInRange = true;
             obstacle.ActivateFx();
             // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
         }
 
     }
 
-    private void OnTriggerExit(Collider other)
-    {
+    // private void OnTriggerExit(Collider other)
+    // {
 
-        if (other.CompareTag("stone"))
-        {
-            this.stoneInRange = false;
-        }
+    //     if (other.CompareTag("stone"))
+    //     {
+    //         this.stoneInRange = false;
+    //     }
 
-    }
+    // }
 
-    private void Update()
-    {
-        // if (isFlameActive)
-        // {
+    // private void Update()
+    // {
+    //     // if (isFlameActive)
+    //     // {
 
-        // }
-    }
+    //     // }
+    // }
 }
 
 

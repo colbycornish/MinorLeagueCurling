@@ -92,10 +92,11 @@ namespace CharacterNPCJobs
             // {
             //     UpdateMostDesiredJob();
             // }
+
             UpdateMostDesiredJob();
 
             // Curling Interrupt
-            // else if (_Character.Parameters.Surroundings.IsCurling && 
+            // else if (_Character.Parameters.Status.IsCurling && 
             //     _Character.JobStateMachine.CurrentState != _Curling
             // )
             // {
@@ -126,7 +127,6 @@ namespace CharacterNPCJobs
 
             if (_Character.JobStateMachine.CurrentState.CanExitState == true)
             {
-                
                 if (_Character.Parameters.Jobs.CurrentJob != _Character.Parameters.Jobs.DesiredJob)
                 {
                     ChangeJobs();
@@ -245,6 +245,12 @@ namespace CharacterNPCJobs
             if (_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
             {
                 _Character.Parameters.Jobs.DesiredJob = JobStateType.Talk;
+                return;
+            }
+
+            if (_Character.Parameters.Status.IsCurling)
+            {
+                _Character.Parameters.Jobs.DesiredJob = JobStateType.Curl;
                 return;
             }
 

@@ -17,13 +17,6 @@ namespace CurlingManagersV3
         /// <summary>
         /// Setup / Reset
         /// </summary>
-        public void Setup(CurlingCourseData courseData)
-        {
-            CurlingManager._instance.Parameters.Course.directionPivotObject = courseData.directionalPivot;
-            CurlingManager._instance.Parameters.Course.directionPivot = courseData.directionalPivot.transform;
-        }
-
-
         public void Enable()
         {
             if (CurlingManager._instance.Parameters.Course.directionPivotObject == null) return;
@@ -149,7 +142,6 @@ namespace CurlingManagersV3
 
             CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = amount; // TODO: phase out
             currentStone.curlAmountInitial = amount; // TODO: Phase out
-
             currentStone.spinSpeedInitial = amount;
             currentStone.spinAmountInitial = amount;
 
@@ -178,3 +170,10 @@ namespace CurlingManagersV3
 //             gameObject.GetComponentInParentOrChildren(ref _Character);
 //         }
 // #endif
+
+
+// public void Setup(CurlingCourseData courseData)
+        // {
+        //     CurlingManager._instance.Parameters.Course.directionPivotObject = courseData.directionalPivot;
+        //     CurlingManager._instance.Parameters.Course.directionPivot = courseData.directionalPivot.transform;
+        // }

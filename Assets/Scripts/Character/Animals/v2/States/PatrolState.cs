@@ -32,7 +32,7 @@ namespace AnimalNPC
         [SerializeField] private List<Transform> _patrolPoints;
         [SerializeField] private Transform _currentDestination;
         [SerializeField] private Transform _nextDestination;
-        [SerializeField] private bool _isAtCurrentDestination = false;
+        // [SerializeField] private bool _isAtCurrentDestination = false;
         [SerializeField] private float _stoppingDistance = 2f; // How close the agent needs to be to a waypoint
 
 
@@ -149,7 +149,7 @@ namespace AnimalNPC
             Animal.Parameters.DistanceFromDestination = 100f;
 
             // reset the flag
-            _isAtCurrentDestination = false;
+            // _isAtCurrentDestination = false;
         }
 
         void ClearDestinationAndWait()
@@ -162,7 +162,7 @@ namespace AnimalNPC
             // Animal.Parameters.DistanceFromDestination = 0f;
             // Animal.Parameters.CurrentDestination = null;
             Animal.NavAgent.ResetPath();
-            _isAtCurrentDestination = true;
+            // _isAtCurrentDestination = true;
             _currentDestination = null;
         }
 

@@ -28,6 +28,11 @@ public class ScorebugController : MonoBehaviour
     public void OnEnable()
     {
         Debug.Log("Scorebug Enabled");
+        if (CurlingManager._instance == null){
+            Debug.LogWarning("CurlingManager instance is null. Cannot update Scorebug.");
+            return;
+        }
+
         UpdateScore(
             homeTeamScore: CurlingManager._instance.Parameters.CurrentGameScore.teamHomeScore,
             awayTeamScore: CurlingManager._instance.Parameters.CurrentGameScore.teamAwayScore
@@ -39,8 +44,12 @@ public class ScorebugController : MonoBehaviour
         );
 
         UpdateStoneAvailability(
-            numHomeTeamStonesAvailable: CurlingManager._instance.Parameters.Stones.stonesTeamHome.FindAll(s => s.isInPlay == false).Count,
-            numAwayTeamStonesAvailable: CurlingManager._instance.Parameters.Stones.stonesTeamAway.FindAll(s => s.isInPlay == false).Count
+            numHomeTeamStonesAvailable: CurlingManager._instance.Parameters.Stones.stonesTeamHome.FindAll(s => 
+                s.Parameters.Status.IsInPlay == false
+            ).Count,
+            numAwayTeamStonesAvailable: CurlingManager._instance.Parameters.Stones.stonesTeamAway.FindAll(s => 
+                s.Parameters.Status.IsInPlay == false
+            ).Count
         );
     }
 

@@ -101,7 +101,7 @@ public class ListOfStoneSquareItems : MonoBehaviour
     /// 
     /// </summary>
     public void BuildList(
-        GameObject[] stonePrefabs
+        CurlingStone[] stonePrefabs
     )
     {
         foreach (Transform child in listArea.transform)
@@ -109,24 +109,24 @@ public class ListOfStoneSquareItems : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        foreach (GameObject stonePrefab in stonePrefabs)
+        foreach (CurlingStone stone in stonePrefabs)
         {
-            CurlingStone stone = stonePrefab.GetComponent<CurlingStone>();
+            // CurlingStone stone = stonePrefab.GetComponent<CurlingStone>();
 
             GameObject listItem = Instantiate(listItemPrefab, listArea.transform);
             StoneSquareItem controller = listItem.GetComponent<StoneSquareItem>();
             listItem.transform.SetParent(this.transform);
 
-            RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetStoneRenderTextureById(
-                stoneId: stone.id,
-                getFace: true,
-                getBody: false
-            );
+            // RenderTexture renderTexture = CanvasManager._instance.canvasDisplayAreaController.GetStoneRenderTextureById(
+            //     stoneId: stone.id,
+            //     getFace: true,
+            //     getBody: false
+            // );
 
             controller.Init(
                 title: stone.title,
                 stoneId: stone.id,
-                renderTexture: renderTexture,
+                renderTexture: stone.avatarImage, //renderTexture,
                 OnSelect: (string stoneId) => { OnSelection(stoneId); }
             );
             // controller.UpdateUI();

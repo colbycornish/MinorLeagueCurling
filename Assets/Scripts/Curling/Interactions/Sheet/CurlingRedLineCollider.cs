@@ -34,7 +34,7 @@ public class CurlingRedLineCollider : MonoBehaviour
 
             CurlingStone stone = other.gameObject.GetComponent<CurlingStone>();
             if (stone != null){
-                stone.isInScoringZone = true;
+                stone.Parameters.Status.IsInScoringZone = true;
             }
             
         }

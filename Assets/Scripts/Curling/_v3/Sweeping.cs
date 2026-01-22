@@ -22,8 +22,6 @@ namespace CurlingManagersV3
             CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController = 
                 rsEB.GetComponent<SweeperExhaustionBarV2>();
 
-            // leftSweeperExhaustionBar = lsEB.GetComponent<SweeperExhaustionBarV2>();
-            // rightSweeperExhaustionBar = rsEB.GetComponent<SweeperExhaustionBarV2>();
         }
 
         /// <summary>
@@ -31,8 +29,8 @@ namespace CurlingManagersV3
         /// </summary>
         void Update()
         {
-            CurlingManagersV3.CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
-            if (currentPhase == CurlingManagersV3.CurlingMatchPhase.CurlingStoneSweepingPhase)
+            CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
+            if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
             {
                 
                 // Track sweeping input ** NEW SWEEPER CODE **
@@ -71,11 +69,11 @@ namespace CurlingManagersV3
         void FixedUpdate()
         {
             
-            CurlingStone currentStone = CurlingManager._instance.Parameters.Stones.currentStone; //CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone;
+            CurlingStone currentStone = CurlingManager._instance.Parameters.Stones.currentStone; 
             if (currentStone == null || currentStone.rb == null) return;
 
-            CurlingManagersV3.CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
-            if (currentPhase != CurlingManagersV3.CurlingMatchPhase.CurlingStoneSweepingPhase)
+            CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
+            if (currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
             { 
                 return;
             }
@@ -83,7 +81,7 @@ namespace CurlingManagersV3
             // TODO: Move to the match flow
             if (
                 currentStone != null && 
-                currentStone.isSliding && 
+                currentStone.Parameters.Status.IsSliding && 
                 currentStone.rb != null
                 // The following line used to be in immediately after != null,
                 // and I think it was throwing things off: 
@@ -98,8 +96,7 @@ namespace CurlingManagersV3
                     currentStone.rb.angularVelocity.sqrMagnitude < 0.01f
                 )
                 {
-                    currentStone.isSliding = false;
-                    // CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.PostThrowResult);
+                    currentStone.Parameters.Status.IsSliding = false;
                 }
 
                 

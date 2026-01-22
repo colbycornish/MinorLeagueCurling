@@ -6,6 +6,7 @@ using Animancer.Units;
 using UnityEngine;
 using Animancer;
 using Unity.Entities.UniversalDelegates;
+using CharacterNPCJobs;
 
 /************************************************************************************************************************/
 /*
@@ -37,17 +38,10 @@ namespace CharacterNPC.v2
         [SerializeField] private TransitionAsset _AnimationWalking;
         [SerializeField] private TransitionAsset _AnimationCrouching;
 
-        [SerializeField] private StringAsset _SpeedParameter;
+        // [SerializeField] private StringAsset _SpeedParameter;
 
         [SerializeField] private TransitionAssetBase _DirectionalMovementTransition;
-        // [SerializeField] private float _WalkParameterValue = 0.5f;
-        // [SerializeField] private float _RunParameterValue = 1;
-        // [SerializeField, Seconds] private float _ParameterSmoothTime = 0.15f;
-        // [SerializeField, DegreesPerSecond] private float _TurnSpeed = 360;
 
-        // private SmoothedFloatParameter _Speed;
-
-        [SerializeField] public bool _UseDirectional = false;
 
         /************************************************************************************************************************/
 
@@ -94,7 +88,7 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
         public void PlayBase()
         {
-            if (_UseDirectional)
+            if (Character.Parameters.Movement.useDirectionalMovementAnimations)
             {
                 Character.AnimationManager.PlayBase(
                     transition: _DirectionalMovementTransition, 
@@ -155,26 +149,19 @@ namespace CharacterNPC.v2
 
         protected virtual void Update()
         {
-            // Character.Movement.UpdateMovementAll();
-            // Character.Movement.UpdateDistanceFromDestination();
-            // Character.Movement.UpdateSpeed();
-            // Character.Movement.UpdateDirectionalMovement();
-
-            
-            Character.Movement.UpdateDistanceFromDestination();
-            Character.Movement.UpdateMovementDirection();
-            Character.Movement.UpdateSpeed();
-            Character.Movement.UpdateTurning();
-            
-            
-            // if (_UseDirectional)
-            // {
-            //     // Character.Movement.UpdateDirectionalMovement();
-            // }
-            // else
-            // {
-            //     Character.Movement.UpdateTurning();
-            // }
+            if (!Character.Parameters.Movement.useDirectionalMovementAnimations)
+            {   
+                Character.Movement.UpdateDistanceFromDestination();
+                Character.Movement.UpdateMovementDirection();
+                Character.Movement.UpdateSpeed();
+                Character.Movement.UpdateTurning();
+            } else
+            {
+                Character.Movement.UpdateDistanceFromDestination();
+                Character.Movement.UpdateMovementDirection();
+                Character.Movement.UpdateSpeed();
+                Character.Movement.UpdateDirectionalMovement();
+            }
         }
 
         /************************************************************************************************************************/

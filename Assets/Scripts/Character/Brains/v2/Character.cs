@@ -19,7 +19,7 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
         // Used in the Characters sample.
         /************************************************************************************************************************/
-
+ 
         [SerializeField]
         private AnimancerComponent _Animancer;
         public AnimancerComponent Animancer => _Animancer;

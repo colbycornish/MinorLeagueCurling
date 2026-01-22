@@ -11,47 +11,15 @@ using UnityEngine;
 public class CurlingYellowLineCollider : MonoBehaviour
 {
 
-    // public KeyCode interactKey = KeyCode.E;
-    private bool stoneInRange = false;
-    // public SceneDatabase sceneDatabase;
-    // public GameObject promptUI;
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("stone"))
         {
             Debug.Log("Yellow Line Collision");
-            stoneInRange = true;
-            /// previous phase manager code, not needed once v3 is adopted
-            // if (CurlingManagersV3.MatchPhaseManager._instance != null){
-            //     CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.MatchPhaseManager.CurlingStoneSweepingPhase);
-            // }
             if (CurlingManagersV3.MatchPhaseManager._instance != null){
                 CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.CurlingMatchPhase.CurlingStoneSweepingPhase);
             }
         }
 
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-
-        if (other.CompareTag("stone"))
-        {
-            stoneInRange = false;
-        }
-
-    }
-
-    private void Update()
-    {
-        if (stoneInRange)
-        {
-            
-        }
-    }
-    
-
-
 }

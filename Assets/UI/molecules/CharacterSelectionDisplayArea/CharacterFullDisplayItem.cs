@@ -30,12 +30,12 @@ public class CharacterFullDisplayItem : MonoBehaviour
     [SerializeField] private bool isRightSweeper = false;
 
     [Header("Settings")]
-    [SerializeField] private bool hasInfo = false;
-    [SerializeField] private bool showEquipment = true;
+    // [SerializeField] private bool hasInfo = false;
+    // [SerializeField] private bool showEquipment = true;
 
-    [Header("Visual State")]
-    [SerializeField] private bool isSelected = false;
-    [SerializeField] private bool isEditingEquipment = false;
+    // [Header("Visual State")]
+    // [SerializeField] private bool isSelected = false;
+    // [SerializeField] private bool isEditingEquipment = false;
     
 
     [Header("Shrink / Expand Settings")]
@@ -75,7 +75,7 @@ public class CharacterFullDisplayItem : MonoBehaviour
     {
         if (character == null)
         {
-            hasInfo = false;
+            // hasInfo = false;
             infoDisplay.UpdateInfo(
                 name: "?????????",
                 description: "unknown"
@@ -91,7 +91,7 @@ public class CharacterFullDisplayItem : MonoBehaviour
                 description: character.description
             );
 
-            hasInfo = true;
+            // hasInfo = true;
             characterImage.color = Color.white; 
             
         }
@@ -153,7 +153,7 @@ public class CharacterFullDisplayItem : MonoBehaviour
     
     public void SetAsUnSelected()
     {
-        hasInfo = false;
+        // hasInfo = false;
         infoDisplay.UpdateInfo(
             name: "?????????",
             // position: character.position,
@@ -164,7 +164,7 @@ public class CharacterFullDisplayItem : MonoBehaviour
 
     public void SetAsSelected()
     {
-        hasInfo = true;
+        // hasInfo = true;
         characterImage.color = Color.white;   
     }
 

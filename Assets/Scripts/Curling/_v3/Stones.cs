@@ -129,8 +129,12 @@ namespace CurlingManagersV3
                 CurlingManager._instance.Parameters.Course.launchPoint != null
             )
             {
-                CurlingManager._instance.Parameters.Stones.currentStone.isThrown = false;
-                CurlingManager._instance.Parameters.Stones.currentStone.isInPlay = true;
+                // CurlingManager._instance.Parameters.Stones.currentStone.isThrown = false;
+                CurlingManager._instance.Parameters.Stones.currentStone.Parameters.Status.IsThrown = false;
+        
+                // CurlingManager._instance.Parameters.Stones.currentStone.isInPlay = true;
+                CurlingManager._instance.Parameters.Stones.currentStone.Parameters.Status.IsInPlay = true;
+
                 CurlingManager._instance.Parameters.Stones.currentStone.transform.position = CurlingManager._instance.Parameters.Course.launchPoint.position;
                 CurlingManager._instance.Parameters.Stones.currentStone.rb.linearVelocity = Vector3.zero;
                 CurlingManager._instance.Parameters.Stones.currentStone.rb.angularVelocity = Vector3.zero;

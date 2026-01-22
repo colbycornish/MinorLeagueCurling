@@ -141,8 +141,22 @@ namespace CurlingManagersV3
 
     
         /// <summary>
-        /// Setup data
+        /// Turn Management
         /// </summary>
+        public void HandleNextTurn()
+        {
+            if (!TurnManager.IsThereAnotherTurnAfterThisOne())
+            {
+                EndCurrentCurlingGame(); // End Curling Game
+            }
+            else
+            {
+                HandleEndOfTurn();
+                HandleStartNextTurn();
+                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
+            }
+        }
+
         public void HandleEndOfTurn()
         {
             // Called when a stone finishes moving, and is now resting in the target zone.
@@ -151,10 +165,6 @@ namespace CurlingManagersV3
             // HandleNextTurn();
         }
 
-
-        /// <summary>
-        /// Next Turn
-        /// </summary>
         public void HandleStartNextTurn()
         {
             if (!TurnManager.IsThereAnotherTurnAfterThisOne()){
@@ -167,9 +177,11 @@ namespace CurlingManagersV3
             }
         }
 
+        /// <summary>
+        /// Stone Selection
+        /// </summary>
         public void OnStoneSelection(){
             List<CurlingStone> stoneOptions = stoneManager.GetStonesForCurrentTeam();
-
         }
 
         public void OnStoneSelectionConfirmed()
@@ -179,7 +191,7 @@ namespace CurlingManagersV3
             for (int i = 0; i < stoneOptions.Count; i++)
             {
                 CurlingStone stone = stoneOptions[i];
-                if (stone.isInPlay == true){ 
+                if (stone.Parameters.Status.IsInPlay == true){ 
                     continue; // Skip stones that are already in play
                 }
                 else {
@@ -197,18 +209,44 @@ namespace CurlingManagersV3
             // aiming.Reset();
             Aiming.Reset();
             Sweeping.ResetSweeperExhaustionBars();
-            CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
 
+            // Update Player Tracking
+            CurlingTeam activeTeam = 
+                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? CurlingManager._instance.Parameters.Teams.teamHome
+                    : CurlingManager._instance.Parameters.Teams.teamAway;
+
+            CurlingTeam inactiveTeam = 
+                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? CurlingManager._instance.Parameters.Teams.teamAway
+                    : CurlingManager._instance.Parameters.Teams.teamHome;
+ 
+            _Players.UpdateSweeperStoneTracking(
+                team: activeTeam,
+                stone: Parameters.Stones.currentStone
+            );
+
+            _Players.UpdateSweeperStoneTracking(
+                team: inactiveTeam,
+                stone: null
+            );
+
+            // _Players.PrepareSweepersToTrackActiveStone();
+            MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
+            
 
         }
 
+        /// <summary>
+        /// Aiming and Power
+        /// </summary>
         public void OnAimingPhaseSelection(){
             // throwing.UpdatePowerFromPowerMeterSelection();
         }
 
         public void OnAimingPhaseComplete(){
             Throwing.ResetPowerMeter();
-            CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
+            MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
         }
 
         public void OnPowerPhaseSelection(){
@@ -222,9 +260,6 @@ namespace CurlingManagersV3
                 power: Parameters.Throwing.LaunchPower 
             );
         }
-
-
-        
 
 
         /// <summary>

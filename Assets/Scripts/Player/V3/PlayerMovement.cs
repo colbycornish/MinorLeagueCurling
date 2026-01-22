@@ -35,6 +35,7 @@ namespace PlayerControls.v3
             // Get input
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
+            
         }
 
         void FixedUpdate()

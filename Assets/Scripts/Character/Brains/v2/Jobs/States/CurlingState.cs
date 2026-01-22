@@ -8,6 +8,7 @@ using Animancer;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using CharacterNPC.v2;
+using TMPro;
 
 /************************************************************************************************************************/
 /*
@@ -33,14 +34,9 @@ namespace CharacterNPCJobs
     {
         /************************************************************************************************************************/
 
-        [SerializeField] private GameObject _CurlingStone;// = new List<Transform>();
-        private int _CurrentPatrolIndex = 0;
-
-        [SerializeField] private float _stoppingDistance = 5f;
-        
-
-        [SerializeField] private UnityEvent _OnStart; // See the Read Me.
-        [SerializeField] private UnityEvent _OnEnd; // See the Read Me.
+        // [SerializeField] private GameObject _CurlingStone;
+        [SerializeField] private UnityEvent _OnStart;
+        [SerializeField] private UnityEvent _OnEnd; 
 
         public override JobStatePriority Priority => JobStatePriority.Low;
 
@@ -54,7 +50,7 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => _CurlingStone != null; 
+        public override bool CanEnterState => Character.Parameters.Status.IsCurling == true;
 
         /************************************************************************************************************************/
 
@@ -62,7 +58,7 @@ namespace CharacterNPCJobs
             JobStateType.Curl;
 
         /************************************************************************************************************************/
-
+        bool isSweeping;
 
         protected virtual void OnDisable()
         {
@@ -81,15 +77,24 @@ namespace CharacterNPCJobs
         {
             if (Character.JobStateMachine.CurrentState == this)
             {
-                UpdateDestination();
+                // UpdateDestination();
+                if (Character.Parameters.Curling.TempTargetObject != null && Character.Parameters.Curling.IsOnIce)
+                {
+                    if (Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperLeft ||
+                        Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperRight){
+                        UpdateFormation();
+                    }
+                }
+                // if (Character.Parameters.Curling.ActiveStone != null && Character.Parameters.Curling.IsOnIce)
+                // {
+                //     UpdateFormation();
+                // }
+                
             }
         }
 
         
-        // private void UpdateDistanceFromDestination()
-        // {
-        //     Character.Parameters.CurrentDestination = _PatrolPoints[_CurrentPatrolIndex];
-        // }
+        
 
         private void UpdateDestination()
         {
@@ -110,18 +115,71 @@ namespace CharacterNPCJobs
             // }
         }
 
-        private void SetNextPatrolLocation()
+        
+
+        // void Update()
+        // {
+        //     UpdateFormation();
+        //     UpdateSweepInput();
+        // }
+
+        void UpdateFormation()
         {
-            // _CurrentPatrolIndex++;
-            // if (_CurrentPatrolIndex >= _PatrolPoints.Count)
-            //     _CurrentPatrolIndex = 0;
+            GameObject stone = Character.Parameters.Curling.TempTargetObject;
+            Vector3 stoneForward = stone.transform.forward;
+            Vector3 stoneRight   = Vector3.Cross(Vector3.up, stoneForward);
 
-            // Character.Parameters.Movement.CurrentDestination = _PatrolPoints[_CurrentPatrolIndex];
+            // for (int i = 0; i < sweepers.Count; i++)
+            // {
+            float side = (Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperLeft) 
+                ? -1f 
+                : 1f;
 
-            // // tell the nav agent to go to that location
-            // Character.NavAgent.SetDestination(_PatrolPoints[_CurrentPatrolIndex].position);
-            // Character.Parameters.Movement.DistanceFromDestination = Character.NavAgent.remainingDistance;
+            Vector3 targetPos =
+                stone.transform.position +
+                stoneForward * Character.Parameters.Curling.forwardDistance +
+                stoneRight * Character.Parameters.Curling.lateralSpacing * side;
+
+            // Character.Parameters.Curling.TargetPosition.position = targetPos;
+            Character.NavAgent.SetDestination(targetPos);
+            Character.Parameters.Movement.DistanceFromDestination = Character.NavAgent.remainingDistance;
+            Character.Parameters.Movement.CurrentDestination = Character.Parameters.Curling.TempTargetObject.transform;
+
+            if (Vector3.Distance(Character.transform.position, targetPos) > 1.1f
+            // Mathf.Sqrt(
+            //     (Character.Parameters.Curling.forwardDistance * Character.Parameters.Curling.forwardDistance) + 
+            //     (Character.Parameters.Curling.lateralSpacing * Character.Parameters.Curling.lateralSpacing)) + 2f
+            )
+            {
+                Character.Parameters.Movement.WantsToRun = true;
+            } else
+            {
+                Character.Parameters.Movement.WantsToRun = false;
+            }
+
+            // SetTarget(
+            //     targetPos,
+            //     stoneForward,
+            //     Character.Parameters.Curling.followSmoothing
+            // );
+
         }
+        
+
+        // void UpdateSweepInput()
+        // {
+        //     bool sweepInput = Input.GetButton("Sweep");
+
+        //     if (sweepInput != isSweeping)
+        //     {
+        //         isSweeping = sweepInput;
+        //         foreach (var s in sweepers)
+        //             s.SetSweeping(isSweeping);
+
+        //         stone.SetSweepActive(isSweeping);
+        //     }
+        // }
+
     }
         
 }

@@ -19,46 +19,28 @@ namespace CurlingManagersV3
 
         public void CalculateScore()
         {
-            if (CurlingManager._instance.Parameters.Course.targetZone == null) return;
+            CalculateScoreByClassicRules();
+        }
+
+        public void CalculateScoreByClassicRules()
+        {
+                        if (CurlingManager._instance.Parameters.Course.targetZone == null) return;
             Vector3 targetZoneCenter = CurlingManager._instance.Parameters.Course.targetZone.transform.position;
 
-            List<CurlingStone> stonesTeamHome = CurlingManager._instance.Parameters.Stones.stonesTeamHome.Where(a =>
-                a.isInPlay == true
-            ).ToList();
-            List<CurlingStone> stonesTeamAway = CurlingManager._instance.Parameters.Stones.stonesTeamAway.Where(a =>
-                a.isInPlay == true
-            ).ToList();
+            List<CurlingStone> stonesTeamHome = FilterAndUpdateStoneListForScoring(
+                stones: CurlingManager._instance.Parameters.Stones.stonesTeamHome
+            );
 
-            foreach (CurlingStone s in stonesTeamHome)
-            {
-                s.UpdateDistanceFromTarget(
-                    targetZone: CurlingManager._instance.Parameters.Course.targetZone
-                );
-            }
-
-            foreach (CurlingStone s in stonesTeamAway)
-            {
-                s.UpdateDistanceFromTarget(
-                    targetZone: CurlingManager._instance.Parameters.Course.targetZone
-                );
-            }
-
-            stonesTeamHome.OrderBy(p => p.distanceFromTarget);
-            stonesTeamAway.OrderBy(p => p.distanceFromTarget);
-
-            // stonesTeamHome.Sort((a, b) =>
-            //     Vector3.Distance(targetZoneCenter, a.rb.transform.position)
-            //     .CompareTo(Vector3.Distance(targetZoneCenter, b.rb.transform.position)));
-
-            // stonesTeamAway.Sort((a, b) => 
-            //     Vector3.Distance(targetZoneCenter, a.rb.transform.position)
-            //     .CompareTo(Vector3.Distance(targetZoneCenter, b.rb.transform.position)));
+            List<CurlingStone> stonesTeamAway = FilterAndUpdateStoneListForScoring(
+                stones: CurlingManager._instance.Parameters.Stones.stonesTeamAway
+            );
 
             int teamHomeScore = 0;
             int teamAwayScore = 0;
 
             if (stonesTeamHome.Count > 0 && stonesTeamAway.Count > 0)
             {
+                Debug.Log("Scoring: Both teams have 1 or more stones in play");
                 if (IsStoneCloserToTargetThanOtherStone(stonesTeamHome[0], stonesTeamAway[0]))
                 {
                     Debug.Log("Home Team Stone is Closer");
@@ -90,11 +72,7 @@ namespace CurlingManagersV3
                 teamAwayScore = stonesTeamAway.Count;
             }
 
-            // CurlingGameManagerV2.Instance.gameData.score.SetScore(
-            //     teamHomeScore: teamHomeScore,
-            //     teamAwayScore: teamAwayScore,
-            //     isFinal: false
-            // );
+            // Update the Game Score
             CurlingManager._instance.Parameters.CurrentGameScore.SetScore(
                 teamHomeScore: teamHomeScore,
                 teamAwayScore: teamAwayScore,
@@ -103,25 +81,35 @@ namespace CurlingManagersV3
 
             Debug.Log($"[Scoring] Team Home: {teamHomeScore}, Team Away: {teamAwayScore}");
             // OnCurlingGameScoreChanged?.Invoke(CurlingGameManagerV2.Instance.gameData.score);
-
         }
 
-        /// returns 1 if true
-        /// returns -1 if false
-        /// returns 0 if equal
-        private bool IsStoneCloserToTargetThanOtherStone(
-            CurlingStone stoneA, 
-            CurlingStone otherStone
+
+        /// <summary>
+        /// Helper Functions
+        /// </summary>
+        public List<CurlingStone> FilterAndUpdateStoneListForScoring(
+            List<CurlingStone> stones
         )
         {
-            // Vector3 targetZoneCenter = CurlingManager._instance.Parameters.Course.targetZone.transform.position;
-            // float DistanceOfStoneAToTarget = Vector3.Distance(targetZoneCenter, stoneA.rb.transform.position);
-            // float DistanceOfStoneBToTarget = Vector3.Distance(targetZoneCenter, otherStone.rb.transform.position);
+            // filter stones to only those in play
+            List<CurlingStone> updatedStones = stones.Where(a =>
+                a.Parameters.Status.IsInPlay == true
+            ).ToList();
 
-            return stoneA.distanceFromTarget > otherStone.distanceFromTarget
-                ? false
-                : true;
+            // Update each stones distance from target
+            foreach (CurlingStone s in updatedStones)
+            {
+                s.UpdateDistanceFromTarget(
+                    targetZone: CurlingManager._instance.Parameters.Course.targetZone
+                );
+            }
+
+            // Order the stones by distance to target (zero is closest)
+            updatedStones.OrderBy(p => p.Parameters.Movement.DistanceFromTarget);
+
+            return updatedStones;
         }
+
 
         private int CalculatePoints(
             List<CurlingStone> scoringStones, 
@@ -143,9 +131,19 @@ namespace CurlingManagersV3
             }
 
             return score;
-
-
         }
+
+
+        private bool IsStoneCloserToTargetThanOtherStone(
+            CurlingStone stoneA, 
+            CurlingStone otherStone
+        )
+        {
+            return stoneA.Parameters.Movement.DistanceFromTarget > otherStone.Parameters.Movement.DistanceFromTarget
+                ? false
+                : true;
+        }
+
         /// <summary>
         /// Update UI
         /// </summary>
@@ -173,3 +171,6 @@ namespace CurlingManagersV3
         }
     }
 }
+
+
+

@@ -53,7 +53,7 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
-        // [Header("Directional Movement Settings")]
+        [Header("Directional Movement Settings")]
         [SerializeField] private StringAsset _DirectionalParameterX;
         [SerializeField] private StringAsset _DirectionalParameterY;
         [SerializeField, Seconds] private float _DirectionalParameterSmoothTime = 0.15f;
@@ -66,10 +66,10 @@ namespace CharacterNPC.v2
         [SerializeField] private bool _FullMovementControl = true;
 
         /************************************************************************************************************************/
-        [Header("Nav Agent Settings")]
-        [SerializeField, MetersPerSecond(Rule = Value.IsNotNegative)]
-        private float _WalkSpeed = 3.5f;
-        public float WalkSpeed => _WalkSpeed;
+        // [Header("Nav Agent Settings")]
+        // [SerializeField, MetersPerSecond(Rule = Value.IsNotNegative)]
+        // private float _WalkSpeed = 3.5f;
+        // public float WalkSpeed => _WalkSpeed;
 
         protected virtual void Awake()
         {
@@ -101,7 +101,6 @@ namespace CharacterNPC.v2
 
         public void UpdateMovementDirection()
         {
-
             if (_Character.NavAgent.velocity.magnitude < 0.1f) 
             {
                 _Character.Parameters.Movement.MovementDirection = Vector3.zero;
@@ -124,9 +123,35 @@ namespace CharacterNPC.v2
             _Character.Parameters.Movement.DistanceFromDestination = 
                 _Character.NavAgent.remainingDistance;
         }
-        
+         
         // new
         public void UpdateSpeed()
+        {
+            
+            UpdateSpeedOfMovementAnimation();            
+
+            _Character.Parameters.Movement.DesiredForwardSpeed = _Character.Parameters.Movement.overrideDesiredSpeed
+                ? _Character.Parameters.Movement.DesiredForwardSpeedOverride
+                : _Character.Parameters.Movement.WantsToRun
+                    ? _Character.Parameters.Movement.RunSpeed
+                    : _Character.Parameters.Movement.WalkSpeed;
+
+            float deltaSpeed = _Character.Parameters.Movement.MovementDirection != Vector3.zero 
+                ? _Character.Parameters.Movement.Acceleration 
+                : _Character.Parameters.Movement.Decceleration;
+                
+            _Character.Parameters.Movement.ForwardSpeed = Mathf.MoveTowards(
+                _Character.Parameters.Movement.ForwardSpeed,
+                _Character.Parameters.Movement.DesiredForwardSpeed,
+                deltaSpeed * Time.deltaTime
+            );
+
+            _Character.NavAgent.speed = _Character.Parameters.Movement.ForwardSpeed;
+        
+        }
+
+
+        public void UpdateSpeedOfMovementAnimation()
         {
             // if at the destination, has no destination, or has no movement direction, speed is zero
             if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
@@ -136,29 +161,13 @@ namespace CharacterNPC.v2
             )
             {
                 _Speed.TargetValue = 0f;
-                // _Character.Parameters.Movement.IsMoving = false;
                 return;
             } else {
                 
                 _Speed.TargetValue = _Character.Parameters.Movement.WantsToRun
                     ? _RunParameterValue
                     : _WalkParameterValue;
-
-                // _Character.Parameters.Movement.IsMoving = true;
             }
-            
-            _Character.NavAgent.speed = WalkSpeed; // Animation walk is 0.5
-            _Character.Parameters.Movement.ForwardSpeed = WalkSpeed; //7f;
-            
-            //     Vector3 movement = _Character.Parameters.MovementDirection;
-
-            //     _Character.Parameters.DesiredForwardSpeed = movement.magnitude * MaxSpeed;
-
-            //     float deltaSpeed = movement != Vector3.zero ? Acceleration : Deceleration;
-            //     _Character.Parameters.ForwardSpeed = Mathf.MoveTowards(
-            //         _Character.Parameters.ForwardSpeed,
-            //         _Character.Parameters.DesiredForwardSpeed,
-            //         deltaSpeed * Time.deltaTime);
         }
 
         // public void StopMovement()
@@ -243,17 +252,17 @@ namespace CharacterNPC.v2
             //     // Calling direction.Normalize() would do the same thing, but would calculate the magnitude again.
             //     movementDirection = direction / Mathf.Sqrt(squaredDistance);
             // }
-            // float dirX = direction.x == 0f
-            //     ? 0f
-            //     : direction.x > 0f 
-            //         ? 1f
-            //         : -1f;
+            float dirX = direction.x == 0f
+                ? 0f
+                : direction.x > 0f 
+                    ? 1f
+                    : -1f;
 
-            // float dirZ = direction.z == 0f
-            //     ? 0f
-            //     : direction.z > 0f 
-            //         ? 1f
-            //         : -1f;
+            float dirZ = direction.z == 0f
+                ? 0f
+                : direction.z > 0f 
+                    ? 1f
+                    : -1f;
 
             // Vector3 localDirection = _Character.gameObject.transform.InverseTransformDirection(movementDirection);
 
@@ -264,16 +273,17 @@ namespace CharacterNPC.v2
             
 
             _DirectionalSmoothedParameters.TargetValue = new Vector2(
-                direction.x, 
-                direction.z
+                dirX, // direction.x, 
+                dirZ // direction.z
             );
+
+            
         }
 
       
         protected virtual void OnAnimatorMove()
         {
             Vector3 movement = GetRootMotion();
-
 
             // Debug.Log("Root Motion: " + movement);
             // CheckGround(ref movement);

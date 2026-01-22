@@ -16,6 +16,12 @@ public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
         LoadData();
     }
 
+    void OnEnable()
+    {
+        UpdateUI();
+        DisplayActiveListOfStones();
+    }
+
     public void Update()
     {
         // Switch item selection right
@@ -58,9 +64,9 @@ public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
         if(stones == null) return;
 
         listOfCurlingStones.ClearList();
-        // listOfCurlingStones.BuildList(
-        //     stones.ConvertAll(s => s.id).ToArray()
-        // );
+        listOfCurlingStones.BuildList(
+            stones.ToArray()
+        );
         listOfCurlingStones.UpdateUI();
     }
 
