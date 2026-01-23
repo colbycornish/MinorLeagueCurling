@@ -12,28 +12,29 @@ namespace CurlingStones
     [Serializable]
     public class CurlingStoneMetaData
     {
-        
-        // [SerializeField]
-        // private bool _IsThrown;
-        // public ref bool IsThrown => ref _IsThrown;
-
-        // [SerializeField]
-        // private bool _IsInPlay;
-        // public ref bool IsInPlay => ref _IsInPlay;
-
-        // [SerializeField]
-        // private bool _IsSliding;
-        // public ref bool IsSliding => ref _IsSliding;
-
-        // [SerializeField]
-        // private bool _IsInScoringZone;
-        // public ref bool IsInScoringZone => ref _IsInScoringZone;
-
         [Header("Basic Data")]
-        public string title = "Basic Stone";
-        public string description = "Just your basic curling stone.";
-        public string id = "";
-        public Texture avatarImage;
+        [SerializeField]
+        private string _Title = "Basic Stone";
+        public string Title => _Title;
+
+        [SerializeField]
+        private string _Description = "Just your basic curling stone.";
+        public string Description => _Description;
+
+        [SerializeField]
+        private string _Id = "";
+        public string Id => _Id;
+
+        [SerializeField]
+        private Texture _AvatarImage = null;
+        public Texture AvatarImage => _AvatarImage;
+
+        
+        
+        // public string title = "Basic Stone";
+        // public string description = "Just your basic curling stone.";
+        // public string id = "";
+        // public Texture avatarImage;
         // private RawImage faceRenderTexture;
 
         [Header("Ids")]

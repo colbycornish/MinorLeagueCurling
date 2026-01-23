@@ -46,6 +46,7 @@ namespace CharacterNPC.v2
         [SerializeField] private StringAsset _SpeedParameter;
         [SerializeField] private float _WalkParameterValue = 0.5f;
         [SerializeField] private float _RunParameterValue = 1;
+        [SerializeField] private float _SprintParameterValue = 1.5f;
         [SerializeField, Seconds] private float _ParameterSmoothTime = 0.15f;
         [SerializeField, DegreesPerSecond] private float _TurnSpeed = 120;
 
@@ -130,11 +131,35 @@ namespace CharacterNPC.v2
             
             UpdateSpeedOfMovementAnimation();            
 
-            _Character.Parameters.Movement.DesiredForwardSpeed = _Character.Parameters.Movement.overrideDesiredSpeed
+            // TODO: Create override for accelleration and decceleration while curling
+            if (_Character.JobStateMachine.CurrentState.JobType == CharacterNPCJobs.JobStateType.Curl && 
+                (_Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperLeft ||
+                _Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperRight) &&
+                _Character.Parameters.Movement.MovementDirection != Vector3.zero && 
+                _Character.Parameters.Curling.IsOnIce &&
+                _Character.Parameters.Curling.ActiveStone != null
+            )
+            {
+                Vector3 v = _Character.Parameters.Curling.ActiveStone.rb.linearVelocity;
+                Debug.Log($"[Sweeper Movement] Stone Magnetude: {v.magnitude}");
+
+                _Character.Parameters.Movement.DesiredForwardSpeed = v.magnitude * 1.4f;
+                _Character.Parameters.Movement.ForwardSpeed = v.magnitude * 1.4f;
+                _Character.NavAgent.acceleration = v.magnitude * 1.4f;
+                _Character.NavAgent.speed = _Character.Parameters.Movement.ForwardSpeed;
+                return;
+                
+            } else
+            {
+                // _Character.NavAgent.acceleration = _Character.Parameters.Movement.Acceleration;
+                _Character.Parameters.Movement.DesiredForwardSpeed = _Character.Parameters.Movement.overrideDesiredSpeed
                 ? _Character.Parameters.Movement.DesiredForwardSpeedOverride
                 : _Character.Parameters.Movement.WantsToRun
                     ? _Character.Parameters.Movement.RunSpeed
                     : _Character.Parameters.Movement.WalkSpeed;
+            }
+
+            
 
             float deltaSpeed = _Character.Parameters.Movement.MovementDirection != Vector3.zero 
                 ? _Character.Parameters.Movement.Acceleration 
@@ -147,7 +172,6 @@ namespace CharacterNPC.v2
             );
 
             _Character.NavAgent.speed = _Character.Parameters.Movement.ForwardSpeed;
-        
         }
 
 
@@ -168,17 +192,7 @@ namespace CharacterNPC.v2
                     ? _RunParameterValue
                     : _WalkParameterValue;
             }
-        }
-
-        // public void StopMovement()
-        // {
-        //     _Speed.TargetValue = 0f;
-        //     _Character.NavAgent.isStopped = true;
-        //     _Character.Parameters.Movement.IsStopped = true;
-        //     _Character.Parameters.Movement.IsMoving = false;
-        // }
-        
-        
+        }        
 
         public void UpdateMovementDirectionDirectional()
         {

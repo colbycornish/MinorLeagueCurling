@@ -78,7 +78,7 @@ namespace CurlingManagersV3
                 launchForceMultiplier: CurlingManager._instance.Parameters.Throwing.LaunchPower,
                 launchForce: CurlingManager._instance.Parameters.Throwing.LaunchForce, // default power
                 launchDirection: direction,
-                initialSpinDirection: currentStone.spinAmountInitial, // initial spin direction
+                initialSpinDirection: currentStone.Parameters.Movement.SpinAmountInitial, // initial spin direction
                 initialSpinStrength: CurlingManager._instance.Parameters.Throwing.SpinStrength // initial spin strength
             );
             

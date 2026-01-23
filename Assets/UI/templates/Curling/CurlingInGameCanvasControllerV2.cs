@@ -29,31 +29,31 @@ public class CurlingInGameCanvasControllerV2 : MonoBehaviour
     }
 
     void HandlePhase(
-        CurlingManagersV3.CurlingMatchPhase newPhase
+        CurlingMatchPhase newPhase
     ){
         OnPhaseChanged();
     }
 
     void OnPhaseChanged(){
-        CurlingManagersV3.CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
+        CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
         switch (currentPhase)
         {
-            case CurlingManagersV3.CurlingMatchPhase.Loading:
+            case CurlingMatchPhase.Loading:
                 OpenLoadingSection();
                 break;
             // case CurlingManagersV3.CurlingMatchPhase.RoundSplash:
             //     OpenRoundSplashSection();
             //     break;
-            case CurlingManagersV3.CurlingMatchPhase.StoneSelection:
+            case CurlingMatchPhase.StoneSelection:
                 OpenStoneSelection();
                 break;
-            case CurlingManagersV3.CurlingMatchPhase.CurlingAimControlsPhase:
+            case CurlingMatchPhase.CurlingAimControlsPhase:
                 OpenCurlingInGameSection();
                 break;
-            case CurlingManagersV3.CurlingMatchPhase.PostThrowResult:
+            case CurlingMatchPhase.PostThrowResult:
                 OpenPostThrowResultsDisplay();
                 break;
-            case CurlingManagersV3.CurlingMatchPhase.FinalResults:
+            case CurlingMatchPhase.FinalResults:
                 OpenFinalResultsDisplay();
                 break;
             default:

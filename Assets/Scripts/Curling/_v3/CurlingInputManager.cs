@@ -267,20 +267,6 @@ namespace CurlingManagersV3
         /// Helpers
         /// </summary>
 
-        // private void HandleNextTurn()
-        // {
-        //     if (!CurlingManager._instance.TurnManager.IsThereAnotherTurnAfterThisOne())
-        //     {
-        //         CurlingManager._instance.EndCurrentCurlingGame(); // End Curling Game
-        //     }
-        //     else
-        //     {
-        //         CurlingManager._instance.HandleEndOfTurn();
-        //         CurlingManager._instance.HandleStartNextTurn();
-        //         MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
-        //     }
-        // }
-
         private void HandleExitCurlingGameInput()
         {
 

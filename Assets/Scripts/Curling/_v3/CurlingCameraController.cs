@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Cinemachine;
 
-/// <summary>
-/// </summary>
-
 namespace CurlingManagersV3
 {
     public class CurlingCameraController : MonoBehaviour

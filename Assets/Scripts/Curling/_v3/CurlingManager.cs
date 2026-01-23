@@ -14,7 +14,6 @@ using CurlingManagersV3.Parameters;
 namespace CurlingManagersV3
 {
     [RequireComponent(typeof(CurlingManagersV3.Aiming))]
-    // [RequireComponent(typeof(CurlingManagersV3.CourseController))]
     [RequireComponent(typeof(CurlingManagersV3.Players))]
     [RequireComponent(typeof(CurlingManagersV3.Scoring))]
     [RequireComponent(typeof(CurlingManagersV3.Stones))]
@@ -42,7 +41,6 @@ namespace CurlingManagersV3
         private CurlingManagersV3.Aiming _Aiming;
         public CurlingManagersV3.Aiming Aiming => _Aiming;
 
-        // public CurlingManagersV3.CourseController courseController;
         [SerializeField]
         private CurlingManagersV3.Players _Players;
         public CurlingManagersV3.Players Players => _Players;
@@ -91,7 +89,6 @@ namespace CurlingManagersV3
 #if UNITY_EDITOR
         protected void OnValidate()
         {
-            // base.OnValidate();
             _Aiming = GetComponent<CurlingManagersV3.Aiming>();
             _Players = GetComponent<CurlingManagersV3.Players>();
             _Scoring = GetComponent<CurlingManagersV3.Scoring>();
@@ -212,14 +209,14 @@ namespace CurlingManagersV3
 
             // Update Player Tracking
             CurlingTeam activeTeam = 
-                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
-                    ? CurlingManager._instance.Parameters.Teams.teamHome
-                    : CurlingManager._instance.Parameters.Teams.teamAway;
+                Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? Parameters.Teams.teamHome
+                    : Parameters.Teams.teamAway;
 
             CurlingTeam inactiveTeam = 
-                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
-                    ? CurlingManager._instance.Parameters.Teams.teamAway
-                    : CurlingManager._instance.Parameters.Teams.teamHome;
+                Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? Parameters.Teams.teamAway
+                    : Parameters.Teams.teamHome;
  
             _Players.UpdateSweeperStoneTracking(
                 team: activeTeam,

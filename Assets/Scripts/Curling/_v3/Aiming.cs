@@ -141,39 +141,12 @@ namespace CurlingManagersV3
 
 
             CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = amount; // TODO: phase out
-            currentStone.curlAmountInitial = amount; // TODO: Phase out
-            currentStone.spinSpeedInitial = amount;
-            currentStone.spinAmountInitial = amount;
+            currentStone.Parameters.Movement.CurlAmountInitial = amount; // TODO: Phase out
+            currentStone.Parameters.Movement.SpinSpeedInitial = amount;
+            currentStone.Parameters.Movement.SpinAmountInitial = amount;
 
             ThrowDirectionIndicator tdi = CurlingManager._instance.Parameters.Course.directionPivotObject.GetComponent<ThrowDirectionIndicator>();
             tdi.SetCurlAmount(amount);
         }
     }
 }
-
-
-
-//         [SerializeField]
-//         private Character _Character;
-//         public Character Character => _Character;
-
-//         /************************************************************************************************************************/
-
-//         public StateMachine<CharacterState> OwnerStateMachine => _Character.StateMachine;
-
-//         /************************************************************************************************************************/
-
-// #if UNITY_EDITOR
-//         protected override void OnValidate()
-//         {
-//             base.OnValidate();
-//             gameObject.GetComponentInParentOrChildren(ref _Character);
-//         }
-// #endif
-
-
-// public void Setup(CurlingCourseData courseData)
-        // {
-        //     CurlingManager._instance.Parameters.Course.directionPivotObject = courseData.directionalPivot;
-        //     CurlingManager._instance.Parameters.Course.directionPivot = courseData.directionalPivot.transform;
-        // }

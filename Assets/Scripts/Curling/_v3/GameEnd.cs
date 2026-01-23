@@ -8,11 +8,6 @@ namespace CurlingManagersV3
 {
     public class GameEnd : MonoBehaviour
     {
-        // [Header("Setup Settings")]
-        // public bool isGameStarted = false;
-        // public bool isGamePaused = false;
-        // public bool isGameEnded = false;
-
         [Header("[Data] Exit Information")]
         public string exitToScene;
         public string exitSpawnId;

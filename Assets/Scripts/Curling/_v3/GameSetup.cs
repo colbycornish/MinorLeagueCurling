@@ -113,7 +113,7 @@ namespace CurlingManagersV3
             Debug.Log("Game Setup: Curling Game is Loading...");
 
             CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
-                newPhase: CurlingManagersV3.CurlingMatchPhase.Loading
+                newPhase: CurlingMatchPhase.Loading
             );
         }
 
@@ -124,7 +124,7 @@ namespace CurlingManagersV3
             Debug.Log("Game Setup: Curling Game is Ready.");
             
             CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
-                newPhase: CurlingManagersV3.CurlingMatchPhase.RoundSplash
+                newPhase: CurlingMatchPhase.RoundSplash
             );
         }
     }

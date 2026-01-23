@@ -11,7 +11,7 @@ namespace CurlingManagersV3
 {
     public class Scoring : MonoBehaviour
     {        
-        public event Action<CurlingGameScore> OnCurlingGameScoreChanged;
+        // public event Action<CurlingGameScore> OnCurlingGameScoreChanged;
 
         /// <summary>
         /// Score Calculation
@@ -24,8 +24,8 @@ namespace CurlingManagersV3
 
         public void CalculateScoreByClassicRules()
         {
-                        if (CurlingManager._instance.Parameters.Course.targetZone == null) return;
-            Vector3 targetZoneCenter = CurlingManager._instance.Parameters.Course.targetZone.transform.position;
+            if (CurlingManager._instance.Parameters.Course.targetZone == null) return;
+            // Vector3 targetZoneCenter = CurlingManager._instance.Parameters.Course.targetZone.transform.position;
 
             List<CurlingStone> stonesTeamHome = FilterAndUpdateStoneListForScoring(
                 stones: CurlingManager._instance.Parameters.Stones.stonesTeamHome

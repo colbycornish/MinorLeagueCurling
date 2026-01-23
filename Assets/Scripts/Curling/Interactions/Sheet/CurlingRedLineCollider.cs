@@ -29,7 +29,7 @@ public class CurlingRedLineCollider : MonoBehaviour
             //     CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.MatchPhaseManager.CurlingNoSweepZone);
             // }
             if (CurlingManagersV3.MatchPhaseManager._instance != null){
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.CurlingMatchPhase.CurlingNoSweepZone);
+                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingNoSweepZone);
             }
 
             CurlingStone stone = other.gameObject.GetComponent<CurlingStone>();

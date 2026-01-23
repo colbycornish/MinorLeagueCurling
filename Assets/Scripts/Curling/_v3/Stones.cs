@@ -129,10 +129,7 @@ namespace CurlingManagersV3
                 CurlingManager._instance.Parameters.Course.launchPoint != null
             )
             {
-                // CurlingManager._instance.Parameters.Stones.currentStone.isThrown = false;
                 CurlingManager._instance.Parameters.Stones.currentStone.Parameters.Status.IsThrown = false;
-        
-                // CurlingManager._instance.Parameters.Stones.currentStone.isInPlay = true;
                 CurlingManager._instance.Parameters.Stones.currentStone.Parameters.Status.IsInPlay = true;
 
                 CurlingManager._instance.Parameters.Stones.currentStone.transform.position = CurlingManager._instance.Parameters.Course.launchPoint.position;
@@ -232,22 +229,3 @@ namespace CurlingManagersV3
         }
     }   
 }
-
-
-
-// [Header("Game Objects")]
-// public List<CurlingStone> stonesTeamHome = new List<CurlingStone>();
-// public List<CurlingStone> stonesTeamAway = new List<CurlingStone>();
-
-// [Header("Locations")]
-// public List<Transform> stonesSpawnLocationsTeamHome = new List<Transform>();
-// public List<Transform> stonesSpawnLocationsTeamAway = new List<Transform>();
-
-// [Header("Current Stone")]
-// This is one of the most important bits, and will be referenced by 
-// the stone throw controller, sweeping controller, etc.
-// public CurlingStone currentStone;
-// public CurlingStone currentStoneId;
-
-// private int stonesSpawned = 0;
-// private int stonesThrown = 0;

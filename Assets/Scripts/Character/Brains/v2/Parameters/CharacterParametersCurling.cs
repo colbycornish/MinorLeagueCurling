@@ -38,5 +38,9 @@ namespace CharacterNPC.v2
 
         [Header("Behavior")]
         [SerializeField] float followSmoothing = 8f;
+
+        [SerializeField]
+        private bool _IsAbleToSweep = false;
+        public ref bool IsAbleToSweep => ref _IsAbleToSweep;
     }
 }

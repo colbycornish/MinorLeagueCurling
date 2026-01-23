@@ -9,41 +9,12 @@ using System;
 namespace CurlingManagersV3
 {
 
-    public enum CurlingMatchPhase
-    {
-        /// Should only be used at the start
-        None,
-        Loading,
-        RoundSplash,
-        TeamSplash,
-
-        /// Curling loop begins here
-        StoneSelection,
-        StoneSelectionDetails,
-        StoneSelectionConfirm,
-        CurlingAimControlsPhase,
-        CurlingPowerMeterPhase,
-        CurlingStoneSweepingPhase,
-        CurlingNoSweepZone,
-        PostThrowResult,
-
-        // Displayed if the settings are marked to allow player obstacles
-        ObstacleSelection,
-        ObstaclePlacement,
-
-        // End Game
-        FinalResults,
-
-        // Exit the Curling Game and return to previous location
-        ExitCurlingGame
-    }
-
     public class MatchPhaseManager : MonoBehaviour
     {
  
         public static CurlingManagersV3.MatchPhaseManager _instance { get; private set; }
-        public CurlingManagersV3.CurlingMatchPhase currentPhase { get; private set; }
-        public event Action<CurlingManagersV3.CurlingMatchPhase> OnPhaseChanged;
+        public CurlingMatchPhase currentPhase { get; private set; }
+        public event Action<CurlingMatchPhase> OnPhaseChanged;
 
         private void Awake()
         {

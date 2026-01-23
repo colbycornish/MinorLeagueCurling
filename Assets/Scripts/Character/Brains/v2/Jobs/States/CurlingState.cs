@@ -62,15 +62,22 @@ namespace CharacterNPCJobs
 
         protected virtual void OnDisable()
         {
-            _OnEnd.Invoke();
             Debug.Log("CurlingState OnDisable");
+            Character.Parameters.Movement.useDirectionalMovementAnimations = false;
+            Character.NavAgent.acceleration = Character.Parameters.Movement.Acceleration;
+            Character.Parameters.Movement.overrideDesiredSpeed = false;
+            Character.Parameters.Movement.useDirectionalMovementAnimations = false;
+            _OnEnd.Invoke();
+            
+            
         }
 
         protected virtual void OnEnable()
         {
+            // Debug.Log("CurlingState OnEnable");
             _OnStart.Invoke();
-            Debug.Log("CurlingState OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Curl;
+            Character.Parameters.Movement.useDirectionalMovementAnimations = true;
         }
 
         protected virtual void Update()
@@ -85,42 +92,25 @@ namespace CharacterNPCJobs
                         UpdateFormation();
                     }
                 }
-                // if (Character.Parameters.Curling.ActiveStone != null && Character.Parameters.Curling.IsOnIce)
-                // {
-                //     UpdateFormation();
-                // }
-                
             }
         }
-
         
-        
-
-        private void UpdateDestination()
-        {
-            // Transform _currentDestination = Character.Parameters.Movement.CurrentDestination;
-            
-            // if (_currentDestination == null)
-            // {
-            //     SetNextPatrolLocation();
-            // }
-            // else if (Character.NavAgent.remainingDistance <= _stoppingDistance && !Character.NavAgent.pathPending)
-            // {
-            //     Debug.Log("PatrolState Reached Destination - Should be going idle");
-            //     Character.JobStateMachine.TrySetDefaultState();
-            // }
-            // else if (_currentDestination != null)
-            // {
-            //     Character.Parameters.Movement.DistanceFromDestination = Character.NavAgent.remainingDistance;
-            // }
-        }
-
-        
-
-        // void Update()
+        /// <summary>
+        /// TODO: Impliment this, and remove from CharacterMovement.cs
+        /// </summary>
+        // void UpdateCharacterSpeed()
         // {
-        //     UpdateFormation();
-        //     UpdateSweepInput();
+        //     Vector3 v = Character.Parameters.Curling.ActiveStone.rb.linearVelocity;
+        //     // Debug.Log($"[Sweeper Movement] Stone Velocity: {v.normalized}");
+        //     Debug.Log($"[Sweeper Movement] Stone Magnetude: {v.magnitude}");
+
+        //     Character.Parameters.Movement.overrideDesiredSpeed = true;
+        //     Character.Parameters.Movement.DesiredForwardSpeedOverride = v.magnitude * 1.4f;
+        //     Character.Parameters.Movement.DesiredForwardSpeed = v.magnitude * 1.4f;
+        //     Character.Parameters.Movement.ForwardSpeed = v.magnitude * 1.4f;
+        //     //
+        //     Character.NavAgent.acceleration = v.magnitude * 1.4f;
+        //     Character.NavAgent.speed = Character.Parameters.Movement.ForwardSpeed;
         // }
 
         void UpdateFormation()
@@ -164,22 +154,6 @@ namespace CharacterNPCJobs
             // );
 
         }
-        
-
-        // void UpdateSweepInput()
-        // {
-        //     bool sweepInput = Input.GetButton("Sweep");
-
-        //     if (sweepInput != isSweeping)
-        //     {
-        //         isSweeping = sweepInput;
-        //         foreach (var s in sweepers)
-        //             s.SetSweeping(isSweeping);
-
-        //         stone.SetSweepActive(isSweeping);
-        //     }
-        // }
-
     }
         
 }

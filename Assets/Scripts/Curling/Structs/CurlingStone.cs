@@ -18,33 +18,6 @@ public class CurlingStone : MonoBehaviour
     [HideInInspector] public int stoneIndex;
 
 
-
-    [Header("Spin")]
-    /// <summary>
-    /// spin can go in either the left (negative) or right (positive) direction
-    /// </summary>
-    public float spinSpeedInitial = 0f;
-    public float spinSpeedCurrent = 0f;
-    public float spinSpeedTarget = 0f;
-    public float spinSpeedStep = 0.25f;
-    public float spinSpeedDecay = 0.05f;
-    public float spinSpeedTargetMax = 1f;
-    public float maxTorque = 1f;
-    /// <summary>
-    /// Todo: remove?
-    /// </summary>
-    [HideInInspector] public float curlAmountCurrent = 0f;
-    [HideInInspector] public float curlAmountInitial = 0f;
-    [HideInInspector] public float spinAmountInitial = 0f;
-    [HideInInspector] public float spinAmountCurrent = 0f;
-    
-    
-    [Header("Speed")]
-    [HideInInspector] public float speedCurrent = 0f;
-
-    public Vector3 movementDirection;
-
-
     [Header("Model")]
     public Rigidbody rb; // Rigidbody to apply force / detect motion
     public GameObject visual; // Optional: mesh or model 
@@ -86,7 +59,10 @@ public class CurlingStone : MonoBehaviour
     )
     {        
         // Fire the stone
-        rb.AddForce(launchDirection * launchForce * launchForceMultiplier, ForceMode.Impulse);
+        rb.AddForce(
+            launchDirection * launchForce * launchForceMultiplier, 
+            ForceMode.Impulse
+        );
         Debug.Log("[Stone Throw] 🚀 Stone launched with power: " + launchForceMultiplier);
 
         // Add initial spin to the stone
@@ -122,27 +98,37 @@ public class CurlingStone : MonoBehaviour
     
     public void HandleLeftSweepSpin()
     {
-        spinSpeedTarget -= spinSpeedStep;
-        spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
+        Parameters.Movement.SpinSpeedTarget -= Parameters.Movement.SpinSpeedStep;
+        Parameters.Movement.SpinSpeedTarget = Mathf.Clamp(
+            Parameters.Movement.SpinSpeedTarget, 
+            -Parameters.Movement.SpinSpeedTargetMax, 
+            Parameters.Movement.SpinSpeedTargetMax
+        );
         HandleSpinStop();
     }
 
     public void HandleRightSweepSpin()
     {
-        spinSpeedTarget = spinSpeedTarget + spinSpeedStep;
-        spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
+        Parameters.Movement.SpinSpeedTarget +=  Parameters.Movement.SpinSpeedStep;
+        Parameters.Movement.SpinSpeedTarget = Mathf.Clamp(
+            Parameters.Movement.SpinSpeedTarget, 
+            -Parameters.Movement.SpinSpeedTargetMax, 
+            Parameters.Movement.SpinSpeedTargetMax
+        );
         HandleSpinStop();
     }
 
     public void HandleSpinStop()
     {
-        if (spinSpeedTarget > 0f && spinSpeedTarget < spinSpeedStep)
+        if (Parameters.Movement.SpinSpeedTarget > 0f && 
+            Parameters.Movement.SpinSpeedTarget < Parameters.Movement.SpinSpeedStep)
         {
-            spinSpeedTarget = 0f; // Prevent negative spin speed
+            Parameters.Movement.SpinSpeedTarget = 0f; // Prevent negative spin speed
         }
-        if (spinSpeedTarget < 0f && spinSpeedTarget > -spinSpeedStep)
+        if (Parameters.Movement.SpinSpeedTarget < 0f && 
+            Parameters.Movement.SpinSpeedTarget > -Parameters.Movement.SpinSpeedStep)
         {
-            spinSpeedTarget = 0f; // Prevent negative spin speed
+            Parameters.Movement.SpinSpeedTarget = 0f; // Prevent negative spin speed
         }
     }
 
@@ -150,13 +136,12 @@ public class CurlingStone : MonoBehaviour
     // it was intended to provide better visual feedback only.
     public void HandleVisualSpin()
     {
-        // Rigidbody rb = currentStone.GetComponent<Rigidbody>();
-        float appliedSpinSpeed = spinSpeedTarget;
-        if (spinSpeedCurrent > maxTorque)
+        float appliedSpinSpeed = Parameters.Movement.SpinSpeedTarget;
+        if (Parameters.Movement.SpinSpeedCurrent > Parameters.Movement.MaxTorque)
         {
             // float spinDiff = spinSpeedCurrent - maxTorque;
             appliedSpinSpeed = 0;// - spinDiff;
-            Debug.Log($"[Stone Spin] 🌀 Spin speed clamped: {spinSpeedCurrent} -> {appliedSpinSpeed}");
+            Debug.Log($"[Stone Spin] 🌀 Spin speed clamped: {Parameters.Movement.SpinSpeedCurrent} -> {appliedSpinSpeed}");
         }
         float torqueMagnitude = 1f * appliedSpinSpeed; // Adjust this value to control the strength of the spin
         rb.AddRelativeTorque(transform.up * torqueMagnitude, ForceMode.Acceleration);
@@ -166,8 +151,8 @@ public class CurlingStone : MonoBehaviour
 
     private void LogCurrentSpinForce()
     {
-        spinSpeedCurrent = rb.angularVelocity.magnitude;
-        Mathf.Clamp(spinSpeedCurrent, -10f, 10f); // Clamp the spin speed to a reasonable rang
+        Parameters.Movement.SpinSpeedCurrent = rb.angularVelocity.magnitude;
+        Mathf.Clamp(Parameters.Movement.SpinSpeedCurrent, -10f, 10f); // Clamp the spin speed to a reasonable rang
     }
 
     /// <summary>
@@ -188,21 +173,30 @@ public class CurlingStone : MonoBehaviour
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
         sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor + Time.fixedDeltaTime * sweepDecayRate);
         // applies a standard amount of force in the forward direction
-        rb.AddForce(forward * sweepBoostFactor * sweepBoostAmount, ForceMode.Acceleration);
+        rb.AddForce(
+            forward * sweepBoostFactor * sweepBoostAmount, 
+            ForceMode.Acceleration
+        );
 
         // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
         if (isSweepingLeft && !isSweepingRight)
         {
             // Debug.Log("Left Sweep Only Applied");
             // applies reduced force in the left direction
-            rb.AddForce(-side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
+            rb.AddForce(
+                -side * sweepStrength * 0.75f, 
+                ForceMode.Acceleration
+            ); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else if (!isSweepingLeft && isSweepingRight)
         {
             // Debug.Log("Right Sweep Only Applied");
             // applies reduced force in the right direction
-            rb.AddForce(side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
+            rb.AddForce(
+                side * sweepStrength * 0.75f, 
+                ForceMode.Acceleration
+            ); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
     }
 
@@ -212,7 +206,11 @@ public class CurlingStone : MonoBehaviour
             transform.position, 
             targetZone.transform.position
         );
+    }
 
+    public void UpdateMovementStatus()
+    {
+        
     }
 
     public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;

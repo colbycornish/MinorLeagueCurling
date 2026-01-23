@@ -17,7 +17,7 @@ public class CurlingYellowLineCollider : MonoBehaviour
         {
             Debug.Log("Yellow Line Collision");
             if (CurlingManagersV3.MatchPhaseManager._instance != null){
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingManagersV3.CurlingMatchPhase.CurlingStoneSweepingPhase);
+                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
             }
         }
 

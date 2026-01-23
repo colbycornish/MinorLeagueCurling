@@ -56,7 +56,8 @@ namespace CurlingManagersV3
                 }
                 return;
             }
-            if (currentPhase == CurlingManagersV3.CurlingMatchPhase.CurlingNoSweepZone && 
+
+            if (currentPhase == CurlingMatchPhase.CurlingNoSweepZone && 
                 (CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft == true ||
                 CurlingManager._instance.Parameters.Sweeping.IsSweepingRight == true)
             )
@@ -183,9 +184,6 @@ namespace CurlingManagersV3
             }
         }
 
-        ///
-        /// 
-        /// 
         
         public void ResetSweeperExhaustionBars()
         {
@@ -223,21 +221,3 @@ namespace CurlingManagersV3
 
     }
 }
-
-
-// [Header("Launch Settings")]
-// public float sweepStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
-
-// [Header("Sweeper Settings")]
-// public float sweepBoostAmount = 1.5f; // how strong the speed boost is ** NEW SWEEPER CODE **
-// public float sweepDecayRate = 2f;
-// public float curlAmount = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
-// private float sweepBoostFactor = 0f; // ** NEW SWEEPER CODE **
-
-// Sweeper State ** NEW SWEEPER CODE **
-// private bool isSweepingLeft = false; // ** NEW SWEEPER CODE **
-// private bool isSweepingRight = false; // ** NEW SWEEPER CODE **
-
-// [Header("Sweeper Bars")]
-// [SerializeField] public SweeperExhaustionBarV2 leftSweeperExhaustionBar;
-// [SerializeField] public SweeperExhaustionBarV2 rightSweeperExhaustionBar;
