@@ -29,8 +29,6 @@ namespace CurlingStones
         private Texture _AvatarImage = null;
         public Texture AvatarImage => _AvatarImage;
 
-        
-        
         // public string title = "Basic Stone";
         // public string description = "Just your basic curling stone.";
         // public string id = "";

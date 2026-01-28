@@ -26,12 +26,9 @@ public class ScorebugTeamStoneAvailabilityItem : MonoBehaviour
     public void SetAvailability(bool available){
         isAvailable = available;
         isUsed = !available;
-        if (available){
-            SetAvailable();
-        }
-        else {
-            SetUsed();
-        }
+        availableColor.SetActive(isAvailable);
+        usedColor.SetActive(isUsed);
+        Debug.Log($"[ScorebugTeamStoneAvailabilityItem] SetAvailability: {available}");
     }
 
     public void SetAvailable(){

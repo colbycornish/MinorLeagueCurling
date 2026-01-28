@@ -122,7 +122,7 @@ namespace CurlingManagersV3
             CurlingManager._instance.Parameters.Status.isLoading = false;
             
             Debug.Log("Game Setup: Curling Game is Ready.");
-            
+            CurlingManager._instance.cameraController.PlayCourseIntroTimeline();
             CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
                 newPhase: CurlingMatchPhase.RoundSplash
             );

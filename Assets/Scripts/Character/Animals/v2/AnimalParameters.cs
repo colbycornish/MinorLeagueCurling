@@ -20,6 +20,18 @@ namespace AnimalNPC
         /************************************************************************************************************************/
 
         [SerializeField]
+        private AnimalParametersStatus _Status;
+        public AnimalParametersStatus Status => _Status;
+
+        /************************************************************************************************************************/
+
+        [SerializeField]
+        private AnimalParametersSurroundings _Surroundings;
+        public AnimalParametersSurroundings Surroundings => _Surroundings;
+
+        /************************************************************************************************************************/
+
+        [SerializeField]
         private Vector3 _MovementDirection;
         public Vector3 MovementDirection
         {

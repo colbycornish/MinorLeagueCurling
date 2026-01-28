@@ -89,7 +89,7 @@ Inspiration & references:
 # Requirements
 
 Platform:
-- Unity (v6.2)
+- Unity (v6000.2.10f1)
 
 Unity Plugins:
 - Animancer (for code-based animation control)

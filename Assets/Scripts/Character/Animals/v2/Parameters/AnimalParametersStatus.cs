@@ -5,6 +5,7 @@
 using System;
 using UnityEngine;
 using Animancer;
+using System.Collections.Generic;
 
 namespace AnimalNPC
 {
@@ -16,6 +17,22 @@ namespace AnimalNPC
         [SerializeField]
         private bool _IsDead;
         public ref bool IsDead => ref _IsDead;
+
+        public enum AnimalStateType
+        {
+            Alive,
+            Dead,
+            Drinking,
+            Eating,
+            Idle,
+            Running,
+            Sleeping,
+            Walking,
+        }
+
+        [SerializeField]
+        private KeyValuePair<AnimalStateType, float> _WantsToLevels;
+        public ref KeyValuePair<AnimalStateType, float> WantsToLevels => ref _WantsToLevels;
         
     }
 }

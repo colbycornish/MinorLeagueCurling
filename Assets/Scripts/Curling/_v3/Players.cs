@@ -25,7 +25,6 @@ namespace CurlingManagersV3
         {
             SetupTeams(teamHome, teamAway);
             SetupPlayers(teamHome, teamAway, curlingCourse);
-
             // scoreBug.UpdateTeamInfo(
             //     homeTeamName: "Blue Broom Brushers",
             //     awayTeamName: "Purple Stone Throwers"
@@ -176,9 +175,6 @@ namespace CurlingManagersV3
                 playerObject: team.sweeperRight,
                 newPosition: idleLocations[2].position
             );
-            // team.thrower.transform.position = idleLocations[0].position;
-            // team.sweeperLeft.transform.position = idleLocations[1].position;
-            // team.sweeperRight.transform.position = idleLocations[2].position;
 
             team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
             team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
@@ -189,15 +185,12 @@ namespace CurlingManagersV3
 
         public void PutTeamOnIce(CurlingTeam team){
             Debug.Log("Putting Team on Ice");
-            // Debug.Log($"Thrower before position: {team.thrower.transform.position}");
-            // Debug.Log($"Adjusted position: {CurlingManager._instance.Parameters.Course.throwerStartLocation.position}");
+            
             TeleportPlayer(
                 playerObject: team.thrower,
                 newPosition: CurlingManager._instance.Parameters.Course.throwerStartLocation.position
             );
             
-            // team.thrower.transform.position = CurlingManager._instance.Parameters.Course.throwerStartLocation.position;
-            // Debug.Log($"Thrower after position: {team.thrower.transform.position}");
             TeleportPlayer(
                 playerObject: team.sweeperLeft,
                 newPosition: CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position
@@ -206,9 +199,7 @@ namespace CurlingManagersV3
                 playerObject: team.sweeperRight,
                 newPosition: CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position
             );
-            // team.sweeperLeft.transform.position = CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position;
-            // team.sweeperRight.transform.position = CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position;
-        
+            
             // Make Right Sweeper look at Left Sweeper
             team.sweeperRight.transform.LookAt(team.sweeperLeft.transform.position);
             // Make Left Sweeper look at Right Sweeper
@@ -258,16 +249,20 @@ namespace CurlingManagersV3
 
             activeTeam.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
                 CurlingManager._instance.Parameters.Stones.currentStone;
+
             activeTeam.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
                 CurlingManager._instance.Parameters.Stones.currentStone;
+
             activeTeam.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.ActiveStone = 
                 CurlingManager._instance.Parameters.Stones.currentStone;
 
 
             activeTeam.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
                 CurlingManager._instance.Parameters.Stones.currentStone.gameObject;
+
             activeTeam.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
                 CurlingManager._instance.Parameters.Stones.currentStone.gameObject;
+
             activeTeam.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
                 CurlingManager._instance.Parameters.Stones.currentStone.gameObject;
         }
@@ -295,17 +290,7 @@ namespace CurlingManagersV3
             team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.TempTargetObject = 
                 stone == null ? null : stone.gameObject;
         }
-
-
-
-
-
-
-        // TODO: Establish the Curling Player Data structure first.
-        // We cannot just bring in one of the NPC as a base (since their nav agent and 
-        // action controls conflict with the basis here)
         
-
 
         /// <summary>
         /// Helper Functions
