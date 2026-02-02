@@ -440,7 +440,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 1852799496}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -9441,7 +9440,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 1215604600}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -10368,6 +10366,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -21879,6 +21878,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -26267,6 +26267,63 @@ Transform:
   - {fileID: 1916644082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &675184892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2075575003597008058, guid: fbb58eea336844d03bfabea4a088084e, type: 3}
+  m_PrefabInstance: {fileID: 6502257829844186934}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adcdd1c0c3f4d49c1833fd8426391d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CookingState
+--- !u!1 &676336137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2096789611941197576, guid: c4340c88669a041ecbef288669f44072, type: 3}
+  m_PrefabInstance: {fileID: 3104261165707892611}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &676336140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3307460549281173223, guid: c4340c88669a041ecbef288669f44072, type: 3}
+  m_PrefabInstance: {fileID: 3104261165707892611}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676336137}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3454517bf670241558048bd01ab8080a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DanceState
+--- !u!114 &676336141 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9125303173241283664, guid: c4340c88669a041ecbef288669f44072, type: 3}
+  m_PrefabInstance: {fileID: 3104261165707892611}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676336137}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adcdd1c0c3f4d49c1833fd8426391d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CookingState
+--- !u!114 &676336146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676336137}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cde915fb5fdd4c34b4d85d86c403a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.PartyState
+  _Character: {fileID: 1638761323984892963}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &677417144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26743,7 +26800,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 554435563}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -32053,6 +32109,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -32095,8 +32152,8 @@ MonoBehaviour:
       _WantsToWanderLevel: 0
     _Jobs:
       _CurrentJob: 0
-      _DesiredJob: 11
-      _AvailableJobStates: 0b0000000000000010000000
+      _DesiredJob: 13
+      _AvailableJobStates: 000000000d000000
       _CurrentAction: 0
       _DesiredAction: 0
       _AvailableActions: 
@@ -40339,6 +40396,25 @@ MonoBehaviour:
   _OnEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &949662009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949661997}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cde915fb5fdd4c34b4d85d86c403a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.PartyState
+  _Character: {fileID: 4980998158749743128}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &949826918
 GameObject:
   m_ObjectHideFlags: 0
@@ -40698,6 +40774,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -49259,6 +49336,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -50992,6 +51070,7 @@ MonoBehaviour:
       forwardDistance: 5
       lateralSpacing: 3.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -53627,7 +53706,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 22.602953, y: 22.602953, z: 22.602953}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1305011322}
@@ -55963,6 +56042,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -63617,6 +63697,13 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+    _Status:
+      _IsDead: 0
+    _Surroundings:
+      _IsPlayerInView: 0
+      _IsPlayerInRange: 0
+      _IsPlayerInRangeToInteractWith: 0
+      _IsEngagedInDialogueWithPlayer: 0
     _MovementDirection: {x: 0, y: 0, z: 0}
     _CurrentDestination: {fileID: 0}
     _DistanceFromDestination: 0
@@ -75692,6 +75779,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae7dcd9704b54d4aa44ea1fa540ba19, type: 3}
+--- !u!114 &1620543351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 201472277300349221, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+  m_PrefabInstance: {fileID: 995247212694304995}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cde915fb5fdd4c34b4d85d86c403a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.PartyState
+--- !u!114 &1620543352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3904062831161791167, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+  m_PrefabInstance: {fileID: 995247212694304995}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3454517bf670241558048bd01ab8080a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DanceState
 --- !u!1 &1621106287
 GameObject:
   m_ObjectHideFlags: 0
@@ -78774,7 +78883,7 @@ Transform:
   m_GameObject: {fileID: 1702002797}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0000000037252899, y: -0, z: -0.0000000074505797, w: 1}
-  m_LocalPosition: {x: 88.66, y: 2.9099998, z: 21.26001}
+  m_LocalPosition: {x: 91.161, y: 12.364729, z: 27.08635}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -88727,7 +88836,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 1060235768}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -89043,6 +89151,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -92200,7 +92309,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 1948815568}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -94558,7 +94666,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 321753560}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -94747,6 +94854,7 @@ MonoBehaviour:
       forwardDistance: 5
       lateralSpacing: 3.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -110314,7 +110422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 773543680}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -112421,6 +112528,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 360
   _DirectionalParameterX: {fileID: 0}
@@ -113962,7 +114070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4654061256857950633, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4756178129997083094, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
@@ -113980,10 +114088,30 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
+    - target: {fileID: 4766200984028200918, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+      propertyPath: _ListOfJobStates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766200984028200918, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1620543351}
+    - target: {fileID: 4766200984028200918, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1620543352}
     - target: {fileID: 7223945971989871787, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
       propertyPath: _CurlingStone
       value: 
       objectReference: {fileID: 1298484928}
+    - target: {fileID: 8281358627218821516, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+      propertyPath: _Parameters._Jobs._DesiredJob
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8281358627218821516, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
+      propertyPath: '_Parameters._Jobs._AvailableJobStates.Array.data[0]'
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8858910156813685764, guid: a625f24c172b64781a8d99768107fe6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 67.240005
@@ -117621,6 +117749,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -119767,6 +119896,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155421395977784853, guid: c4340c88669a041ecbef288669f44072, type: 3}
+      propertyPath: _Party
+      value: 
+      objectReference: {fileID: 676336146}
+    - target: {fileID: 155421395977784853, guid: c4340c88669a041ecbef288669f44072, type: 3}
+      propertyPath: _ListOfJobStates.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 155421395977784853, guid: c4340c88669a041ecbef288669f44072, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 676336146}
+    - target: {fileID: 155421395977784853, guid: c4340c88669a041ecbef288669f44072, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[1]'
+      value: 
+      objectReference: {fileID: 676336140}
+    - target: {fileID: 155421395977784853, guid: c4340c88669a041ecbef288669f44072, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[2]'
+      value: 
+      objectReference: {fileID: 676336141}
     - target: {fileID: 1216705486789883297, guid: c4340c88669a041ecbef288669f44072, type: 3}
       propertyPath: m_LocalPosition.x
       value: 62.9
@@ -119813,7 +119962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6639533956369863155, guid: c4340c88669a041ecbef288669f44072, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6657928930024068207, guid: c4340c88669a041ecbef288669f44072, type: 3}
       propertyPath: _CurlingStone
@@ -119838,7 +119987,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2096789611941197576, guid: c4340c88669a041ecbef288669f44072, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 676336146}
   m_SourcePrefab: {fileID: 100100000, guid: c4340c88669a041ecbef288669f44072, type: 3}
 --- !u!4 &3105869690506907377
 Transform:
@@ -121701,6 +121853,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -122435,6 +122588,7 @@ MonoBehaviour:
       forwardDistance: 2.5
       lateralSpacing: 0.6
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -125291,6 +125445,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -126148,6 +126303,95 @@ Transform:
   - {fileID: 730697100792408743}
   m_Father: {fileID: 1628485921117950431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5364605051885884992
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4272145085084559045, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: _Parameters._Movement._CurrentDestination
+      value: 
+      objectReference: {fileID: 1407428119}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 91.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656734448097891076, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6488699768465446073, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 114951265}
+    - target: {fileID: 6488699768465446073, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1542897120}
+    - target: {fileID: 6488699768465446073, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2054072359}
+    - target: {fileID: 7200571966980372911, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 752515615}
+    - target: {fileID: 7200571966980372911, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 223719653}
+    - target: {fileID: 7200571966980372911, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1243875644}
+    - target: {fileID: 7200571966980372911, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 271391142}
+    - target: {fileID: 8487673624320381856, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
+      propertyPath: m_Name
+      value: Character_Mick_TheMoose_Sliderson
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c7e2408b442d54543bb10b1d93aa849f, type: 3}
 --- !u!4 &5366674200584734040
 Transform:
   m_ObjectHideFlags: 0
@@ -127941,6 +128185,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -129465,6 +129710,18 @@ PrefabInstance:
       propertyPath: _CurlingStone
       value: 
       objectReference: {fileID: 1298484928}
+    - target: {fileID: 1393730191164531741, guid: fbb58eea336844d03bfabea4a088084e, type: 3}
+      propertyPath: _Parameters._Jobs._AvailableJobStates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242509537422472134, guid: fbb58eea336844d03bfabea4a088084e, type: 3}
+      propertyPath: _ListOfJobStates.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242509537422472134, guid: fbb58eea336844d03bfabea4a088084e, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 675184892}
     - target: {fileID: 3818687123604113114, guid: fbb58eea336844d03bfabea4a088084e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 58.18
@@ -129531,7 +129788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8832201274170877752, guid: fbb58eea336844d03bfabea4a088084e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -129875,6 +130132,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -131185,6 +131443,95 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8822632921871661329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &7118984869412737573
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1691248528861644032, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 114951265}
+    - target: {fileID: 1691248528861644032, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1542897120}
+    - target: {fileID: 1691248528861644032, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2054072359}
+    - target: {fileID: 2682433647378507716, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: _Parameters._Movement._CurrentDestination
+      value: 
+      objectReference: {fileID: 1407428119}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403984536810845470, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037012012936302450, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: m_Name
+      value: Character_Broomy_OCallahan
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429206494141329973, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 752515615}
+    - target: {fileID: 8429206494141329973, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 223719653}
+    - target: {fileID: 8429206494141329973, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1243875644}
+    - target: {fileID: 8429206494141329973, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
+      propertyPath: '_PatrolPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 271391142}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ec3cd47f29cb14895a11a30c8488bd5a, type: 3}
 --- !u!4 &7124519756460489324
 Transform:
   m_ObjectHideFlags: 0
@@ -133297,9 +133644,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 752515615}
     - target: {fileID: 1673347388406462706, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
+      propertyPath: _Party
+      value: 
+      objectReference: {fileID: 949662009}
+    - target: {fileID: 1673347388406462706, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
       propertyPath: _Dialogue
       value: 
       objectReference: {fileID: 949662003}
+    - target: {fileID: 1673347388406462706, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
+      propertyPath: _ListOfJobStates.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673347388406462706, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
+      propertyPath: '_ListOfJobStates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 949662009}
     - target: {fileID: 2771961921194530970, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 52.79
@@ -133354,11 +133713,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6972376859573308919, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530319501862199085, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
+      propertyPath: _Parameters._Jobs._DesiredJob
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7530319501862199085, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
       propertyPath: _Parameters._Jobs._AvailableJobStates.Array.size
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530319501862199085, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
+      propertyPath: '_Parameters._Jobs._AvailableJobStates.Array.data[1]'
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7530319501862199085, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
       propertyPath: '_Parameters._Jobs._AvailableJobStates.Array.data[2]'
@@ -133371,6 +133738,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3034867762090702109, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 949662003}
+    - targetCorrespondingSourceObject: {fileID: 3034867762090702109, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 949662009}
   m_SourcePrefab: {fileID: 100100000, guid: f1523dbc5f1ac4cbdb77faea7a0769e3, type: 3}
 --- !u!4 &7805094878844388704
 Transform:
@@ -134996,7 +135366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 427612721434444788, guid: 82ea4d35bb2254699a1978f5a89659f8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1129353937491790461, guid: 82ea4d35bb2254699a1978f5a89659f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -135058,6 +135428,10 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
+    - target: {fileID: 7027623047494047758, guid: 82ea4d35bb2254699a1978f5a89659f8, type: 3}
+      propertyPath: _Parameters._Jobs._DesiredJob
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -136808,7 +137182,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
   _Character: {fileID: 3715945667413235095}
-  _CurlingStone: {fileID: 1298484928}
   _OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -137047,6 +137420,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -137775,6 +138149,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -138039,6 +138414,8 @@ SceneRoots:
   - {fileID: 1852799500}
   - {fileID: 1060235772}
   - {fileID: 1948815572}
+  - {fileID: 5364605051885884992}
+  - {fileID: 7118984869412737573}
   - {fileID: 8748244896683521948}
   - {fileID: 1914702324}
   - {fileID: 640516287}

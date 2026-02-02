@@ -14,7 +14,7 @@ namespace AnimalNPC
 {
     
     /// 
-    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character NPC - Character Movement")]
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Animal NPC - Animal Movement")]
     [AnimancerHelpUrl(typeof(AnimalMovement))]
     public class AnimalMovement : MonoBehaviour
     {
