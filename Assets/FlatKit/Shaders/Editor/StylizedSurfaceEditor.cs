@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using FlatKit;
 using FlatKit.StylizedSurface;
+using FlatKit.Editor;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -34,7 +35,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
     private static readonly int LightmapDirectionYaw = Shader.PropertyToID("_LightmapDirectionYaw");
     private const string OutlineSmoothNormalsKeyword = "DR_OUTLINE_SMOOTH_NORMALS";
     private const string RenderingOptionsName = "Rendering Options";
-    private const string UnityVersion = "NLC6GM";
+    private const string UnityVersion = "NLC6GO";
 
     private void DrawStandard(MaterialProperty property) {
         // Remove everything in square brackets.
@@ -45,7 +46,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
         }
 
         var guiContent = new GUIContent(cleanName, tooltip);
-        if (property.propertyType == ShaderPropertyType.Texture) {
+        if (property.GetShaderPropertyType() == ShaderPropertyType.Texture) {
             if (!property.name.Contains("_BaseMap")) {
                 EditorGUILayout.Space(10);
             }
@@ -228,19 +229,16 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
                             !_target.IsKeywordEnabled("_OUTLINESPACE_SCREEN");
 
             bool isOverrideLightDirectionToggle = displayName.ToLower().Contains("override light direction");
-            if (Lightmapping.lightingDataAsset != null)
-            {
+            if (Lightmapping.lightingDataAsset != null) {
                 // Lightmapping is enabled.
                 _target.EnableKeyword("DR_ENABLE_LIGHTMAP_DIR");
-                if (isOverrideLightDirectionToggle)
-                {
+                if (isOverrideLightDirectionToggle) {
                     skipProperty = true;
 
-                    if (latestFoldoutState && foldoutName.Contains("Advanced Lighting"))
-                    {
-                        const string m = "<b>Lightmap Direction Override</b> is required because the scene is using baked lighting.";
-                        EditorGUILayout.LabelField(m, new GUIStyle(EditorStyles.label)
-                        {
+                    if (latestFoldoutState && foldoutName.Contains("Advanced Lighting")) {
+                        const string m =
+                            "<b>Lightmap Direction Override</b> is required because the scene is using baked lighting.";
+                        EditorGUILayout.LabelField(m, new GUIStyle(EditorStyles.label) {
                             richText = true,
                             wordWrap = true,
                             padding = new RectOffset(16, 0, 8, 0)
@@ -323,7 +321,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
             }
 
             if (!skipProperty &&
-                property.propertyType == ShaderPropertyType.Color &&
+                property.GetShaderPropertyType() == ShaderPropertyType.Color &&
                 property.colorValue == HashColor) {
                 property.colorValue = _target.GetColor(ColorPropertyName);
             }
@@ -344,7 +342,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
                 EditorGUI.indentLevel += 1;
             }
 
-            bool hideInInspector = (property.propertyFlags & ShaderPropertyFlags.HideInInspector) != 0;
+            bool hideInInspector = (property.GetShaderPropertyFlags() & ShaderPropertyFlags.HideInInspector) != 0;
             if (!hideInInspector && !skipProperty) {
                 EditorGUI.BeginChangeCheck();
                 DrawStandard(property);
@@ -436,7 +434,8 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
                 EndBox();
                 latestFoldoutState = false;
                 if (foldoutName.Contains("Advanced Lighting")) {
-                    const string m = "<b>Advanced Lighting</b> features have significantly different impact in real-time and baked lighting.";
+                    const string m =
+                        "<b>Advanced Lighting</b> features have significantly different impact in real-time and baked lighting.";
                     EditorGUILayout.LabelField(m, _richHelpBoxStyle);
                 }
             }
@@ -580,7 +579,77 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
                     case 2: {
                         // Save to Assets folder
                         pathSmoothed = $"Assets/{Path.GetFileName(pathSmoothed)}";
-                        AssetDatabase.CreateAsset(newMesh, pathSmoothed);
+
+                        // Make sure the name is a valid file name.
+                        pathSmoothed = Regex.Replace(pathSmoothed, @"[<>:""/\\|?*]", "_");
+
+                        // Re-name if the file already exists.
+                        if (File.Exists(pathSmoothed)) {
+                            var baseName = Path.GetFileNameWithoutExtension(pathSmoothed);
+                            var extension = Path.GetExtension(pathSmoothed);
+                            var directory = Path.GetDirectoryName(pathSmoothed);
+                            int copyIndex = 1;
+                            string newPath;
+                            do {
+                                newPath = $"{directory}\\{baseName} ({copyIndex}){extension}";
+                                copyIndex++;
+
+                                if (copyIndex > 160) {
+                                    Debug.LogError(
+                                        "<b>[Flat Kit]</b> Could not find a valid file name to save the smoothed mesh.");
+                                    _target.DisableKeyword(OutlineSmoothNormalsKeyword);
+
+                                    // Show the user a message.
+                                    EditorUtility.DisplayDialog("Error",
+                                        "Could not find a valid file name to save the smoothed mesh. " +
+                                        "Please try renaming the mesh or saving it to a different folder.",
+                                        "OK");
+
+                                    return;
+                                }
+                            } while (File.Exists(newPath));
+
+                            pathSmoothed = newPath;
+                        }
+
+                        try {
+                            AssetDatabase.CreateAsset(newMesh, pathSmoothed);
+                            Debug.Log($"<b>[Flat Kit]</b> Created asset <i>{pathSmoothed}</i>.");
+                        }
+                        catch (Exception e) {
+                            Debug.LogError($"<b>[Flat Kit]</b> Could not create asset at path '{pathSmoothed}'. " +
+                                           $"Please check the Console for more information.\n{e}");
+
+                            // Show the user a message to select a folder.
+                            var m =
+                                $"Could not create asset at path '{pathSmoothed}'. Please select the folder and file name.";
+                            if (EditorUtility.DisplayDialog("Error", m, "Select Folder", "Cancel")) {
+                                var userPath = EditorUtility.SaveFilePanelInProject("Save Smoothed Mesh",
+                                    Path.GetFileName(pathSmoothed), "asset",
+                                    "Please select a folder and file name to save the smoothed mesh.",
+                                    Path.GetDirectoryName(pathSmoothed));
+                                if (!string.IsNullOrEmpty(userPath)) {
+                                    try {
+                                        AssetDatabase.CreateAsset(newMesh, userPath);
+                                        Debug.Log($"<b>[Flat Kit]</b> Created asset <i>{userPath}</i>.");
+                                    }
+                                    catch (Exception ex) {
+                                        Debug.LogError(
+                                            $"<b>[Flat Kit]</b> Could not create asset at path '{userPath}'. " +
+                                            $"Please check the Console for more information.\n{ex}");
+                                        _target.DisableKeyword(OutlineSmoothNormalsKeyword);
+                                    }
+                                } else {
+                                    _target.DisableKeyword(OutlineSmoothNormalsKeyword);
+                                }
+                            } else {
+                                _target.DisableKeyword(OutlineSmoothNormalsKeyword);
+                            }
+
+                            _target.DisableKeyword(OutlineSmoothNormalsKeyword);
+                            return;
+                        }
+
                         break;
                     }
                 }

@@ -12,60 +12,47 @@ public static class ObjectOutlineEditorUtils {
     private static readonly GUIStyle RichHelpBoxStyle = new(EditorStyles.helpBox) { richText = true };
 
     public static void SetActive(Material material, bool active) {
-        var renderer = GetRenderer(Camera.current ?? Camera.main);
-        if (renderer == null) {
-            const string m = "<b>ScriptableRendererData</b> is required to enable per-object outlines.\n" +
+        // Work directly with the active URP Renderer Data to avoid dependency on a Camera context.
+        var rendererData = GetRendererData();
+        if (rendererData == null) {
+            const string m = "<b>ScriptableRendererData</b> is required to manage per-object outlines.\n" +
                              "Please assign a <b>URP Asset</b> in the Graphics settings.";
             EditorGUILayout.LabelField(m, RichHelpBoxStyle);
             return;
         }
 
-        var features = GetRendererFeatures(renderer);
-        if (features == null) {
-            const string m = "<b>ScriptableRendererFeature</b> is required to enable per-object outlines.\n" +
-                             "Please assign a <b>URP Asset</b> in the Graphics settings.";
-            EditorGUILayout.LabelField(m, RichHelpBoxStyle);
-            return;
+        // Find existing feature on the renderer data.
+        var feature = rendererData.rendererFeatures
+            .FirstOrDefault(f => f != null && f.GetType() == typeof(ObjectOutlineRendererFeature));
+
+        // Create feature on demand when enabling outlines.
+        if (feature == null && active) {
+            feature = ScriptableObject.CreateInstance<ObjectOutlineRendererFeature>();
+            feature.name = "Flat Kit Per Object Outline";
+            AddRendererFeature(rendererData, feature);
+
+            var addedMsg = $"<color=grey>[Flat Kit]</color> <b>Added</b> <color=green>{feature.name}</color> Renderer " +
+                           $"Feature to <b>{rendererData.name}</b>.";
+            Debug.Log(addedMsg, rendererData);
         }
 
-        var feature = features.FirstOrDefault(f => f.GetType() == typeof(ObjectOutlineRendererFeature));
-        if (feature == null) {
-            if (active) {
-                // Add the feature.
-                var rendererData = GetRendererData();
-                if (rendererData == null) return;
+        // If disabling and there's no feature, nothing to do.
+        if (feature == null) return;
 
-                feature = ScriptableObject.CreateInstance<ObjectOutlineRendererFeature>();
-                feature.name = "Flat Kit Per Object Outline";
-                AddRendererFeature(rendererData, feature);
-
-                var m = $"<color=grey>[Flat Kit]</color> <b>Added</b> <color=green>{feature.name}</color> Renderer " +
-                        $"Feature to <b>{rendererData.name}</b>.";
-                Debug.Log(m, rendererData);
-            } else {
-                // Feature not added and outline is disabled.
-                return;
-            }
-        }
-
-        // Register the material. This handles the feature activation.
-        var outlineFeature = feature as ObjectOutlineRendererFeature;
-        if (outlineFeature == null) {
+        // Register/unregister the material and check usage.
+        if (feature is not ObjectOutlineRendererFeature outlineFeature) {
             Debug.LogError("ObjectOutlineRendererFeature not found");
             return;
         }
 
         var featureIsUsed = outlineFeature.RegisterMaterial(material, active);
 
-        // Remove the feature if no materials are using it.
+        // Remove the feature asset if no materials are using it anymore.
         if (!featureIsUsed) {
-            var rendererData = GetRendererData();
-            if (rendererData == null) return;
             RemoveRendererFeature(rendererData, feature);
-
-            var m = $"<color=grey>[Flat Kit]</color> <b>Removed</b> <color=green>{feature.name}</color> Renderer " +
-                    $"Feature from <b>{rendererData.name}</b> because no materials are using it.";
-            Debug.Log(m, rendererData);
+            var removedMsg = $"<color=grey>[Flat Kit]</color> <b>Removed</b> <color=green>{feature.name}</color> Renderer " +
+                             $"Feature from <b>{rendererData.name}</b> because no materials are using it.";
+            Debug.Log(removedMsg, rendererData);
         }
     }
 
