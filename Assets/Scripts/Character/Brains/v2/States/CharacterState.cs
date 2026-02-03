@@ -15,21 +15,6 @@ namespace CharacterNPC.v2
     public abstract class CharacterState : StateBehaviour, IOwnedState<CharacterState>
     {
 
-        // [System.Serializable]
-        // public class StateMachine : StateMachine<CharacterState>.WithDefault
-        // {
-        //     /************************************************************************************************************************/
-
-        //     [SerializeField]
-        //     private CharacterState _Locomotion;
-        //     public CharacterState Locomotion => _Locomotion;
-
-        //     // [SerializeField]
-        //     // private CharacterState _Airborne;
-        //     // public CharacterState Airborne => _Airborne;
-
-        //     /************************************************************************************************************************/
-        // }
         /************************************************************************************************************************/
 
         [SerializeField]
@@ -103,3 +88,20 @@ namespace CharacterNPC.v2
             ActionType.None;
     }
 }
+
+
+// [System.Serializable]
+// public class StateMachine : StateMachine<CharacterState>.WithDefault
+// {
+//     /************************************************************************************************************************/
+
+//     [SerializeField]
+//     private CharacterState _Locomotion;
+//     public CharacterState Locomotion => _Locomotion;
+
+//     // [SerializeField]
+//     // private CharacterState _Airborne;
+//     // public CharacterState Airborne => _Airborne;
+
+//     /************************************************************************************************************************/
+// }

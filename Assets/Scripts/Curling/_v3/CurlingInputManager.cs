@@ -42,7 +42,6 @@ namespace CurlingManagersV3
                 case CurlingMatchPhase.None:
                     break;
                 case CurlingMatchPhase.Loading:
-                    
                     break;
                 case CurlingMatchPhase.RoundSplash:
                     HandleRoundSplashInput();
