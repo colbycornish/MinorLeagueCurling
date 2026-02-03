@@ -67,6 +67,16 @@ namespace CharacterNPC.v2
         [SerializeField] private bool _FullMovementControl = true;
 
         /************************************************************************************************************************/
+
+#if UNITY_EDITOR
+        protected void OnValidate()
+        {
+            // base.OnValidate();
+            gameObject.GetComponentInParentOrChildren(ref _Character);
+            gameObject.GetComponentInParentOrChildren(ref _NavAgent);
+        }
+#endif
+
         // [Header("Nav Agent Settings")]
         // [SerializeField, MetersPerSecond(Rule = Value.IsNotNegative)]
         // private float _WalkSpeed = 3.5f;

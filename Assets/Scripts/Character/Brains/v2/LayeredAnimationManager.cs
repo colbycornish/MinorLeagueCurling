@@ -41,6 +41,15 @@ namespace CharacterNPC.v2
 
         /************************************************************************************************************************/
 
+#if UNITY_EDITOR
+        protected void OnValidate()
+        {
+            _Animancer = gameObject.GetComponent<AnimancerComponent>();
+        }
+#endif
+
+        /************************************************************************************************************************/
+
         protected virtual void Awake()
         {
             _BaseLayer = _Animancer.Layers[0];

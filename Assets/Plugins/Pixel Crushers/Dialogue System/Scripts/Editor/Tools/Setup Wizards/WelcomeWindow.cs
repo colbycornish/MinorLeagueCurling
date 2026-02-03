@@ -122,6 +122,7 @@ namespace PixelCrushers.DialogueSystem
         private void DrawButtons()
         {
             //GUILayout.BeginArea(new Rect(5, 40, position.width - 10, position.height - 40));
+            var ButtonHeightLayout = GUILayout.Height(3 * EditorGUIUtility.singleLineHeight);
             try
             {
                 EditorWindowTools.DrawHorizontalLine();
@@ -131,23 +132,23 @@ namespace PixelCrushers.DialogueSystem
                 GUILayout.BeginHorizontal();
                 try
                 {
-                    if (GUILayout.Button(new GUIContent("Quick\nStart", "Open Quick Start tutorial"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Quick\nStart", "Open Quick Start tutorial"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
-                        Application.OpenURL("http://www.pixelcrushers.com/dialogue_system/manual2x/html/quick_start.html");
+                        Application.OpenURL("https://www.pixelcrushers.com/dialogue_system/manual2x/html/quick_start.html");
                     }
-                    if (GUILayout.Button(new GUIContent("Manual", "Open online manual"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Manual", "Open online manual"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
-                        Application.OpenURL("http://www.pixelcrushers.com/dialogue_system/manual2x/html/");
+                        Application.OpenURL("https://www.pixelcrushers.com/dialogue_system/manual2x/html/");
                     }
-                    if (GUILayout.Button(new GUIContent("Videos", "Open video tutorial list"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Videos", "Open video tutorial list"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
-                        Application.OpenURL("http://www.pixelcrushers.com/dialogue-system-tutorials/");
+                        Application.OpenURL("https://www.youtube.com/watch?v=exs6s3Db8aU&list=PLwJBdHXwa-RoOVOj_BjpdmFbXGV245VQb&index=2");
                     }
-                    if (GUILayout.Button(new GUIContent("Scripting\nReference", "Open scripting & API reference"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Scripting\nReference", "Open scripting & API reference"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
-                        Application.OpenURL("http://www.pixelcrushers.com/dialogue_system/manual2x/html/scripting.html");
+                        Application.OpenURL("https://www.pixelcrushers.com/dialogue_system/manual2x/html/scripting.html");
                     }
-                    if (GUILayout.Button(new GUIContent("Forum", "Go to the Pixel Crushers forum"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Forum", "Go to the Pixel Crushers forum"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
                         Application.OpenURL("https://forum.pixelcrushers.com/");
                     }
@@ -161,25 +162,25 @@ namespace PixelCrushers.DialogueSystem
                 GUILayout.BeginHorizontal();
                 try
                 {
-                    if (GUILayout.Button(new GUIContent("Dialogue\nEditor", "Open the Dialogue Editor window"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Dialogue\nEditor", "Open the Dialogue Editor window"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
                         PixelCrushers.DialogueSystem.DialogueEditor.DialogueEditorWindow.OpenDialogueEditorWindow();
                     }
-                    if (GUILayout.Button(new GUIContent("Dialogue\nManager\nWizard", "Configure a Dialogue Manager, the component that coordinates all Dialogue System activity"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Dialogue\nManager\nWizard", "Configure a Dialogue Manager, the component that coordinates all Dialogue System activity"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
                         DialogueManagerWizard.Init();
                     }
-                    if (GUILayout.Button(new GUIContent("Player\nSetup\nWizard", "Configure a player GameObject to work with the Dialogue System"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Player\nSetup\nWizard", "Configure a player GameObject to work with the Dialogue System"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
                         PlayerSetupWizard.Init();
                     }
-                    if (GUILayout.Button(new GUIContent("NPC\nSetup\nWizard", "Configure a non-player character or other interactive GameObject to work with the Dialogue System"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("NPC\nSetup\nWizard", "Configure a non-player character or other interactive GameObject to work with the Dialogue System"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
                         NPCSetupWizard.Init();
                     }
-                    if (GUILayout.Button(new GUIContent("Free\nExtras", "Go to the Dialogue System free extras website"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), GUILayout.Height(3 * EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button(new GUIContent("Free\nExtras", "Go to the Dialogue System free extras website"), quickButtonGuiStyle, GUILayout.Width(ButtonWidth), ButtonHeightLayout))
                     {
-                        Application.OpenURL("http://www.pixelcrushers.com/dialogue-system-extras/");
+                        Application.OpenURL("https://www.pixelcrushers.com/dialogue-system-extras/");
                     }
                 }
                 finally
@@ -524,10 +525,15 @@ namespace PixelCrushers.DialogueSystem
         {
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Learn About OpenAI Addon", "Visit the Asset Store page for the Addon for OpenAI"),
-                GUILayout.Width(190)))
+            if (GUILayout.Button(new GUIContent("OpenAI Addon", "Visit the Asset Store page for the Addon for OpenAI & Other Generative AI"),
+                GUILayout.Width(150)))
             {
                 Application.OpenURL("https://assetstore.unity.com/packages/tools/ai/dialogue-system-addon-for-openai-249287");
+            }
+            if (GUILayout.Button(new GUIContent("Procedural Dialogue", "Visit the Asset Store page for the Addon for Procedural Dialogue"),
+                GUILayout.Width(150)))
+            {
+                Application.OpenURL("https://assetstore.unity.com/packages/tools/behavior-ai/dialogue-system-for-unity-addon-for-procedural-dialogue-317822");
             }
             GUILayout.EndHorizontal();
 
@@ -540,16 +546,16 @@ namespace PixelCrushers.DialogueSystem
             }
             GUILayout.FlexibleSpace();
 
-            //#if EVALUATION_VERSION || ACADEMIC
+            #if EVALUATION_VERSION || ACADEMIC
             if (GUILayout.Button(new GUIContent("Buy", "Buy a license"), GUILayout.Width(70)))
             {
                 Application.OpenURL("https://assetstore.unity.com/packages/tools/ai/dialogue-system-for-unity-11672");
             }
-            //#endif
+            #endif
 
             if (GUILayout.Button(new GUIContent("Support", "Contact the developer for support"), GUILayout.Width(70)))
             {
-                Application.OpenURL("http://www.pixelcrushers.com/support-form/");
+                Application.OpenURL("https://www.pixelcrushers.com/support-form/");
             }
             EditorGUILayout.EndHorizontal();
         }
