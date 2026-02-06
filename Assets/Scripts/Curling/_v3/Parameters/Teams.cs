@@ -15,9 +15,15 @@ namespace CurlingManagersV3.Parameters
         // public List<CurlingTeam> teams = new List<CurlingTeam>();
 
         [SerializeField]
-        // private CurlingTeam _TeamHome;
-        // public CurlingTeam TeamHome => _TeamHome;
         public CurlingTeam teamHome;
+        
+        // [SerializeField]
+        // private CurlingTeam _TeamHome;
+        // public CurlingTeam TeamHome
+        // {
+        //     get => _TeamHome;
+        //     set => _TeamHome = value;
+        // }
 
         [SerializeField]
         // private CurlingTeam _TeamAway;
@@ -27,14 +33,6 @@ namespace CurlingManagersV3.Parameters
         [SerializeField]
         public CurlingTeam currentTeam;
 
-        // [Header("Team Members")]
-        // private GameObject teamHomeThrower;
-        // private GameObject teamHomeSweeperL;
-        // private GameObject teamHomeSweeperR;
-        // private GameObject teamAwayThrower;
-        // private GameObject teamAwaySweeperL;
-        // private GameObject teamAwaySweeperR;
-        // public CurlingTeam currentTeam;
         
     }
 }
