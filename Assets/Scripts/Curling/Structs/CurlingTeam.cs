@@ -22,10 +22,10 @@ public class CurlingTeam : MonoBehaviour
     public GameObject defaultStone;
     public List<GameObject> stones;
 
-    public void PopulateListOfStones()
-    {
+    // public void PopulateListOfStones()
+    // {
         
-    }
+    // }
 
     public void SetData()
     {

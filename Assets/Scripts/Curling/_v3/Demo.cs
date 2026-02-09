@@ -64,7 +64,7 @@ namespace CurlingManagersV3
             PrepGameDataSettings();
             PrepExitLocation();
             CurlingRules rules = new CurlingRules();
-            rules.SetDefaultRules();
+            // rules.SetDefaultRules();
             CurlingManager._instance.Setup.SetupAll(
                 rulesData: rules,
                 courseData: courseData,
