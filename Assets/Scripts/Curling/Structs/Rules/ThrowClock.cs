@@ -11,7 +11,6 @@ namespace Curling.Rules {
     public class ThrowClock
     {
 
-        
         public bool enabled;
         public int timeAllowedInSeconds;
 
