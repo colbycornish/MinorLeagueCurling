@@ -164,6 +164,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -185,6 +187,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -434,8 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc8ad0853db3469b91b51d4d12a6f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 
   title: The Rink
   description: Let's get pitted
+  thumbnail: {fileID: 0}
   launchPoint: {fileID: 9153016019423404850}
   targetZone: {fileID: 857616272368276828}
   directionalPivot: {fileID: 8255957582847025126}
@@ -463,7 +468,12 @@ MonoBehaviour:
   - {fileID: 3257072329890384209}
   - {fileID: 8420430748368480941}
   objectsToHideIfCurling: {fileID: 0}
+  announcerBooth: {fileID: 0}
   afterGameSpawnLocation: {fileID: 0}
+  courseFullTimeline: {fileID: 0}
+  targetZoneTimeline: {fileID: 0}
+  teamHomeIntroTimeline: {fileID: 0}
+  teamAwayIntroTimeline: {fileID: 0}
 --- !u!1 &857616272368276828
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,6 +927,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -938,6 +950,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -1095,6 +1108,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1116,6 +1131,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -1273,6 +1289,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1294,6 +1312,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -1810,6 +1829,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1831,6 +1852,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -2100,6 +2122,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2121,6 +2145,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -2324,6 +2349,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2345,6 +2372,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -2432,6 +2460,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2453,6 +2483,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -2978,6 +3009,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2999,6 +3032,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -3410,6 +3444,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3431,6 +3467,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -3815,6 +3852,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3836,6 +3875,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -3925,6 +3965,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3946,6 +3988,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -5305,7 +5348,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (6)
@@ -5418,6 +5461,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
       propertyPath: m_Name
       value: bowl-corner-outer
@@ -5673,7 +5720,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (6)
@@ -6519,7 +6566,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (3)
@@ -6920,6 +6967,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
       propertyPath: m_Name
       value: bowl-corner-outer
@@ -7179,7 +7230,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (11)
@@ -7477,7 +7528,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (2)
@@ -7593,7 +7644,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (2)
@@ -7783,7 +7834,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (11)
@@ -8184,6 +8235,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
       propertyPath: m_Name
       value: bowl-corner-outer (2)
@@ -8447,7 +8502,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (5)
@@ -8563,7 +8618,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side
@@ -9290,7 +9345,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (3)
@@ -11236,7 +11291,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (5)
@@ -11349,6 +11404,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: bdad23b7fbee44f2d892b1dad696e529, type: 3}
       propertyPath: m_Name
       value: bowl-corner-outer (2)
@@ -11686,7 +11745,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side
@@ -11950,7 +12009,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (7)
@@ -12684,7 +12743,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (1)
@@ -13240,7 +13299,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (8)
@@ -13504,7 +13563,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (1)
@@ -14636,7 +14695,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (8)
@@ -14822,7 +14881,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (4)
@@ -16222,7 +16281,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (7)
@@ -16486,7 +16545,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: a12d44a4adb5c493fb29178af1b57365, type: 2}
+      objectReference: {fileID: 2100000, guid: ba14bec02d2904ebbaca22cfe42c23b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cc7aa53caf41f4c7fb93a8977a5e48a0, type: 3}
       propertyPath: m_Name
       value: bowl-side (4)
