@@ -1,0 +1,40 @@
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace CurlingUI.v3 {
+    public abstract class IListItemController : MonoBehaviour
+    {
+
+        [Header("State")]
+        [SerializeField] public IListItemController defaultListItem;
+
+        [Header("Events")]
+        [SerializeField] private UnityEvent _OnSelected; // See the Read Me.
+        [SerializeField] private UnityEvent _OnPressed; // See the Read Me.
+        [SerializeField] private UnityEvent _OnHighlighted; // See the Read Me.
+        [SerializeField] private UnityEvent _OnNormal; // See the Read Me.
+        [SerializeField] private UnityEvent _OnDisabled; // See the Read Me.
+
+        [Header("Animations")]
+        [SerializeField] private Animator animator;
+        [SerializeField] public bool SnapScrollPosition = false; // See the Read Me.
+
+
+        public void OnEnter(){} // Called when entering the state
+        public void OnExit(){}  // Called when exiting the state
+        // public void OnUpdate(){} // Logic that runs per frame
+
+        public void OnSelectItem() { // Called when an item is selected
+            _OnSelected.Invoke();
+        }
+
+        public void BuildList(){} // Called when entering the state
+        public void UpdateList(){} // Called when entering the state
+        
+
+        
+        
+    }
+}
+
+

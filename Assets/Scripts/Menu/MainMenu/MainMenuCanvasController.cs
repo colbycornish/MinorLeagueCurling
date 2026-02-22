@@ -34,23 +34,23 @@ public class MainMenuCanvasController : UIController
 
     public CanvasMainMenuState currentState = CanvasMainMenuState.None;
 
-    private void Update()
-    {
-        MainState currentMainState = MainManager._instance.currentState;
+    // private void Update()
+    // {
+    //     MainState currentMainState = MainManager._instance.currentState;
 
-        switch (currentMainState)
-        {
-            case MainState.MainMenu:
-                OpenSection(CanvasMainMenuState.MainMenu);
-                // make things visible
-                Show();
-                break;
-            default:
-                Hide();
-                // hide this canvas
-                break;
-        }
-    }
+    //     switch (currentMainState)
+    //     {
+    //         case MainState.MainMenu:
+    //             OpenSection(CanvasMainMenuState.MainMenu);
+    //             // make things visible
+    //             Show();
+    //             break;
+    //         default:
+    //             Hide();
+    //             // hide this canvas
+    //             break;
+    //     }
+    // }
     
     
 
@@ -95,6 +95,7 @@ public class MainMenuCanvasController : UIController
 
     public void OpenSection(CanvasMainMenuState newState)
     {
+        Debug.Log("Opening section: " + newState.ToString());
         if (currentState == newState) return;
 
         // Disable all canvases first

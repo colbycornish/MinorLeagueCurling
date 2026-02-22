@@ -1,0 +1,19 @@
+using UnityEngine;
+
+namespace CurlingUI.v3 {
+    public class CurlingCharacterItem : MonoBehaviour
+    {
+        public ScriptableObject characterData;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+            
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            
+        }
+    }
+}

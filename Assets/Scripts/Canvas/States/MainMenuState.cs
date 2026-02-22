@@ -1,30 +1,41 @@
 using UnityEngine;
 
-public class MainMenuState : ICanvasState
+namespace UICanvasManager.v3
 {
-    private GameObject mainMenuCanvas;
-    private UICanvasStateMachine uiStateMachine; // Reference to the controller
-
-    public MainMenuState(GameObject canvas, UICanvasStateMachine stateMachine)
+    public class MainMenuState : ICanvasState
     {
-        mainMenuCanvas = canvas;
-        uiStateMachine = stateMachine;
-    }
+        private GameObject mainMenuCanvas;
+        private UICanvasStateMachine uiStateMachine; // Reference to the controller
 
-    public void OnEnter()
-    {
-        mainMenuCanvas.SetActive(true); // Show the canvas
-        // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
-    }
+        public MainMenuState(GameObject canvas, UICanvasStateMachine stateMachine)
+        {
+            mainMenuCanvas = canvas;
+            uiStateMachine = stateMachine;
+        }
 
-    public void OnUpdate()
-    {
-        // Handle input or logic while in this state
-    }
+        public override void OnEnter()
+        {
+            mainMenuCanvas.SetActive(true); // Show the canvas
+            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
+        }
 
-    public void OnExit()
-    {
-        mainMenuCanvas.SetActive(false); // Hide the canvas
-        // Remove listeners
+        public override void OnUpdate()
+        {
+            // Handle input or logic while in this state
+        }
+
+        public override void OnExit()
+        {
+            mainMenuCanvas.SetActive(false); // Hide the canvas
+            // Remove listeners
+        }
+
+        /// <summary>
+        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// </summary>
+        public override CanvasType CurrentCanvasType => CanvasType.MainMenu;
+
+
+
     }
 }
