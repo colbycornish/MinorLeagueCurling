@@ -7,17 +7,12 @@ using Animancer;
 
 namespace UICanvasManager.v3
 {
-    public abstract class ICanvasState : StateBehaviour //, IOwnedState<ICanvasState>
+    public abstract class ICanvasModalState : StateBehaviour //, IOwnedState<ICanvasState>
     {
 
         [SerializeField]
         private UICanvasManager _UICanvasManager;
         public UICanvasManager UICanvasManager => _UICanvasManager;
-
-        // public UICanvasStateMachine<ICanvasState> OwnerStateMachine => _UICanvasManager.StateMachine;
-        // [SerializeField]
-        // private UICanvasManager _CanvasManager;
-        // public UICanvasManager CanvasManager => _CanvasManager;
 
         /************************************************************************************************************************/
 
@@ -30,7 +25,7 @@ namespace UICanvasManager.v3
 
         /************************************************************************************************************************/
 
-        // public StateMachine<ICanvasState> OwnerStateMachine => _CanvasManager.StateMachine;
+        // public StateMachine<ICanvasState> OwnerStateMachine => _UICanvasManager.StateMachine;
         
         public virtual void OnEnter(){} // Called when entering the state
         

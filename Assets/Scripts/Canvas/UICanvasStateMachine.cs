@@ -9,15 +9,23 @@ namespace UICanvasManager.v3
         private ICanvasState currentState;
         private List<ICanvasState> stateHistory = new List<ICanvasState>();
 
-        public void ChangeState(ICanvasState newState)
+        public void ChangeState(
+            ICanvasState nextState,
+            bool addToHistory = true
+        )
         {
+            Debug.Log($"Changing state to: {nextState?.name ?? "null"}");
             if (currentState != null)
             {
                 currentState.OnExit();
+                if (addToHistory)
+                {
+                    stateHistory.Add(currentState);
+                }
+                
             }
 
-            currentState = newState;
-            stateHistory.Add(currentState);
+            currentState = nextState;
             
             if (currentState != null)
             {
@@ -30,17 +38,27 @@ namespace UICanvasManager.v3
             if (stateHistory.Count > 0)
             {
                 ICanvasState previousState = stateHistory[stateHistory.Count - 1];
+                Debug.Log($"Going back to previous state. Current history count: {previousState?.name ?? "null"}, History count: {stateHistory.Count}");
                 stateHistory.RemoveAt(stateHistory.Count - 1);
-                ChangeState(previousState);
+                ChangeState(
+                    nextState: previousState,
+                    addToHistory: false
+                );
             }
         }
 
-        // void Update()
-        // {
-        //     if (currentState != null)
-        //     {
-        //         currentState.OnUpdate();
-        //     }
-        // }
+        public void ClearHistory()
+        {
+            stateHistory.Clear();
+        }
+
+        public void CloseAllUI()
+        {
+            currentState.OnExit();
+            currentState = null;
+            ClearHistory();
+        }
+
+        
     }
 }

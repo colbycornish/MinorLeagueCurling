@@ -11,6 +11,7 @@ public class OptionButton : MonoBehaviour
         "Option C", 
         "Option D" 
     }; // Your list of options
+    
     private int currentIndex = 0;
 
     void Start()

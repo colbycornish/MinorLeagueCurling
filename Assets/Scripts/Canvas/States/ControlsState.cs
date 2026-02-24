@@ -15,7 +15,7 @@ namespace UICanvasManager.v3
 
         public override void OnEnter()
         {
-            controlsCanvas.SetActive(true); // Show the canvas
+            gameObject.SetActive(true); // Show the canvas
             // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
         }
 
@@ -26,14 +26,14 @@ namespace UICanvasManager.v3
 
         public override void OnExit()
         {
-            controlsCanvas.SetActive(false); // Hide the canvas
+            gameObject.SetActive(false); // Hide the canvas
             // Remove listeners
         }
 
         /// <summary>
         /// Used to help the CanvasManager know which canvas to enable when this state is active
         /// </summary>
-        public override CanvasType CurrentCanvasType => CanvasType.Controls;
+        public override CanvasType StateCanvasType => CanvasType.Controls;
 
     }
 }

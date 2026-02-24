@@ -7,7 +7,7 @@ using Animancer;
 
 namespace UICanvasManager.v3
 {
-    public abstract class ICanvasState : StateBehaviour //, IOwnedState<ICanvasState>
+    public abstract class ICanvasCollectionState : StateBehaviour //, IOwnedState<ICanvasState>
     {
 
         [SerializeField]

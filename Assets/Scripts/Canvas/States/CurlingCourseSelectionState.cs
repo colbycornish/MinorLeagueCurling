@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UICanvasManager.v3
 {
-    public class NewGameState : ICanvasState
+    public class CurlingCourseSelectionState : ICanvasState
     {
-        // private GameObject canvasGameObject;
-        private UICanvasStateMachine uiStateMachine; // Reference to the controller
+        private GameObject mainMenuCanvas;
+        // private UICanvasStateMachine uiStateMachine; // Reference to the controller
 
         // public MainMenuState(GameObject canvas, UICanvasStateMachine stateMachine)
         // {
@@ -33,7 +33,7 @@ namespace UICanvasManager.v3
         /// <summary>
         /// Used to help the CanvasManager know which canvas to enable when this state is active
         /// </summary>
-        public override CanvasType StateCanvasType => CanvasType.NewGame;
+        public override CanvasType StateCanvasType => CanvasType.CurlingCourseSelection;
 
     }
 }
