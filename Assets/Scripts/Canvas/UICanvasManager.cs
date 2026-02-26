@@ -12,9 +12,21 @@ namespace UICanvasManager.v3
         public UICanvasStateMachine StateMachine => _StateMachine;
 
         [SerializeField]
+        private UICanvasModalStateMachine _ModalStateMachine = new UICanvasModalStateMachine();
+        public UICanvasModalStateMachine ModalStateMachine => _ModalStateMachine;
+
+        [SerializeField]
         private List<ICanvasState> _ListOfCanvasStates = new List<ICanvasState>();
         public List<ICanvasState> ListOfCanvasStates => _ListOfCanvasStates;
 
+        [SerializeField]
+        private List<ICanvasModalState> _ListOfCanvasModalStates = new List<ICanvasModalState>();
+        public List<ICanvasModalState> ListOfCanvasModalStates => _ListOfCanvasModalStates;
+
+        private bool _ModalIsOpen => ModalStateMachine.CurrentState != null;
+        public bool ModalIsOpen => _ModalIsOpen;
+
+        
 
         protected virtual void Awake()
         {
@@ -27,11 +39,19 @@ namespace UICanvasManager.v3
         {
             ICanvasState[] listedStates = GetComponentsInChildren<ICanvasState>(true);
             _ListOfCanvasStates = new List<ICanvasState>(listedStates);
+
+            ICanvasModalState[] listedModalStates = GetComponentsInChildren<ICanvasModalState>(true);
+            _ListOfCanvasModalStates = new List<ICanvasModalState>(listedModalStates);
         }
         #endif
 
         public void GoBack() => _StateMachine.GoBack();
 
+        
+
+        /// <summary>
+        /// General function for opening a canvas section based on its CanvasType.
+        /// </summary>
         public void OpenSection(CanvasType canvasType)
         {
             foreach (ICanvasState state in _ListOfCanvasStates){
@@ -44,6 +64,23 @@ namespace UICanvasManager.v3
                         return;
                     }
                     _StateMachine.ChangeState(state);
+                    return;
+                }
+            }
+        }
+
+        public void OpenModal(CanvasModalType canvasModalType)
+        {
+            foreach (ICanvasModalState state in _ListOfCanvasModalStates){
+                if (state.StateCanvasModalType == canvasModalType)
+                {
+                    Debug.Log($"Opening canvas modal: {canvasModalType}");
+                    if (_ModalStateMachine == null)
+                    {
+                        Debug.LogError("ModalStateMachine reference is null in UICanvasManager.");
+                        return;
+                    }
+                    _ModalStateMachine.ChangeState(state);
                     return;
                 }
             }
@@ -72,15 +109,35 @@ namespace UICanvasManager.v3
         public void OpenCurlingGameSplashTurnDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
         public void OpenCurlingGameFinalResultDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
 
-        public void CloseAllCanvases()
-        {
-            _StateMachine.ChangeState(null);
-        }
+        public void CloseAllCanvases() => _StateMachine.ChangeState(null);
+        public void CloseAllModals() => _ModalStateMachine.ChangeState(null);
+        
+
+
+
+        /// <summary>
+        /// General function for opening a dialogue section based on its CanvasModalType.
+        /// </summary>
+        /// 
+        public void OpenTeamCharacterSelectionModal() => OpenModal(canvasModalType: CanvasModalType.TeamCharacterSelection);
+        public void OpenTeamStoneSelectionModal() => OpenModal(canvasModalType: CanvasModalType.TeamStoneSelection);
+        public void OpenTeamBroomLeftSweeperSelectionModal() => OpenModal(canvasModalType: CanvasModalType.TeamBroomLeftSweeperSelection);
+        public void OpenTeamBroomRightSweeperSelectionModal() => OpenModal(canvasModalType: CanvasModalType.TeamBroomRightSweeperSelection);
+        public void OpenStoneToUseSelectionModal() => OpenModal(canvasModalType: CanvasModalType.StoneToUseSelection);
+        
+
+        /// <summary>
+        /// Additional quick reference functions for opening specific sections, to be used by buttons and other UI elements.
+        /// </summary>
 
         public void PauseGame()
         {
             OpenSection(canvasType: CanvasType.PauseMenu);
         }
+
+        /// <summary>
+        /// Manual Triggering of canvas sections for testing purposes. Can be removed or replaced with a more robust input handling system later.
+        /// </summary>
 
         public void Update()
         {

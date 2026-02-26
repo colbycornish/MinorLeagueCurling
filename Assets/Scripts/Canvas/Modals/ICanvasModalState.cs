@@ -32,6 +32,11 @@ namespace UICanvasManager.v3
         public virtual void OnExit(){}  // Called when exiting the state
 
         public virtual void OnUpdate(){} // Logic that runs per frame
+
+        public virtual void CloseModal()
+        {
+            _UICanvasManager.CloseAllModals();
+        }
          
 
         // public bool CanExitState
@@ -54,7 +59,7 @@ namespace UICanvasManager.v3
         /// <summary>
         /// Used to help the CanvasManager know which canvas to enable when this state is active
         /// </summary>
-        public virtual CanvasType StateCanvasType => CanvasType.None;
+        public virtual CanvasModalType StateCanvasModalType => CanvasModalType.None;
         
     }
 }

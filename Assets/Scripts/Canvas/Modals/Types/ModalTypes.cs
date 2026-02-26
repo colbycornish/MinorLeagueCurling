@@ -3,9 +3,13 @@
 
 namespace UICanvasManager.v3
 {
-    public enum ModalType
+    public enum CanvasModalType
     {
-        CharacterSelection,
-        StoneSelection 
+        None,
+        TeamCharacterSelection,
+        TeamStoneSelection,
+        TeamBroomLeftSweeperSelection,
+        TeamBroomRightSweeperSelection,
+        StoneToUseSelection
     }
 }
