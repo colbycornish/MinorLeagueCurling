@@ -22,6 +22,7 @@ namespace UICanvasManager.v3
         CurlingTeamSelection,
         CurlingRules,
         CurlingGameSplashTurnDisplay,
+        CurlingGameInGameHUD,
         CurlingGameFinalResultDisplay,
         //
         SplashScreenBurnoutGames

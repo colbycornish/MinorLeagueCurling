@@ -1,7 +1,8 @@
 using UnityEngine;
 using Unity.Properties;
 
-public class CurlingStoneSO : MonoBehaviour
+[CreateAssetMenu(fileName = "CurlingStoneSO", menuName = "Scriptable Objects/CurlingStoneSO")]
+public class CurlingStoneSO : ScriptableObject
 {
     [SerializeField, DontCreateProperty] 
     private string _Id;
@@ -28,8 +29,8 @@ public class CurlingStoneSO : MonoBehaviour
     public string Description => _Description;
 
     [SerializeField, DontCreateProperty] 
-    private Texture _Thumbnail;
+    private Sprite _AvatarImage;
 
     [CreateProperty] 
-    public Texture Thumbnail => _Thumbnail;
+    public Sprite AvatarImage => _AvatarImage;
 }

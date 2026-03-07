@@ -35,5 +35,36 @@ namespace UICanvasManager.v3
         /// </summary>
         public override CanvasType StateCanvasType => CanvasType.CurlingRules;
 
+        // useful functions
+        public void OnUpdateRule()
+        {
+            
+        }
+
+        public void OnUpdateGameMode()
+        {
+            
+        }
+
+        public void OnUpdateDifficulty()
+        {
+            
+        }
+
+        public void OnUpdateNumberOfGames()
+        {
+            
+        }
+
+        public void OnUpdateScoring()
+        {
+            
+        }
+
+        public void OnUpdateThrowClock()
+        {
+            
+        }
+
     }
 }

@@ -664,7 +664,7 @@
             ]
         },
         {
-            "name": "Curling-Throwing",
+            "name": "Curling",
             "id": "df72bab6-f4b2-4d1e-90b4-fd81be5d7306",
             "actions": [
                 {
@@ -720,6 +720,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseStoneAbility",
+                    "type": "Button",
+                    "id": "56e12672-2f5f-4ffd-bf73-1a3b1de519a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SweepRight",
+                    "type": "Button",
+                    "id": "72673c07-4fc7-4ce0-8bbd-9ddc5c309d86",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SweepLeft",
+                    "type": "Button",
+                    "id": "46c2f86a-7973-4efe-ad35-1cc84eba8883",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -729,7 +756,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "IncreasePower",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -810,56 +837,10 @@
                     "action": "AimThrow",
                     "isComposite": false,
                     "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "Curling-Sweeping",
-            "id": "f617a23e-9ec6-4f5e-b4d5-d0830aa7c076",
-            "actions": [
-                {
-                    "name": "SweepLeft",
-                    "type": "Button",
-                    "id": "e075e676-90dd-4535-a223-d53b089c1aa0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SweepRight",
-                    "type": "Button",
-                    "id": "3207f814-c6e5-4aad-86fb-7414a264d0ea",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UseStoneAbility",
-                    "type": "Button",
-                    "id": "8024b0a2-f03a-4338-b53a-6896e0b14d6b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "4cc25d32-71a2-42d1-8840-9791a537cf43",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "Tap,Hold",
-                    "processors": "",
-                    "groups": ";Keyboard & Mouse",
-                    "action": "SweepLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "eddc488e-c100-4629-9d4e-dd61b827af22",
+                    "id": "683a25a5-c80c-4f26-b4ed-c1899dc9bffb",
                     "path": "<Keyboard>/rightShift",
                     "interactions": "Tap,Hold",
                     "processors": "",
@@ -870,7 +851,18 @@
                 },
                 {
                     "name": "",
-                    "id": "8b1530c2-9b84-49d0-80d2-81243a11948d",
+                    "id": "e16edf52-3e44-41ef-b199-23c11d900b71",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Tap,Hold",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "SweepLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb282b89-76fb-4141-8e8f-77f46834fccd",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",

@@ -750,7 +750,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Curling-Throwing"",
+            ""name"": ""Curling"",
             ""id"": ""df72bab6-f4b2-4d1e-90b4-fd81be5d7306"",
             ""actions"": [
                 {
@@ -806,6 +806,33 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseStoneAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""56e12672-2f5f-4ffd-bf73-1a3b1de519a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SweepRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""72673c07-4fc7-4ce0-8bbd-9ddc5c309d86"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SweepLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""46c2f86a-7973-4efe-ad35-1cc84eba8883"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -815,7 +842,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
+                    ""groups"": "";Keyboard & Mouse;Keyboard&Mouse"",
                     ""action"": ""IncreasePower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -896,56 +923,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""AimThrow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                }
-            ]
-        },
-        {
-            ""name"": ""Curling-Sweeping"",
-            ""id"": ""f617a23e-9ec6-4f5e-b4d5-d0830aa7c076"",
-            ""actions"": [
-                {
-                    ""name"": ""SweepLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""e075e676-90dd-4535-a223-d53b089c1aa0"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SweepRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""3207f814-c6e5-4aad-86fb-7414a264d0ea"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UseStoneAbility"",
-                    ""type"": ""Button"",
-                    ""id"": ""8024b0a2-f03a-4338-b53a-6896e0b14d6b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""4cc25d32-71a2-42d1-8840-9791a537cf43"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""Tap,Hold"",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""SweepLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""eddc488e-c100-4629-9d4e-dd61b827af22"",
+                    ""id"": ""683a25a5-c80c-4f26-b4ed-c1899dc9bffb"",
                     ""path"": ""<Keyboard>/rightShift"",
                     ""interactions"": ""Tap,Hold"",
                     ""processors"": """",
@@ -956,7 +937,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8b1530c2-9b84-49d0-80d2-81243a11948d"",
+                    ""id"": ""e16edf52-3e44-41ef-b199-23c11d900b71"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Tap,Hold"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""SweepLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb282b89-76fb-4141-8e8f-77f46834fccd"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1564,19 +1556,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        // Curling-Throwing
-        m_CurlingThrowing = asset.FindActionMap("Curling-Throwing", throwIfNotFound: true);
-        m_CurlingThrowing_AimThrow = m_CurlingThrowing.FindAction("AimThrow", throwIfNotFound: true);
-        m_CurlingThrowing_IncreasePower = m_CurlingThrowing.FindAction("IncreasePower", throwIfNotFound: true);
-        m_CurlingThrowing_DecreasePower = m_CurlingThrowing.FindAction("DecreasePower", throwIfNotFound: true);
-        m_CurlingThrowing_CurlLeft = m_CurlingThrowing.FindAction("CurlLeft", throwIfNotFound: true);
-        m_CurlingThrowing_CurlRight = m_CurlingThrowing.FindAction("CurlRight", throwIfNotFound: true);
-        m_CurlingThrowing_ThrowStone = m_CurlingThrowing.FindAction("ThrowStone", throwIfNotFound: true);
-        // Curling-Sweeping
-        m_CurlingSweeping = asset.FindActionMap("Curling-Sweeping", throwIfNotFound: true);
-        m_CurlingSweeping_SweepLeft = m_CurlingSweeping.FindAction("SweepLeft", throwIfNotFound: true);
-        m_CurlingSweeping_SweepRight = m_CurlingSweeping.FindAction("SweepRight", throwIfNotFound: true);
-        m_CurlingSweeping_UseStoneAbility = m_CurlingSweeping.FindAction("UseStoneAbility", throwIfNotFound: true);
+        // Curling
+        m_Curling = asset.FindActionMap("Curling", throwIfNotFound: true);
+        m_Curling_AimThrow = m_Curling.FindAction("AimThrow", throwIfNotFound: true);
+        m_Curling_IncreasePower = m_Curling.FindAction("IncreasePower", throwIfNotFound: true);
+        m_Curling_DecreasePower = m_Curling.FindAction("DecreasePower", throwIfNotFound: true);
+        m_Curling_CurlLeft = m_Curling.FindAction("CurlLeft", throwIfNotFound: true);
+        m_Curling_CurlRight = m_Curling.FindAction("CurlRight", throwIfNotFound: true);
+        m_Curling_ThrowStone = m_Curling.FindAction("ThrowStone", throwIfNotFound: true);
+        m_Curling_UseStoneAbility = m_Curling.FindAction("UseStoneAbility", throwIfNotFound: true);
+        m_Curling_SweepRight = m_Curling.FindAction("SweepRight", throwIfNotFound: true);
+        m_Curling_SweepLeft = m_Curling.FindAction("SweepLeft", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1595,8 +1585,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     {
         UnityEngine.Debug.Assert(!m_Exploration.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Exploration.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_CurlingThrowing.enabled, "This will cause a leak and performance issues, InputSystem_Actions.CurlingThrowing.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_CurlingSweeping.enabled, "This will cause a leak and performance issues, InputSystem_Actions.CurlingSweeping.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Curling.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Curling.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
     }
 
@@ -1983,54 +1972,69 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
 
-    // Curling-Throwing
-    private readonly InputActionMap m_CurlingThrowing;
-    private List<ICurlingThrowingActions> m_CurlingThrowingActionsCallbackInterfaces = new List<ICurlingThrowingActions>();
-    private readonly InputAction m_CurlingThrowing_AimThrow;
-    private readonly InputAction m_CurlingThrowing_IncreasePower;
-    private readonly InputAction m_CurlingThrowing_DecreasePower;
-    private readonly InputAction m_CurlingThrowing_CurlLeft;
-    private readonly InputAction m_CurlingThrowing_CurlRight;
-    private readonly InputAction m_CurlingThrowing_ThrowStone;
+    // Curling
+    private readonly InputActionMap m_Curling;
+    private List<ICurlingActions> m_CurlingActionsCallbackInterfaces = new List<ICurlingActions>();
+    private readonly InputAction m_Curling_AimThrow;
+    private readonly InputAction m_Curling_IncreasePower;
+    private readonly InputAction m_Curling_DecreasePower;
+    private readonly InputAction m_Curling_CurlLeft;
+    private readonly InputAction m_Curling_CurlRight;
+    private readonly InputAction m_Curling_ThrowStone;
+    private readonly InputAction m_Curling_UseStoneAbility;
+    private readonly InputAction m_Curling_SweepRight;
+    private readonly InputAction m_Curling_SweepLeft;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Curling-Throwing".
+    /// Provides access to input actions defined in input action map "Curling".
     /// </summary>
-    public struct CurlingThrowingActions
+    public struct CurlingActions
     {
         private @InputSystem_Actions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public CurlingThrowingActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public CurlingActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "CurlingThrowing/AimThrow".
+        /// Provides access to the underlying input action "Curling/AimThrow".
         /// </summary>
-        public InputAction @AimThrow => m_Wrapper.m_CurlingThrowing_AimThrow;
+        public InputAction @AimThrow => m_Wrapper.m_Curling_AimThrow;
         /// <summary>
-        /// Provides access to the underlying input action "CurlingThrowing/IncreasePower".
+        /// Provides access to the underlying input action "Curling/IncreasePower".
         /// </summary>
-        public InputAction @IncreasePower => m_Wrapper.m_CurlingThrowing_IncreasePower;
+        public InputAction @IncreasePower => m_Wrapper.m_Curling_IncreasePower;
         /// <summary>
-        /// Provides access to the underlying input action "CurlingThrowing/DecreasePower".
+        /// Provides access to the underlying input action "Curling/DecreasePower".
         /// </summary>
-        public InputAction @DecreasePower => m_Wrapper.m_CurlingThrowing_DecreasePower;
+        public InputAction @DecreasePower => m_Wrapper.m_Curling_DecreasePower;
         /// <summary>
-        /// Provides access to the underlying input action "CurlingThrowing/CurlLeft".
+        /// Provides access to the underlying input action "Curling/CurlLeft".
         /// </summary>
-        public InputAction @CurlLeft => m_Wrapper.m_CurlingThrowing_CurlLeft;
+        public InputAction @CurlLeft => m_Wrapper.m_Curling_CurlLeft;
         /// <summary>
-        /// Provides access to the underlying input action "CurlingThrowing/CurlRight".
+        /// Provides access to the underlying input action "Curling/CurlRight".
         /// </summary>
-        public InputAction @CurlRight => m_Wrapper.m_CurlingThrowing_CurlRight;
+        public InputAction @CurlRight => m_Wrapper.m_Curling_CurlRight;
         /// <summary>
-        /// Provides access to the underlying input action "CurlingThrowing/ThrowStone".
+        /// Provides access to the underlying input action "Curling/ThrowStone".
         /// </summary>
-        public InputAction @ThrowStone => m_Wrapper.m_CurlingThrowing_ThrowStone;
+        public InputAction @ThrowStone => m_Wrapper.m_Curling_ThrowStone;
+        /// <summary>
+        /// Provides access to the underlying input action "Curling/UseStoneAbility".
+        /// </summary>
+        public InputAction @UseStoneAbility => m_Wrapper.m_Curling_UseStoneAbility;
+        /// <summary>
+        /// Provides access to the underlying input action "Curling/SweepRight".
+        /// </summary>
+        public InputAction @SweepRight => m_Wrapper.m_Curling_SweepRight;
+        /// <summary>
+        /// Provides access to the underlying input action "Curling/SweepLeft".
+        /// </summary>
+        public InputAction @SweepLeft => m_Wrapper.m_Curling_SweepLeft;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_CurlingThrowing; }
+        public InputActionMap Get() { return m_Wrapper.m_Curling; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -2038,9 +2042,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="CurlingThrowingActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="CurlingActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(CurlingThrowingActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(CurlingActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -2048,11 +2052,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="CurlingThrowingActions" />
-        public void AddCallbacks(ICurlingThrowingActions instance)
+        /// <seealso cref="CurlingActions" />
+        public void AddCallbacks(ICurlingActions instance)
         {
-            if (instance == null || m_Wrapper.m_CurlingThrowingActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_CurlingThrowingActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_CurlingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CurlingActionsCallbackInterfaces.Add(instance);
             @AimThrow.started += instance.OnAimThrow;
             @AimThrow.performed += instance.OnAimThrow;
             @AimThrow.canceled += instance.OnAimThrow;
@@ -2071,6 +2075,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ThrowStone.started += instance.OnThrowStone;
             @ThrowStone.performed += instance.OnThrowStone;
             @ThrowStone.canceled += instance.OnThrowStone;
+            @UseStoneAbility.started += instance.OnUseStoneAbility;
+            @UseStoneAbility.performed += instance.OnUseStoneAbility;
+            @UseStoneAbility.canceled += instance.OnUseStoneAbility;
+            @SweepRight.started += instance.OnSweepRight;
+            @SweepRight.performed += instance.OnSweepRight;
+            @SweepRight.canceled += instance.OnSweepRight;
+            @SweepLeft.started += instance.OnSweepLeft;
+            @SweepLeft.performed += instance.OnSweepLeft;
+            @SweepLeft.canceled += instance.OnSweepLeft;
         }
 
         /// <summary>
@@ -2079,8 +2092,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="CurlingThrowingActions" />
-        private void UnregisterCallbacks(ICurlingThrowingActions instance)
+        /// <seealso cref="CurlingActions" />
+        private void UnregisterCallbacks(ICurlingActions instance)
         {
             @AimThrow.started -= instance.OnAimThrow;
             @AimThrow.performed -= instance.OnAimThrow;
@@ -2100,133 +2113,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ThrowStone.started -= instance.OnThrowStone;
             @ThrowStone.performed -= instance.OnThrowStone;
             @ThrowStone.canceled -= instance.OnThrowStone;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CurlingThrowingActions.UnregisterCallbacks(ICurlingThrowingActions)" />.
-        /// </summary>
-        /// <seealso cref="CurlingThrowingActions.UnregisterCallbacks(ICurlingThrowingActions)" />
-        public void RemoveCallbacks(ICurlingThrowingActions instance)
-        {
-            if (m_Wrapper.m_CurlingThrowingActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="CurlingThrowingActions.AddCallbacks(ICurlingThrowingActions)" />
-        /// <seealso cref="CurlingThrowingActions.RemoveCallbacks(ICurlingThrowingActions)" />
-        /// <seealso cref="CurlingThrowingActions.UnregisterCallbacks(ICurlingThrowingActions)" />
-        public void SetCallbacks(ICurlingThrowingActions instance)
-        {
-            foreach (var item in m_Wrapper.m_CurlingThrowingActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_CurlingThrowingActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="CurlingThrowingActions" /> instance referencing this action map.
-    /// </summary>
-    public CurlingThrowingActions @CurlingThrowing => new CurlingThrowingActions(this);
-
-    // Curling-Sweeping
-    private readonly InputActionMap m_CurlingSweeping;
-    private List<ICurlingSweepingActions> m_CurlingSweepingActionsCallbackInterfaces = new List<ICurlingSweepingActions>();
-    private readonly InputAction m_CurlingSweeping_SweepLeft;
-    private readonly InputAction m_CurlingSweeping_SweepRight;
-    private readonly InputAction m_CurlingSweeping_UseStoneAbility;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Curling-Sweeping".
-    /// </summary>
-    public struct CurlingSweepingActions
-    {
-        private @InputSystem_Actions m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public CurlingSweepingActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "CurlingSweeping/SweepLeft".
-        /// </summary>
-        public InputAction @SweepLeft => m_Wrapper.m_CurlingSweeping_SweepLeft;
-        /// <summary>
-        /// Provides access to the underlying input action "CurlingSweeping/SweepRight".
-        /// </summary>
-        public InputAction @SweepRight => m_Wrapper.m_CurlingSweeping_SweepRight;
-        /// <summary>
-        /// Provides access to the underlying input action "CurlingSweeping/UseStoneAbility".
-        /// </summary>
-        public InputAction @UseStoneAbility => m_Wrapper.m_CurlingSweeping_UseStoneAbility;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_CurlingSweeping; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="CurlingSweepingActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(CurlingSweepingActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="CurlingSweepingActions" />
-        public void AddCallbacks(ICurlingSweepingActions instance)
-        {
-            if (instance == null || m_Wrapper.m_CurlingSweepingActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_CurlingSweepingActionsCallbackInterfaces.Add(instance);
-            @SweepLeft.started += instance.OnSweepLeft;
-            @SweepLeft.performed += instance.OnSweepLeft;
-            @SweepLeft.canceled += instance.OnSweepLeft;
-            @SweepRight.started += instance.OnSweepRight;
-            @SweepRight.performed += instance.OnSweepRight;
-            @SweepRight.canceled += instance.OnSweepRight;
-            @UseStoneAbility.started += instance.OnUseStoneAbility;
-            @UseStoneAbility.performed += instance.OnUseStoneAbility;
-            @UseStoneAbility.canceled += instance.OnUseStoneAbility;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="CurlingSweepingActions" />
-        private void UnregisterCallbacks(ICurlingSweepingActions instance)
-        {
-            @SweepLeft.started -= instance.OnSweepLeft;
-            @SweepLeft.performed -= instance.OnSweepLeft;
-            @SweepLeft.canceled -= instance.OnSweepLeft;
-            @SweepRight.started -= instance.OnSweepRight;
-            @SweepRight.performed -= instance.OnSweepRight;
-            @SweepRight.canceled -= instance.OnSweepRight;
             @UseStoneAbility.started -= instance.OnUseStoneAbility;
             @UseStoneAbility.performed -= instance.OnUseStoneAbility;
             @UseStoneAbility.canceled -= instance.OnUseStoneAbility;
+            @SweepRight.started -= instance.OnSweepRight;
+            @SweepRight.performed -= instance.OnSweepRight;
+            @SweepRight.canceled -= instance.OnSweepRight;
+            @SweepLeft.started -= instance.OnSweepLeft;
+            @SweepLeft.performed -= instance.OnSweepLeft;
+            @SweepLeft.canceled -= instance.OnSweepLeft;
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CurlingSweepingActions.UnregisterCallbacks(ICurlingSweepingActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CurlingActions.UnregisterCallbacks(ICurlingActions)" />.
         /// </summary>
-        /// <seealso cref="CurlingSweepingActions.UnregisterCallbacks(ICurlingSweepingActions)" />
-        public void RemoveCallbacks(ICurlingSweepingActions instance)
+        /// <seealso cref="CurlingActions.UnregisterCallbacks(ICurlingActions)" />
+        public void RemoveCallbacks(ICurlingActions instance)
         {
-            if (m_Wrapper.m_CurlingSweepingActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_CurlingActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -2236,21 +2140,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="CurlingSweepingActions.AddCallbacks(ICurlingSweepingActions)" />
-        /// <seealso cref="CurlingSweepingActions.RemoveCallbacks(ICurlingSweepingActions)" />
-        /// <seealso cref="CurlingSweepingActions.UnregisterCallbacks(ICurlingSweepingActions)" />
-        public void SetCallbacks(ICurlingSweepingActions instance)
+        /// <seealso cref="CurlingActions.AddCallbacks(ICurlingActions)" />
+        /// <seealso cref="CurlingActions.RemoveCallbacks(ICurlingActions)" />
+        /// <seealso cref="CurlingActions.UnregisterCallbacks(ICurlingActions)" />
+        public void SetCallbacks(ICurlingActions instance)
         {
-            foreach (var item in m_Wrapper.m_CurlingSweepingActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_CurlingActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_CurlingSweepingActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_CurlingActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="CurlingSweepingActions" /> instance referencing this action map.
+    /// Provides a new <see cref="CurlingActions" /> instance referencing this action map.
     /// </summary>
-    public CurlingSweepingActions @CurlingSweeping => new CurlingSweepingActions(this);
+    public CurlingActions @Curling => new CurlingActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -2619,11 +2523,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Curling-Throwing" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Curling" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="CurlingThrowingActions.AddCallbacks(ICurlingThrowingActions)" />
-    /// <seealso cref="CurlingThrowingActions.RemoveCallbacks(ICurlingThrowingActions)" />
-    public interface ICurlingThrowingActions
+    /// <seealso cref="CurlingActions.AddCallbacks(ICurlingActions)" />
+    /// <seealso cref="CurlingActions.RemoveCallbacks(ICurlingActions)" />
+    public interface ICurlingActions
     {
         /// <summary>
         /// Method invoked when associated input action "AimThrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -2667,21 +2571,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnThrowStone(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Curling-Sweeping" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="CurlingSweepingActions.AddCallbacks(ICurlingSweepingActions)" />
-    /// <seealso cref="CurlingSweepingActions.RemoveCallbacks(ICurlingSweepingActions)" />
-    public interface ICurlingSweepingActions
-    {
         /// <summary>
-        /// Method invoked when associated input action "SweepLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "UseStoneAbility" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSweepLeft(InputAction.CallbackContext context);
+        void OnUseStoneAbility(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SweepRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2690,12 +2586,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSweepRight(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "UseStoneAbility" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SweepLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUseStoneAbility(InputAction.CallbackContext context);
+        void OnSweepLeft(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

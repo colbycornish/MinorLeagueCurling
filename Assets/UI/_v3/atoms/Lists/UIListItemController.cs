@@ -2,11 +2,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace CurlingUI.v3 {
-    public abstract class IListItemController : MonoBehaviour
+    public abstract class UIListItemController : MonoBehaviour
     {
 
+        
         [Header("State")]
-        [SerializeField] public IListItemController defaultListItem;
+        [SerializeField] private bool isHighlighted;
+        [SerializeField] private bool isDisabled;
+        [SerializeField] private bool isPressed;
+        [SerializeField] private bool isNormal;
+        [SerializeField] private bool isSelected;
 
         [Header("Events")]
         [SerializeField] private UnityEvent _OnSelected; // See the Read Me.
@@ -17,8 +22,6 @@ namespace CurlingUI.v3 {
 
         [Header("Animations")]
         [SerializeField] private Animator animator;
-        [SerializeField] public bool SnapScrollPosition = false; // See the Read Me.
-
 
         public void OnEnter(){} // Called when entering the state
         public void OnExit(){}  // Called when exiting the state
@@ -27,11 +30,6 @@ namespace CurlingUI.v3 {
         public void OnSelectItem() { // Called when an item is selected
             _OnSelected.Invoke();
         }
-
-        public void BuildList(){} // Called when entering the state
-        public void UpdateList(){} // Called when entering the state
-        
-
         
         
     }

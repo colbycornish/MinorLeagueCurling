@@ -93,6 +93,8 @@ namespace UICanvasManager.v3
         /// functions for common actions.
         /// </summary>
 
+        public void OpenMainMenu() => OpenSection(canvasType: CanvasType.MainMenu);
+        /// 
         public void OpenControlsSection() => OpenSection(canvasType: CanvasType.Controls);
         //
         public void OpenExitGameSection() => OpenSection(canvasType: CanvasType.ExitGame);

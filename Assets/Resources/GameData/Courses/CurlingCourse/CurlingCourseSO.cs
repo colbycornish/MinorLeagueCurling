@@ -24,8 +24,8 @@ public class CurlingCourseSO : ScriptableObject
     public string Description => _Description;
 
     [SerializeField, DontCreateProperty] 
-    private Texture _Thumbnail;
+    private Sprite _Thumbnail;
 
     [CreateProperty] 
-    public Texture Thumbnail => _Thumbnail;
+    public Sprite Thumbnail => _Thumbnail;
 }

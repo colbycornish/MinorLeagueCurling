@@ -15,6 +15,7 @@ public class PowerMeterController : MonoBehaviour
     /// </summary>
     [Header("Game Objects")]
     public GameObject powerMeterBar;
+    public GameObject powerMeterBarContainer;
     public GameObject powerMeterSingleBarPrefab;
     public GameObject maxTextArea;
     public GameObject keyIconItem;
