@@ -24,7 +24,6 @@ namespace CurlingUI.v3 {
 
         [Header("Selections")]
         public Action<CurlingBroomSO> _OnUpdateRules;
-
         public GameObject currentRules;
         public GameObject currentSelectedRule;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,6 +41,11 @@ namespace CurlingUI.v3 {
         }
 
         public void OnUpdateDisplay(){}
+
+        /************************************************************************************************************************/
+
+
+        /************************************************************************************************************************/
 
         public void OnChangeGameMode()
         {

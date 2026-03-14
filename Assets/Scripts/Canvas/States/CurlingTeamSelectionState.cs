@@ -1,10 +1,9 @@
-// using System.Collections.Generic;
 using UnityEngine;
-// using UnityEngine.UI;
 using CurlingUI.v3;
 using System;
 using System.Collections.Generic;
-// using PixelCrushers.DialogueSystem;
+using UnityEngine.Events;
+using Unity.VisualScripting;
 
 namespace UICanvasManager.v3
 {
@@ -34,13 +33,16 @@ namespace UICanvasManager.v3
         public Action<CurlingBroomSO> _OnSelectCharacterRightSweeper;   
 
         [Header("Temp Data")]
-        private CharacterSO selectedCharacterForThrower = null;
-        private CharacterSO selectedCharacterForLeftSweeper = null;
-        private CharacterSO selectedCharacterForRightSweeper = null;
+        public CharacterSO selectedCharacterForThrower = null;
+        public CharacterSO selectedCharacterForLeftSweeper = null;
+        public CharacterSO selectedCharacterForRightSweeper = null;
 
-        private CurlingBroomSO selectedBroomForLeftSweeper = null;
-        private CurlingBroomSO selectedBroomForRightSweeper = null;  
-        private List<CurlingStoneSO> selectedStonesForThrower = new List<CurlingStoneSO>();             
+        public CurlingBroomSO selectedBroomForLeftSweeper = null;
+        public CurlingBroomSO selectedBroomForRightSweeper = null;  
+        public List<CurlingStoneSO> selectedStonesForThrower = new List<CurlingStoneSO>();
+
+        [Header("Events")]             
+        public UnityEvent _OnCharacterSelectionChanged;
 
         /************************************************************************************************************************/
 
@@ -106,18 +108,25 @@ namespace UICanvasManager.v3
         }
 
         /************************************************************************************************************************/
-
         public void UpdateDisplays()
+        {
+            UpdateCharacterDisplays();
+            UpdateEquipmentDisplays();
+        }
+
+
+        public void UpdateCharacterDisplays()
         {
             teamMemberThrowerItem.UpdateCharacterData(selectedCharacterForThrower);
             teamMemberLeftSweeperItem.UpdateCharacterData(selectedCharacterForLeftSweeper);
             teamMemberRightSweeperItem.UpdateCharacterData(selectedCharacterForRightSweeper);
-            //
+        }
+
+        public void UpdateEquipmentDisplays()
+        {
             teamMemberThrowerItem.UpdateStonesData(selectedStonesForThrower);
-            //
             teamMemberLeftSweeperItem.UpdateBroomData(selectedBroomForLeftSweeper);
             teamMemberRightSweeperItem.UpdateBroomData(selectedBroomForRightSweeper);
-            // Handle input or logic while in this state
         }
 
         /************************************************************************************************************************/
@@ -193,18 +202,21 @@ namespace UICanvasManager.v3
             Debug.Log($"Selected Character for Team Member: {characterData.Id}");
             selectedCharacterForThrower = characterData;
             UpdateDisplays();
+            _OnCharacterSelectionChanged?.Invoke();
         }
 
         public void OnSelectCharacterForLeftSweeper(CharacterSO characterData){
             Debug.Log($"Selected Character for Team Member: {characterData.Id}");
             selectedCharacterForLeftSweeper = characterData;
             UpdateDisplays();
+            _OnCharacterSelectionChanged?.Invoke();
         }
 
         public void OnSelectCharacterForRightSweeper(CharacterSO characterData){
             Debug.Log($"Selected Character for Team Member: {characterData.Id}");
             selectedCharacterForRightSweeper = characterData;
             UpdateDisplays();
+            _OnCharacterSelectionChanged?.Invoke();
         }
 
         /************************************************************************************************************************/
@@ -213,14 +225,14 @@ namespace UICanvasManager.v3
             Debug.Log($"[Canvas State] Selected Broom for Left Sweeper: {broom.Name}");
             _OnSelectBroomForLeftSweeper?.Invoke(broom);
             selectedBroomForLeftSweeper = broom;
-            UpdateDisplays();
+            UpdateEquipmentDisplays();
         }
 
         public void OnSelectBroomForRightSweeper(CurlingBroomSO broom){
             Debug.Log($"[Canvas State] Selected Broom for Right Sweeper: {broom.Name}");
             _OnSelectBroomForRightSweeper.Invoke(broom);
             selectedBroomForRightSweeper = broom;
-            UpdateDisplays();
+            UpdateEquipmentDisplays();
         }
 
         /************************************************************************************************************************/

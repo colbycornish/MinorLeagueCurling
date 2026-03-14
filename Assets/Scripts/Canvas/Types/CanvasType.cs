@@ -25,7 +25,8 @@ namespace UICanvasManager.v3
         CurlingGameInGameHUD,
         CurlingGameFinalResultDisplay,
         //
-        SplashScreenBurnoutGames
+        SplashScreenBurnoutGames,
+        SplashScreenMinorLeagueCurling
         
     }
 }

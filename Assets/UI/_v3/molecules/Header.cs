@@ -9,14 +9,16 @@ namespace CurlingUI.v3 {
         // [SerializeField]
         public GameObject _HeaderContent;
 
-        [Header("Curling States")]
+        [Header("Title")]
         public string subtitleTop;
         public string title;
         public string subtitleBottom;
 
-        [Header("Curling States")]
+        [Header("Button States")]
         public bool hasBackButton;
         public bool hasContinueButton;
+
+        public bool canContinue;
         
         
 

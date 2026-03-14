@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace UICanvasManager.v3
@@ -25,6 +26,14 @@ namespace UICanvasManager.v3
 
         private bool _ModalIsOpen => ModalStateMachine.CurrentState != null;
         public bool ModalIsOpen => _ModalIsOpen;
+
+        [Header("Events")]
+        [SerializeField] private UnityEvent _OnOpenModal; // See the Read Me.
+        [SerializeField] private UnityEvent _OnCloseModal; // See the Read Me. 
+        [SerializeField] private UnityEvent _OnOpenSection; // See the Read Me.
+        [SerializeField] private UnityEvent _OnCloseSection; // See the Read Me.
+
+        [SerializeField] private UnityEvent _CloseAllCanvases; // See the Read Me.
 
         
 
@@ -92,7 +101,8 @@ namespace UICanvasManager.v3
         /// which allows for more flexibility in how the sections are opened while still providing easy-to-use 
         /// functions for common actions.
         /// </summary>
-
+        public void OpenSplashMinorLeagueCurling() => OpenSection(canvasType: CanvasType.SplashScreenMinorLeagueCurling);
+        public void OpenSplashBurnoutGames() => OpenSection(canvasType: CanvasType.SplashScreenBurnoutGames);
         public void OpenMainMenu() => OpenSection(canvasType: CanvasType.MainMenu);
         /// 
         public void OpenControlsSection() => OpenSection(canvasType: CanvasType.Controls);
@@ -111,8 +121,7 @@ namespace UICanvasManager.v3
         public void OpenCurlingGameSplashTurnDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
         public void OpenCurlingGameFinalResultDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
 
-        public void CloseAllCanvases() => _StateMachine.ChangeState(null);
-        public void CloseAllModals() => _ModalStateMachine.ChangeState(null);
+        
         
 
 
@@ -128,6 +137,13 @@ namespace UICanvasManager.v3
         public void OpenStoneToUseSelectionModal() => OpenModal(canvasModalType: CanvasModalType.StoneToUseSelection);
         
 
+        public void CloseAllCanvases()
+        {
+            _CloseAllCanvases?.Invoke();
+            _StateMachine.ChangeState(null);
+        }
+        
+        public void CloseAllModals() => _ModalStateMachine.ChangeState(null);
         /// <summary>
         /// Additional quick reference functions for opening specific sections, to be used by buttons and other UI elements.
         /// </summary>
@@ -148,6 +164,16 @@ namespace UICanvasManager.v3
                 if (_StateMachine.CurrentState == null)
                 {
                     OpenSection(canvasType: CanvasType.MainMenu); // Attempt to open the pause menu even if the state machine is missing, to provide some feedback.
+                    return;
+                }
+                
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                if (_StateMachine.CurrentState == null)
+                {
+                    OpenSection(canvasType: CanvasType.SplashScreenBurnoutGames); 
                     return;
                 }
                 

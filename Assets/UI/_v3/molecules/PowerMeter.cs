@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CurlingUI.v3 {
     public class PowerMeter : MonoBehaviour
@@ -16,11 +17,42 @@ namespace CurlingUI.v3 {
         [Header("Visualization Settings")]
         public int numberOfVisualSteps = 25;
         public int numberOfUserSteps = 4;
-        
+
+        [Header("FX Events")]
+        public GameObject fxMax;
+        public GameObject fx75;
+        public GameObject fx50;
+        public GameObject fx25;
+        public GameObject fxMin;
+        // // public UnityEvent onPowerChanged;
+        // public UnityEvent _OnMaxPowerReached;
+        // public UnityEvent _On75PowerReached;
+        // public UnityEvent _On50PowerReached;
+        // public UnityEvent _On25PowerReached;
+        // public UnityEvent _OnMinPowerReached;
+
+        void Update()
+        {
+            // For testing purposes, we can use the up and down arrow keys to adjust power
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                IncreasePower();
+                UpdatePowerDisplay();
+                // PlayPowerFXDisplay();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                DecreasePower();
+                UpdatePowerDisplay();
+                // PlayPowerFXDisplay();
+            }
+        }
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void OnEnable()
         {
-            
+            UpdatePowerDisplay();
+            PlayPowerFXDisplay();
         }
 
         // Update is called once per frame
@@ -65,6 +97,7 @@ namespace CurlingUI.v3 {
         public void IncreasePower(){
             currentPower = currentPower + 0.04f;
             currentPower = Mathf.Clamp(currentPower, minPower, maxPower);
+            PlayPowerFXDisplay();
             // UpdatePowerDisplay();
 
         }
@@ -72,6 +105,7 @@ namespace CurlingUI.v3 {
         public void DecreasePower(){
             currentPower = currentPower - 0.04f;
             currentPower = Mathf.Clamp(currentPower, minPower, maxPower);
+            PlayPowerFXDisplay();
             // UpdatePowerDisplay();
         }
 
@@ -102,27 +136,62 @@ namespace CurlingUI.v3 {
         public void UpdatePowerDisplay(){
 
             // Hide / Show the bars, according to the amount of power applied;
-            // int numberOfChildren = powerMeterBar.transform.childCount;
-            // float currentPowerPct = (currentPower - minPower) / (maxPower - minPower);
+            int numberOfChildren = PowerMeterBarArea.transform.childCount;
+            float currentPowerPct = (currentPower - minPower) / (maxPower - minPower);
 
-            // float numberOfActivesF = numberOfChildren * currentPowerPct;
-            // int numberOfActives = Mathf.CeilToInt(numberOfActivesF) + 2;
-            // numberOfActives = Mathf.Clamp(numberOfActives, 2, numberOfChildren);
+            float numberOfActivesF = numberOfChildren * currentPowerPct;
+            int numberOfActives = Mathf.CeilToInt(numberOfActivesF) + 2;
+            numberOfActives = Mathf.Clamp(numberOfActives, 2, numberOfChildren);
 
-            // int index = numberOfActives - numberOfChildren;
+            int index = numberOfActives - numberOfChildren;
 
-            // foreach(Transform child in powerMeterBar.transform){
-            //     if (index >=0){
-            //         child.gameObject.SetActive(true);
-            //     }
-            //     else {
-            //         child.gameObject.SetActive(false);
-            //     }
-            //     index++;
+            foreach(Transform child in PowerMeterBarArea.transform){
+                if (index >=0){
+                    child.gameObject.SetActive(true);
+                }
+                else {
+                    child.gameObject.SetActive(false);
+                }
+                index++;
                 
-            // }
+            }
 
-            // UpdateMaxPowerDisplay();
+            UpdateMaxPowerDisplay();
+        }
+
+
+
+        public void PlayPowerFXDisplay(){
+            float pct75 = 0.75f * (maxPower - minPower) + minPower;
+            float pct50 = 0.50f * (maxPower - minPower) + minPower;
+            float pct25 = 0.25f * (maxPower - minPower) + minPower;
+
+
+            if (fxMax != null)
+            {
+                fxMax.SetActive(currentPower == maxPower );
+            }
+
+            if (fx75 != null)
+            {
+                fx75.SetActive(currentPower >= pct75);
+            }
+
+            if (fx50 != null)
+            {
+                fx50.SetActive(currentPower >= pct50);
+            }
+
+            if (fx25 != null)
+            {
+                fx25.SetActive(currentPower >= pct25);
+            }
+
+            if (fxMin != null)
+            {
+                fxMin.SetActive(currentPower == minPower);
+            }
+            
         }
     }
 }

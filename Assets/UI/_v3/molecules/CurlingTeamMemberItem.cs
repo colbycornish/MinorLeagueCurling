@@ -39,6 +39,8 @@ namespace CurlingUI.v3 {
         [Header("Functions")]
         public UnityEvent EditCharacterEvent;
         public UnityEvent EditEquipmentEvent;
+
+        public UnityEvent _OnChangeCharacterSelection;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -62,6 +64,7 @@ namespace CurlingUI.v3 {
         {
             characterData = newCharacterData;
             UpdateCharacterDisplays();
+            _OnChangeCharacterSelection?.Invoke();
             // Update the UI display for the character data
         }
 
@@ -97,14 +100,9 @@ namespace CurlingUI.v3 {
 
         void UpdateCharacterNameDisplay()
         {
-            if (characterData != null)
-            {
-                textName.text = characterData.Name;
-            }
-            else
-            {
-                textName.text = "???????????";
-            }
+            textName.text = (characterData != null) 
+                ? characterData.Name 
+                : "??????? ?????????";
                 
         }
 
@@ -113,18 +111,13 @@ namespace CurlingUI.v3 {
             // Update Position Text
             if (textPosition != null)
             {
-                if (isThrower == true)
-                {
-                    textPosition.text = "Thrower";
-                }
-                else if (isLeftSweeper == true)
-                {
-                    textPosition.text = "Left Sweeper";
-                }
-                else if (isRightSweeper == true)
-                {
-                    textPosition.text = "Right Sweeper";
-                }
+                textPosition.text = (isThrower == true) 
+                    ? "Thrower" 
+                    : (isLeftSweeper == true) 
+                        ? "Left Sweeper" 
+                        : (isRightSweeper == true) 
+                            ? "Right Sweeper" 
+                            : "???????";
             }
 
             // Update Available Equipment Display
@@ -190,7 +183,11 @@ namespace CurlingUI.v3 {
 
         private void UpdateBroomDisplay()
         {
-            
+            CurlingBroomItem broomItemDisplay = CharacterBroomDisplayArea.GetComponentInChildren<CurlingBroomItem>();
+            if (broomItemDisplay != null && broomData != null){
+                broomItemDisplay.broomData = broomData;
+                broomItemDisplay.UpdateDisplay();
+            }
         }
 
         private void ResetBroomDisplay(){}
