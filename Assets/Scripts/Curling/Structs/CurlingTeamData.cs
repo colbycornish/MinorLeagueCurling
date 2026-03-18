@@ -7,7 +7,7 @@ public struct CurlingTeamData
     //Variable declaration
     public string teamName;
     public string teamId;
-    // public Image avatarImage;
+    public Image avatarImage;
     public CurlingPlayer thrower;
     public CurlingPlayer sweeperLeft;
     public CurlingPlayer sweeperRight;

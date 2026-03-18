@@ -679,6 +679,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3734,7 +3735,7 @@ GameObject:
   - component: {fileID: 5927240075853770243}
   m_Layer: 0
   m_Name: Character_Mick_TheMoose_Sliderson
-  m_TagString: CharacterNPC
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3888,8 +3889,8 @@ MonoBehaviour:
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
     _Posture:
-      _CurrentPosture: 1
-      _DesiredPosture: 1
+      _CurrentPosture: 0
+      _DesiredPosture: 0
       _IsHoldingPose: 0
     _Status:
       _IsCurling: 1
@@ -4185,7 +4186,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808979076072991386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88b141073e9c11499db9761c99dd5b0, type: 3}
   m_Name: 
@@ -4207,9 +4208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e5c604841074b11870af69e69af9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.Weapon
-  _AttackAnimations: []
-  _EquipAnimation: {fileID: 0}
-  _UnequipAnimation: {fileID: 0}
+  _AttackAnimations:
+  - {fileID: 358, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
+  _EquipAnimation: {fileID: 357, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
+  _UnequipAnimation: {fileID: 357, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
   _IsTwoHanded: 0
 --- !u!1001 &2198507091241376680
 PrefabInstance:
@@ -4406,7 +4408,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6534314225952358040}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88b141073e9c11499db9761c99dd5b0, type: 3}
   m_Name: 
@@ -4427,9 +4429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e5c604841074b11870af69e69af9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.Weapon
-  _AttackAnimations: []
-  _EquipAnimation: {fileID: 0}
-  _UnequipAnimation: {fileID: 0}
+  _AttackAnimations:
+  - {fileID: 360, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
+  _EquipAnimation: {fileID: 357, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
+  _UnequipAnimation: {fileID: 357, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
   _IsTwoHanded: 0
 --- !u!1001 &6549147143812783245
 PrefabInstance:

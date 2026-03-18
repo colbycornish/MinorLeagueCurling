@@ -65,6 +65,8 @@ namespace CurlingManagersV3
             PrepExitLocation();
             CurlingRules rules = new CurlingRules();
             // rules.SetDefaultRules();
+            
+            /// This is the critical line that sets up the CurlingManager with all the necessary data to run the demo.
             CurlingManager._instance.Setup.SetupAll(
                 rulesData: rules,
                 courseData: courseData,
@@ -75,15 +77,6 @@ namespace CurlingManagersV3
                 exitSpawnId: exitSpawnId
             );
 
-            
-            // CurlingManager._instance.InitSetupFromDemo(
-            //     courseData,
-            //     teamHome,
-            //     teamAway,
-            //     gameData,
-            //     exitScene,
-            //     exitSpawnId
-            // );
             demoHasBeenLoaded = true;
         }
 

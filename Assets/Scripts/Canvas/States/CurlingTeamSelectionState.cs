@@ -23,19 +23,19 @@ namespace UICanvasManager.v3
         public GameObject teamBroomRightSweeperSelectionModal;
 
         [Header("Actions/Callbacks")]     
-        public Action<CurlingBroomSO> _OnSelectBroomForLeftSweeper;
-        public Action<CurlingBroomSO> _OnSelectBroomForRightSweeper;
-        public Action<CurlingBroomSO> _OnSelectStone;
-        public Action<CurlingBroomSO> _OnRemoveStone;
+        public Action<CurlingBroomSO> _OnSelectBroomForLeftSweeper => CurlingPreGameSetupManagerV2._instance.OnSelectBroomForLeftSweeper;
+        public Action<CurlingBroomSO> _OnSelectBroomForRightSweeper => CurlingPreGameSetupManagerV2._instance.OnSelectBroomForRightSweeper;
+        public Action<CurlingStoneSO, int> _OnSelectStone => CurlingPreGameSetupManagerV2._instance.OnSelectStone;
+        public Action<CurlingStoneSO, int> _OnRemoveStone => CurlingPreGameSetupManagerV2._instance.OnRemoveStone;
 
-        public Action<CurlingBroomSO> _OnSelectCharacterThrower;
-        public Action<CurlingBroomSO> _OnSelectCharacterLeftSweeper;
-        public Action<CurlingBroomSO> _OnSelectCharacterRightSweeper;   
+        public Action<CharacterSO> _OnSelectCharacterThrower => CurlingPreGameSetupManagerV2._instance.OnSelectCharacterForThrower;
+        public Action<CharacterSO> _OnSelectCharacterLeftSweeper => CurlingPreGameSetupManagerV2._instance.OnSelectCharacterForLeftSweeper;
+        public Action<CharacterSO> _OnSelectCharacterRightSweeper => CurlingPreGameSetupManagerV2._instance.OnSelectCharacterForRightSweeper;
 
         [Header("Temp Data")]
-        public CharacterSO selectedCharacterForThrower = null;
-        public CharacterSO selectedCharacterForLeftSweeper = null;
-        public CharacterSO selectedCharacterForRightSweeper = null;
+        public CharacterSO selectedCharacterForThrower => CurlingPreGameSetupManagerV2._instance.selectedThrower;
+        public CharacterSO selectedCharacterForLeftSweeper => CurlingPreGameSetupManagerV2._instance.selectedLeftSweeper;
+        public CharacterSO selectedCharacterForRightSweeper => CurlingPreGameSetupManagerV2._instance.selectedRightSweeper;
 
         public CurlingBroomSO selectedBroomForLeftSweeper = null;
         public CurlingBroomSO selectedBroomForRightSweeper = null;  
@@ -136,18 +136,39 @@ namespace UICanvasManager.v3
             teamMemberThrowerItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
             teamMemberLeftSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
             teamMemberRightSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
+
+            if (UICanvasManager.ModalStateMachine._currentState != null && 
+                UICanvasManager.ModalStateMachine._currentState.StateCanvasModalType == CanvasModalType.TeamCharacterSelection)
+            {
+                Debug.Log("Thrower Item Selected and Character Selection Modal is Open - Opening Thrower Edit Character Modal");
+                OpenThrowerEditCharacterModal();
+            }
         }
         public void TeamLeftSweeperSelected()
         {
             teamMemberThrowerItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
             teamMemberLeftSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
             teamMemberRightSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
+
+            if (UICanvasManager.ModalStateMachine._currentState != null && 
+                UICanvasManager.ModalStateMachine._currentState.StateCanvasModalType == CanvasModalType.TeamCharacterSelection)
+            {
+                Debug.Log("Left Sweeper Item Selected and Character Selection Modal is Open - Opening Left Sweeper Edit Character Modal");
+                OpenLeftSweeperEditCharacterModal();
+            }
         }
         public void TeamRightSweeperSelected()
         {
             teamMemberThrowerItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
             teamMemberLeftSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
             teamMemberRightSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
+
+            if (UICanvasManager.ModalStateMachine._currentState != null && 
+                UICanvasManager.ModalStateMachine._currentState.StateCanvasModalType == CanvasModalType.TeamCharacterSelection)
+            {
+                Debug.Log("Right Sweeper Item Selected and Character Selection Modal is Open - Opening Right Sweeper Edit Character Modal");
+                OpenRightSweeperEditCharacterModal();
+            }
         }
 
         /************************************************************************************************************************/
@@ -155,26 +176,40 @@ namespace UICanvasManager.v3
         // Character Modals/Dialogues
         public void OpenThrowerEditCharacterModal()
         {
+            Debug.Log("Opening Thrower Character Selection Modal");
             TeamCharacterSelectionModalState characterSelectionModalController = teamCharacterSelectionModal.GetComponent<TeamCharacterSelectionModalState>();
             characterSelectionModalController._OnSelectCharacter = OnSelectCharacterForThrower;
             UICanvasManager.OpenTeamCharacterSelectionModal();
-            TeamThrowerSelected();
+            if (teamMemberThrowerItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn == false)
+            {
+                TeamThrowerSelected();
+            }
         }
 
         public void OpenLeftSweeperEditCharacterModal()
         {
+            Debug.Log("Opening Left Sweeper Character Selection Modal");
             TeamCharacterSelectionModalState characterSelectionModalController = teamCharacterSelectionModal.GetComponent<TeamCharacterSelectionModalState>();
             characterSelectionModalController._OnSelectCharacter = OnSelectCharacterForLeftSweeper;
             UICanvasManager.OpenTeamCharacterSelectionModal();
-            TeamLeftSweeperSelected();
+            if (teamMemberLeftSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn == false)
+            {
+                TeamLeftSweeperSelected();
+            }
+            
         }
 
         public void OpenRightSweeperEditCharacterModal()
         {
+            Debug.Log("Opening Right Sweeper Character Selection Modal");
             TeamCharacterSelectionModalState characterSelectionModalController = teamCharacterSelectionModal.GetComponent<TeamCharacterSelectionModalState>();
             characterSelectionModalController._OnSelectCharacter = OnSelectCharacterForRightSweeper;
             UICanvasManager.OpenTeamCharacterSelectionModal();
-            TeamRightSweeperSelected();
+            
+            if (teamMemberRightSweeperItem.gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn == false)
+            {
+                TeamRightSweeperSelected();
+            }
         }
 
         // Equipment Modals/Dialogues
@@ -200,23 +235,26 @@ namespace UICanvasManager.v3
         
         public void OnSelectCharacterForThrower(CharacterSO characterData){
             Debug.Log($"Selected Character for Team Member: {characterData.Id}");
-            selectedCharacterForThrower = characterData;
+            _OnSelectCharacterThrower?.Invoke(characterData);
+            // selectedCharacterForThrower = characterData;
             UpdateDisplays();
-            _OnCharacterSelectionChanged?.Invoke();
+            
         }
 
         public void OnSelectCharacterForLeftSweeper(CharacterSO characterData){
             Debug.Log($"Selected Character for Team Member: {characterData.Id}");
-            selectedCharacterForLeftSweeper = characterData;
+            _OnSelectCharacterLeftSweeper?.Invoke(characterData);
+            // selectedCharacterForLeftSweeper = characterData;
             UpdateDisplays();
-            _OnCharacterSelectionChanged?.Invoke();
+            
         }
 
         public void OnSelectCharacterForRightSweeper(CharacterSO characterData){
             Debug.Log($"Selected Character for Team Member: {characterData.Id}");
-            selectedCharacterForRightSweeper = characterData;
+            _OnSelectCharacterRightSweeper?.Invoke(characterData);
+            // selectedCharacterForRightSweeper = characterData;
             UpdateDisplays();
-            _OnCharacterSelectionChanged?.Invoke();
+            
         }
 
         /************************************************************************************************************************/
@@ -253,9 +291,12 @@ namespace UICanvasManager.v3
         /************************************************************************************************************************/
         public void Reset()
         {
-            selectedCharacterForThrower = null;
-            selectedCharacterForLeftSweeper = null;
-            selectedCharacterForRightSweeper = null;
+            CurlingPreGameSetupManagerV2._instance.selectedThrower = null;
+            CurlingPreGameSetupManagerV2._instance.selectedLeftSweeper = null;
+            CurlingPreGameSetupManagerV2._instance.selectedRightSweeper = null;
+            // selectedCharacterForThrower = null;
+            // selectedCharacterForLeftSweeper = null;
+            // selectedCharacterForRightSweeper = null;
 
             selectedBroomForLeftSweeper = null;
             selectedBroomForRightSweeper = null;
@@ -267,5 +308,5 @@ namespace UICanvasManager.v3
         /// </summary>
         public override CanvasType StateCanvasType => CanvasType.CurlingTeamSelection;
 
-    }
+    } 
 }

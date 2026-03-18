@@ -27,8 +27,13 @@ namespace CurlingManagersV3
     [RequireComponent(typeof(CurlingManagersV3.GameSetup))]
     [RequireComponent(typeof(CurlingManagersV3.Demo))]
 
+    [DefaultExecutionOrder(-10000)]// Initialize the StateMachine before anything uses it.
     public class CurlingManager : MonoBehaviour
     {
+
+        [SerializeField]
+        private MatchPhaseStateMachine _StateMachine = new MatchPhaseStateMachine();
+        public MatchPhaseStateMachine StateMachine => _StateMachine;
 
         // [HideInInspector] 
         public static CurlingManager _instance { get; private set; }
@@ -106,8 +111,22 @@ namespace CurlingManagersV3
         }
 #endif
 
-        private void Awake()
+        // private void Awake()
+        // {
+        //     if (_instance != null)
+        //     {
+        //         Destroy(gameObject);
+        //         Init();
+        //         return;
+        //     }
+        //     _instance = this;
+        //     Init();
+        // }
+
+        protected virtual void Awake()
         {
+            _StateMachine.InitializeAfterDeserialize();
+
             if (_instance != null)
             {
                 Destroy(gameObject);

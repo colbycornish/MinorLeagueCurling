@@ -6,8 +6,13 @@ namespace UICanvasManager.v3
 {
     public class UICanvasModalStateMachine : StateMachine<ICanvasModalState>
     {
-        private ICanvasModalState currentState;
+        public ICanvasModalState _currentState;
         private List<ICanvasModalState> stateHistory = new List<ICanvasModalState>();
+
+        public void OnAwake()
+        {
+            this.SetAllowNullStates(true);
+        }
 
         public void ChangeState(
             ICanvasModalState nextState,
@@ -15,21 +20,21 @@ namespace UICanvasManager.v3
         )
         {
             Debug.Log($"Changing state to: {nextState?.name ?? "null"}");
-            if (currentState != null)
+            if (_currentState != null)
             {
-                currentState.OnExit();
+                _currentState.OnExit();
                 if (addToHistory)
                 {
-                    stateHistory.Add(currentState);
+                    stateHistory.Add(_currentState);
                 }
                 
             }
 
-            currentState = nextState;
+            _currentState = nextState;
             
-            if (currentState != null)
+            if (_currentState != null)
             {
-                currentState.OnEnter();
+                _currentState.OnEnter();
             }
         }
 
@@ -54,8 +59,8 @@ namespace UICanvasManager.v3
 
         public void CloseAllUIModals()
         {
-            currentState.OnExit();
-            currentState = null;
+            _currentState.OnExit();
+            _currentState = null;
             ClearHistory();
         }
 

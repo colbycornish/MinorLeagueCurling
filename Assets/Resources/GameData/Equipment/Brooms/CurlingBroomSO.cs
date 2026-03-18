@@ -34,6 +34,12 @@ public class CurlingBroomSO : ScriptableObject
     [CreateProperty] 
     public Sprite Thumbnail => _Thumbnail;
 
+    [SerializeField, DontCreateProperty] 
+    private GameObject _GameModel;
+
+    [CreateProperty] 
+    public GameObject GameModel => _GameModel;
+
     
     // "type": "Item",
     // "rarity": "Common",

@@ -14,6 +14,8 @@ namespace UICanvasManager.v3
         public TextMeshProUGUI selectedCourseText;
         public CurlingCourseSO selectedCourse;
 
+        public Action<CurlingCourseSO> _OnSelectCourse => CurlingPreGameSetupManagerV2._instance.OnSelectCourse;
+
         public ListOfCurlingCourseItems listOfCoursesController;
 
         public void Start()
@@ -55,6 +57,7 @@ namespace UICanvasManager.v3
         public void OnSelectCourse(CurlingCourseSO course)
         {
             selectedCourse = course;
+            _OnSelectCourse?.Invoke(course);
             UpdateSelectedCourseDisplay();
         }
 

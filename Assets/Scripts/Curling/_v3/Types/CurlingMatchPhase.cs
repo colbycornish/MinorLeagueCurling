@@ -12,6 +12,7 @@ public enum CurlingMatchPhase
     StoneSelection,
     StoneSelectionDetails,
     StoneSelectionConfirm,
+    AimingAndPowerPhase,
     CurlingAimControlsPhase,
     CurlingPowerMeterPhase,
     CurlingStoneSweepingPhase,

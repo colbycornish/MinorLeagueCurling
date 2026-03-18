@@ -17,12 +17,16 @@ namespace UICanvasManager.v3
         Curling,
         Inventory,
         None,
-
+        //
         CurlingCourseSelection,
-        CurlingTeamSelection,
         CurlingRules,
+        CurlingTeamSelection,
+        CurlingLockerRoom,
+        //
         CurlingGameSplashTurnDisplay,
+        CurlingGameSplashTeamDisplay,
         CurlingGameInGameHUD,
+        CurlingGamePostThrowResultDisplay,
         CurlingGameFinalResultDisplay,
         //
         SplashScreenBurnoutGames,

@@ -6,7 +6,7 @@ namespace UICanvasManager.v3
 {
     public class UICanvasStateMachine : StateMachine<ICanvasState>
     {
-        private ICanvasState currentState;
+        public ICanvasState currentState;
         private List<ICanvasState> stateHistory = new List<ICanvasState>();
 
         public void ChangeState(
