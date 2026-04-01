@@ -11,7 +11,6 @@ namespace CurlingManagersV3
 {
     public class Scoring : MonoBehaviour
     {        
-        // public event Action<CurlingGameScore> OnCurlingGameScoreChanged;
 
         /// <summary>
         /// Score Calculation
@@ -147,16 +146,16 @@ namespace CurlingManagersV3
         /// <summary>
         /// Update UI
         /// </summary>
-        public void UpdateScoreUI(
-            int teamHomeScore, 
-            int teamAwayScore
-        )
-        {
-            CurlingManager._instance.Parameters.Canvas.scoreBug.UpdateScore(
-                homeTeamScore: teamHomeScore,
-                awayTeamScore: teamAwayScore
-            );
-        }
+        // public void UpdateScoreUI(
+        //     int teamHomeScore, 
+        //     int teamAwayScore
+        // )
+        // {
+        //     CurlingManager._instance.Parameters.Canvas.scoreBugController.UpdateScore(
+        //         // homeTeamScore: teamHomeScore,
+        //         // awayTeamScore: teamAwayScore
+        //     );
+        // }
 
 
         /// <summary>

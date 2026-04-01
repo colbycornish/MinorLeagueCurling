@@ -126,6 +126,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &2235581421980185372
 CapsuleCollider:
@@ -184,7 +185,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!96 &7200001194765494772
 TrailRenderer:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -230,6 +231,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Time: 3
   m_PreviewTimeScale: 1
   m_Parameters:
@@ -288,7 +290,6 @@ TrailRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
@@ -381,6 +382,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &5672585509327705321
 MeshCollider:
@@ -493,6 +495,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &8661884326740607767
 CapsuleCollider:
@@ -637,6 +640,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &5776724265029734742
 MeshCollider:
@@ -749,6 +753,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &2739965383942179213
 CapsuleCollider:
@@ -862,6 +867,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &3520870900993795143
 MeshCollider:
@@ -1037,6 +1043,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &4182390164773155822
 MeshCollider:
@@ -1297,6 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ce89f3420ac4e81aa9655638773c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stoneDataSO: {fileID: 11400000, guid: 5ecfa433a57cf423894b02f267a7a2b0, type: 2}
   title: Basic Stone
   description: Just your basic curling stone.
   id: STONE_BASIC_ORANGE
@@ -1304,26 +1312,37 @@ MonoBehaviour:
   teamId_i: 0
   teamId: 
   stoneIndex: 0
-  isThrown: 0
-  isInPlay: 0
-  isSliding: 0
-  isInScoringZone: 0
-  distanceFromTarget: 1000
-  spinSpeedInitial: 0
-  spinSpeedCurrent: 0
-  spinSpeedTarget: 0
-  spinSpeedStep: 0.25
-  spinSpeedDecay: 0.05
-  spinSpeedTargetMax: 1
-  maxTorque: 1
-  curlAmountCurrent: 0
-  curlAmountInitial: 0
-  spinAmountInitial: 0
-  spinAmountCurrent: 0
-  speedCurrent: 0
   rb: {fileID: 7211359655643630791}
   visual: {fileID: 0}
   hasSpecialAbility: 0
+  _Parameters:
+    _MetaData:
+      _Title: Basic Stone
+      _Description: Just your basic curling stone.
+      _Id: 
+      _AvatarImage: {fileID: 0}
+      teamId_i: 0
+      teamId: 
+      stoneIndex: 0
+    _Movement:
+      _MovementDirection: {x: 0, y: 0, z: 0}
+      _DistanceFromTarget: 1000
+      _SpinSpeedInitial: 0
+      _SpinSpeedCurrent: 0
+      _SpinSpeedTarget: 0
+      _SpinSpeedStep: 0.25
+      _SpinSpeedDecay: 0.05
+      _SpinSpeedTargetMax: 1
+      _MaxTorque: 1
+      _CurlAmountCurrent: 0
+      _CurlAmountInitial: 0
+      _SpinAmountInitial: 0
+      _SpinAmountCurrent: 0
+    _Status:
+      _IsThrown: 0
+      _IsInPlay: 0
+      _IsSliding: 0
+      _IsInScoringZone: 0
 --- !u!64 &341857527013286348
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1467,6 +1486,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &8448725978133481466
 CapsuleCollider:
@@ -1580,6 +1600,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &7767478459811893936
 MeshCollider:
@@ -1759,6 +1780,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &4877817256803305875
 MeshCollider:

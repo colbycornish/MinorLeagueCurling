@@ -119,7 +119,7 @@ namespace CharacterNPC.v2
                 if (_Character.Parameters.Movement.IsBaseFromIdleState == false && 
                     _Character.StateMachine.CurrentState.CanExitState
                 ){
-                    Debug.Log("->> Enter Idle State");
+                    // Debug.Log("->> Enter Idle State");
                     _Character.StateMachine.TrySetState(_Idle);
                     // _Character.StateMachine.TryResetState(_Idle);
                 }
@@ -130,7 +130,7 @@ namespace CharacterNPC.v2
             )
             {
                 if (_Character.Parameters.Movement.IsBaseFromMoveState == false){
-                    Debug.Log("->> Enter Movement State");
+                    // Debug.Log("->> Enter Movement State");
                     // _Character.StateMachine.TrySetState(_Move);
                     _Character.StateMachine.TryResetState(_Move);
                 }
@@ -148,17 +148,18 @@ namespace CharacterNPC.v2
 
         private void UpdateEquip()
         {
-            if (SampleInput.RightMouseDown)
-            {
-                int equippedWeaponIndex = Array.IndexOf(_Weapons, _Character.Equipment.Weapon);
+            // TODO: Don't use this input setting :(
+            // if (SampleInput.RightMouseDown)
+            // {
+            //     int equippedWeaponIndex = Array.IndexOf(_Weapons, _Character.Equipment.Weapon);
 
-                equippedWeaponIndex++;
-                if (equippedWeaponIndex >= _Weapons.Length)
-                    equippedWeaponIndex = 0;
+            //     equippedWeaponIndex++;
+            //     if (equippedWeaponIndex >= _Weapons.Length)
+            //         equippedWeaponIndex = 0;
 
-                _Equip.NextWeapon = _Weapons[equippedWeaponIndex];
-                _InputBuffer.Buffer(_Equip, _AttackInputTimeOut);
-            }
+            //     _Equip.NextWeapon = _Weapons[equippedWeaponIndex];
+            //     _InputBuffer.Buffer(_Equip, _AttackInputTimeOut);
+            // }
         }
 
 
@@ -259,7 +260,7 @@ namespace CharacterNPC.v2
         {
             if (_Character.StateMachine.CurrentState != _Wave)
             {
-                Debug.Log("-> Update Action: Wave state");
+                // Debug.Log("-> Update Action: Wave state");
                 _Character.StateMachine.TrySetState(_Wave);
             }
         }
@@ -268,7 +269,7 @@ namespace CharacterNPC.v2
         {
             if (_Character.StateMachine.CurrentState != _Talk)
             {
-                Debug.Log("-> Update Action: Talk state");
+                // Debug.Log("-> Update Action: Talk state");
                 _Character.StateMachine.TrySetState(_Talk);
             }
         }
@@ -276,7 +277,7 @@ namespace CharacterNPC.v2
         private void UpdateActionsForCookJob()
         {
             if (_Character.StateMachine.CurrentState != _Cook){
-                Debug.Log("-> Update Action: Cook state");
+                // Debug.Log("-> Update Action: Cook state");
                 _Character.StateMachine.TrySetState(_Cook);
             }
         }
@@ -284,7 +285,7 @@ namespace CharacterNPC.v2
         private void UpdateActionsForDanceJob()
         {
             if (_Character.StateMachine.CurrentState != _Dance){
-                Debug.Log("-> Update Action: Dance state");
+                // Debug.Log("-> Update Action: Dance state");
                 _Character.StateMachine.TrySetState(_Dance);
             }
         }
@@ -292,7 +293,7 @@ namespace CharacterNPC.v2
         private void UpdateActionsForDeskJob()
         {
             if (_Character.StateMachine.CurrentState.StateActionType != ActionType.UseComputer){
-                Debug.Log("-> Update Action: Use Computer state");
+                // Debug.Log("-> Update Action: Use Computer state");
                 _Character.StateMachine.TrySetState(_UseComputer);
             }
         }
@@ -306,7 +307,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
-                Debug.Log("-> Update Action: Forage state");
+                // Debug.Log("-> Update Action: Forage state");
                 _Character.StateMachine.TrySetState(_Forage);
             }
             else if (_Character.StateMachine.CurrentState.StateActionType == ActionType.Forage &&
@@ -314,7 +315,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.StateActionType != ActionType.Idle
             )
             {
-                Debug.Log("-> Update Action: Idle state");
+                // Debug.Log("-> Update Action: Idle state");
                 _Character.StateMachine.TrySetState(_Idle);
             }
         }
@@ -327,7 +328,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
-                Debug.Log("-> Update Action: Eat state");
+                // Debug.Log("-> Update Action: Eat state");
                 _Character.StateMachine.TrySetState(_Eat);
             }
 
@@ -337,7 +338,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
-                Debug.Log("-> Update Action: Drink state");
+                // Debug.Log("-> Update Action: Drink state");
                 _Character.StateMachine.TrySetState(_Drink);
             }
 
@@ -346,7 +347,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
-                Debug.Log("-> Update Action: Talk state");
+                // Debug.Log("-> Update Action: Talk state");
                 _Character.StateMachine.TrySetState(_Talk);
             }
 
@@ -360,7 +361,7 @@ namespace CharacterNPC.v2
                 _Character.StateMachine.CurrentState.CanExitState
             )
             {
-                Debug.Log("-> Update Action: Drink state");
+                // Debug.Log("-> Update Action: Drink state");
                 _Character.StateMachine.TrySetState(_DeliverMail);
             }
         }

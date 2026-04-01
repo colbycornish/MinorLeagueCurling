@@ -3,6 +3,8 @@ using Unity.Cinemachine;
 using UnityEngine;
 using Curling.Rules;
 using CurlingManagersV3.Parameters;
+using Animancer.FSM;
+using System;
 
 /// <summary>
 /// This is the high-level game manager for a curling game.
@@ -21,7 +23,7 @@ namespace CurlingManagersV3
     [RequireComponent(typeof(CurlingManagersV3.Throwing))]
     //
     [RequireComponent(typeof(CurlingManagersV3.CurlingCameraController))]
-    [RequireComponent(typeof(CurlingManagersV3.CurlingInputManager))]
+    // [RequireComponent(typeof(CurlingManagersV3.CurlingInputManager))]
     [RequireComponent(typeof(CurlingManagersV3.GameTurn))]
     [RequireComponent(typeof(CurlingManagersV3.GameEnd))]
     [RequireComponent(typeof(CurlingManagersV3.GameSetup))]
@@ -32,8 +34,18 @@ namespace CurlingManagersV3
     {
 
         [SerializeField]
-        private MatchPhaseStateMachine _StateMachine = new MatchPhaseStateMachine();
-        public MatchPhaseStateMachine StateMachine => _StateMachine;
+        private StateMachine<IMatchPhaseState> _StateMachine;
+        public StateMachine<IMatchPhaseState> StateMachine => _StateMachine;
+
+        // [SerializeField]
+        // private MatchPhaseStateMachine _StateMachine = new MatchPhaseStateMachine();
+        // public MatchPhaseStateMachine StateMachine => _StateMachine;
+
+
+ 
+        [SerializeField] 
+        private List<IMatchPhaseState> _ListOfMatchPhaseStates = new List<IMatchPhaseState>();
+        public List<IMatchPhaseState> ListOfMatchPhaseStates => _ListOfMatchPhaseStates;
 
         // [HideInInspector] 
         public static CurlingManager _instance { get; private set; }
@@ -72,7 +84,7 @@ namespace CurlingManagersV3
         // private CurlingManagersV3.CurlingCameraController _CameraController;
         // public CurlingManagersV3.CurlingCameraController CameraController => _CameraController;
         public CurlingManagersV3.CurlingCameraController cameraController;
-        public CurlingManagersV3.CurlingInputManager curlingInputManager;
+        // public CurlingManagersV3.CurlingInputManager curlingInputManager;
 
         [SerializeField]
         private CurlingManagersV3.GameSetup _Setup;
@@ -86,10 +98,14 @@ namespace CurlingManagersV3
 
         [Header("[Data] Course")]
         public Camera stoneCamera;
+        public CinemachineCamera ccStoneCamera;
         
         [Header("[Data] Settings")]
         public CurlingGameData gameData;
-        // public int turnsMax = 10;
+        
+
+        [Header("Actions")]
+        public Action<CurlingMatchPhase> OnMatchPhaseStateChanged;
 
 #if UNITY_EDITOR
         protected void OnValidate()
@@ -102,30 +118,25 @@ namespace CurlingManagersV3
             _Throwing = GetComponent<CurlingManagersV3.Throwing>();
             //
             cameraController = GetComponent<CurlingManagersV3.CurlingCameraController>();
-            curlingInputManager = GetComponent<CurlingManagersV3.CurlingInputManager>();
+            // curlingInputManager = GetComponent<CurlingManagersV3.CurlingInputManager>();
             _TurnManager = GetComponent<CurlingManagersV3.GameTurn>();
             gameEndManager = GetComponent<CurlingManagersV3.GameEnd>();
 
             _Setup = GetComponent<CurlingManagersV3.GameSetup>();
             demo = GetComponent<CurlingManagersV3.Demo>();
+
+            IMatchPhaseState[] listedStates = GetComponentsInChildren<IMatchPhaseState>(true);
+            _ListOfMatchPhaseStates = new List<IMatchPhaseState>(listedStates);
         }
 #endif
 
-        // private void Awake()
-        // {
-        //     if (_instance != null)
-        //     {
-        //         Destroy(gameObject);
-        //         Init();
-        //         return;
-        //     }
-        //     _instance = this;
-        //     Init();
-        // }
+
+        /************************************************************************************************************************/
 
         protected virtual void Awake()
         {
             _StateMachine.InitializeAfterDeserialize();
+            _StateMachine.SetAllowNullStates(true);
 
             if (_instance != null)
             {
@@ -147,7 +158,7 @@ namespace CurlingManagersV3
             if (_Throwing == null) _Throwing = GetComponent<CurlingManagersV3.Throwing>();
             //
             if (cameraController == null) cameraController = GetComponent<CurlingManagersV3.CurlingCameraController>();
-            if (curlingInputManager == null) curlingInputManager = GetComponent<CurlingManagersV3.CurlingInputManager>();
+            // if (curlingInputManager == null) curlingInputManager = GetComponent<CurlingManagersV3.CurlingInputManager>();
             if (_TurnManager == null) _TurnManager = GetComponent<CurlingManagersV3.GameTurn>();
             if (gameEndManager == null) gameEndManager = GetComponent<CurlingManagersV3.GameEnd>();
 
@@ -155,22 +166,37 @@ namespace CurlingManagersV3
             if (demo == null) demo = GetComponent<CurlingManagersV3.Demo>();
         }
 
-    
+        /************************************************************************************************************************/
+
+        public void ChangePhase(CurlingMatchPhase matchPhaseType)
+        {
+            
+            foreach (IMatchPhaseState state in ListOfMatchPhaseStates){
+                if (state.StateMatchPhaseType == matchPhaseType)
+                {
+                    
+                    Debug.Log($"Starting Match Phase: {matchPhaseType}");
+                    if (_StateMachine == null)
+                    {
+                        OnMatchPhaseStateChanged?.Invoke(CurlingMatchPhase.None);
+                        Debug.LogError("StateMachine reference is null in CurlingManager.");
+                        return;
+                    }
+                    _StateMachine.TrySetState(state);
+                    OnMatchPhaseStateChanged?.Invoke(matchPhaseType);
+                    return;
+                }
+            }
+        }
+
+
+        /************************************************************************************************************************/
         /// <summary>
         /// Turn Management
         /// </summary>
         public void HandleNextTurn()
         {
-            if (!TurnManager.IsThereAnotherTurnAfterThisOne())
-            {
-                EndCurrentCurlingGame(); // End Curling Game
-            }
-            else
-            {
-                HandleEndOfTurn();
-                HandleStartNextTurn();
-                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelection);
-            }
+            HandleEndOfTurn();
         }
 
         public void HandleEndOfTurn()
@@ -178,105 +204,115 @@ namespace CurlingManagersV3
             // Called when a stone finishes moving, and is now resting in the target zone.
             Scoring.CalculateScore();
             SaveCurlingGameResults();
-            // HandleNextTurn();
+
+            if (!TurnManager.IsThereAnotherTurnAfterThisOne())
+            {
+                EndCurrentCurlingGame();
+                gameEndManager.EndCurrentCurlingGame();
+            }
+            else
+            {
+                HandleStartNextTurn();
+                ChangePhase(CurlingMatchPhase.TurnSplash);
+            }
         }
 
         public void HandleStartNextTurn()
         {
-            if (!TurnManager.IsThereAnotherTurnAfterThisOne()){
-                gameEndManager.EndCurrentCurlingGame();
-                return;
-            } else {
-                TurnManager.NextTurn();
-                Players.UpdateCurrentTeam();
-                Players.RepositionCharacters();
-            }
+            TurnManager.NextTurn();
+            Players.UpdateCurrentTeam();
+            Players.RepositionCharacters();
         }
+
+        /************************************************************************************************************************/
 
         /// <summary>
         /// Stone Selection
         /// </summary>
-        public void OnStoneSelection(){
-            List<CurlingStone> stoneOptions = stoneManager.GetStonesForCurrentTeam();
-        }
+        // public void OnStoneSelection(){
+        //     List<CurlingStone> stoneOptions = stoneManager.GetStonesForCurrentTeam();
+        // }
 
         public void OnStoneSelectionConfirmed()
         {
-            List<CurlingStone> stoneOptions = stoneManager.GetStonesForCurrentTeam();
-            CurlingStone selectedStone = stoneOptions[0];
-            for (int i = 0; i < stoneOptions.Count; i++)
-            {
-                CurlingStone stone = stoneOptions[i];
-                if (stone.Parameters.Status.IsInPlay == true){ 
-                    continue; // Skip stones that are already in play
-                }
-                else {
-                    selectedStone = stone; //stoneManager.UpdateCurrentStone(stone);
-                    break;
-                }
-            }
+            Debug.Log("On Stone Selection Confirmed");
+            if (Parameters.Stones.currentStone == null){
+                Debug.LogError("No stone has been selected, but trying to confirm stone selection. This should not happen.");
 
-            stoneManager.UpdateCurrentStone(
-                selectedStone: selectedStone
-            );
+                List<CurlingStone> stoneOptions = stoneManager.GetStonesForCurrentTeam();
+                CurlingStone selectedStone = stoneOptions[0];
+                for (int i = 0; i < stoneOptions.Count; i++)
+                {
+                    CurlingStone stone = stoneOptions[i];
+                    if (stone.Parameters.Status.IsInPlay == true){ 
+                        continue; // Skip stones that are already in play
+                    }
+                    else {
+                        selectedStone = stone; //stoneManager.UpdateCurrentStone(stone);
+                        break;
+                    }
+                }
+
+                stoneManager.UpdateCurrentStone(
+                    selectedStone: selectedStone
+                );
+                // return;
+            }
+            
+
+            Debug.Log($"Confirmed Stone Selection: {Parameters.Stones.currentStone.name}");
             stoneManager.PlaceCurrentStoneInLaunchPosition();
             // change camera
+            Debug.Log("Switching to Stone Camera");
             cameraController.SwitchToStoneCamera();
             // aiming.Reset();
+            Debug.Log("Resetting Aiming and Sweeping Systems for New Turn");
             Aiming.Reset();
+
+            Debug.Log("Resetting Sweeper Exhaustion Bars");
             Sweeping.ResetSweeperExhaustionBars();
 
-            // Update Player Tracking
-            CurlingTeam activeTeam = 
-                Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
-                    ? Parameters.Teams.teamHome
-                    : Parameters.Teams.teamAway;
-
-            CurlingTeam inactiveTeam = 
-                Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
-                    ? Parameters.Teams.teamAway
-                    : Parameters.Teams.teamHome;
- 
             _Players.UpdateSweeperStoneTracking(
-                team: activeTeam,
+                team: Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? Parameters.Teams.teamHome
+                    : Parameters.Teams.teamAway,
                 stone: Parameters.Stones.currentStone
             );
 
             _Players.UpdateSweeperStoneTracking(
-                team: inactiveTeam,
+                team: Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? Parameters.Teams.teamAway
+                    : Parameters.Teams.teamHome,
                 stone: null
             );
-
-            // _Players.PrepareSweepersToTrackActiveStone();
-            MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingAimControlsPhase);
-            
-
         }
+
+        /************************************************************************************************************************/
 
         /// <summary>
         /// Aiming and Power
         /// </summary>
-        public void OnAimingPhaseSelection(){
-            // throwing.UpdatePowerFromPowerMeterSelection();
-        }
+        // public void OnAimingPhaseSelection(){
+        //     // throwing.UpdatePowerFromPowerMeterSelection();
+        // }
 
-        public void OnAimingPhaseComplete(){
-            Throwing.ResetPowerMeter();
-            MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
-        }
+        // public void OnAimingPhaseComplete(){
+        //     // Throwing.ResetPowerMeter();
+        //     // MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
+        // }
 
-        public void OnPowerPhaseSelection(){
-            Throwing.UpdatePowerFromPowerMeterSelection();
-        }
+        // public void OnPowerPhaseSelection(){
+        //     Throwing.UpdatePowerFromPowerMeterSelection();
+        // }
 
-        public void OnPowerPhaseComplete(){
-            Throwing.LaunchStone(
-                stone: CurlingManager._instance.Parameters.Stones.currentStone, 
-                launchDirection: Parameters.Course.directionPivot.forward,
-                power: Parameters.Throwing.LaunchPower 
-            );
-        }
-
+        // public void OnPowerPhaseComplete(){
+        //     Throwing.LaunchStone(
+        //         stone: CurlingManager._instance.Parameters.Stones.currentStone, 
+        //         launchDirection: Parameters.Course.directionPivot.forward,
+        //         power: Parameters.Throwing.LaunchPower 
+        //     );
+        // }
+        /************************************************************************************************************************/
 
         /// <summary>
         /// End Game

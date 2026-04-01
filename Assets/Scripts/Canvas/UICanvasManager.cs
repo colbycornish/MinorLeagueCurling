@@ -161,7 +161,8 @@ namespace UICanvasManager.v3
         public void OpenCurlingFinalResults() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
         public void OpenCurlingPostThrowResults() => OpenSection(canvasType: CanvasType.CurlingGamePostThrowResultDisplay);
         
-        //
+        // 
+        public void OpenLoadingFullScreenSection() => OpenSection(canvasType: CanvasType.LoadingFullScreen);
         public void OpenCurlingGameSplashTurnDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
         public void OpenCurlingGameFinalResultDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
 

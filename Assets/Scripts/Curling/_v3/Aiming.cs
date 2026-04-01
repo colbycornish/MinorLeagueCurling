@@ -40,7 +40,7 @@ namespace CurlingManagersV3
                 CurlingManager._instance.Parameters.Course.directionPivotObject != null
             )
             {
-                CurlingManager._instance.Parameters.Course.directionPivotObject.transform.rotation =  Quaternion.identity;//Quaternion.Euler(0, 0, 0);
+                CurlingManager._instance.Parameters.Course.directionPivotObject.transform.rotation =  Quaternion.identity; //Quaternion.Euler(0, 0, 0);
                 CurlingManager._instance.Parameters.Course.directionPivot.rotation = Quaternion.identity; //Quaternion.Euler(0, 0, 0);
             }
 
@@ -135,7 +135,6 @@ namespace CurlingManagersV3
             CurlingStone currentStone = stone;
             if (currentStone == null){
                 currentStone = CurlingManager._instance.Parameters.Stones.currentStone;
-                //CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone;
             }
             if (currentStone == null || currentStone.rb == null) return;
 

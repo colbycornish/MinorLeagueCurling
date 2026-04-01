@@ -13,6 +13,8 @@ namespace CurlingManagersV3
     public class Players : MonoBehaviour
     {        
         public event Action<List<CurlingTeam>> OnTeamDataChanged;
+        public float sweeperForwardDistanceFromStone = 12f;
+        public float sweeperLateralDistanceFromStone = 8f;
 
         /// <summary>
         /// Setup
@@ -25,10 +27,6 @@ namespace CurlingManagersV3
         {
             SetupTeams(teamHome, teamAway);
             SetupPlayers(teamHome, teamAway, curlingCourse);
-            // scoreBug.UpdateTeamInfo(
-            //     homeTeamName: "Blue Broom Brushers",
-            //     awayTeamName: "Purple Stone Throwers"
-            // );
         }
 
         // assigns the teams.
@@ -56,6 +54,8 @@ namespace CurlingManagersV3
             CurlingCourseData curlingCourse
         )
         {
+
+            
             CurlingManager._instance.Parameters.Teams.teamHome.thrower = Instantiate(
                 CurlingManager._instance.Parameters.Teams.teamHome.thrower, 
                 CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[0].position, 
@@ -107,12 +107,72 @@ namespace CurlingManagersV3
             CurlingManager._instance.Parameters.Teams.teamAway.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.SweeperLeft;
             CurlingManager._instance.Parameters.Teams.teamAway.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.CurlingTeamPosition = CurlingPlayerPosition.SweeperRight;
             
+            // InitializePlayerCurlingParameters(
+            //     curlingPlayer: teamHome.thrower, 
+            //     curlingPosition: CurlingPlayerPosition.Thrower,
+            //     initialPosition: CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[0].position
+            // );
+            // InitializePlayerCurlingParameters(
+            //     curlingPlayer: teamHome.sweeperLeft, 
+            //     curlingPosition: CurlingPlayerPosition.SweeperLeft,
+            //     initialPosition: CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[1].position
+            // );
+            // InitializePlayerCurlingParameters(
+            //     curlingPlayer: teamHome.sweeperRight, 
+            //     curlingPosition: CurlingPlayerPosition.SweeperRight,
+            //     initialPosition: CurlingManager._instance.Parameters.Course.idleLocationsTeamHome[2].position
+            // );
+            // InitializePlayerCurlingParameters(
+            //     curlingPlayer: teamAway.thrower, 
+            //     curlingPosition: CurlingPlayerPosition.Thrower,
+            //     initialPosition: CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[0].position
+            // );
+            // InitializePlayerCurlingParameters(
+            //     curlingPlayer: teamAway.sweeperLeft, 
+            //     curlingPosition: CurlingPlayerPosition.SweeperLeft,
+            //     initialPosition: CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[1].position
+            // );
+            // InitializePlayerCurlingParameters(
+            //     curlingPlayer: teamAway.sweeperRight, 
+            //     curlingPosition: CurlingPlayerPosition.SweeperRight,
+            //     initialPosition: CurlingManager._instance.Parameters.Course.idleLocationsTeamAway[2].position
+            // );
+
             PutTeamOnSidelines(
                 team: CurlingManager._instance.Parameters.Teams.teamAway, 
                 idleLocations: CurlingManager._instance.Parameters.Course.idleLocationsTeamAway
             );
 
             PutTeamOnIce(team: CurlingManager._instance.Parameters.Teams.teamHome);            
+        }
+
+        private void InitializePlayerCurlingParameters(
+            GameObject curlingPlayer,
+            CurlingPlayerPosition curlingPosition,
+            Vector3 initialPosition
+
+        )
+        {
+
+            CurlingManager._instance.Parameters.Teams.teamHome.thrower = Instantiate(
+                curlingPlayer, 
+                initialPosition,
+                Quaternion.identity
+            );
+
+
+
+            CharacterNPC.v2.Character c = curlingPlayer.GetComponent<CharacterNPC.v2.Character>();
+            c.Parameters.Status.IsCurling = true;
+            c.Parameters.Curling.CurlingTeamPosition = curlingPosition;
+            c.Parameters.Curling.lateralSpacing = sweeperLateralDistanceFromStone;
+            c.Parameters.Curling.forwardDistance = sweeperForwardDistanceFromStone;
+
+            if (curlingPosition == CurlingPlayerPosition.SweeperLeft || 
+                curlingPosition == CurlingPlayerPosition.SweeperRight)
+            {
+                c.Parameters.Curling.IsAbleToSweep = true;
+            }
         }
 
 
@@ -163,57 +223,136 @@ namespace CurlingManagersV3
             CurlingTeam team, 
             List<Transform> idleLocations
         ){
-            TeleportPlayer(
+
+            PutPlayerOnSideline(
                 playerObject: team.thrower,
-                newPosition: idleLocations[0].position
-            );
-            TeleportPlayer(
-                playerObject: team.sweeperLeft,
-                newPosition: idleLocations[1].position
-            );
-            TeleportPlayer(
-                playerObject: team.sweeperRight,
-                newPosition: idleLocations[2].position
+                idleLocation: idleLocations[0],
+                lookAtTarget: CurlingManager._instance.Parameters.Course.targetZone.transform.position
             );
 
-            team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
-            team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
-            team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
+            PutPlayerOnSideline(
+                playerObject: team.sweeperLeft,
+                idleLocation: idleLocations[1],
+                lookAtTarget: CurlingManager._instance.Parameters.Course.targetZone.transform.position
+            );
+
+            PutPlayerOnSideline(
+                playerObject: team.sweeperRight,
+                idleLocation: idleLocations[2],
+                lookAtTarget: CurlingManager._instance.Parameters.Course.targetZone.transform.position
+            );
 
             return;
+
+            // TeleportPlayer(
+            //     playerObject: team.thrower,
+            //     newPosition: idleLocations[0].position
+            // );
+            // TeleportPlayer(
+            //     playerObject: team.sweeperLeft,
+            //     newPosition: idleLocations[1].position
+            // );
+            // TeleportPlayer(
+            //     playerObject: team.sweeperRight,
+            //     newPosition: idleLocations[2].position
+            // );
+
+            // team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
+            // team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
+            // team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
+
+            
+        }
+
+        private void PutPlayerOnSideline(
+            GameObject playerObject, 
+            Transform idleLocation,
+            Vector3 lookAtTarget
+        ){
+            TeleportPlayer(
+                playerObject: playerObject,
+                newPosition: idleLocation.position
+            );
+
+            playerObject.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = false;
         }
 
         public void PutTeamOnIce(CurlingTeam team){
             Debug.Log("Putting Team on Ice");
-            
-            TeleportPlayer(
+
+            PutPlayerOnIce(
                 playerObject: team.thrower,
-                newPosition: CurlingManager._instance.Parameters.Course.throwerStartLocation.position
-            );
-            
-            TeleportPlayer(
-                playerObject: team.sweeperLeft,
-                newPosition: CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position
-            );
-            TeleportPlayer(
-                playerObject: team.sweeperRight,
-                newPosition: CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position
-            );
-            
-            // Make Right Sweeper look at Left Sweeper
-            team.sweeperRight.transform.LookAt(team.sweeperLeft.transform.position);
-            // Make Left Sweeper look at Right Sweeper
-            team.sweeperLeft.transform.LookAt(team.sweeperRight.transform.position);
-            // Make Thrower look at Target Zone
-            team.thrower.transform.LookAt(
-                CurlingManager._instance.Parameters.Course.targetZone.transform.position
+                iceLocation: CurlingManager._instance.Parameters.Course.throwerStartLocation,
+                lookAtTarget: CurlingManager._instance.Parameters.Course.targetZone.transform.position
             );
 
-            team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
-            team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
-            team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+            PutPlayerOnIce(
+                playerObject: team.sweeperLeft,
+                iceLocation: CurlingManager._instance.Parameters.Course.sweeperLStartLocation,
+                lookAtTarget: CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position
+                    //team.sweeperRight.transform.position
+            );
+
+            PutPlayerOnIce(
+                playerObject: team.sweeperRight,
+                iceLocation: CurlingManager._instance.Parameters.Course.sweeperRStartLocation,
+                lookAtTarget: CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position
+                    //team.sweeperLeft.transform.position
+            );
+
+            // // Make Right Sweeper look at Left Sweeper
+            // team.sweeperRight.transform.LookAt(team.sweeperLeft.transform.position);
+            // // Make Left Sweeper look at Right Sweeper
+            // team.sweeperLeft.transform.LookAt(team.sweeperRight.transform.position);
+            // // Make Thrower look at Target Zone
+            // team.thrower.transform.LookAt(
+            //     CurlingManager._instance.Parameters.Course.targetZone.transform.position
+            // );
 
             return;
+            
+            // TeleportPlayer(
+            //     playerObject: team.thrower,
+            //     newPosition: CurlingManager._instance.Parameters.Course.throwerStartLocation.position
+            // );
+            
+            // TeleportPlayer(
+            //     playerObject: team.sweeperLeft,
+            //     newPosition: CurlingManager._instance.Parameters.Course.sweeperLStartLocation.position
+            // );
+            // TeleportPlayer(
+            //     playerObject: team.sweeperRight,
+            //     newPosition: CurlingManager._instance.Parameters.Course.sweeperRStartLocation.position
+            // );
+            
+            // // Make Right Sweeper look at Left Sweeper
+            // team.sweeperRight.transform.LookAt(team.sweeperLeft.transform.position);
+            // // Make Left Sweeper look at Right Sweeper
+            // team.sweeperLeft.transform.LookAt(team.sweeperRight.transform.position);
+            // // Make Thrower look at Target Zone
+            // team.thrower.transform.LookAt(
+            //     CurlingManager._instance.Parameters.Course.targetZone.transform.position
+            // );
+
+            // team.thrower.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+            // team.sweeperLeft.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+            // team.sweeperRight.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
+
+            
+        }
+
+        private void PutPlayerOnIce(
+            GameObject playerObject, 
+            Transform iceLocation,
+            Vector3 lookAtTarget
+        ){
+            TeleportPlayer(
+                playerObject: playerObject,
+                newPosition: iceLocation.position
+            );
+
+            playerObject.transform.LookAt(lookAtTarget);
+            playerObject.GetComponent<CharacterNPC.v2.Character>().Parameters.Curling.IsOnIce = true;
         }
 
         // Call this method to teleport the instantiated object

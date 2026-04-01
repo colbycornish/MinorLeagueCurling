@@ -120,6 +120,22 @@ namespace CurlingUI.v3 {
             // }
         }
 
+        public void SetExhaustionLevelsFromCharacterStats(
+                float exhaustionLevel,
+                float maxExhaustionLevel, 
+                float minExhaustionLevel,
+                float exhaustionRate,
+                float recoveryRate,
+                float exhaustionThreshold
+        ){
+            this.exhaustionLevel = exhaustionLevel;
+            this.maxExhaustionValue = maxExhaustionLevel;
+            this.minExhaustionValue = minExhaustionLevel;
+            this.exhaustionRate = exhaustionRate;
+            this.recoveryRate = recoveryRate;
+            this.exhaustionThreshold = exhaustionThreshold;
+        }
+
 
     }
 }

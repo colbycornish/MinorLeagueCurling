@@ -30,7 +30,8 @@ namespace UICanvasManager.v3
         CurlingGameFinalResultDisplay,
         //
         SplashScreenBurnoutGames,
-        SplashScreenMinorLeagueCurling
+        SplashScreenMinorLeagueCurling,
+        LoadingFullScreen
         
     }
 }

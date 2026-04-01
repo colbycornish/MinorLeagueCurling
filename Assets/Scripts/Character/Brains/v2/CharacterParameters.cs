@@ -1,10 +1,5 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
-
 using System;
 using UnityEngine;
-using Animancer;
 
 namespace CharacterNPC.v2
 {
@@ -13,7 +8,6 @@ namespace CharacterNPC.v2
     public class CharacterParameters
     {
 
-        
         [SerializeField]
         private CharacterParametersCurling _Curling;
         public CharacterParametersCurling Curling => _Curling;
@@ -41,6 +35,10 @@ namespace CharacterNPC.v2
         [SerializeField]
         private CharacterParametersSurroundings _Surroundings;
         public CharacterParametersSurroundings Surroundings => _Surroundings;  
+
+        // [SerializeField]
+        // private CharacterSO _CharacterScripableObject;
+        // public CharacterSO CharacterScripableObject => _CharacterScripableObject;    
 
         /* MOVEMENT ***********************************************************************************************************************/
 

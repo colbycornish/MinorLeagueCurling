@@ -8,22 +8,24 @@ namespace CurlingUI.v3 {
     public class CurlingStoneItem : MonoBehaviour
     {
         [Header("UI Elements")]
+        
         public TextMeshProUGUI textName;
         public TextMeshProUGUI textDescription;
         public Image avatarImage;
 
         [Header("Data")]
-        public CurlingStoneSO stoneData;
-        public Action<CurlingStoneSO> _OnSelectStone;
+        public CurlingStone stoneData;
+        public CurlingStoneSO stoneDataSO;
+        public Action<CurlingStone> _OnSelectStone;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         
         public void UpdateDisplay()
         {
             if (stoneData != null)
             {
-                if (textName != null) textName.text = stoneData.Name;
-                if (textDescription != null) textDescription.text = stoneData.Description;
-                if (avatarImage != null) avatarImage.sprite = stoneData.AvatarImage;
+                if (textName != null) textName.text = stoneData.name;
+                if (textDescription != null) textDescription.text = stoneData.description;
+                if (avatarImage != null) avatarImage.sprite = stoneData.stoneDataSO.AvatarImage;
             }
             else
             {
@@ -34,7 +36,7 @@ namespace CurlingUI.v3 {
         }
 
         public void SelectStone() {
-            Debug.Log($"[item] Selected Stone: {stoneData.Name}");
+            Debug.Log($"[item] Selected Stone: {stoneData.name}");
             _OnSelectStone?.Invoke(stoneData);
         }
     }

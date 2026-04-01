@@ -5,31 +5,27 @@ namespace CurlingManagersV3.MatchPhaseStates
 {
     public class StoneSelectionState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
+        
 
-        public override void OnEnter()
+        /************************************************************************************************************************/
+        protected virtual void OnEnable()
         {
+            UICanvasManager.v3.UICanvasManager.Instance.CloseAllCanvases();
             UICanvasManager.v3.UICanvasManager.Instance.OpenStoneToUseSelectionModal();
         }
 
-        public override void OnUpdate()
+        /************************************************************************************************************************/
+
+        protected virtual void OnDisable()
         {
-            // Handle input or logic while in this state
-            if (Input.GetMouseButtonDown(0))
-            {
-                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.StoneSelectionConfirm);
-            }
+            UICanvasManager.v3.UICanvasManager.Instance.CloseAllModals();
+            // MainCurlingManager.OnStoneSelectionConfirmed();
         }
 
-        public override void OnExit()
-        {
-            // TODO: Go To AimAndPower
-            // Remove listeners
-        }
+        /************************************************************************************************************************/
 
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.StoneSelection;
 

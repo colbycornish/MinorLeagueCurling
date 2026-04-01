@@ -38,6 +38,11 @@ public class CurlingPreGameSetupManagerV2 : MonoBehaviour
     [SerializeField] public GameObject selectedStone4;
     [SerializeField] public GameObject selectedStone5;
 
+    [Header("Temp Demo Functionality")]
+    [SerializeField] public CurlingTeam demoTeamHome;
+    [SerializeField] public CurlingTeam demoTeamAway;
+    [SerializeField] public CurlingCourseData demoCurlingCourseData;
+
     // [Header("Opponent")]
     // [SerializeField] public bool isOpponentAI;
     // [SerializeField] public bool isOpponentLocal;
@@ -112,9 +117,29 @@ public class CurlingPreGameSetupManagerV2 : MonoBehaviour
     }
 
 
+    public void StartDemoCurlingGame()
+    {
+        UICanvasManager.v3.UICanvasManager.Instance.CloseAllCanvases();
+        if (selectedLeftSweeper != null){ demoTeamHome.sweeperLeft = selectedLeftSweeper.GameModel; }
+        if (selectedRightSweeper != null){ demoTeamHome.sweeperRight = selectedRightSweeper.GameModel; }
+        if (selectedThrower != null){ demoTeamHome.thrower = selectedThrower.GameModel; }
+
+        CurlingManager._instance.Setup.SetupAll(
+            rulesData: curlingRules,
+            courseData: demoCurlingCourseData,
+            teamHome: demoTeamHome,
+            teamAway: demoTeamAway,
+
+            gameData: new CurlingGameData(),
+            exitSceneName: "MainMenu",
+            exitSpawnId: "MainMenuSpawn"
+        );
+    }
+
     public void StartCurlingGame()
     {
         UICanvasManager.v3.UICanvasManager.Instance.CloseAllCanvases();
+        CurlingManager._instance.ResetCurlingGame();
         CurlingManager._instance.Setup.SetupAll(
             rulesData: curlingRules,
             courseData: PrepCourseData(), // courseData,

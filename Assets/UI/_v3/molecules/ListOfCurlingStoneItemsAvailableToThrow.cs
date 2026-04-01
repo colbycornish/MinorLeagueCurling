@@ -8,13 +8,14 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 namespace CurlingUI.v3 {
-    public class ListOfCurlingStoneItemsAvailableToThrow : UIListController
+    public class ListOfCurlingStoneItemsAvailableToThrow : MonoBehaviour//UIListController
     {
         public CurlingStonesSO listOfCurlingStones;
+        public List<CurlingStone> listOfAvailableStones;
         public GameObject ContentArea;
         public GameObject DefaultCurlingStoneItem;
 
-        public Action<CurlingStoneSO> _OnSelectStone;
+        public Action<CurlingStone> _OnSelectStone;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -22,27 +23,34 @@ namespace CurlingUI.v3 {
         }
 
         void OnEnable(){
-            PopulateList();
         } 
 
-        void PopulateList(){
-            foreach (Transform child in ContentArea.transform) {
-                Destroy(child.gameObject);
-            }
+        
 
-            foreach (CurlingStoneSO stone in listOfCurlingStones.CurlingStones) {
+        public void BuildList()
+        {
+            foreach (CurlingStone stone in listOfAvailableStones) {
                 GameObject newItem = Instantiate(DefaultCurlingStoneItem, ContentArea.transform);
                 CurlingStoneItem stoneItemScript = newItem.GetComponent<CurlingStoneItem>();
 
                 stoneItemScript._OnSelectStone = OnSelectStone;
                     // OnSelect: (string characterId) => { OnSelection(characterId); }
+                // stoneItemScript.stoneDataSO = stone;
                 stoneItemScript.stoneData = stone;
+                stoneItemScript.UpdateDisplay();
             }
         }
 
-        public void OnSelectStone(CurlingStoneSO stone)
+        public void Reset()
         {
-            Debug.Log($"[list] Selected Stone: {stone.Name}");
+            foreach (Transform child in ContentArea.transform) {
+                Destroy(child.gameObject);
+            }
+        }
+
+        public void OnSelectStone(CurlingStone stone)
+        {
+            Debug.Log($"[list] Selected Stone: {stone.name}");
             _OnSelectStone?.Invoke(stone);
         }
     }

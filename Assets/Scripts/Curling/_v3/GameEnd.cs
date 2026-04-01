@@ -39,7 +39,7 @@ namespace CurlingManagersV3
         }
 
         public void EndCurlingGame(){
-
+            CurlingManager._instance.ChangePhase(CurlingMatchPhase.FinalResults);
         }
 
         public void ExitCurlingGame()

@@ -1,33 +1,49 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CurlingManagersV3.MatchPhaseStates
 {
     public class TeamSplashState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
+        private InputAction goToNextPhaseAction;
+        
+        void Awake()
+        {
+            goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
+        {
+            goToNextPhaseAction.performed += OnGoToNextPhase;
+            goToNextPhaseAction.Enable();
+            OnEnter();
+        }
 
         public override void OnEnter()
         {
             UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingTeamSplash();
-            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
         }
 
-        public override void OnUpdate()
+        /************************************************************************************************************************/
+
+        protected virtual void OnDisable()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                // MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.RoundSplash);
-            }
+            goToNextPhaseAction.performed -= OnGoToNextPhase;
+            goToNextPhaseAction.Disable();
         }
 
-        public override void OnExit()
+        /************************************************************************************************************************/
+
+        private void OnGoToNextPhase(InputAction.CallbackContext obj)
         {
-            // Remove listeners
-        }
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.TurnSplash);
+        } 
 
+        /************************************************************************************************************************/
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.TeamSplash;
 

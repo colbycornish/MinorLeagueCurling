@@ -1,29 +1,45 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CurlingManagersV3.MatchPhaseStates
 {
     public class ExitCurlingGameState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
-
-        public override void OnEnter()
+        private InputAction goToNextPhaseAction;
+        
+        void Awake()
         {
-            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
+            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
+            goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
         }
 
-        public override void OnUpdate()
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
         {
-            // Handle input or logic while in this state
+            goToNextPhaseAction.performed += OnGoToNextPhase;
+            goToNextPhaseAction.Enable();
         }
 
-        public override void OnExit()
+        /************************************************************************************************************************/
+        protected virtual void OnDisable()
         {
-            // Remove listeners
+            goToNextPhaseAction.performed -= OnGoToNextPhase;
+            goToNextPhaseAction.Disable();
         }
+
+        /************************************************************************************************************************/
+
+        private void OnGoToNextPhase(InputAction.CallbackContext obj)
+        {
+            Debug.Log("Go to Main Menu or Exit Game");
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.None);
+        }
+
+        /************************************************************************************************************************/
 
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.ExitCurlingGame;
 

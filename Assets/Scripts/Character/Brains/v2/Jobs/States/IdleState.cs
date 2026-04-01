@@ -56,13 +56,13 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("IdleJob OnDisable");
+            // Debug.Log("IdleJob OnDisable");
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("IdleJob OnEnable");
+            // Debug.Log("IdleJob OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Idle;
         }
     }

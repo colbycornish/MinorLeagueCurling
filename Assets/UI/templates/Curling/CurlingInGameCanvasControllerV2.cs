@@ -18,14 +18,14 @@ public class CurlingInGameCanvasControllerV2 : MonoBehaviour
 
     private void OnEnable()
     {
-        if (CurlingManagersV3.MatchPhaseManager._instance == null) return;
-        CurlingManagersV3.MatchPhaseManager._instance.OnPhaseChanged += HandlePhase;
+        // if (CurlingManagersV3.MatchPhaseManager._instance == null) return;
+        // CurlingManagersV3.MatchPhaseManager._instance.OnPhaseChanged += HandlePhase;
     }
 
     private void OnDisable()
     {
-        if (CurlingManagersV3.MatchPhaseManager._instance == null) return;
-        CurlingManagersV3.MatchPhaseManager._instance.OnPhaseChanged -= HandlePhase;
+        // if (CurlingManagersV3.MatchPhaseManager._instance == null) return;
+        // CurlingManagersV3.MatchPhaseManager._instance.OnPhaseChanged -= HandlePhase;
     }
 
     void HandlePhase(
@@ -35,31 +35,31 @@ public class CurlingInGameCanvasControllerV2 : MonoBehaviour
     }
 
     void OnPhaseChanged(){
-        CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
-        switch (currentPhase)
-        {
-            case CurlingMatchPhase.Loading:
-                OpenLoadingSection();
-                break;
-            // case CurlingManagersV3.CurlingMatchPhase.RoundSplash:
-            //     OpenRoundSplashSection();
-            //     break;
-            case CurlingMatchPhase.StoneSelection:
-                OpenStoneSelection();
-                break;
-            case CurlingMatchPhase.CurlingAimControlsPhase:
-                OpenCurlingInGameSection();
-                break;
-            case CurlingMatchPhase.PostThrowResult:
-                OpenPostThrowResultsDisplay();
-                break;
-            case CurlingMatchPhase.FinalResults:
-                OpenFinalResultsDisplay();
-                break;
-            default:
-                // SetActiveSelection();
-                break;
-        }
+        // CurlingMatchPhase currentPhase = CurlingManagersV3.MatchPhaseManager._instance.currentPhase;
+        // switch (currentPhase)
+        // {
+        //     case CurlingMatchPhase.Loading:
+        //         OpenLoadingSection();
+        //         break;
+        //     // case CurlingManagersV3.CurlingMatchPhase.RoundSplash:
+        //     //     OpenRoundSplashSection();
+        //     //     break;
+        //     case CurlingMatchPhase.StoneSelection:
+        //         OpenStoneSelection();
+        //         break;
+        //     case CurlingMatchPhase.CurlingAimControlsPhase:
+        //         OpenCurlingInGameSection();
+        //         break;
+        //     case CurlingMatchPhase.PostThrowResult:
+        //         OpenPostThrowResultsDisplay();
+        //         break;
+        //     case CurlingMatchPhase.FinalResults:
+        //         OpenFinalResultsDisplay();
+        //         break;
+        //     default:
+        //         // SetActiveSelection();
+        //         break;
+        // }
     }
 
     public void OpenLoadingSection(){

@@ -1,40 +1,62 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CurlingManagersV3.MatchPhaseStates
 {
     public class FinalResultsState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
+        private InputAction goToNextPhaseAction;
+        
+        void Awake()
+        {
+            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
+            goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
+        {
+            // Add listeners
+            goToNextPhaseAction.performed += OnGoToNextPhase;
+            goToNextPhaseAction.Enable();
+
+            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingFinalResults();
+
+            // OnEnter();
+        }
 
         public override void OnEnter()
         {
+            // This is likely already triggered?
             CurlingManager._instance.gameEndManager.EndCurlingGame();
-            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingFinalResults();
-            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
         }
 
-        public override void OnUpdate()
-        {
-            HandleFinalResultsInput();
-            // Handle input or logic while in this state
-        }
+        /************************************************************************************************************************/
 
-        private void HandleFinalResultsInput()
+        protected virtual void OnDisable()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.RoundSplash);
-            }
+            // Remove listeners
+            goToNextPhaseAction.performed -= OnGoToNextPhase;
+            goToNextPhaseAction.Disable();
         }
 
         public override void OnExit()
         {
-            // Remove listeners
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.ExitCurlingGame);
         }
 
+        /************************************************************************************************************************/
+
+        private void OnGoToNextPhase(InputAction.CallbackContext obj)
+        {
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.ExitCurlingGame);
+        } 
+
+        /************************************************************************************************************************/
+
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.FinalResults;
 

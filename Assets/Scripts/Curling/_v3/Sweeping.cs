@@ -13,108 +13,111 @@ namespace CurlingManagersV3
         /// </summary>
         public void Setup()
         {           
-            GameObject lsEB = CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBar;
-            GameObject rsEB = CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBar;
+            // GameObject lsEB = CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBar;
+            // GameObject rsEB = CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBar;
 
-            CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController = 
-                lsEB.GetComponent<SweeperExhaustionBarV2>();
+            // CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController = 
+            //     lsEB.GetComponent<SweeperExhaustionBarV2>();
             
-            CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController = 
-                rsEB.GetComponent<SweeperExhaustionBarV2>();
+            // CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController = 
+            //     rsEB.GetComponent<SweeperExhaustionBarV2>();
 
         }
 
         /// <summary>
         /// Update!
         /// </summary>
-        void Update()
-        {
-            CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
-            if (currentPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
-            {
+        // void Update()
+        // {
+        //     // return; // FLAG: DISABLE FIXED UPDATE FOR NOW TO TEST IF THIS IS CAUSING PROBLEMS WITH SWEEPING
+        //     // CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
+        //     CurlingMatchPhase currentMatchPhase = CurlingManager._instance.StateMachine.CurrentState?.StateMatchPhaseType ?? CurlingMatchPhase.None;
+        //     if (currentMatchPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
+        //     {
                 
-                // Track sweeping input ** NEW SWEEPER CODE **
-                // this does not work. It's unclear why. 
-                // this.isSweepingLeft = Input.GetKeyDown(leftSweeperKey); // ** NEW SWEEPER CODE **
-                // this.isSweepingRight = Input.GetKeyDown(rightSweeperKey); // ** NEW SWEEPER CODE **
+        //         // Track sweeping input ** NEW SWEEPER CODE **
+        //         // this does not work. It's unclear why. 
+        //         // this.isSweepingLeft = Input.GetKeyDown(leftSweeperKey); // ** NEW SWEEPER CODE **
+        //         // this.isSweepingRight = Input.GetKeyDown(rightSweeperKey); // ** NEW SWEEPER CODE **
 
-                if (Input.GetKeyDown(KeyCode.LeftShift))
-                {
-                    CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = true;
-                    CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.IncreaseExhaustionLevel();
-                } 
-                if (Input.GetKeyDown(KeyCode.RightShift))
-                {
-                    CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = true;
-                    CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController.IncreaseExhaustionLevel();
-                } 
-                if (Input.GetKeyUp(KeyCode.LeftShift)){
-                    CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = false;
-                }
-                if (Input.GetKeyUp(KeyCode.RightShift)){
-                    CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = false;
-                }
-                return;
-            }
+        //         if (Input.GetKeyDown(KeyCode.LeftShift))
+        //         {
+        //             Debug.Log("Left Shift Key Down - Start Sweeping Left");
+        //             CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = true;
+        //             CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.IncreaseExhaustionLevel();
+        //         } 
+        //         if (Input.GetKeyDown(KeyCode.RightShift))
+        //         {
+        //             Debug.Log("Right Shift Key Down - Start Sweeping Right");
+        //             CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = true;
+        //             CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController.IncreaseExhaustionLevel();
+        //         } 
+        //         if (Input.GetKeyUp(KeyCode.LeftShift)){
+        //             CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = false;
+        //         }
+        //         if (Input.GetKeyUp(KeyCode.RightShift)){
+        //             CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = false;
+        //         }
+        //         return;
+        //     }
 
-            if (currentPhase == CurlingMatchPhase.CurlingNoSweepZone && 
-                (CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft == true ||
-                CurlingManager._instance.Parameters.Sweeping.IsSweepingRight == true)
-            )
-            {
-                CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = false;
-                CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = false;
-            }
-        }
+        //     if (currentMatchPhase == CurlingMatchPhase.CurlingNoSweepZone && 
+        //         (CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft == true ||
+        //         CurlingManager._instance.Parameters.Sweeping.IsSweepingRight == true)
+        //     )
+        //     {
+        //         CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = false;
+        //         CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = false;
+        //     }
+        // }
 
-        void FixedUpdate()
-        {
-            
-            CurlingStone currentStone = CurlingManager._instance.Parameters.Stones.currentStone; 
-            if (currentStone == null || currentStone.rb == null) return;
+        // void FixedUpdate()
+        // {
+        //     // return; // FLAG: DISABLE FIXED UPDATE FOR NOW TO TEST IF THIS IS CAUSING PROBLEMS WITH SWEEPING
+        //     CurlingStone currentStone = CurlingManager._instance.Parameters.Stones.currentStone; 
+        //     if (currentStone == null || currentStone.rb == null) return;
 
-            CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
-            if (currentPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
-            { 
-                return;
-            }
+        //     CurlingMatchPhase currentMatchPhase = CurlingManager._instance.StateMachine.CurrentState?.StateMatchPhaseType ?? CurlingMatchPhase.None;
+        //     // CurlingMatchPhase currentPhase = MatchPhaseManager._instance.currentPhase;
+        //     if (currentMatchPhase != CurlingMatchPhase.CurlingStoneSweepingPhase)
+        //     { 
+        //         return;
+        //     }
 
-            // TODO: Move to the match flow
-            if (
-                currentStone != null && 
-                currentStone.Parameters.Status.IsSliding && 
-                currentStone.rb != null
-                // The following line used to be in immediately after != null,
-                // and I think it was throwing things off: 
-                // && Mathf.Abs(curlAmount) > 0.01f
-            ) 
-            {
+        //     // TODO: Move to the match flow
+        //     if (
+        //         currentStone != null && 
+        //         currentStone.Parameters.Status.IsSliding && 
+        //         currentStone.rb != null
+        //         // The following line used to be in immediately after != null,
+        //         // and I think it was throwing things off: 
+        //         // && Mathf.Abs(curlAmount) > 0.01f
+        //     ) 
+        //     {
                 
-                // todo: move to match flow
-                if (
-                    currentStone.rb != null && 
-                    currentStone.rb.linearVelocity.sqrMagnitude < 0.01f && 
-                    currentStone.rb.angularVelocity.sqrMagnitude < 0.01f
-                )
-                {
-                    currentStone.Parameters.Status.IsSliding = false;
-                }
+        //         // todo: move to match flow
+        //         if (
+        //             currentStone.rb != null && 
+        //             currentStone.rb.linearVelocity.sqrMagnitude < 0.01f && 
+        //             currentStone.rb.angularVelocity.sqrMagnitude < 0.01f
+        //         )
+        //         {
+        //             currentStone.Parameters.Status.IsSliding = false;
+        //         }
 
                 
-                ApplySpinForceToStone(stone: currentStone);
+        //         ApplySpinForceToStone(stone: currentStone);
                 
-                /// TODO: both of these are currently false
-                bool sweeping = CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft || CurlingManager._instance.Parameters.Sweeping.IsSweepingRight;
-                if (sweeping)
-                {
-                    ApplySweepingImpactToStone(stone: currentStone);
-                }
+        //         /// TODO: both of these are currently false
+        //         bool sweeping = CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft || CurlingManager._instance.Parameters.Sweeping.IsSweepingRight;
+        //         if (sweeping)
+        //         {
+        //             ApplySweepingImpactToStone(stone: currentStone);
+        //         }
 
-                // Debug lines to track that sweeping is working correctly
-                // if (isSweepingLeft) Debug.Log("🧹 Sweeping LEFT (K key)");
-                // if (isSweepingRight) Debug.Log("🧹 Sweeping RIGHT (L key)");
-            }
-        }
+                
+        //     }
+        // }
 
         /// <summary>
         /// Apply Spin
@@ -124,7 +127,7 @@ namespace CurlingManagersV3
             // Debug.Log("Applying Spin Force to Stone");
             CurlingStone currentStone = stone;
             if (currentStone == null){
-                currentStone = CurlingManager._instance.Parameters.Stones.currentStone; //CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone;
+                currentStone = CurlingManager._instance.Parameters.Stones.currentStone; 
             }
             if (currentStone == null || currentStone.rb == null) return;
             // Fire the stone
@@ -188,7 +191,7 @@ namespace CurlingManagersV3
         public void ResetSweeperExhaustionBars()
         {
             /// leftSweeperBar
-            CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.SetExhaustionLevelsFromCharacter(
+            CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.SetExhaustionLevelsFromCharacterStats(
                 exhaustionLevel: 0.0f, 
                 maxExhaustionLevel: 1.0f, 
                 minExhaustionLevel: 0.0f,
@@ -199,7 +202,7 @@ namespace CurlingManagersV3
             CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.InitializeDisplay();
             
             /// rightSweeperBar
-            CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController.SetExhaustionLevelsFromCharacter(
+            CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController.SetExhaustionLevelsFromCharacterStats(
                 exhaustionLevel: 0.0f, 
                 maxExhaustionLevel: 1.0f, 
                 minExhaustionLevel: 0.0f,

@@ -5,7 +5,9 @@ using CurlingStones;
 
 public class CurlingStone : MonoBehaviour
 {
+
     [Header("Basic Data")]
+    public CurlingStoneSO stoneDataSO;
     public string title = "Basic Stone";
     public string description = "Just your basic curling stone.";
     public string id = "";
@@ -35,6 +37,13 @@ public class CurlingStone : MonoBehaviour
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
+        }
+        if (stoneDataSO != null)
+        {
+            title = stoneDataSO.Name;
+            description = stoneDataSO.Description;
+            // avatarImage = stoneDataSO.Thumbnail;
+            // hasSpecialAbility = stoneDataSO.HasSpecialAbility;
         }
     }
 

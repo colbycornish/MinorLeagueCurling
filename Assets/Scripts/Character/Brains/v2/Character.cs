@@ -35,18 +35,11 @@ namespace CharacterNPC.v2
         [SerializeField]
         private NavMeshAgent _NavAgent;
         public NavMeshAgent NavAgent => _NavAgent;
-        
+
+            
 
         /************************************************************************************************************************/
 
-        // [SerializeField]
-        // private StateMachine<CharacterState>.WithDefault _StateMachine;
-        // public StateMachine<CharacterState>.WithDefault StateMachine => _StateMachine;
-
-        // [SerializeField] 
-        // private CharacterState.StateMachine _StateMachine;
-        // public CharacterState.StateMachine StateMachine => _StateMachine;
-        
         /// <summary>
         /// The state machine that controls the current Animation State of this <see cref="Character"/>.
         /// </summary>

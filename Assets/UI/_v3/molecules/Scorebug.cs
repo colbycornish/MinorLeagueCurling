@@ -45,7 +45,8 @@ namespace CurlingUI.v3 {
 
         void OnEnable()
         {
-            // InitializeScorebug();
+            InitializeScorebug();
+        
             
         }
 
@@ -54,6 +55,7 @@ namespace CurlingUI.v3 {
             BuildTeamRocks();
             UpdateTeamNames();
             UpdateTeamNames();
+            UpdateScore();
             UpdateTeamRockIndicators();
         }
 
@@ -64,7 +66,7 @@ namespace CurlingUI.v3 {
         }
 
         /************************************************************************************************************************/
-        public void UpdateScores()
+        public void UpdateScore()
         {
             CurlingManager cm = CurlingManager._instance;
             int homeScore = cm.Parameters.CurrentGameScore.teamHomeScore;
@@ -79,8 +81,8 @@ namespace CurlingUI.v3 {
         {
             CurlingManager cm = CurlingManager._instance;
 
-            string homeTeamName = cm.Parameters.Teams.teamHome.name; // ?? "Purple People Eaters"; // This will be based on the game state, but we'll hardcode it for now
-            string awayTeamName = cm.Parameters.Teams.teamAway.name; //?? "Ruby Red Rhino Riders"; // This will be based on the game state
+            string homeTeamName = cm.Parameters.Teams.teamHome.teamName; // ?? "Purple People Eaters"; // This will be based on the game state, but we'll hardcode it for now
+            string awayTeamName = cm.Parameters.Teams.teamAway.teamName; //?? "Ruby Red Rhino Riders"; // This will be based on the game state
             TeamAreaHomeName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{homeTeamName}";
             TeamAreaAwayName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{awayTeamName}";
         }

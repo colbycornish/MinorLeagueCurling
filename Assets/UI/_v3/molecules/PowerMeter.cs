@@ -31,22 +31,22 @@ namespace CurlingUI.v3 {
         // public UnityEvent _On25PowerReached;
         // public UnityEvent _OnMinPowerReached;
 
-        void Update()
-        {
-            // For testing purposes, we can use the up and down arrow keys to adjust power
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                IncreasePower();
-                UpdatePowerDisplay();
-                // PlayPowerFXDisplay();
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                DecreasePower();
-                UpdatePowerDisplay();
-                // PlayPowerFXDisplay();
-            }
-        }
+        // void Update()
+        // {
+        //     // For testing purposes, we can use the up and down arrow keys to adjust power
+        //     if (Input.GetKeyDown(KeyCode.UpArrow))
+        //     {
+        //         IncreasePower();
+        //         UpdatePowerDisplay();
+        //         // PlayPowerFXDisplay();
+        //     }
+        //     else if (Input.GetKeyDown(KeyCode.DownArrow))
+        //     {
+        //         DecreasePower();
+        //         UpdatePowerDisplay();
+        //         // PlayPowerFXDisplay();
+        //     }
+        // }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void OnEnable()
@@ -69,7 +69,7 @@ namespace CurlingUI.v3 {
             this.currentPower = current;
             this.minPower = min;
             this.maxPower = max;
-            // UpdatePowerDisplay();
+            UpdatePowerDisplay();
         }
 
         public void UpdateMaxPowerDisplay(){
@@ -90,7 +90,7 @@ namespace CurlingUI.v3 {
         /// </summary>
         public void UpdateCurrentPower(float current){
             this.currentPower = Mathf.Clamp(current, minPower, maxPower);
-            // UpdatePowerDisplay();
+            UpdatePowerDisplay();
         }
 
 
@@ -98,7 +98,7 @@ namespace CurlingUI.v3 {
             currentPower = currentPower + 0.04f;
             currentPower = Mathf.Clamp(currentPower, minPower, maxPower);
             PlayPowerFXDisplay();
-            // UpdatePowerDisplay();
+            UpdatePowerDisplay();
 
         }
 
@@ -106,7 +106,7 @@ namespace CurlingUI.v3 {
             currentPower = currentPower - 0.04f;
             currentPower = Mathf.Clamp(currentPower, minPower, maxPower);
             PlayPowerFXDisplay();
-            // UpdatePowerDisplay();
+            UpdatePowerDisplay();
         }
 
 

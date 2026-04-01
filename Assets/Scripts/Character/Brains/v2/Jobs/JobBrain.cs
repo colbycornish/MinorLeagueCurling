@@ -54,7 +54,7 @@ namespace CharacterNPCJobs
 
         protected virtual void Awake()
         {
-            Debug.Log("JobBrain Active");
+            // Debug.Log("JobBrain Active");
             _InputBuffer = new(_Character.JobStateMachine);
         }
 
@@ -151,7 +151,7 @@ namespace CharacterNPCJobs
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                Debug.Log("JobBrain - Trying to set Patrol State");
+                // Debug.Log("JobBrain - Trying to set Patrol State");
                 _Character.JobStateMachine.TrySetState(_Patrol);
             }
 
@@ -169,14 +169,14 @@ namespace CharacterNPCJobs
                 _Character.Parameters.Jobs.DesiredJob == 
                     JobStateType.Wander)
             {
-                Debug.Log("JobBrain - Trying to set Wander State");
+                // Debug.Log("JobBrain - Trying to set Wander State");
                 _Character.JobStateMachine.TrySetState(_Patrol);
             }
 
 
             if (Input.GetKeyDown(KeyCode.I))
             {
-                Debug.Log("JobBrain - Trying to set Idle State");
+                // Debug.Log("JobBrain - Trying to set Idle State");
                 _Character.JobStateMachine.TrySetState(_Idle);
             }
 

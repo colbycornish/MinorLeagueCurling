@@ -5,6 +5,7 @@ namespace UICanvasManager.v3
     public class SplashScreenBurnoutGamesState : ICanvasState
     {
         
+        /************************************************************************************************************************/
 
         public override void OnEnter()
         {
@@ -22,6 +23,8 @@ namespace UICanvasManager.v3
             gameObject.SetActive(false); // Hide the canvas
             // Remove listeners
         }
+
+        /************************************************************************************************************************/
 
         /// <summary>
         /// Used to help the CanvasManager know which canvas to enable when this state is active

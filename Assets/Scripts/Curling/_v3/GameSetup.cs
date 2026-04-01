@@ -34,6 +34,7 @@ namespace CurlingManagersV3
         
             CurlingManager._instance.cameraController.Setup(
                 stoneCamera: CurlingManager._instance.stoneCamera,
+                ccStoneCamera: CurlingManager._instance.ccStoneCamera,
                 targetZoneCamera: CurlingManager._instance.stoneCamera,
                 throwerCamera: CurlingManager._instance.stoneCamera, 
                 courseCamera: CurlingManager._instance.stoneCamera,
@@ -105,16 +106,16 @@ namespace CurlingManagersV3
         }
 
         public void MarkAsLoading(){
-            CanvasManager._instance.OpenCanvas(newState: CanvasState.CurlingMatch);
+            // CanvasManager._instance.OpenCanvas(newState: CanvasState.CurlingMatch);
 
             CurlingManager._instance.Parameters.Status.isReady = false;
             CurlingManager._instance.Parameters.Status.isLoading = true;
 
             Debug.Log("Game Setup: Curling Game is Loading...");
 
-            CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
-                newPhase: CurlingMatchPhase.Loading
-            );
+            // CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
+            //     newPhase: CurlingMatchPhase.Loading
+            // );
         }
 
         public void MarkAsReady(){
@@ -122,10 +123,12 @@ namespace CurlingManagersV3
             CurlingManager._instance.Parameters.Status.isLoading = false;
             
             Debug.Log("Game Setup: Curling Game is Ready.");
-            CurlingManager._instance.cameraController.PlayCourseIntroTimeline();
-            CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
-                newPhase: CurlingMatchPhase.RoundSplash
-            );
+            CurlingManager._instance.ChangePhase(CurlingMatchPhase.StartGameIntro);
+
+            // CurlingManager._instance.cameraController.PlayCourseIntroTimeline();
+            // CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
+            //     newPhase: CurlingMatchPhase.RoundSplash
+            // );
         }
     }
 }

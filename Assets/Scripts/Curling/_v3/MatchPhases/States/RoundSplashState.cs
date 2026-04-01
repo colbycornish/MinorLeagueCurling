@@ -1,36 +1,63 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using System.Collections;
 
 namespace CurlingManagersV3.MatchPhaseStates
 {
+    // TODO: Impliment Round Spalsh Screen based on how many rounds are being played
     public class RoundSplashState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
+        private InputAction goToNextPhaseAction;
+        
+        void Awake()
+        {
+            goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
+        {
+            // Add listeners and enable action
+            goToNextPhaseAction.performed += OnGoToNextPhase;
+            goToNextPhaseAction.Enable();
+            
+            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingGameSplashTurnDisplaySection();
+            OnEnter();
+        }
 
         public override void OnEnter()
         {
-            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingGameSplashTurnDisplaySection();
-            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
+            Debug.Log("Invoking GoToNextPhase after 4 seconds");
+            this.StartCoroutine(Wait());
         }
 
-        public override void OnUpdate()
+        private IEnumerator Wait()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                OnExit();
-                // MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.TeamSplash);
-            }
-            // Handle input or logic while in this state
+            Debug.Log("Coroutine started, waiting for 4 seconds...");
+            yield return new WaitForSeconds(4f);
+            OnGoToNextPhase(new InputAction.CallbackContext());
         }
 
-        public override void OnExit()
+        /************************************************************************************************************************/
+
+        protected virtual void OnDisable()
         {
-            //TODO: Go To Stone Selection
-            // Remove listeners
+            goToNextPhaseAction.performed -= OnGoToNextPhase;
+            goToNextPhaseAction.Disable();
         }
+
+        /************************************************************************************************************************/
+
+        private void OnGoToNextPhase(InputAction.CallbackContext obj)
+        {
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.TurnSplash);
+        } 
+
+        /************************************************************************************************************************/
 
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.RoundSplash;
 

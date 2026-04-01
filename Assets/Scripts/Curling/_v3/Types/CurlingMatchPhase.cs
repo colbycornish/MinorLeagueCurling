@@ -5,8 +5,10 @@ public enum CurlingMatchPhase
     /// Should only be used at the start
     None,
     Loading,
+    StartGameIntro,
     RoundSplash,
     TeamSplash,
+    TurnSplash,
 
     /// Curling loop begins here
     StoneSelection,

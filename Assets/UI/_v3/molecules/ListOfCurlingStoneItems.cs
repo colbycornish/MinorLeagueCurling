@@ -21,29 +21,29 @@ namespace CurlingUI.v3 {
             
         }
 
-        void OnEnable(){
-            PopulateList();
-        } 
+        // void OnEnable(){
+        //     PopulateList();
+        // } 
 
-        void PopulateList(){
-            foreach (Transform child in ContentArea.transform) {
-                Destroy(child.gameObject);
-            }
+        // void PopulateList(){
+        //     foreach (Transform child in ContentArea.transform) {
+        //         Destroy(child.gameObject);
+        //     }
 
-            foreach (CurlingStoneSO stone in listOfCurlingStones.CurlingStones) {
-                GameObject newItem = Instantiate(DefaultCurlingStoneItem, ContentArea.transform);
-                CurlingStoneItem stoneItemScript = newItem.GetComponent<CurlingStoneItem>();
+        //     foreach (CurlingStoneSO stone in listOfCurlingStones.CurlingStones) {
+        //         GameObject newItem = Instantiate(DefaultCurlingStoneItem, ContentArea.transform);
+        //         CurlingStoneItem stoneItemScript = newItem.GetComponent<CurlingStoneItem>();
 
-                stoneItemScript._OnSelectStone = OnSelectStone;
-                    // OnSelect: (string characterId) => { OnSelection(characterId); }
-                stoneItemScript.stoneData = stone;
-            }
-        }
+        //         stoneItemScript._OnSelectStone = OnSelectStone;
+        //             // OnSelect: (string characterId) => { OnSelection(characterId); }
+        //         stoneItemScript.stoneData = stone;
+        //     }
+        // }
 
-        public void OnSelectStone(CurlingStoneSO stone)
-        {
-            Debug.Log($"[list] Selected Stone: {stone.Name}");
-            _OnSelectStone?.Invoke(stone);
-        }
+        // public void OnSelectStone(CurlingStoneSO stone)
+        // {
+        //     Debug.Log($"[list] Selected Stone: {stone.Name}");
+        //     _OnSelectStone?.Invoke(stone);
+        // }
     }
 }

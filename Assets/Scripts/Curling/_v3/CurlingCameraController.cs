@@ -10,6 +10,7 @@ namespace CurlingManagersV3
     {
         [Header("Aim Settings")]
         public Camera stoneCamera;
+        public CinemachineCamera ccStoneCamera; 
         public Camera targetZoneCamera;
         public Camera throwerCamera;
         public Camera courseCamera;
@@ -18,6 +19,7 @@ namespace CurlingManagersV3
 
         public void Setup(
             Camera stoneCamera,
+            CinemachineCamera ccStoneCamera,
             Camera targetZoneCamera,
             Camera throwerCamera,
             Camera courseCamera,
@@ -25,6 +27,9 @@ namespace CurlingManagersV3
         ){
             if (stoneCamera != null){
                 this.stoneCamera = stoneCamera;
+            }
+            if (ccStoneCamera != null){
+                this.ccStoneCamera = ccStoneCamera;
             }
             if (targetZoneCamera != null){
                 this.targetZoneCamera = targetZoneCamera;
@@ -41,15 +46,29 @@ namespace CurlingManagersV3
         }
 
         public void SwitchToStoneCamera(){
-            stoneCamera.enabled = true;
-
+            if (stoneCamera != null){
+                stoneCamera.enabled = true;
+            }
+            if (ccStoneCamera != null){
+                ccStoneCamera.enabled = true;
+            }
+            
+            Debug.Log("Switching Target for Stone Camera");
             Transform stoneCameraTarget = CurlingManager._instance.Parameters.Stones.currentStone.transform;
-            if (CurlingManager._instance.Parameters.Stones.currentStone == null ||stoneCameraTarget == null)
+            if (CurlingManager._instance.Parameters.Stones.currentStone == null || stoneCameraTarget == null)
             {   
                 stoneCameraTarget = CurlingManager._instance.Parameters.Course.course.launchPoint;
             }
 
-            stoneCamera.GetComponent<CinemachineCamera>().Follow = stoneCameraTarget;
+            if (stoneCamera != null){
+                stoneCamera.GetComponent<CinemachineCamera>().Follow = stoneCameraTarget;
+            }
+            if (ccStoneCamera != null) 
+            {
+                ccStoneCamera.Follow = stoneCameraTarget;
+            }
+                
+            
         }
 
         public void SwitchToAnnouncerCamera(){
@@ -70,7 +89,12 @@ namespace CurlingManagersV3
             if (CurlingManager._instance.Parameters.Course.course.courseFullTimeline != null){
                 PlayableDirector director = CurlingManager._instance.Parameters.Course.course.courseFullTimeline;
                 director.Play();
-                stoneCamera.enabled = false;
+                if (stoneCamera != null){
+                    stoneCamera.enabled = false;
+                }
+                if (ccStoneCamera != null){
+                    ccStoneCamera.enabled = false;
+                }
 
                 director.stopped += OnTimelineFinished;
                 return;

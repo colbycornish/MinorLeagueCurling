@@ -7,11 +7,7 @@ namespace UICanvasManager.v3
         private GameObject mainMenuCanvas;
         private UICanvasStateMachine uiStateMachine; // Reference to the controller
 
-        // public void MainMenuState(GameObject canvas, UICanvasStateMachine stateMachine)
-        // {
-        //     mainMenuCanvas = canvas;
-        //     uiStateMachine = stateMachine;
-        // }
+        /************************************************************************************************************************/
 
         public override void OnEnter()
         {

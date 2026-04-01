@@ -7,11 +7,7 @@ namespace UICanvasManager.v3
         private GameObject controlsCanvas;
         private UICanvasStateMachine uiStateMachine; // Reference to the controller
 
-        // public MainMenuState(GameObject canvas, UICanvasStateMachine stateMachine)
-        // {
-        //     mainMenuCanvas = canvas;
-        //     uiStateMachine = stateMachine;
-        // }
+        /************************************************************************************************************************/
 
         public override void OnEnter()
         {
@@ -29,6 +25,8 @@ namespace UICanvasManager.v3
             gameObject.SetActive(false); // Hide the canvas
             // Remove listeners
         }
+
+        /************************************************************************************************************************/
 
         /// <summary>
         /// Used to help the CanvasManager know which canvas to enable when this state is active

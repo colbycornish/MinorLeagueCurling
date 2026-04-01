@@ -15,8 +15,8 @@ public class ToggleIndicatorAndColor : MonoBehaviour, ISelectHandler, IDeselectH
     void OnDisable()
     {
         // Ensure the indicator is hidden and text color is reset when the button is disabled
-        indicator.SetActive(false);
-        buttonText.color = inactiveColor;
+        if (indicator != null) indicator.SetActive(false);
+        if (buttonText != null) buttonText.color = inactiveColor;
         isIndicatorActive = false;
     }
 
@@ -43,16 +43,16 @@ public class ToggleIndicatorAndColor : MonoBehaviour, ISelectHandler, IDeselectH
     {
         isIndicatorActive = !isIndicatorActive; // Toggle the state
         // Show/hide the indicator
-        indicator.SetActive(isIndicatorActive);
+        if (indicator != null) indicator.SetActive(isIndicatorActive);
 
         // Change the button text color
         if (isIndicatorActive)
         {
-            buttonText.color = activeColor;
+            if (buttonText != null) buttonText.color = activeColor;
         }
         else
         {
-            buttonText.color = inactiveColor;
+            if (buttonText != null) buttonText.color = inactiveColor;
         }
     }
 }

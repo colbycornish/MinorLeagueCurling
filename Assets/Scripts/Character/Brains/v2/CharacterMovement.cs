@@ -151,7 +151,7 @@ namespace CharacterNPC.v2
             )
             {
                 Vector3 v = _Character.Parameters.Curling.ActiveStone.rb.linearVelocity;
-                Debug.Log($"[Sweeper Movement] Stone Magnetude: {v.magnitude}");
+                // Debug.Log($"[Sweeper Movement] Stone Magnetude: {v.magnitude}");
 
                 _Character.Parameters.Movement.DesiredForwardSpeed = v.magnitude * 1.4f;
                 _Character.Parameters.Movement.ForwardSpeed = v.magnitude * 1.4f;

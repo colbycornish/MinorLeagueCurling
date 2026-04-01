@@ -11,7 +11,23 @@ namespace CurlingManagersV3.Parameters
         [SerializeField]
         private CurlingGameTurnType _CurrentTurn = CurlingGameTurnType.None; // Base launch force (tweak as needed; adjust for distance--may want to bring force down if we shorten the distance)
         public ref CurlingGameTurnType CurrentTurn => ref _CurrentTurn;
- 
+
+        [SerializeField]
+        private int _CurrentTurnCount = 0;
+        public ref int CurrentTurnCount => ref _CurrentTurnCount;    
+
+        [SerializeField]
+        private int _NumberOfHomeTeamTurnsCompleted = 0;
+        public ref int NumberOfHomeTeamTurnsCompleted => ref _NumberOfHomeTeamTurnsCompleted;
+
+        [SerializeField]
+        private int _NumberOfAwayTeamTurnsCompleted = 0;
+        public ref int NumberOfAwayTeamTurnsCompleted => ref _NumberOfAwayTeamTurnsCompleted;
+
+        [SerializeField]
+        private int _MaxTurnCount = 10;
+        public ref int MaxTurnCount => ref _MaxTurnCount;
+
         // // public CurlingGameTurnType currentTurn;
 
         // [Header("Helpful References")]

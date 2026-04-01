@@ -16,8 +16,12 @@ public class CurlingYellowLineCollider : MonoBehaviour
         if (other.CompareTag("stone"))
         {
             Debug.Log("Yellow Line Collision");
-            if (CurlingManagersV3.MatchPhaseManager._instance != null){
-                CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+            // if (CurlingManagersV3.MatchPhaseManager._instance != null){
+            //     CurlingManagersV3.MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
+            // }
+
+            if (CurlingManagersV3.CurlingManager._instance != null && CurlingManagersV3.CurlingManager._instance.StateMachine.CurrentState.StateMatchPhaseType != CurlingMatchPhase.CurlingStoneSweepingPhase){
+                CurlingManagersV3.CurlingManager._instance.ChangePhase(CurlingMatchPhase.CurlingStoneSweepingPhase);
             }
         }
 

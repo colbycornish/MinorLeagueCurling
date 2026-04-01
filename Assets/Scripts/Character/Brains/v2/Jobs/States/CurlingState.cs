@@ -62,7 +62,7 @@ namespace CharacterNPCJobs
 
         protected virtual void OnDisable()
         {
-            Debug.Log("CurlingState OnDisable");
+            // Debug.Log("CurlingState OnDisable");
             Character.Parameters.Movement.useDirectionalMovementAnimations = false;
             Character.NavAgent.acceleration = Character.Parameters.Movement.Acceleration;
             Character.Parameters.Movement.overrideDesiredSpeed = false;

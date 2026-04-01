@@ -1,49 +1,78 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
+using System.Collections;
 
 namespace CurlingManagersV3.MatchPhaseStates
 {
     public class PostThrowResultState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
+        private InputAction goToNextPhaseAction;
+        
+        void Awake()
+        {
+            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
+            goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
+        {
+            goToNextPhaseAction.performed += OnGoToNextPhase;
+            goToNextPhaseAction.Enable();
+
+            OnEnter();
+        }
 
         public override void OnEnter()
         {
             UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingPostThrowResults();
-            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
+            this.StartCoroutine(Wait());
         }
 
-        public override void OnUpdate()
+        private IEnumerator Wait()
         {
-            // Handle input or logic while in this state
+            Debug.Log("Coroutine started, waiting for 6 seconds...");
+            yield return new WaitForSeconds(7.00f);
+            OnGoToNextPhase(new InputAction.CallbackContext());
         }
+        
 
-        // private void HandlePostThrowResultInput()
-        // {
-        //     // Handle inputs specific to the Post Throw Result phase
-        //     if (Input.GetMouseButtonDown(0))
-        //     {
-        //         if (!CurlingManager._instance.gameData.settings.enableObstaclePlacementByPlayer &&
-        //             !CurlingManager._instance.gameData.settings.enableObstaclePlacementByEnvironment
-        //         )
-        //         {
-        //             CurlingManager._instance.HandleNextTurn();
-        //         }
-        //         else
-        //         {
-        //             MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.ObstacleSelection);
-        //         }
-        //     }
-        // }
+        /************************************************************************************************************************/
+
+        protected virtual void OnDisable()
+        {
+            goToNextPhaseAction.performed -= OnGoToNextPhase;
+            goToNextPhaseAction.Disable();
+        }
 
         public override void OnExit()
         {
-            // Remove listeners
+            
         }
 
+        /************************************************************************************************************************/
+ 
+
+        private void OnGoToNextPhase(InputAction.CallbackContext obj)
+        {
+            Debug.Log("Initiate Next Turn or Go to End Game Results");
+            if (!MainCurlingManager.gameData.settings.enableObstaclePlacementByPlayer &&
+                !MainCurlingManager.gameData.settings.enableObstaclePlacementByEnvironment
+            )
+            {
+                MainCurlingManager.HandleNextTurn();
+            } else
+            {
+                MainCurlingManager.HandleNextTurn();
+            }
+        } 
+
+        /************************************************************************************************************************/
+
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.PostThrowResult;
 

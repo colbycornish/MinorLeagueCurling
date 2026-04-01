@@ -1,52 +1,78 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CurlingManagersV3.MatchPhaseStates
 {
     public class NoSweepZoneState : IMatchPhaseState
     {
-        // private GameObject controlsCanvas;
-        private MatchPhaseStateMachine matchPhaseStateMachine; // Reference to the controller
+        private InputAction goToNextPhaseAction;
+        
+        void Awake()
+        {
+            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
+            goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
+        {
+            // Add Listeners
+            goToNextPhaseAction.performed += OnGoToNextPhase;
+            goToNextPhaseAction.Enable();
+            OnEnter();
+        }
 
         public override void OnEnter()
         {
             UICanvasManager.v3.UICanvasManager.Instance.CloseAllCanvases();
             UICanvasManager.v3.UICanvasManager.Instance.CloseAllModals();
-            // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
         }
 
-        public override void OnUpdate()
-        {
-            HandleCurlingTurnEndInput();
-            // Handle input or logic while in this state
-        }
+        /************************************************************************************************************************/
 
-        private void HandleCurlingTurnEndInput()
+        protected virtual void OnDisable()
         {
-            bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
-            bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
-            if (!stoneIsMoving || !stoneIsMovingForward)
-            {
-                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.PostThrowResult);
-            }
-        }
-
-        private void HandleCurlingNoSweepZonePhaseInput()
-        {
-            bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
-            bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
-            if (!stoneIsMoving || !stoneIsMovingForward)
-            {
-                MatchPhaseManager._instance.SetPhase(CurlingMatchPhase.PostThrowResult);
-            }
+            // Remove listeners
+            goToNextPhaseAction.performed -= OnGoToNextPhase;
+            goToNextPhaseAction.Disable();
         }
 
         public override void OnExit()
         {
-            // Remove listeners
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.PostThrowResult);
         }
 
+        /************************************************************************************************************************/
+
+        public void Update()
+        {
+            HandleCurlingNoSweepZonePhaseInput();
+        }
+
+        /************************************************************************************************************************/
+
+        private void HandleCurlingNoSweepZonePhaseInput()
+        {
+            Debug.Log("NoSweepZoneState OnUpdate: Checking if stone has stopped moving or is no longer moving forward");
+            bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
+            bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
+            if (!stoneIsMoving || !stoneIsMovingForward)
+            {
+                Debug.Log("Stone stopped moving or is no longer moving forward, transitioning to PostThrowResult phase");
+                MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.PostThrowResult);
+            }
+        }
+
+        private void OnGoToNextPhase(InputAction.CallbackContext obj)
+        {
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.PostThrowResult);
+        } 
+
+        /************************************************************************************************************************/
+
         /// <summary>
-        /// Used to help the CanvasManager know which canvas to enable when this state is active
+        /// Used to help the CurlingManager know which canvas to enable when this state is active
         /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.CurlingNoSweepZone;
 

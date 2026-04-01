@@ -673,7 +673,7 @@
                     "id": "1bf90688-ddae-4d47-8768-4faaa9019391",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "initialStateCheck": true
                 },
                 {
@@ -747,6 +747,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GoToNextPhase",
+                    "type": "Button",
+                    "id": "7a12196a-e6ab-456c-a7b8-c0455d75a5e7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -767,7 +776,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "DecreasePower",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -778,7 +787,7 @@
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "CurlLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -789,7 +798,7 @@
                     "path": "<Keyboard>/rightShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "CurlRight",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -800,7 +809,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "ThrowStone",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -822,7 +831,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "AimThrow",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -833,7 +842,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "AimThrow",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -844,7 +853,7 @@
                     "path": "<Keyboard>/rightShift",
                     "interactions": "Tap,Hold",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "SweepRight",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -855,7 +864,7 @@
                     "path": "<Keyboard>/leftShift",
                     "interactions": "Tap,Hold",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "SweepLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -866,8 +875,19 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard & Mouse",
+                    "groups": ";Keyboard & Mouse;Keyboard&Mouse",
                     "action": "UseStoneAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c23d2f90-5cec-4891-9c0f-5a498f18ff71",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GoToNextPhase",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -890,7 +910,7 @@
                     "name": "Submit",
                     "type": "Button",
                     "id": "7607c7b6-cd76-4816-beef-bd0341cfe950",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
