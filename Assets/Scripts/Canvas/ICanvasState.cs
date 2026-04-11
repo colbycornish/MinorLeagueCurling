@@ -36,9 +36,6 @@ namespace UICanvasManager.v3
         
         public virtual void OnExit(){}  // Called when exiting the state
 
-        public virtual void OnUpdate(){} // Logic that runs per frame
-         
-
         // public bool CanExitState
         // {
         //     get

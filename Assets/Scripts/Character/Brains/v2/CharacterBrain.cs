@@ -9,7 +9,7 @@ using Animancer.Samples;
 using static Animancer.Validate;
 using CharacterNPCJobs;
 using System.Collections.Generic;
-
+using UnityEngine.InputSystem;
 
 namespace CharacterNPC.v2
 {
@@ -38,6 +38,10 @@ namespace CharacterNPC.v2
         [SerializeField] private CharacterState _Move;
 
         [Header("Extra States")]
+        [SerializeField]
+        private List<CharacterState> _ListOfAvailableCharacterStates = new List<CharacterState>();
+        public List<CharacterState> ListOfAvailableCharacterStates => _ListOfAvailableCharacterStates;
+
         [SerializeField] private CharacterState _Cook;
         [SerializeField] private CharacterState _Dance;
         [SerializeField] private CharacterState _Forage;
@@ -57,6 +61,18 @@ namespace CharacterNPC.v2
 
         private StateMachine<CharacterState>.InputBuffer _InputBuffer;
 
+        // [Header("Settings")]
+
+        /************************************************************************************************************************/
+
+        #if UNITY_EDITOR
+        protected void OnValidate()
+        {
+            CharacterState[] listedStates = GetComponents<CharacterState>();
+            _ListOfAvailableCharacterStates = new List<CharacterState>(listedStates);
+        }
+        #endif
+
         /************************************************************************************************************************/
 
         protected virtual void Awake()
@@ -71,8 +87,7 @@ namespace CharacterNPC.v2
             // Equip takes priority
             UpdateEquip();
 
-            // Posture changes can affect the availability of 
-            // any subsequent choices of movement or action
+            // Posture changes can affect the availability of any subsequent choices of movement or action
             UpdatePosture();
 
             // RUN COMMAND
@@ -84,7 +99,7 @@ namespace CharacterNPC.v2
 
             // Updating movement
             if (_Character.Parameters.Posture.CurrentPosture != 
-                    CharacterParametersPosture.CharacterPostureState.Sitting &&
+                    CharacterPostureState.Sitting &&
                 (_Character.StateMachine.CurrentState.FullMovementControl == false || 
                 _Character.StateMachine.CurrentState == _Move)
             )
@@ -96,7 +111,7 @@ namespace CharacterNPC.v2
             UpdateActions();
 
             // Manual Check here for testing
-            UpdateActionsManually();
+            // UpdateActionsManually();
 
         }
 
@@ -107,8 +122,6 @@ namespace CharacterNPC.v2
             // _Character.Movement.UpdateMovementDirection();
             _Character.Movement.UpdateMovementParameters();
             
-
-
             if (_Character.Parameters.Movement.CurrentDestination == null && 
                 _Character.Parameters.Movement.MovementDirection == Vector3.zero && 
                 _Character.StateMachine.CurrentState != _Idle &&
@@ -201,7 +214,7 @@ namespace CharacterNPC.v2
 
             // Action Override to Get Player Attention
             if (_Character.Parameters.Surroundings.IsPlayerInRangeToInteractWith && 
-                !_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
+                !_Character.Parameters.Dialogue.IsEngagedInDialogueWithPlayer)
             {
                 UpdateActionsToGetPlayerAttention();
                 return;
@@ -209,13 +222,25 @@ namespace CharacterNPC.v2
 
             // Is talking to player
             if (_Character.Parameters.Surroundings.IsPlayerInRangeToInteractWith && 
-                _Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
+                _Character.Parameters.Dialogue.IsEngagedInDialogueWithPlayer)
             {
                 UpdateActionsToTalkToPlayer();
                 return;
             }
 
-            
+            // Is talking to player
+            if (_Character.Parameters.Dialogue.IsEngagedInDialogueWithOtherCharacters)
+            {
+                UpdateActionsToTalkToPlayer();
+                return;
+            }
+
+
+            if (_Character.Parameters.Jobs.DesiredAction != _Character.Parameters.Jobs.CurrentAction)
+            {
+                UpdateActionsByDesiredAction();
+                return;
+            }
 
             /// Job Based Action Trees
             switch (_Character.JobStateMachine.CurrentState.JobType)
@@ -235,24 +260,38 @@ namespace CharacterNPC.v2
                 case JobStateType.Mailman:
                     UpdateActionsForMailmanJob();
                     break;
-                // case JobStateType.Shopkeeper:
-                    // UpdateActionsForMailmanJob();
-                    // break;
-                // case JobStateType.Hospital:
-                    // UpdateActionsForMailmanJob();
-                    // break;
                 default:
                     break;
             }
         }
 
+        private void UpdateActionsByDesiredAction()
+        {
+            if (_Character.Parameters.Jobs.DesiredAction != _Character.Parameters.Jobs.CurrentAction)
+            {
+                foreach (CharacterState state in _ListOfAvailableCharacterStates)
+                {
+                    if (state.StateActionType == _Character.Parameters.Jobs.DesiredAction)
+                    {
+                        _Character.StateMachine.TrySetState(state);
+                        return;
+                    }
+                }
+            }
+        }
+
         private void UpdateActionsWhileCurling()
         {
-            // if (_Character.StateMachine.CurrentState != _Sweep)
+            UpdateActionsByDesiredAction();
+            // if (_Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperLeft ||
+            //     _Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperRight)
             // {
-            //     Debug.Log("-> Update Action: Sweep state");
-            //     _Character.StateMachine.TrySetState(_Sweep);
-            // }
+            //     if (_Character.StateMachine.CurrentState != _Sweep)
+            //     {
+            //         Debug.Log("-> Update Action: Sweep state");
+            //         _Character.StateMachine.TrySetState(_Sweep);
+            //     }
+            // }   
         }
 
 
@@ -372,47 +411,47 @@ namespace CharacterNPC.v2
 
 
 
-        private void UpdateActionsManually()
-        {
-            // Jump gets priority for better platforming.
-            // Character Wants To Pose && is not posing
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _InputBuffer.Buffer(_Idle, _AttackInputTimeOut);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _InputBuffer.Buffer(_Pose, _AttackInputTimeOut);
-            }
-            // Character Wants To Talk && is not Talking
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                _InputBuffer.Buffer(_Talk, _AttackInputTimeOut);
-            }
-            // Character Wants To Wave && is not Waving
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                _InputBuffer.Buffer(_Wave, _AttackInputTimeOut);
-            }
-            // Character Wants To Eat && is not Eating
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                _InputBuffer.Buffer(_Eat, _AttackInputTimeOut);
-            }
-            // Character Wants To Drink && is not Drinking
-            if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                _InputBuffer.Buffer(_Drink, _AttackInputTimeOut);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                _InputBuffer.Buffer(_Sweep, _AttackInputTimeOut);
-            }
-            // Character Wants To Idle && is not Idling
+        // private void UpdateActionsManually()
+        // {
+        //     // Jump gets priority for better platforming.
+        //     // Character Wants To Pose && is not posing
+        //     if (Input.GetKeyDown(KeyCode.Alpha1))
+        //     {
+        //         _InputBuffer.Buffer(_Idle, _AttackInputTimeOut);
+        //     }
+        //     if (Input.GetKeyDown(KeyCode.Alpha2))
+        //     {
+        //         _InputBuffer.Buffer(_Pose, _AttackInputTimeOut);
+        //     }
+        //     // Character Wants To Talk && is not Talking
+        //     if (Input.GetKeyDown(KeyCode.Alpha3))
+        //     {
+        //         _InputBuffer.Buffer(_Talk, _AttackInputTimeOut);
+        //     }
+        //     // Character Wants To Wave && is not Waving
+        //     if (Input.GetKeyDown(KeyCode.Alpha4))
+        //     {
+        //         _InputBuffer.Buffer(_Wave, _AttackInputTimeOut);
+        //     }
+        //     // Character Wants To Eat && is not Eating
+        //     if (Input.GetKeyDown(KeyCode.Alpha5))
+        //     {
+        //         _InputBuffer.Buffer(_Eat, _AttackInputTimeOut);
+        //     }
+        //     // Character Wants To Drink && is not Drinking
+        //     if (Input.GetKeyDown(KeyCode.Alpha6))
+        //     {
+        //         _InputBuffer.Buffer(_Drink, _AttackInputTimeOut);
+        //     }
+        //     if (Input.GetKeyDown(KeyCode.Alpha7))
+        //     {
+        //         _InputBuffer.Buffer(_Sweep, _AttackInputTimeOut);
+        //     }
+        //     // Character Wants To Idle && is not Idling
             
             
-            _InputBuffer.Update();
-        }
+        //     _InputBuffer.Update();
+        // }
 
         
     }

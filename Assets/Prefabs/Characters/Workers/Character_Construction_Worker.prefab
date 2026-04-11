@@ -481,7 +481,6 @@ MonoBehaviour:
   _Forage: {fileID: 0}
   _Mailman: {fileID: 0}
   _ListOfJobStates: []
-  _AttackInputTimeOut: 0.5
 --- !u!114 &5229781763424897504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1479,6 +1478,20 @@ MonoBehaviour:
   _Eat: {fileID: 994115030083356458}
   _Sweep: {fileID: 4647396424565772615}
   _Move: {fileID: 3364862663741089568}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 2588704644405143458}
+  - {fileID: 3364862663741089568}
+  - {fileID: 757192346862625192}
+  - {fileID: 4669606897653945253}
+  - {fileID: 994115030083356458}
+  - {fileID: 9162621480763548235}
+  - {fileID: 4588280195131940815}
+  - {fileID: 2776261147711252588}
+  - {fileID: 2359251968480996885}
+  - {fileID: 4647396424565772615}
+  - {fileID: 1522323978748962528}
+  - {fileID: 7232516564496075099}
+  - {fileID: 7264343891974834964}
   _Cook: {fileID: 2359251968480996885}
   _Dance: {fileID: 7232516564496075099}
   _Forage: {fileID: 0}
@@ -1563,6 +1576,38 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -1684,6 +1729,22 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 2b03cb0fb56e0405d85de199bb3f38f7, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 5753f440daef44333bd8375a20788822, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c56feba77b7414804b1fb0c39508179f, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -2488,6 +2549,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 5229781763424897504}
     _DefaultState: {fileID: 5229781763424897504}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -2505,6 +2567,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -2522,6 +2586,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 0
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -2541,15 +2607,14 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 00000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
-      _AvailableActions: 
+      _AvailableActions: 000000002000000024000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 5216333672847389552}
 --- !u!114 &8661687274206357604
 MonoBehaviour:

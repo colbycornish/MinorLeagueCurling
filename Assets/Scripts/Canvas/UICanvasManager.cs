@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.InputSystem;
 
 namespace UICanvasManager.v3
 {
@@ -34,49 +34,80 @@ namespace UICanvasManager.v3
         [SerializeField] private UnityEvent _OnCloseSection; // See the Read Me.
         [SerializeField] private UnityEvent _CloseAllCanvases; // See the Read Me.
 
+        [Header("Input Actions")]
+        private InputAction openPauseMenuAction;
+        private InputAction openMainMenuAction;
+        private InputAction openCompanySplashAction;
+
         
 
         protected virtual void Awake()
         {
             _StateMachine.InitializeAfterDeserialize();
+            openPauseMenuAction = InputSystem.actions.FindAction("Pause", true);
+            openMainMenuAction = InputSystem.actions.FindAction("DevOpenMainMenu", true);
+            openCompanySplashAction = InputSystem.actions.FindAction("DevOpenCompanySplashScreens", true);
         }
 
         /// <summary>
         /// Manual Triggering of canvas sections for testing purposes. Can be removed or replaced with a more robust input handling system later.
         /// </summary>
-
-        public void Update()
+        protected virtual void OnEnable()
         {
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                if (_StateMachine.CurrentState == null)
-                {
-                    OpenSection(canvasType: CanvasType.MainMenu); // Attempt to open the pause menu even if the state machine is missing, to provide some feedback.
-                    return;
-                }
-                
-            }
+            openPauseMenuAction.performed += OpenPauseMenuFromInputAction;
+            openPauseMenuAction.Enable();
 
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                if (_StateMachine.CurrentState == null)
-                {
-                    OpenSection(canvasType: CanvasType.SplashScreenBurnoutGames); 
-                    return;
-                }
-                
-            }
+            openMainMenuAction.performed += OpenMainMenuFromInputAction;
+            openMainMenuAction.Enable();
 
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                if (_StateMachine.CurrentState == null)
-                {
-                    OpenSection(canvasType: CanvasType.PauseMenu); // Attempt to open the pause menu even if the state machine is missing, to provide some feedback.
-                    return;
-                }
-                
-            }
+            openCompanySplashAction.performed += OpenCompanySplashScreensFromInputAction;
+            openCompanySplashAction.Enable();
         }
+
+        protected virtual void OnDisable()
+        {
+            openPauseMenuAction.performed -= OpenPauseMenuFromInputAction;
+            openPauseMenuAction.Disable();
+
+            openMainMenuAction.performed -= OpenMainMenuFromInputAction;
+            openMainMenuAction.Disable();
+
+            openCompanySplashAction.performed -= OpenCompanySplashScreensFromInputAction;
+            openCompanySplashAction.Disable();
+        }
+
+        // public void Update()
+        // {
+        //     if (Input.GetKeyDown(KeyCode.M))
+        //     {
+        //         if (_StateMachine.CurrentState == null)
+        //         {
+        //             OpenSection(canvasType: CanvasType.MainMenu); // Attempt to open the pause menu even if the state machine is missing, to provide some feedback.
+        //             return;
+        //         }
+                
+        //     }
+
+        //     if (Input.GetKeyDown(KeyCode.B))
+        //     {
+        //         if (_StateMachine.CurrentState == null)
+        //         {
+        //             OpenSection(canvasType: CanvasType.SplashScreenBurnoutGames); 
+        //             return;
+        //         }
+                
+        //     }
+
+        //     if (Input.GetKeyDown(KeyCode.P))
+        //     {
+        //         if (_StateMachine.CurrentState == null)
+        //         {
+        //             OpenSection(canvasType: CanvasType.PauseMenu); // Attempt to open the pause menu even if the state machine is missing, to provide some feedback.
+        //             return;
+        //         }
+                
+        //     }
+        // }
 
         
         #if UNITY_EDITOR
@@ -131,6 +162,8 @@ namespace UICanvasManager.v3
             }
         }
 
+        /************************************************************************************************************************/
+
         /// <summary>
         /// reference functions for opening specific canvas sections, to be used by buttons and other UI elements. 
         /// These just call the more general OpenSection function with the appropriate CanvasType, 
@@ -157,19 +190,17 @@ namespace UICanvasManager.v3
         //
         public void OpenCurlingTeamSplash() => OpenSection(canvasType: CanvasType.CurlingGameSplashTeamDisplay);
         public void OpenCurlingInGameHUD() => OpenSection(canvasType: CanvasType.CurlingGameInGameHUD);
-        public void OpenCurlingRoundSplash() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
-        public void OpenCurlingFinalResults() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
+        // public void OpenCurlingRoundSplash() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
+        // public void OpenCurlingGameSplashTurnDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
+        public void OpenCurlingTurnSplash() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
+        public void OpenCurlingScoringDisplayState() => OpenSection(canvasType: CanvasType.CurlingGameScoringDisplayState);
         public void OpenCurlingPostThrowResults() => OpenSection(canvasType: CanvasType.CurlingGamePostThrowResultDisplay);
-        
+        public void OpenCurlingFinalResults() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
+        public void OpenCurlingGameFinalResultDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
         // 
         public void OpenLoadingFullScreenSection() => OpenSection(canvasType: CanvasType.LoadingFullScreen);
-        public void OpenCurlingGameSplashTurnDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameSplashTurnDisplay);
-        public void OpenCurlingGameFinalResultDisplaySection() => OpenSection(canvasType: CanvasType.CurlingGameFinalResultDisplay);
-
         
-        
-
-
+        /************************************************************************************************************************/
 
         /// <summary>
         /// General function for opening a dialogue section based on its CanvasModalType.
@@ -181,22 +212,57 @@ namespace UICanvasManager.v3
         public void OpenTeamBroomRightSweeperSelectionModal() => OpenModal(canvasModalType: CanvasModalType.TeamBroomRightSweeperSelection);
         public void OpenStoneToUseSelectionModal() => OpenModal(canvasModalType: CanvasModalType.StoneToUseSelection);
         
+        /************************************************************************************************************************/
 
         public void CloseAllCanvases()
         {
             _CloseAllCanvases?.Invoke();
             _StateMachine.ChangeState(null);
+            Time.timeScale = 1f;
         }
         
         public void CloseAllModals() => _ModalStateMachine.ChangeState(null);
+
+        /************************************************************************************************************************/
         /// <summary>
-        /// Additional quick reference functions for opening specific sections, to be used by buttons and other UI elements.
+        /// Open Menus from Input Actions
         /// </summary>
+        
+        private void OpenPauseMenuFromInputAction(InputAction.CallbackContext obj)
+        {
+            if (_StateMachine.CurrentState == null)
+            {
+                PauseGame();
+                return;
+            }
+        }
+
+        private void OpenMainMenuFromInputAction(InputAction.CallbackContext obj)
+        {
+            if (_StateMachine.CurrentState == null)
+            {
+                OpenSection(canvasType: CanvasType.MainMenu); 
+                return;
+            }
+        }
+        
+
+        private void OpenCompanySplashScreensFromInputAction(InputAction.CallbackContext obj)
+        {
+            if (_StateMachine.CurrentState == null)
+            {
+                OpenSection(canvasType: CanvasType.SplashScreenBurnoutGames); 
+                return;
+            }
+        }
 
         public void PauseGame()
         {
+            Time.timeScale = 0f;
             OpenSection(canvasType: CanvasType.PauseMenu);
         }
+
+        /************************************************************************************************************************/
 
         
 

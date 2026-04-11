@@ -1,13 +1,6 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
-
-using Animancer.FSM;
 using UnityEngine;
 using Animancer;
-using UnityEngine.AI;
 using System.Collections.Generic;
-using CharacterNPC.v2;
 
 
 /************************************************************************************************************************/
@@ -56,7 +49,9 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => _PatrolPoints.Count > 0; 
+        public override bool CanEnterState => 
+            _PatrolPoints.Count > 0 || 
+            Character.Parameters.Movement.PatrolPoints.Count > 0; 
 
         /************************************************************************************************************************/
 
@@ -64,6 +59,21 @@ namespace CharacterNPCJobs
             JobStateType.Patrol;
 
         /************************************************************************************************************************/
+        protected virtual void OnEnable()
+        {
+            _OnStart.Invoke();
+            Debug.Log("PatrolState OnEnable");
+            Character.Parameters.Jobs.CurrentJob = JobStateType.Patrol;
+            Character.NavAgent.isStopped = false;
+            Character.Parameters.Status.IsPatrolling = true;
+            if (_PatrolPoints.Count == 0 && Character.Parameters.Movement.PatrolPoints.Count > 0)
+            {
+                _PatrolPoints = Character.Parameters.Movement.PatrolPoints;
+            }
+
+
+            SetNextPatrolLocation();
+        }
 
         protected virtual void OnDisable()
         {
@@ -75,15 +85,7 @@ namespace CharacterNPCJobs
             Character.Parameters.Movement.CurrentDestination = null;
         }
 
-        protected virtual void OnEnable()
-        {
-            _OnStart.Invoke();
-            Debug.Log("PatrolState OnEnable");
-            Character.Parameters.Jobs.CurrentJob = JobStateType.Patrol;
-            Character.NavAgent.isStopped = false;
-            Character.Parameters.Status.IsPatrolling = true;
-            SetNextPatrolLocation();
-        }
+        
 
         protected virtual void Update()
         {

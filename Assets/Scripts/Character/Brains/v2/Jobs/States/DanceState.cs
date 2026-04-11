@@ -1,11 +1,5 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
-
-using Animancer.FSM;
 using UnityEngine;
 using Animancer;
-using UnityEngine.AI;
 using System.Collections.Generic;
 using CharacterNPC.v2;
 
@@ -53,11 +47,22 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override JobStateType JobType => 
-            JobStateType.Dance;
+        public override JobStateType JobType => JobStateType.Dance;
 
         /************************************************************************************************************************/
 
+        private void UpdateAvailableActions()
+        {
+            // List<ActionType> newAvailableActions =
+            Character.Parameters.Jobs.AvailableActions = new List<ActionType>
+            {
+                ActionType.Idle,
+                ActionType.Dance
+            };
+            // Character.Parameters.Jobs.AvailableActions = newAvailableActions;
+        }
+
+        /************************************************************************************************************************/
 
         protected virtual void OnDisable()
         {
@@ -72,6 +77,8 @@ namespace CharacterNPCJobs
             Character.Parameters.Jobs.CurrentJob = JobStateType.Dance;
             Character.Parameters.Jobs.DesiredAction = ActionType.Dance;
         }
+
+        
 
         // protected virtual void Update()
         // {

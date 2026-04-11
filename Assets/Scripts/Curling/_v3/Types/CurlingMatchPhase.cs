@@ -16,10 +16,12 @@ public enum CurlingMatchPhase
     StoneSelectionConfirm,
     AimingAndPowerPhase,
     CurlingAimControlsPhase,
+    CurlingLaunchStonePhase,
     CurlingPowerMeterPhase,
     CurlingStoneSweepingPhase,
     CurlingNoSweepZone,
     PostThrowResult,
+    ScoringPhase,
 
     // Displayed if the settings are marked to allow player obstacles
     ObstacleSelection,

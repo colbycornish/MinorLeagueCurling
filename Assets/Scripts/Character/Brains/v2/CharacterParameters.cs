@@ -7,6 +7,9 @@ namespace CharacterNPC.v2
     [Serializable]
     public class CharacterParameters
     {
+        [SerializeField]
+        private CharacterSO _CharacterDataSO;
+        public CharacterSO CharacterDataSO => _CharacterDataSO;
 
         [SerializeField]
         private CharacterParametersCurling _Curling;

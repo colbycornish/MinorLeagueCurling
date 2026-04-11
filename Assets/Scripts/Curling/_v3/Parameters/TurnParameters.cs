@@ -28,6 +28,10 @@ namespace CurlingManagersV3.Parameters
         private int _MaxTurnCount = 10;
         public ref int MaxTurnCount => ref _MaxTurnCount;
 
+        public bool IsCurrentTurnTheLastTurn => (_CurrentTurnCount + 1) == _MaxTurnCount;
+        
+        public bool IsThereAnotherTurnAfterThisOne => _CurrentTurnCount + 1 + 1 <= _MaxTurnCount;
+
         // // public CurlingGameTurnType currentTurn;
 
         // [Header("Helpful References")]

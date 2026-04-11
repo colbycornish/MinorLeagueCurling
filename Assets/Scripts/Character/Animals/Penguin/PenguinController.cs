@@ -55,7 +55,7 @@ namespace AnimalControllers.Penguin
             {
                 return;
             }
-            if (agent.remainingDistance <= stoppingDistance && !agent.pathPending)
+            else if (agent.remainingDistance <= stoppingDistance && !agent.pathPending)
             {
                 if (!isWaiting)
                 {
@@ -80,6 +80,21 @@ namespace AnimalControllers.Penguin
             }
         }
 
+        
+        private void OnCollisionEnter(Collision collision)
+        {
+            // Check if the colliding object has a specific tag
+            if (collision.gameObject.CompareTag("stone"))
+            {
+                Debug.Log("Penguin hit by stone! Playing death animation.");
+                isDead = true;
+                animator.SetBool("isWalking", false); 
+                animator.SetBool("isShaking", false); 
+                animator.SetBool("isRunning", false); 
+                animator.SetBool("isDead", true); // Must match the name in the Animator
+            }
+        }
+
         void SetNextDestination()
         {
             int randomIndex = UnityEngine.Random.Range(0, patrolPoints.Count);
@@ -96,6 +111,7 @@ namespace AnimalControllers.Penguin
 
         public void Move()
         {
+            if (isDead) return;
             animator.SetBool("isWalking", true);
             animator.SetBool("isShaking", false);
             // animator.SetBool("isRunning", true);

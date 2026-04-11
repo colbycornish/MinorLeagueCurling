@@ -5,6 +5,7 @@
 using Animancer.Units;
 using UnityEngine;
 using Animancer;
+using UnityEngine.InputSystem;
 
 /************************************************************************************************************************/
 /*
@@ -44,11 +45,17 @@ namespace CharacterNPC.v2
         [SerializeField] private UnityEvent _OnStart; // See the Read Me.
         [SerializeField] private UnityEvent _OnEnd; // See the Read Me.
 
+        [Header("Input Actions")]
+        private InputAction sweepRightAction;
+        private InputAction sweepLeftAction;
+
+
         /************************************************************************************************************************/
 
         protected virtual void Awake()
         {
-            // _SetWeaponOwner.Invoke();
+            sweepLeftAction = InputSystem.actions.FindAction("SweepLeft");
+            sweepRightAction = InputSystem.actions.FindAction("SweepRight");
         }
 
         /************************************************************************************************************************/
@@ -84,6 +91,17 @@ namespace CharacterNPC.v2
         /// </summary>
         protected virtual void OnEnable()
         {
+            // if (Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperLeft)
+            // {
+            //     sweepLeftAction.performed += OnSweepLeft;
+            //     sweepLeftAction.Enable();
+            // }
+            // if (Character.Parameters.Curling.CurlingTeamPosition == CurlingPlayerPosition.SweeperRight)
+            // {
+            //     sweepRightAction.performed += OnSweepRight;
+            //     sweepRightAction.Enable();
+            // }
+
             Character.Parameters.Jobs.CurrentAction = StateActionType;
             _CurrentAnimation = SelectAnimationToPlay();
             

@@ -7,6 +7,7 @@ namespace CharacterNPCJobs
     {
         Idle, 
         None,
+        Announcer,
         Clean,
         Cook,
         Curl,

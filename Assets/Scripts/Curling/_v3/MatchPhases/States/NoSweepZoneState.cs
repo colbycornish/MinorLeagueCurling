@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+ 
 namespace CurlingManagersV3.MatchPhaseStates
 {
     public class NoSweepZoneState : IMatchPhaseState
@@ -9,7 +9,6 @@ namespace CurlingManagersV3.MatchPhaseStates
         
         void Awake()
         {
-            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
             goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
         }
 
@@ -54,7 +53,7 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         private void HandleCurlingNoSweepZonePhaseInput()
         {
-            Debug.Log("NoSweepZoneState OnUpdate: Checking if stone has stopped moving or is no longer moving forward");
+            // Debug.Log("NoSweepZoneState OnUpdate: Checking if stone has stopped moving or is no longer moving forward");
             bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
             bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
             if (!stoneIsMoving || !stoneIsMovingForward)

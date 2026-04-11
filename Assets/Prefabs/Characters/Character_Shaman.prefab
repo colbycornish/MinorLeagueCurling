@@ -420,6 +420,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 6515631603055480481}
     _DefaultState: {fileID: 6515631603055480481}
   _Parameters:
+    _CharacterDataSO: {fileID: 11400000, guid: 1863b60b9951f4c07b8a8d79b5d53f54, type: 2}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -437,6 +438,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -454,6 +457,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -473,15 +478,14 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 00000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
-      _AvailableActions: 
+      _AvailableActions: 000000002000000024000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 169750359988084167}
 --- !u!136 &3316205619066108150
 CapsuleCollider:
@@ -943,6 +947,21 @@ MonoBehaviour:
   _Eat: {fileID: 6529909386172309585}
   _Sweep: {fileID: 5417372416628959277}
   _Move: {fileID: 4692718916440954315}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 5367680631328127950}
+  - {fileID: 4692718916440954315}
+  - {fileID: 7586819765587335757}
+  - {fileID: 8072932602397529322}
+  - {fileID: 6529909386172309585}
+  - {fileID: 6088610289629953261}
+  - {fileID: 2067950717872186711}
+  - {fileID: 228714998244262536}
+  - {fileID: 5417372416628959277}
+  - {fileID: 5375123890715524714}
+  - {fileID: 593320242640703223}
+  - {fileID: 8394887889754890714}
+  - {fileID: 1283987176573437235}
+  - {fileID: 3616495598517364600}
   _Cook: {fileID: 593320242640703223}
   _Dance: {fileID: 8394887889754890714}
   _Forage: {fileID: 1283987176573437235}
@@ -1031,6 +1050,38 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -3303,7 +3354,6 @@ MonoBehaviour:
   - {fileID: 6515631603055480481}
   - {fileID: 515413392519563202}
   - {fileID: 58886570451115042}
-  _AttackInputTimeOut: 0.5
 --- !u!114 &6515631603055480481
 MonoBehaviour:
   m_ObjectHideFlags: 0

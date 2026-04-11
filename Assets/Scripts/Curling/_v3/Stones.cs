@@ -42,11 +42,6 @@ namespace CurlingManagersV3
                 teamAwayStones.ConvertAll(stone => stone.GetComponent<CurlingStone>());
 
             Debug.Log($"[Stones] Team Away Stones Count: {teamAwayStones.Count}");
-            
-            // scoreBug.UpdateStoneAvailability(
-            //     numHomeTeamStonesAvailable: 5,
-            //     numAwayTeamStonesAvailable: 5
-            // );
         }
 
         public List<GameObject> SetupTeamStonesInWaitingArea(
@@ -150,42 +145,43 @@ namespace CurlingManagersV3
         {
             
             CurlingStone cs = CurlingManager._instance.Parameters.Stones.currentStone;
-            Rigidbody rb = cs.rb;
-            float threshold = 0.2f;
+            return cs.IsStoneMoving();
+            // Rigidbody rb = cs.rb;
+            // float threshold = 0.2f;
 
-            // Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
-            if (rb.linearVelocity == Vector3.zero)
-            {
-                Debug.Log("Velocity is zero (direct comparison)");
-                return false;
-                // Do something when velocity is zero
-            }
+            // // Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
+            // if (rb.linearVelocity == Vector3.zero)
+            // {
+            //     Debug.Log("Velocity is zero (direct comparison)");
+            //     return false;
+            //     // Do something when velocity is zero
+            // }
 
-            // Method 2: Checking the magnitude
-            if (rb.linearVelocity.magnitude < threshold)
-            {
-                Debug.Log("Velocity is near zero (magnitude)");
-                return false;
-                // Do something when velocity is near zero
-            }
+            // // Method 2: Checking the magnitude
+            // if (rb.linearVelocity.magnitude < threshold)
+            // {
+            //     Debug.Log("Velocity is near zero (magnitude)");
+            //     return false;
+            //     // Do something when velocity is near zero
+            // }
 
-            // Method 3: Checking the square of the magnitude (slightly faster than magnitude)
-            if (rb.linearVelocity.sqrMagnitude < threshold * threshold)
-            {
-                Debug.Log("Velocity is near zero (squared magnitude)");
-                return false;
-                // Do something when velocity is near zero
-            }
+            // // Method 3: Checking the square of the magnitude (slightly faster than magnitude)
+            // if (rb.linearVelocity.sqrMagnitude < threshold * threshold)
+            // {
+            //     Debug.Log("Velocity is near zero (squared magnitude)");
+            //     return false;
+            //     // Do something when velocity is near zero
+            // }
 
-            // Method 4: Using IsSleeping() (for more reliable check if object is at rest)
-            if (rb.IsSleeping())
-            {
-                Debug.Log("Rigidbody is sleeping (at rest)");
-                return false;
-                // Do something when the rigidbody is sleeping
-            }
+            // // Method 4: Using IsSleeping() (for more reliable check if object is at rest)
+            // if (rb.IsSleeping())
+            // {
+            //     Debug.Log("Rigidbody is sleeping (at rest)");
+            //     return false;
+            //     // Do something when the rigidbody is sleeping
+            // }
 
-            return true;
+            // return true;
         }
 
         public bool IsCurrentStoneMovingForward()
@@ -199,7 +195,7 @@ namespace CurlingManagersV3
             if (Mathf.Approximately(forwardVelocity.magnitude, 0f) || forwardVelocity.magnitude < threshold)
             {
                 // Object is not moving forward (or very slowly)
-                Debug.Log("Object is not moving forward");
+                // Debug.Log("Object is not moving forward");
                 return false;
             }
 

@@ -269,6 +269,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 4681450040823851916}
     _DefaultState: {fileID: 4681450040823851916}
   _Parameters:
+    _CharacterDataSO: {fileID: 11400000, guid: ee92e1a04364d48c488e1c95dbd9b0c3, type: 2}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -286,6 +287,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -303,6 +306,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 0
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -322,15 +327,14 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 00000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
-      _AvailableActions: 000000000b0000000d0000002000000022000000110000001e000000
+      _AvailableActions: 000000002000000024000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 4090090807718595815}
 --- !u!114 &8318351774338193566
 MonoBehaviour:
@@ -1540,7 +1544,6 @@ MonoBehaviour:
   _ListOfJobStates:
   - {fileID: 1453804910912672843}
   - {fileID: 9205716548314085100}
-  _AttackInputTimeOut: 0.5
 --- !u!114 &4681450040823851916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2831,6 +2834,19 @@ MonoBehaviour:
   _Eat: {fileID: 7965359881603813196}
   _Sweep: {fileID: 1889547075403551333}
   _Move: {fileID: 6574858321132950287}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 3632153790688286888}
+  - {fileID: 6574858321132950287}
+  - {fileID: 2718454932951907676}
+  - {fileID: 7468879565108745076}
+  - {fileID: 7965359881603813196}
+  - {fileID: 8827219810484799793}
+  - {fileID: 2101253782124397864}
+  - {fileID: 7794358095200532113}
+  - {fileID: 8672372107010506653}
+  - {fileID: 1889547075403551333}
+  - {fileID: 7790346971578659906}
+  - {fileID: 9169079929933002149}
   _Cook: {fileID: 8672372107010506653}
   _Dance: {fileID: 9169079929933002149}
   _Forage: {fileID: 0}
@@ -2915,6 +2931,38 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -3036,6 +3084,22 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 2b03cb0fb56e0405d85de199bb3f38f7, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 5753f440daef44333bd8375a20788822, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c56feba77b7414804b1fb0c39508179f, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:

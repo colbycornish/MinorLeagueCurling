@@ -67,6 +67,21 @@ MonoBehaviour:
   _Eat: {fileID: 7754370641559430627}
   _Sweep: {fileID: 7092739811190676691}
   _Move: {fileID: 7133289559505266461}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 5953849600462613053}
+  - {fileID: 7133289559505266461}
+  - {fileID: 5959741148080551318}
+  - {fileID: 1350766506255255358}
+  - {fileID: 7754370641559430627}
+  - {fileID: 9192591732097135426}
+  - {fileID: 6282903890055368180}
+  - {fileID: 6266845146975611467}
+  - {fileID: 7092739811190676691}
+  - {fileID: 1609439874048434042}
+  - {fileID: 6752131675516227741}
+  - {fileID: 3614742626819933748}
+  - {fileID: 920317661294023476}
+  - {fileID: 1302059585611681051}
   _Cook: {fileID: 6752131675516227741}
   _Dance: {fileID: 3614742626819933748}
   _Forage: {fileID: 920317661294023476}
@@ -155,6 +170,38 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -752,7 +799,6 @@ MonoBehaviour:
   - {fileID: 6348924607440629355}
   - {fileID: 7708045001807086030}
   - {fileID: 579533408137196015}
-  _AttackInputTimeOut: 0.5
 --- !u!114 &6348924607440629355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,7 +1013,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7019950084230747745}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1001,6 +1047,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 6348924607440629355}
     _DefaultState: {fileID: 6348924607440629355}
   _Parameters:
+    _CharacterDataSO: {fileID: 11400000, guid: 9f86fd96363bd458d85989759b3a16f0, type: 2}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -1018,6 +1065,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -1035,6 +1084,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -1054,15 +1105,14 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 00000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
-      _AvailableActions: 00000000
+      _AvailableActions: 000000002000000024000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 194966589035589209}
 --- !u!195 &7177818082842272438
 NavMeshAgent:
@@ -1094,7 +1144,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7019950084230747745}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 120
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1109,7 +1159,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

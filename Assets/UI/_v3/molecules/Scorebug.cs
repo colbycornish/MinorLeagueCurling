@@ -32,31 +32,26 @@ namespace CurlingUI.v3 {
         
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
+        // void Start()
+        // {
+        //     InitializeScorebug();
+        // }
 
         void OnEnable()
         {
             InitializeScorebug();
-        
-            
         }
 
         void InitializeScorebug()
         {
             BuildTeamRocks();
+
             UpdateTeamNames();
             UpdateTeamNames();
             UpdateScore();
-            UpdateTeamRockIndicators();
+            // UpdateTeamRockIndicators();
+
+            UpdateTurnIndicator();
         }
 
         /************************************************************************************************************************/
@@ -81,8 +76,8 @@ namespace CurlingUI.v3 {
         {
             CurlingManager cm = CurlingManager._instance;
 
-            string homeTeamName = cm.Parameters.Teams.teamHome.teamName; // ?? "Purple People Eaters"; // This will be based on the game state, but we'll hardcode it for now
-            string awayTeamName = cm.Parameters.Teams.teamAway.teamName; //?? "Ruby Red Rhino Riders"; // This will be based on the game state
+            string homeTeamName = cm.Parameters.Teams?.teamHome?.teamName ?? "Purple People Eaters"; // ?? "Purple People Eaters"; // This will be based on the game state, but we'll hardcode it for now
+            string awayTeamName = cm.Parameters.Teams?.teamAway?.teamName ?? "Ruby Red Rhino Riders"; //?? "Ruby Red Rhino Riders"; // This will be based on the game state
             TeamAreaHomeName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{homeTeamName}";
             TeamAreaAwayName.GetComponent<TMPro.TextMeshProUGUI>().text = $"{awayTeamName}";
         }
@@ -91,6 +86,37 @@ namespace CurlingUI.v3 {
         /// <summary>
         /// Rock Indicators 
         /// </summary>
+
+        
+        private void BuildTeamRocks()
+        {
+            foreach (Transform child in TeamAreaHomeRocks.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (Transform child in TeamAreaAwayRocks.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            StartCoroutine(BuildTeamRockIndicators());
+        }
+
+        IEnumerator BuildTeamRockIndicators()
+        {
+            int numberOfRocks = 5; // This will be based on the game state, but we'll hardcode it for now
+            for (int i = 0; i < numberOfRocks; i++)
+            {
+                Instantiate(RockIndicator, TeamAreaHomeRocks.transform);
+                Instantiate(RockIndicator, TeamAreaAwayRocks.transform);
+
+                yield return new WaitForSeconds(0.2f); 
+            }
+            // Update the team names on the scorebug
+            UpdateTeamRockIndicators();
+        }
+ 
+        
 
         private void UpdateTeamRockIndicators()
         {
@@ -116,26 +142,35 @@ namespace CurlingUI.v3 {
             bool isCurrentActiveTeam
         )
         {
-            int numRocksThrown = teamStones.FindAll(stone => stone.Parameters.Status.IsThrown).Count;
+            int numRocksThrown = teamStones.FindAll(stone => stone.Parameters.Status.IsThrown).Count; 
             int numRocksScorable = teamStones.FindAll(stone => stone.Parameters.Status.IsInScoringZone).Count;
+            int numRockIndicators = teamAreaRocks.childCount; // starts
+            Debug.Log($"Updating rock indicators for team. \nNum Rocks Thrown: {numRocksThrown}, \nNum Rocks Scorable: {numRocksScorable}, \nNum Rock Indicators: {numRockIndicators}, \nIs Current Active Team: {isCurrentActiveTeam}\n------");
 
             for (int i = 0; i < teamAreaRocks.childCount; i++)
             {   
                 GameObject rockIndicator = teamAreaRocks.GetChild(i).gameObject;
                 ScorebugRockIndicator rockIndicatorScript = rockIndicator.GetComponent<ScorebugRockIndicator>();
 
-                if (i == numRocksThrown - 1 && isCurrentActiveTeam)
+                // Adjust Indicator for a thrown rock
+                if (i < numRocksThrown)
+                {
+                    // a thrown rock will either be a bad throw, a good throw, or an active throw
+                    if (i < numRocksScorable)
+                    {
+                        rockIndicatorScript.SetState(ScorebugRockIndicator.RockIndicatorState.GoodThrow);
+                    }
+                    else
+                    {
+                        rockIndicatorScript.SetState(ScorebugRockIndicator.RockIndicatorState.BadThrow);
+                    }
+                }
+                // else, if the team is active team and this rock indicator corresponds to the next rock to throw, set it to active
+                else if (i == numRocksThrown && isCurrentActiveTeam)
                 {
                     rockIndicatorScript.SetState(ScorebugRockIndicator.RockIndicatorState.Active);
                 }
-                else if (i < numRocksScorable)
-                {
-                    rockIndicatorScript.SetState(ScorebugRockIndicator.RockIndicatorState.GoodThrow);
-                }
-                else if (i < numRocksThrown)
-                {
-                    rockIndicatorScript.SetState(ScorebugRockIndicator.RockIndicatorState.BadThrow);
-                }
+                // else the rock remains waiting. 
                 else
                 {
                     rockIndicatorScript.SetState(ScorebugRockIndicator.RockIndicatorState.Default);
@@ -143,32 +178,15 @@ namespace CurlingUI.v3 {
             }
         }
 
-        private void BuildTeamRocks()
+        /************************************************************************************************************************/
+
+        private void UpdateTurnIndicator()
         {
-            foreach (Transform child in TeamAreaHomeRocks.transform)
-            {
-                Destroy(child.gameObject);
-            }
-            foreach (Transform child in TeamAreaAwayRocks.transform)
-            {
-                Destroy(child.gameObject);
-            }
+            CurlingManager cm = CurlingManager._instance;
+            bool isHomeTeamTurn = cm.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home;
 
-            StartCoroutine(BuildTeamRockIndicators());
-            
-        }
-
-        IEnumerator BuildTeamRockIndicators()
-        {
-            int numberOfRocks = 5; // This will be based on the game state, but we'll hardcode it for now
-            for (int i = 0; i < numberOfRocks; i++)
-            {
-                Instantiate(RockIndicator, TeamAreaHomeRocks.transform);
-                Instantiate(RockIndicator, TeamAreaAwayRocks.transform);
-
-                yield return new WaitForSeconds(0.2f); 
-            }
-            // Update the team names on the scorebug
+            TurnIndicatorHome.SetActive(isHomeTeamTurn);
+            TurnIndicatorAway.SetActive(!isHomeTeamTurn);
         }
     }
 }

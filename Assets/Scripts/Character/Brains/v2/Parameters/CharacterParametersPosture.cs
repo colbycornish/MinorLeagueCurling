@@ -12,13 +12,13 @@ namespace CharacterNPC.v2
     public class CharacterParametersPosture
     {
         
-        public enum CharacterPostureState
-        {
-            Standing, 
-            Sitting,
-            Crouching,
-            LayingDown
-        }
+        // public enum CharacterPostureState
+        // {
+        //     Standing, 
+        //     Sitting,
+        //     Crouching,
+        //     LayingDown
+        // }
 
         [SerializeField]
         private CharacterPostureState _CurrentPosture;
@@ -27,6 +27,8 @@ namespace CharacterNPC.v2
         [SerializeField]
         private CharacterPostureState _DesiredPosture;
         public ref CharacterPostureState DesiredPosture => ref _DesiredPosture;
+
+        /************************************************************************************************************************/
 
         // Other
         [SerializeField]

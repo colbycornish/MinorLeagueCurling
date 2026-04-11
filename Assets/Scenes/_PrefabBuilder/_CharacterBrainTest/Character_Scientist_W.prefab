@@ -153,6 +153,7 @@ MonoBehaviour:
   _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
   _WalkParameterValue: 0.5
   _RunParameterValue: 1
+  _SprintParameterValue: 1.5
   _ParameterSmoothTime: 0.15
   _TurnSpeed: 120
   _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
@@ -1078,6 +1079,21 @@ MonoBehaviour:
   _Eat: {fileID: 5956464404416039358}
   _Sweep: {fileID: 7048957052796103095}
   _Move: {fileID: 6755320561221838847}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 4648841558653439248}
+  - {fileID: 6755320561221838847}
+  - {fileID: 4316575358199488522}
+  - {fileID: 2842533420208932059}
+  - {fileID: 5956464404416039358}
+  - {fileID: 2058931700734183468}
+  - {fileID: 97970922729102948}
+  - {fileID: 8490987255709524306}
+  - {fileID: 7048957052796103095}
+  - {fileID: 8478480586044311354}
+  - {fileID: 8717677772291973063}
+  - {fileID: 6535213919987694676}
+  - {fileID: 5411319535247415025}
+  - {fileID: 4582517388933655474}
   _Cook: {fileID: 8717677772291973063}
   _Dance: {fileID: 6535213919987694676}
   _Forage: {fileID: 5411319535247415025}
@@ -1794,7 +1810,6 @@ MonoBehaviour:
   - {fileID: 8141007390518112367}
   - {fileID: 6792914266903991300}
   - {fileID: 5609944183484373354}
-  _AttackInputTimeOut: 0.5
 --- !u!114 &8141007390518112367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,6 +2163,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 8141007390518112367}
     _DefaultState: {fileID: 8141007390518112367}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 1
       _IsOnIce: 0
@@ -2157,6 +2173,7 @@ MonoBehaviour:
       forwardDistance: 12
       lateralSpacing: 5
       followSmoothing: 8
+      _IsAbleToSweep: 0
     _Dialogue:
       _CurrentState: 0
       _DesiredState: 0
@@ -2164,6 +2181,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -2181,6 +2200,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -2200,7 +2221,7 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 0000000004000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
       _AvailableActions: 
@@ -2208,7 +2229,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 3529087320071115762}
 --- !u!136 &2842743998599385948
 CapsuleCollider:
@@ -2585,6 +2605,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0

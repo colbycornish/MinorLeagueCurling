@@ -9,7 +9,6 @@ namespace CurlingManagersV3.MatchPhaseStates
         
         void Awake()
         {
-            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
             goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
         }
 

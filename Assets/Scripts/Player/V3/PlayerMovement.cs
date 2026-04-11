@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 namespace PlayerControls.v3
 {
@@ -19,9 +21,24 @@ namespace PlayerControls.v3
         public Animator animator;
         public float walkAnimationSpeed = 2.2f;
         public float runAnimatonSpeed = 1f;
+        private bool isSprinting = false;
 
         private float horizontalInput;
         private float verticalInput;
+
+        [Header("Movement Inputs")]
+        private InputAction movementAction;
+        private InputAction sprintAction;
+        // private InputAction interactAction;
+        
+        private Coroutine _movementProcess;
+
+        void Awake()
+        {
+            sprintAction = InputSystem.actions.FindAction("Sprint", true);
+            movementAction = InputSystem.actions.FindAction("Move", true);
+            // interactAction = InputSystem.actions.FindAction("Interact", true);
+        }
 
         void Start()
         {
@@ -29,6 +46,61 @@ namespace PlayerControls.v3
             animator = GetComponent<Animator>();
             orientation = this.transform;
         }
+
+        protected virtual void OnEnable()
+        {
+            movementAction.performed += MovePlayerAction;
+            movementAction.Enable();
+
+            sprintAction.performed += ToggleSprintAction;
+            sprintAction.Enable();
+        }
+
+        protected virtual void OnDisable()
+        {
+            movementAction.performed -= MovePlayerAction;
+            movementAction.Disable();
+
+            sprintAction.performed -= ToggleSprintAction;
+            sprintAction.Disable();
+            
+        }
+
+        /************************************************************************************************************************/
+
+        // private void OnMovePlayer(InputAction.CallbackContext obj)
+        // {
+        //     Debug.Log("Aim Throw action performed");
+        //     StartMovement(obj);   
+        // }
+        
+        // // This method is called when the player performs the AimThrow action. It starts a coroutine that 
+        // // continuously updates the aiming direction based on the input value until the input value returns to zero 
+        // // (i.e., the player stops aiming).
+        // public void StartMovement(InputAction.CallbackContext callbackContext)
+        // {
+        //     if (this._movementProcess != null)
+        //         this.StopCoroutine(this._movementProcess);
+
+        //     this._movementProcess = this.StartCoroutine(this.MovementProcess(callbackContext));
+        // }
+
+
+        // private IEnumerator MovementProcess(InputAction.CallbackContext callbackContext)
+        // {
+        //     float direction = callbackContext.ReadValue<float>();
+
+        //     while (direction != 0)
+        //     {
+        //         CurlingManager._instance.Aiming.ChangeDirection(
+        //             input: callbackContext.ReadValue<float>()
+        //         );
+
+        //         yield return null;
+
+        //         direction = callbackContext.ReadValue<float>();
+        //     }
+        // }
 
         void Update()
         {
@@ -43,6 +115,44 @@ namespace PlayerControls.v3
             MoveCharacter();
         }
 
+        /************************************************************************************************************************/
+
+        private void ToggleSprintAction(InputAction.CallbackContext obj)
+        {
+            isSprinting = !isSprinting;
+        }
+
+        private void MovePlayerAction(InputAction.CallbackContext obj)
+        {
+            StartMovement(obj);
+        }
+
+        public void StartMovement(InputAction.CallbackContext callbackContext)
+        {
+            if (this._movementProcess != null)
+                this.StopCoroutine(this._movementProcess);
+
+            this._movementProcess = this.StartCoroutine(this.MovementProcess(callbackContext));
+        }
+
+
+        private IEnumerator MovementProcess(InputAction.CallbackContext callbackContext)
+        {
+            Vector2 direction = callbackContext.ReadValue<Vector2>();
+
+            while (direction.x != 0 || direction.y != 0)
+            {
+                Debug.Log("Player Input for movement direction has been registered!");
+                // TODO: Adjust the MoveCharacter Function to work with this
+
+                yield return null;
+
+                direction = callbackContext.ReadValue<Vector2>();
+            }
+        }
+
+
+        /************************************************************************************************************************/
 
         void MoveCharacter()
         {
@@ -50,7 +160,8 @@ namespace PlayerControls.v3
             float vertical = verticalInput;
             float animSpeed = walkAnimationSpeed;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            // if (Input.GetKey(KeyCode.LeftShift))
+            if (isSprinting)
             {
                 vertical *= 2f;
                 speed *= 2f; // runSpeed

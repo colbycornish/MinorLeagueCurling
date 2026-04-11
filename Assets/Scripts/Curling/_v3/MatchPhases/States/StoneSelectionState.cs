@@ -12,6 +12,7 @@ namespace CurlingManagersV3.MatchPhaseStates
         {
             UICanvasManager.v3.UICanvasManager.Instance.CloseAllCanvases();
             UICanvasManager.v3.UICanvasManager.Instance.OpenStoneToUseSelectionModal();
+            MainCurlingManager.cameraController.SwitchToStoneBenchCamera();
         }
 
         /************************************************************************************************************************/
@@ -19,6 +20,7 @@ namespace CurlingManagersV3.MatchPhaseStates
         protected virtual void OnDisable()
         {
             UICanvasManager.v3.UICanvasManager.Instance.CloseAllModals();
+            MainCurlingManager.Players.RepositionCharactersForCurling();
             // MainCurlingManager.OnStoneSelectionConfirmed();
         }
 

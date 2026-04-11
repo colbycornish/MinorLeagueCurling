@@ -17,7 +17,6 @@ namespace CurlingManagersV3.MatchPhaseStates
         
         private void Awake()
         {
-            Debug.Log("AimingAndPowerState Awake: Finding Input Actions");
             aimAction = InputSystem.actions.FindAction("AimThrow", true);
             curlLeftAction = InputSystem.actions.FindAction("CurlLeft", true);
             curlRightAction = InputSystem.actions.FindAction("CurlRight", true);
@@ -51,14 +50,17 @@ namespace CurlingManagersV3.MatchPhaseStates
 
             goToNextPhaseAction.performed += OnGoToNextPhase;
             goToNextPhaseAction.Enable();
+
             
+             
             OnEnter();
         }
 
         public override void OnEnter()
         {
             // Close any UI Modals, and open the InGame Curling HUD
-            Debug.Log("AimingAndPowerState OnEnterState: Entering Aiming and Power State");
+            
+            MainCurlingManager.cameraController.SwitchToFollowStoneCamera();
             UICanvasManager.v3.UICanvasManager.Instance.CloseAllModals();
             UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingInGameHUD();
 
@@ -71,7 +73,6 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         private void OnAimThrow(InputAction.CallbackContext obj)
         {
-            Debug.Log("Aim Throw action performed");
             StartAiming(obj);   
         }
         
@@ -108,13 +109,13 @@ namespace CurlingManagersV3.MatchPhaseStates
         // Changes the initial curl amount
         private void OnCurlLeft(InputAction.CallbackContext obj)
         {
-            Debug.Log("Curl Left action performed");
+            // Debug.Log("Curl Left action performed");
             CurlingManager._instance.Aiming.IncreaseLeftCurlAmount();
         }
 
         private void OnCurlRight(InputAction.CallbackContext obj)
         {
-            Debug.Log("Curl Right action performed");
+            // Debug.Log("Curl Right action performed");
             CurlingManager._instance.Aiming.IncreaseRightCurlAmount();
         }
 
@@ -123,13 +124,13 @@ namespace CurlingManagersV3.MatchPhaseStates
         // Increases or decreases the initial power level of the throw.
         private void OnIncreasePower(InputAction.CallbackContext obj)
         {
-            Debug.Log("Increase Power action performed");
+            // Debug.Log("Increase Power action performed");
             CurlingManager._instance.Throwing.IncreaseThrowPower();
         }
 
         private void OnDecreasePower(InputAction.CallbackContext obj)
         {
-            Debug.Log("Decrease Power action performed");
+            // Debug.Log("Decrease Power action performed");
             CurlingManager._instance.Throwing.DecreaseThrowPower();
         }
 
@@ -167,15 +168,10 @@ namespace CurlingManagersV3.MatchPhaseStates
         // Lauch the stone! 
         private void OnGoToNextPhase(InputAction.CallbackContext obj)
         {
-
-            Debug.Log("Go To Next Phase action performed, launching stone and changing phase");
+            // Debug.Log("Go To Next Phase action performed, launching stone and changing phase");
             MainCurlingManager.Throwing.UpdatePowerFromPowerMeterSelection();
-            
-            MainCurlingManager.Throwing.LaunchStone(
-                stone: CurlingManager._instance.Parameters.Stones.currentStone, 
-                launchDirection: CurlingManager._instance.Parameters.Course.directionPivot.forward,
-                power: CurlingManager._instance.Parameters.Throwing.LaunchPower 
-            );
+
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.CurlingLaunchStonePhase);
         } 
 
 

@@ -69,7 +69,7 @@ namespace CharacterNPC.v2
         // middle of an attack.
 
         public override bool CanExitState
-            => _CurrentAnimation != null && _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime;
+            => _CurrentAnimation != null && _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime - 0.1;
 
         /************************************************************************************************************************/
 
@@ -100,17 +100,19 @@ namespace CharacterNPC.v2
 
         private ClipTransition SelectAnimationToPlay()
         {
-            if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
-                _Animations[_CurrentAnimationIndex].State.Weight == 0)
-            {
-                _CurrentAnimationIndex = 0;
-            }
-            else
-            {
-                _CurrentAnimationIndex++;
-            }
+            int newIndex = Random.Range(0, _Animations.Length - 1);
+            return _Animations[newIndex];
+            // if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
+            //     _Animations[_CurrentAnimationIndex].State.Weight == 0)
+            // {
+            //     _CurrentAnimationIndex = 0;
+            // }
+            // else
+            // {
+            //     _CurrentAnimationIndex++;
+            // }
 
-            return _Animations[_CurrentAnimationIndex];
+            // return _Animations[_CurrentAnimationIndex];
         }
 
         /************************************************************************************************************************/

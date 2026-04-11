@@ -8,6 +8,8 @@ namespace CurlingManagersV3.MatchPhaseStates
     {
         private InputAction sweepLeftAction;
         private InputAction sweepRightAction;
+
+        private Coroutine _stoneStoppedCoroutine;
         
         private void Awake()
         {
@@ -17,14 +19,29 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         /************************************************************************************************************************/
 
-        protected virtual void OnEnable()
-        {
+        private void EnableActions(){
             sweepLeftAction.performed += OnSweepLeft;
             sweepLeftAction.Enable();
 
             sweepRightAction.performed += OnSweepRight;
             sweepRightAction.Enable();
+        }
+
+        private void DisableActions(){
+            sweepLeftAction.performed -= OnSweepLeft;
+            sweepLeftAction.Disable();
             
+            sweepRightAction.performed -= OnSweepRight;
+            sweepRightAction.Disable();
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void OnEnable()
+        {
+            this._stoneStoppedCoroutine = null;
+            MainCurlingManager.cameraController.UpdateOrbitStoneCameraTarget();
+            EnableActions();
             OnEnter();
         }
 
@@ -38,9 +55,8 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         protected virtual void OnDisable()
         {
-            sweepLeftAction.Disable();
-            sweepRightAction.Disable();
-            
+            this._stoneStoppedCoroutine = null;
+            DisableActions();
             OnExit();
         }
 
@@ -55,15 +71,41 @@ namespace CurlingManagersV3.MatchPhaseStates
         {
             bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
             bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
+
             if (!stoneIsMoving || !stoneIsMovingForward)
             {
-                MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.PostThrowResult);
+                if (this._stoneStoppedCoroutine == null){
+                    DisableActions();
+                    StoneHasStopped();
+                }
+                // this.StartCoroutine(Wait());
+            } else
+            {
+                CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = sweepLeftAction.IsPressed();
+                CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = sweepRightAction.IsPressed();
             }
 
-            CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = sweepLeftAction.IsPressed();
-            CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = sweepRightAction.IsPressed();
-            
         }
+
+        public void StoneHasStopped()
+        {
+            if (this._stoneStoppedCoroutine == null)
+                this._stoneStoppedCoroutine = this.StartCoroutine(this.Wait());
+                
+        }
+
+        
+        
+
+        private IEnumerator Wait()
+        {
+            Debug.Log("Stone has stopped, waiting for 3 seconds...");
+            MainCurlingManager.cameraController.SwitchToOrbitStoneCamera();
+            yield return new WaitForSeconds(3.00f);
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.PostThrowResult);
+        }
+
+        /************************************************************************************************************************/
 
         public void FixedUpdate()
         {
@@ -128,89 +170,3 @@ namespace CurlingManagersV3.MatchPhaseStates
     }
 }
 
-
-
-
-        // private Coroutine _sweepLeftProcess;
-        // private Coroutine _sweepRightProcess;
-        // public void StartSweepLeft(InputAction.CallbackContext callbackContext)
-        // {
-        //     if (this._sweepLeftProcess != null)
-        //         this.StopCoroutine(this._sweepLeftProcess);
-
-        //     this._sweepLeftProcess = this.StartCoroutine(this.SweepLeftProcess(callbackContext));
-        // }
-
-
-        // private IEnumerator SweepLeftProcess(InputAction.CallbackContext callbackContext)
-        // {
-        //     double startTime = callbackContext.startTime;
-        //     double time = callbackContext.time;
-        //     while (time - startTime < 0.01f)
-        //     {
-        //         CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = true;
-        //         // CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.IncreaseExhaustionLevel();
-
-        //         yield return null;
-
-        //         time = callbackContext.time;
-        //     }
-
-        //     CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = false;
-        // }
-
-        // private void OnSweepLeft(InputAction.CallbackContext obj)
-        // {
-        //     Debug.Log("Sweep Left action performed");
-        //     StartSweepLeft(obj);
-        //     CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = true;
-        //     // CurlingManager._instance.Parameters.Canvas.leftSweeperExhaustionBarController.IncreaseExhaustionLevel();
-        // }
-
-        // private void OnSweepLeftCancelled(InputAction.CallbackContext obj)
-        // {
-        //     Debug.Log("Sweep Left action Cancelled");
-        //     CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = false;
-        // }
-
-        // /************************************************************************************************************************/
-
-        // public void StartSweepRight(InputAction.CallbackContext callbackContext)
-        // {
-        //     if (this._sweepRightProcess != null)
-        //         this.StopCoroutine(this._sweepRightProcess);
-
-        //     this._sweepRightProcess = this.StartCoroutine(this.SweepRightProcess(callbackContext));
-        // }
-
-
-        // private IEnumerator SweepRightProcess(InputAction.CallbackContext callbackContext)
-        // {
-        //     double startTime = callbackContext.startTime;
-        //     double time = callbackContext.time;
-        //     while (time - startTime < 0.01f)
-        //     {
-        //         CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = true;
-        //         // CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController.IncreaseExhaustionLevel();
-
-        //         yield return null;
-
-        //         time = callbackContext.time;
-        //     }
-
-        //     CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = false;
-        // }
-
-        // private void OnSweepRight(InputAction.CallbackContext obj)
-        // {
-        //     Debug.Log("Sweep Right action performed");
-        //     CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = true;
-        //     StartSweepRight(obj);
-        //     CurlingManager._instance.Parameters.Canvas.rightSweeperExhaustionBarController.IncreaseExhaustionLevel();
-        // }
-
-        // private void OnSweepRightCancelled(InputAction.CallbackContext obj)
-        // {
-        //     Debug.Log("Sweep Right action Cancelled");
-        //     CurlingManager._instance.Parameters.Sweeping.IsSweepingRight = false;
-        // }

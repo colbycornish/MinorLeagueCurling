@@ -1,12 +1,6 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
-
 using System;
 using UnityEngine;
-using Animancer;
-using Animancer.FSM;
-using UnityEngine.AI;
+using System.Collections.Generic;
 using Animancer.Units;
 using static Animancer.Validate;
 
@@ -49,6 +43,8 @@ namespace CharacterNPC.v2
         private float _DistanceFromDestination = 0f;
         public ref float DistanceFromDestination => ref _DistanceFromDestination;
 
+        /************************************************************************************************************************/
+
         [SerializeField, MetersPerSecond(Rule = Value.IsNotNegative)]
         private float _WalkSpeed = 3.5f;
         public float WalkSpeed => _WalkSpeed;
@@ -69,7 +65,7 @@ namespace CharacterNPC.v2
         private float _Decceleration = 8f;
         public float Decceleration => _Decceleration;
 
-        
+        /************************************************************************************************************************/
 
         [SerializeField]
         private bool _WantsToRun;
@@ -87,6 +83,8 @@ namespace CharacterNPC.v2
         private bool _IsIdle = false;
         public ref bool IsIdle => ref _IsIdle;
 
+        /************************************************************************************************************************/
+
         [SerializeField]
         private bool _IsBaseFromIdleState = true;
         public ref bool IsBaseFromIdleState => ref _IsBaseFromIdleState;
@@ -94,6 +92,16 @@ namespace CharacterNPC.v2
         [SerializeField]
         private bool _IsBaseFromMoveState = false;
         public ref bool IsBaseFromMoveState => ref _IsBaseFromMoveState;
+
+        /************************************************************************************************************************/
+
+        [SerializeField] 
+        private List<Transform> _PatrolPoints;
+        public ref List<Transform> PatrolPoints => ref _PatrolPoints;
+
+        [SerializeField] 
+        private int _CurrentPatrolIndex = 0;
+        public ref int CurrentPatrolIndex => ref _CurrentPatrolIndex;
        
     }
 }

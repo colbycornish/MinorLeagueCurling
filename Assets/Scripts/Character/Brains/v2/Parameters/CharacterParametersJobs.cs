@@ -22,9 +22,13 @@ namespace CharacterNPC.v2
         private JobStateType _DesiredJob;
         public ref JobStateType DesiredJob => ref _DesiredJob;
 
+        /************************************************************************************************************************/
+
         [SerializeField]
         private List<JobStateType> _AvailableJobStates;
         public ref List<JobStateType> AvailableJobStates => ref _AvailableJobStates;
+
+        /************************************************************************************************************************/
 
         [SerializeField]
         private ActionType _CurrentAction;
@@ -38,7 +42,7 @@ namespace CharacterNPC.v2
         private List<ActionType> _AvailableActions;
         public ref List<ActionType> AvailableActions => ref _AvailableActions;
 
-
+        /************************************************************************************************************************/
 
         [SerializeField]
         private Dictionary<JobStateType, JobStateSetting> _JobStateSettings;

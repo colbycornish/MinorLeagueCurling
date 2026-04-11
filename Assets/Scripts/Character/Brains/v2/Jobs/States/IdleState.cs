@@ -48,21 +48,18 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override JobStateType JobType => 
-            JobStateType.Idle;
+        public override JobStateType JobType => JobStateType.Idle;
 
         /************************************************************************************************************************/
 
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            // Debug.Log("IdleJob OnDisable");
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            // Debug.Log("IdleJob OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Idle;
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Playables;
+using Unity.Cinemachine;
 
 namespace CurlingManagersV3.Parameters
 {
@@ -13,6 +14,21 @@ namespace CurlingManagersV3.Parameters
         public Camera throwerCamera;
         public Camera courseCamera;
         public Camera announcersCamera;
+
+        [Header("Cinemachine Cameras")]
+        // Stone & Target Zone
+        public CinemachineCamera ccFollowStoneCamera;
+        public CinemachineCamera ccOrbitTargetZoneCamera;
+        public CinemachineCamera ccOrbitStoneCamera;
+        // Team Area
+        public CinemachineCamera ccStaticStoneBenchCamera;
+        public CinemachineCamera ccDollyInHomeTeamCamera;
+        public CinemachineCamera ccDollyInAwayTeamCamera;
+        // Announcers
+        public CinemachineCamera ccDollyAnnouncerCamera;
+        public CinemachineCamera ccProfileBroomyAnnouncerCamera;
+        public CinemachineCamera ccProfileMickAnnouncerCamera;
+        
         
         [Header("Course Cinematics")]
         public PlayableDirector courseFullTimeline;

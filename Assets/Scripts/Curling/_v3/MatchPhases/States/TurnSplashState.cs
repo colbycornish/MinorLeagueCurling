@@ -19,29 +19,27 @@ namespace CurlingManagersV3.MatchPhaseStates
         {
             CurlingManager._instance.Parameters.Stones.currentStone = null; 
             goToNextPhaseAction.performed += OnGoToNextPhase;
-            goToNextPhaseAction.Enable();
-            
+            goToNextPhaseAction.Enable();    
             OnEnter();
         }
 
         
-
         public override void OnEnter()
         {
-            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingGameSplashTurnDisplaySection();
+            MainCurlingManager.Players.RepositionCharactersForEpicTeamPose();
+            MainCurlingManager.cameraController.SwitchToDollyInCurrentTeamCamera();
 
-
+            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingTurnSplash();
             this.StartCoroutine(Wait());
-            Debug.Log("Invoking GoToNextPhase after 4 seconds");
-
-            OnGoToNextPhase(new InputAction.CallbackContext());
-
         }
 
         private IEnumerator Wait()
         {
             Debug.Log("Coroutine started, waiting for 4 seconds...");
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3.5f);
+
+            Debug.Log("Invoking GoToNextPhase after 4 seconds");
+            OnGoToNextPhase(new InputAction.CallbackContext());
         }
 
         /************************************************************************************************************************/

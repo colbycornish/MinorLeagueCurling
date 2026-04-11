@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using Curling.Rules;
+using CurlingObjects;
 
 /// <summary>
 /// </summary>
@@ -27,11 +28,11 @@ namespace CurlingManagersV3
             
             CurlingManager._instance.Parameters.Course.course = courseData; 
             SetupLocations(courseData: courseData);
-            
-            CurlingManager._instance.Parameters.Course.directionPivotObject = courseData.directionalPivot;
-            CurlingManager._instance.Parameters.Course.directionPivot = courseData.directionalPivot.transform;
-            
-        
+
+            // Announcer Booth Setup
+            CurlingManager._instance.Parameters.Course.announcerArea.Setup();
+    
+            // Camera Setup
             CurlingManager._instance.cameraController.Setup(
                 stoneCamera: CurlingManager._instance.stoneCamera,
                 ccStoneCamera: CurlingManager._instance.ccStoneCamera,
@@ -40,32 +41,35 @@ namespace CurlingManagersV3
                 courseCamera: CurlingManager._instance.stoneCamera,
                 announcersCamera: CurlingManager._instance.stoneCamera
             );
+            AnnouncerBooth ab = courseData.announcerBooth;
 
-            CurlingManager._instance.Sweeping.Setup();
-            // CurlingManager._instance.rules = 
-            // .Setup( 
-            //     rulesData: rulesData,
-            //     gameData: gameData,
-            //     teamHome: teamHome,
-            //     teamAway: teamAway
-            // );
-            //
+            CurlingManager._instance.Parameters.Cinematics.ccDollyInAwayTeamCamera = courseData.ccDollyInTeamAway;
+            CurlingManager._instance.Parameters.Cinematics.ccDollyInHomeTeamCamera = courseData.ccDollyInTeamHome;
+            CurlingManager._instance.Parameters.Cinematics.ccDollyAnnouncerCamera = CurlingManager._instance.Parameters.Course.announcerArea.dollyTwoShotCamera;
+            CurlingManager._instance.Parameters.Cinematics.ccProfileMickAnnouncerCamera = CurlingManager._instance.Parameters.Course.announcerArea.mickProfileCamera;
+            CurlingManager._instance.Parameters.Cinematics.ccProfileBroomyAnnouncerCamera = CurlingManager._instance.Parameters.Course.announcerArea.broomyProfileCamera;
 
-
+            // Stones
             CurlingManager._instance.stoneManager.Setup(
                 courseData: courseData,
                 teamHome: teamHome,
                 teamAway: teamAway
             );
-            CurlingManager._instance.gameEndManager.SetExitInfo(
-                sceneName: exitSceneName,
-                spawnId: exitSpawnId
-            );
+
+            // Players
             CurlingManager._instance.Players.Setup(
                 curlingCourse: courseData,
                 teamHome: teamHome,
                 teamAway: teamAway
             );
+
+            // End Game Setup
+            CurlingManager._instance.gameEndManager.SetExitInfo(
+                sceneName: exitSceneName,
+                spawnId: exitSpawnId
+            );
+
+            
 
             CurlingManager._instance.Parameters.CurrentGameScore.ResetScore();
 
@@ -83,10 +87,17 @@ namespace CurlingManagersV3
 
             CurlingManager._instance.Parameters.Course.stonesSpawnLocationsTeamHome = courseData.stonesSpawnLocationsTeamHome;
             CurlingManager._instance.Parameters.Course.stonesSpawnLocationsTeamAway = courseData.stonesSpawnLocationsTeamAway;
+            CurlingManager._instance.Parameters.Course.stoneBenchTeamHome = courseData.stoneBenchTeamHome;
+            CurlingManager._instance.Parameters.Course.stoneBenchTeamAway = courseData.stoneBenchTeamAway;
+
+            CurlingManager._instance.Parameters.Course.directionPivotObject = courseData.directionalPivot;
+            CurlingManager._instance.Parameters.Course.directionPivot = courseData.directionalPivot.transform;
             
             CurlingManager._instance.Parameters.Course.targetZone = courseData.targetZone;
 
             CurlingManager._instance.Parameters.Course.launchPoint = courseData.launchPoint;
+
+            CurlingManager._instance.Parameters.Course.announcerArea = courseData.announcerBooth;
         }
 
 
@@ -106,16 +117,10 @@ namespace CurlingManagersV3
         }
 
         public void MarkAsLoading(){
-            // CanvasManager._instance.OpenCanvas(newState: CanvasState.CurlingMatch);
-
             CurlingManager._instance.Parameters.Status.isReady = false;
             CurlingManager._instance.Parameters.Status.isLoading = true;
 
             Debug.Log("Game Setup: Curling Game is Loading...");
-
-            // CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
-            //     newPhase: CurlingMatchPhase.Loading
-            // );
         }
 
         public void MarkAsReady(){
@@ -124,11 +129,18 @@ namespace CurlingManagersV3
             
             Debug.Log("Game Setup: Curling Game is Ready.");
             CurlingManager._instance.ChangePhase(CurlingMatchPhase.StartGameIntro);
-
-            // CurlingManager._instance.cameraController.PlayCourseIntroTimeline();
-            // CurlingManagersV3.MatchPhaseManager._instance.SetPhase(
-            //     newPhase: CurlingMatchPhase.RoundSplash
-            // );
         }
     }
 }
+
+
+
+// CurlingManager._instance.Sweeping.Setup();
+            // CurlingManager._instance.rules = 
+            // .Setup( 
+            //     rulesData: rulesData,
+            //     gameData: gameData,
+            //     teamHome: teamHome,
+            //     teamAway: teamAway
+            // );
+            //

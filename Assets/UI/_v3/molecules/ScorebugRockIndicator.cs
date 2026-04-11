@@ -23,12 +23,6 @@ namespace CurlingUI.v3 {
             UpdateVisuals();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-
         public void SetState(RockIndicatorState newState)
         {
             currentState = newState;

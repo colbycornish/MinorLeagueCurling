@@ -101,13 +101,6 @@ namespace UICanvasManager.v3
         }
 
         /************************************************************************************************************************/
-
-        public override void OnUpdate()
-        {
-            // Handle input or logic while in this state
-        }
-
-        /************************************************************************************************************************/
         public void UpdateDisplays()
         {
             UpdateCharacterDisplays();

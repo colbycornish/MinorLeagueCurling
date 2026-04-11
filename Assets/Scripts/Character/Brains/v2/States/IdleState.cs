@@ -104,19 +104,19 @@ namespace CharacterNPC.v2
             switch (Character.Parameters.Posture.DesiredPosture)
             {
                 // Sitting
-                case CharacterParametersPosture.CharacterPostureState.Sitting: 
+                case CharacterPostureState.Sitting: 
                     PlaySitting();
                     break;
                 // Crouching
-                case CharacterParametersPosture.CharacterPostureState.Crouching: 
+                case CharacterPostureState.Crouching: 
                     PlayCrouching();
                     break;
                 // LayingDown
-                case CharacterParametersPosture.CharacterPostureState.LayingDown: 
+                case CharacterPostureState.LayingDown: 
                     PlayLayingDown();
                     break;
                 // Standing
-                case CharacterParametersPosture.CharacterPostureState.Standing: 
+                case CharacterPostureState.Standing: 
                 default:
                     PlayStanding();
                     break;
@@ -130,7 +130,7 @@ namespace CharacterNPC.v2
                 canPlayActionFullBody: false
             );
             Character.Parameters.Posture.CurrentPosture = 
-                CharacterParametersPosture.CharacterPostureState.Standing;
+                CharacterPostureState.Standing;
         }
 
         private void PlayCrouching()
@@ -140,7 +140,7 @@ namespace CharacterNPC.v2
                 canPlayActionFullBody: false
             );
             Character.Parameters.Posture.CurrentPosture = 
-                CharacterParametersPosture.CharacterPostureState.Crouching;
+                CharacterPostureState.Crouching;
         }
 
         private void PlaySitting()
@@ -150,7 +150,7 @@ namespace CharacterNPC.v2
                 canPlayActionFullBody: false
             );
             Character.Parameters.Posture.CurrentPosture = 
-                CharacterParametersPosture.CharacterPostureState.Sitting;
+                CharacterPostureState.Sitting;
         }
 
         private void PlayLayingDown()
@@ -160,7 +160,7 @@ namespace CharacterNPC.v2
                 canPlayActionFullBody: false
             );
             Character.Parameters.Posture.CurrentPosture = 
-                CharacterParametersPosture.CharacterPostureState.LayingDown;
+                CharacterPostureState.LayingDown;
         }
 
         /************************************************************************************************************************/

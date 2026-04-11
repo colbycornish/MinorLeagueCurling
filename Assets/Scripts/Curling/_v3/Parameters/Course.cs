@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using CurlingObjects;
 
 namespace CurlingManagersV3.Parameters
 {
@@ -16,6 +17,9 @@ namespace CurlingManagersV3.Parameters
         [Header("Course")]
         public CurlingCourseData course;      
 
+        [Header("Announcer Booth")]
+        public AnnouncerBooth announcerArea;      
+
         [Header("Placement Locations")]
         public Transform throwerStartLocation;
         public Transform sweeperLStartLocation;
@@ -26,6 +30,8 @@ namespace CurlingManagersV3.Parameters
         [Header("Locations")]
         public List<Transform> stonesSpawnLocationsTeamHome = new List<Transform>();
         public List<Transform> stonesSpawnLocationsTeamAway = new List<Transform>();
+        public Transform stoneBenchTeamHome;
+        public Transform stoneBenchTeamAway;
 
         [Header("Target")]
         public GameObject targetZone;

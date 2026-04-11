@@ -11,7 +11,6 @@ namespace CurlingManagersV3.MatchPhaseStates
         
         void Awake()
         {
-            Debug.Log("StartGameIntroState Awake: Finding SkipCinematicsAction");
             goToNextPhaseAction = InputSystem.actions.FindAction("GoToNextPhase", true);
         }
 
@@ -21,6 +20,8 @@ namespace CurlingManagersV3.MatchPhaseStates
         {
             goToNextPhaseAction.performed += OnGoToNextPhase;
             goToNextPhaseAction.Enable();
+
+            MainCurlingManager.cameraController.SwitchToTargetZoneCamera();
 
             OnEnter();
         }
@@ -34,7 +35,7 @@ namespace CurlingManagersV3.MatchPhaseStates
         private IEnumerator Wait()
         {
             Debug.Log("Coroutine started, waiting for 6 seconds...");
-            yield return new WaitForSeconds(7.00f);
+            yield return new WaitForSeconds(5.00f);
             OnGoToNextPhase(new InputAction.CallbackContext());
         }
         
@@ -57,16 +58,7 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         private void OnGoToNextPhase(InputAction.CallbackContext obj)
         {
-            Debug.Log("Initiate Next Turn or Go to End Game Results");
-            if (!MainCurlingManager.gameData.settings.enableObstaclePlacementByPlayer &&
-                !MainCurlingManager.gameData.settings.enableObstaclePlacementByEnvironment
-            )
-            {
-                MainCurlingManager.HandleNextTurn();
-            } else
-            {
-                MainCurlingManager.HandleNextTurn();
-            }
+            MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.ScoringPhase);
         } 
 
         /************************************************************************************************************************/

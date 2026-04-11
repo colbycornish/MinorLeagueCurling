@@ -36,6 +36,9 @@ namespace CharacterNPC.v2
         private NavMeshAgent _NavAgent;
         public NavMeshAgent NavAgent => _NavAgent;
 
+        
+        // public CharacterSO characterDataSO;
+
             
 
         /************************************************************************************************************************/

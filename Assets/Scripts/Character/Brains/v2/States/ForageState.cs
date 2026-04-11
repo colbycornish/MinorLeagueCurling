@@ -5,6 +5,9 @@
 using Animancer.Units;
 using UnityEngine;
 using Animancer;
+using Animancer.TransitionLibraries;
+using Unity.VisualScripting;
+using System.Linq;
 
 /************************************************************************************************************************/
 /*
@@ -32,8 +35,9 @@ namespace CharacterNPC.v2
     public class ForageState : CharacterState
     {
         /************************************************************************************************************************/
-
+        // [SerializeField] private TransitionLibraryAsset _LibraryAnimations;
         [SerializeField] private ClipTransition[] _Animations;
+        
 
         private int _CurrentAnimationIndex = int.MaxValue;
         private ClipTransition _CurrentAnimation;
@@ -103,6 +107,9 @@ namespace CharacterNPC.v2
 
         private ClipTransition SelectAnimationToPlay()
         {
+            
+
+            
             if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
                 _Animations[_CurrentAnimationIndex].State.Weight == 0)
             {

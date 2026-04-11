@@ -22,7 +22,7 @@ namespace CurlingManagersV3.MatchPhaseStates
             goToNextPhaseAction.performed += OnGoToNextPhase;
             goToNextPhaseAction.Enable();
             
-            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingGameSplashTurnDisplaySection();
+            UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingTurnSplash();
             OnEnter();
         }
 

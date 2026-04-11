@@ -8,11 +8,6 @@ namespace CurlingManagersV3
 {
     public class GameTurn : MonoBehaviour
     {
-        [Header("Helpful References")]
-        public int numberOfHomeTeamTurnsCompleted = 0;
-        public int numberOfAwayTeamTurnsCompleted = 0;
-        public int currentTurnCount = 0;
-        public int maxTurnCount = 10;
 
         /// <summary>
         /// Set Game Turn
@@ -24,9 +19,11 @@ namespace CurlingManagersV3
 
             if (isHome){
                 CurlingManager._instance.Parameters.Turn.CurrentTurn = CurlingGameTurnType.Home;
+                Debug.LogWarning("GameTurn: Home Team Turn");
             } 
             else if (isAway){
                 CurlingManager._instance.Parameters.Turn.CurrentTurn = CurlingGameTurnType.Away;
+                Debug.LogWarning("GameTurn: Away Team Turn");
             }
             else {
                 Debug.LogWarning("GameTurn: NextTurn() - currentTurn is None, defaulting to Home");
@@ -35,21 +32,22 @@ namespace CurlingManagersV3
         }
 
         public void NextTurn(){
-            currentTurnCount++;
+            CurlingManager._instance.Parameters.Turn.CurrentTurnCount++; // Reset current stone at the beginning of the next turn
+
+            // currentTurnCount++;
             if (CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home){
-                numberOfHomeTeamTurnsCompleted++;
+
+                // numberOfHomeTeamTurnsCompleted++;
+                CurlingManager._instance.Parameters.Turn.NumberOfHomeTeamTurnsCompleted++;
                 
-                SetGameTurn(
-                    isHome: false,
-                    isAway: true
-                );
-                Debug.LogWarning("GameTurn: Away Team Turn");
+                SetGameTurn(isHome: false, isAway: true);
+                
             } 
             else if (CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Away){
-                numberOfAwayTeamTurnsCompleted++;
-
+                
+                CurlingManager._instance.Parameters.Turn.NumberOfAwayTeamTurnsCompleted++;
                 SetGameTurn(isHome: true, isAway: false);
-                Debug.LogWarning("GameTurn: Home Team Turn");
+                
             }
             else {
                 Debug.LogWarning("GameTurn: NextTurn() - currentTurn is None, defaulting to Home");
@@ -57,16 +55,26 @@ namespace CurlingManagersV3
             }
         }
 
+        public void UpdateCurrentTeam(){
+            CurlingManager._instance.Parameters.Teams.currentTeam = 
+                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? CurlingManager._instance.Parameters.Teams.teamHome
+                    : CurlingManager._instance.Parameters.Teams.teamAway;
+        }
+
+
 
         /// <summary>
         /// Inquire About Current Turn
         /// </summary>
         public bool IsCurrentTurnTheLastTurn(){
-            return currentTurnCount == maxTurnCount;
+            return CurlingManager._instance.Parameters.Turn.CurrentTurnCount + 1 == 
+                CurlingManager._instance.Parameters.Turn.MaxTurnCount;
         }
 
         public bool IsThereAnotherTurnAfterThisOne(){
-            return currentTurnCount + 1 <= maxTurnCount;
+            return CurlingManager._instance.Parameters.Turn.CurrentTurnCount + 1 < 
+            CurlingManager._instance.Parameters.Turn.MaxTurnCount;
         }
 
         /// <summary>
@@ -74,8 +82,10 @@ namespace CurlingManagersV3
         /// </summary>
         public void Reset(){
             SetGameTurn(isHome: true);
-            numberOfHomeTeamTurnsCompleted = 0;
-            numberOfAwayTeamTurnsCompleted = 0;
+            CurlingManager._instance.Parameters.Turn.CurrentTurnCount = 0;
+            CurlingManager._instance.Parameters.Turn.NumberOfHomeTeamTurnsCompleted = 0;
+            CurlingManager._instance.Parameters.Turn.NumberOfAwayTeamTurnsCompleted = 0;
+            CurlingManager._instance.Parameters.Turn.MaxTurnCount = 10;
         }
 
     }

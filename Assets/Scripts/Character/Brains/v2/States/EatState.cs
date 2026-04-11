@@ -61,7 +61,7 @@ namespace CharacterNPC.v2
 
         public override bool CanEnterState => 
             Character.Parameters.Status.HungerLevel > 0.8 && 
-            Character.Parameters.Posture.CurrentPosture == CharacterParametersPosture.CharacterPostureState.Sitting; 
+            Character.Parameters.Posture.CurrentPosture == CharacterPostureState.Sitting; 
 
         /************************************************************************************************************************/
 

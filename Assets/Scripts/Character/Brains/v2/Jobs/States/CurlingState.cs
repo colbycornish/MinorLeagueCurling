@@ -1,14 +1,7 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
-
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
-
-using Animancer.FSM;
 using UnityEngine;
 using Animancer;
-using UnityEngine.AI;
 using System.Collections.Generic;
 using CharacterNPC.v2;
-using TMPro;
 
 /************************************************************************************************************************/
 /*
@@ -54,10 +47,22 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override JobStateType JobType => 
-            JobStateType.Curl;
+        public override JobStateType JobType => JobStateType.Curl;
 
         /************************************************************************************************************************/
+
+        private void UpdateAvailableActions()
+        {
+            Character.Parameters.Jobs.AvailableActions = new List<ActionType>
+            {
+                ActionType.Idle,
+                ActionType.CurlSweep,
+                ActionType.Pose
+            };
+        }
+
+        /************************************************************************************************************************/
+
         bool isSweeping;
 
         protected virtual void OnDisable()
@@ -154,6 +159,9 @@ namespace CharacterNPCJobs
             // );
 
         }
+
+
+        
     }
         
 }

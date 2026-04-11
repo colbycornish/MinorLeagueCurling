@@ -11,6 +11,7 @@ namespace UICanvasManager.v3
         public CurlingUI.v3.SweeperExhaustionBar RightSweeperBar;
         public CurlingUI.v3.SweeperExhaustionBar LeftSweeperBar;
         public CurlingUI.v3.PowerMeter PowerMeter;
+        public GameObject LaunchCountDown;
         
     
         public override void OnEnter()
@@ -27,11 +28,20 @@ namespace UICanvasManager.v3
                 ShowScorebug();
                 ShowAimingAndPowerSelection();
                 ShowSweeperExhaustionDisplay();
+                HideLaunchStoneCountdownDisplay();
+            }
+            else if (newPhase == CurlingMatchPhase.CurlingLaunchStonePhase)
+            {
+                HideScorebug();
+                HideAimingAndPowerSelection();
+                ShowLaunchStoneCountdownDisplay();
+                ShowSweeperExhaustionDisplay();
             }
             else if (newPhase == CurlingMatchPhase.CurlingStoneSweepingPhase)
             {
                 ShowScorebug();
                 HideAimingAndPowerSelection();
+                HideLaunchStoneCountdownDisplay();
                 ShowSweeperExhaustionDisplay();
             }
             else if (newPhase == CurlingMatchPhase.CurlingNoSweepZone)
@@ -39,6 +49,7 @@ namespace UICanvasManager.v3
                 ShowScorebug();
                 HideAimingAndPowerSelection();
                 HideSweeperExhaustionDisplay();
+                HideLaunchStoneCountdownDisplay();
             }
         }
 
@@ -51,13 +62,8 @@ namespace UICanvasManager.v3
 
         /************************************************************************************************************************/
 
-        public void ShowScorebug(){
-            DisplayScorebug(show: true);
-        }
-
-        public void HideScorebug(){
-            DisplayScorebug(show: false);
-        }
+        public void ShowScorebug() => DisplayScorebug(show: true);
+        public void HideScorebug() => DisplayScorebug(show: false);
 
         private void DisplayScorebug(bool show = false){
             if (Scorebug != null && Scorebug.gameObject.activeInHierarchy != show) Scorebug.gameObject.SetActive(show);
@@ -65,13 +71,8 @@ namespace UICanvasManager.v3
 
         /************************************************************************************************************************/
 
-        public void ShowAimingAndPowerSelection(){
-            DisplayAimingAndPowerSelection(show: true);
-        }
-
-        public void HideAimingAndPowerSelection(){
-            DisplayAimingAndPowerSelection(show: false);
-        }
+        public void ShowAimingAndPowerSelection() => DisplayAimingAndPowerSelection(show: true);
+        public void HideAimingAndPowerSelection() => DisplayAimingAndPowerSelection(show: false);
 
         private void DisplayAimingAndPowerSelection(bool show = false){
             if (Scorebug.gameObject.activeInHierarchy != show) Scorebug.gameObject.SetActive(show);
@@ -81,13 +82,8 @@ namespace UICanvasManager.v3
 
         /************************************************************************************************************************/
 
-        public void ShowSweeperExhaustionDisplay(){
-            DisplaySweeperExhaustionDisplay(show: true);
-        }
-
-        public void HideSweeperExhaustionDisplay(){
-            DisplaySweeperExhaustionDisplay(show: false);
-        }
+        public void ShowSweeperExhaustionDisplay() => DisplaySweeperExhaustionDisplay(show: true);
+        public void HideSweeperExhaustionDisplay() => DisplaySweeperExhaustionDisplay(show: false);
 
         private void DisplaySweeperExhaustionDisplay(bool show = false){
             LeftSweeperBar.controlsLeftSweeper = true;
@@ -100,6 +96,17 @@ namespace UICanvasManager.v3
                 LeftSweeperBar.InitializeDisplay();
                 RightSweeperBar.InitializeDisplay();
             }
+        }
+
+        /************************************************************************************************************************/
+
+        
+
+        public void ShowLaunchStoneCountdownDisplay() => DisplayLaunchStoneCountdownDisplay(show: true);
+        public void HideLaunchStoneCountdownDisplay() => DisplayLaunchStoneCountdownDisplay(show: false);
+
+        private void DisplayLaunchStoneCountdownDisplay (bool show = false){
+            if (LaunchCountDown != null && LaunchCountDown.gameObject.activeInHierarchy != show) LaunchCountDown.gameObject.SetActive(show);
         }
 
         /************************************************************************************************************************/

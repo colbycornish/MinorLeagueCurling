@@ -70,16 +70,16 @@ namespace CharacterNPC.v2
         private void UpdatePosture()
         {
             if (_CharacterChef.Parameters.Posture.CurrentPosture ==
-                CharacterParametersPosture.CharacterPostureState.Standing)
+                CharacterPostureState.Standing)
             {
                 _CharacterChef.Parameters.Posture.DesiredPosture =
-                    CharacterParametersPosture.CharacterPostureState.Crouching;
+                    CharacterPostureState.Crouching;
             }
             else if (_CharacterChef.Parameters.Posture.CurrentPosture ==
-                CharacterParametersPosture.CharacterPostureState.Crouching)
+                CharacterPostureState.Crouching)
             {
                 _CharacterChef.Parameters.Posture.DesiredPosture =
-                    CharacterParametersPosture.CharacterPostureState.Standing;
+                    CharacterPostureState.Standing;
             }
             
             

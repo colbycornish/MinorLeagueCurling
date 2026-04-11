@@ -63,8 +63,18 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override JobStateType JobType => 
-            JobStateType.Forage;
+        public override JobStateType JobType => JobStateType.Forage;
+
+        /************************************************************************************************************************/
+
+        private void UpdateAvailableActions()
+        {
+            Character.Parameters.Jobs.AvailableActions = new List<ActionType>
+            {
+                ActionType.Idle,
+                ActionType.Forage
+            };
+        }
 
         /************************************************************************************************************************/
 
@@ -185,6 +195,8 @@ namespace CharacterNPCJobs
             Character.Parameters.Movement.DistanceFromDestination = 50; //Character.NavAgent.remainingDistance;
             
         }
+
+        
     }
         
 }

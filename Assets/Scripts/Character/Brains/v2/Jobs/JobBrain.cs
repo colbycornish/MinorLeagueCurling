@@ -46,7 +46,7 @@ namespace CharacterNPCJobs
         [Header("Settings")]
         [SerializeField]
         [Seconds(Rule = Value.IsNotNegative)]
-        private float _AttackInputTimeOut = 0.5f;
+        // private float _AttackInputTimeOut = 0.5f;
 
         private StateMachine<JobState>.InputBuffer _InputBuffer;
 
@@ -65,7 +65,7 @@ namespace CharacterNPCJobs
             // UpdateMovement();
             // UpdateActions();
             UpdateJob();
-            UpdateJobManually();
+            // UpdateJobManually();
         }
 
         /************************************************************************************************************************/
@@ -242,7 +242,7 @@ namespace CharacterNPCJobs
         // TODO: fix to look at some relevant parameters
         private void UpdateMostDesiredJob()
         {
-            if (_Character.Parameters.Surroundings.IsEngagedInDialogueWithPlayer)
+            if (_Character.Parameters.Dialogue.IsEngagedInDialogueWithPlayer)
             {
                 _Character.Parameters.Jobs.DesiredJob = JobStateType.Talk;
                 return;

@@ -84,7 +84,6 @@ namespace CurlingManagersV3
         // private CurlingManagersV3.CurlingCameraController _CameraController;
         // public CurlingManagersV3.CurlingCameraController CameraController => _CameraController;
         public CurlingManagersV3.CurlingCameraController cameraController;
-        // public CurlingManagersV3.CurlingInputManager curlingInputManager;
 
         [SerializeField]
         private CurlingManagersV3.GameSetup _Setup;
@@ -189,41 +188,6 @@ namespace CurlingManagersV3
             }
         }
 
-
-        /************************************************************************************************************************/
-        /// <summary>
-        /// Turn Management
-        /// </summary>
-        public void HandleNextTurn()
-        {
-            HandleEndOfTurn();
-        }
-
-        public void HandleEndOfTurn()
-        {
-            // Called when a stone finishes moving, and is now resting in the target zone.
-            Scoring.CalculateScore();
-            SaveCurlingGameResults();
-
-            if (!TurnManager.IsThereAnotherTurnAfterThisOne())
-            {
-                EndCurrentCurlingGame();
-                gameEndManager.EndCurrentCurlingGame();
-            }
-            else
-            {
-                HandleStartNextTurn();
-                ChangePhase(CurlingMatchPhase.TurnSplash);
-            }
-        }
-
-        public void HandleStartNextTurn()
-        {
-            TurnManager.NextTurn();
-            Players.UpdateCurrentTeam();
-            Players.RepositionCharacters();
-        }
-
         /************************************************************************************************************************/
 
         /// <summary>
@@ -263,14 +227,13 @@ namespace CurlingManagersV3
             Debug.Log($"Confirmed Stone Selection: {Parameters.Stones.currentStone.name}");
             stoneManager.PlaceCurrentStoneInLaunchPosition();
             // change camera
-            Debug.Log("Switching to Stone Camera");
-            cameraController.SwitchToStoneCamera();
+            cameraController.SwitchToFollowStoneCamera();
             // aiming.Reset();
             Debug.Log("Resetting Aiming and Sweeping Systems for New Turn");
             Aiming.Reset();
-
-            Debug.Log("Resetting Sweeper Exhaustion Bars");
             Sweeping.ResetSweeperExhaustionBars();
+
+            Players.RepositionCharactersForCurling();
 
             _Players.UpdateSweeperStoneTracking(
                 team: Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
@@ -314,11 +277,48 @@ namespace CurlingManagersV3
         // }
         /************************************************************************************************************************/
 
+        
+        /// <summary>
+        /// Turn Management
+        /// </summary>
+        public void HandleNextTurn()
+        {
+            HandleEndOfTurn();
+        }
+
+        public void HandleEndOfTurn()
+        {
+            // Called when a stone finishes moving, and is now resting in the target zone.
+            Scoring.CalculateScore();
+            SaveCurlingGameResults();
+
+            if (!TurnManager.IsThereAnotherTurnAfterThisOne())
+            {
+                EndCurrentCurlingGame();
+                gameEndManager.EndCurrentCurlingGame();
+            }
+            else
+            {
+                HandleStartNextTurn();
+                ChangePhase(CurlingMatchPhase.TurnSplash);
+            }
+        }
+
+        public void HandleStartNextTurn()
+        {
+            TurnManager.NextTurn();
+            TurnManager.UpdateCurrentTeam();
+            // Players.RepositionCharactersForCurling();
+        }
+
+        /************************************************************************************************************************/
+
         /// <summary>
         /// End Game
         /// </summary>
         public void EndCurrentCurlingGame()
         {
+            ChangePhase(CurlingMatchPhase.FinalResults);
             // scoring.CalculateScore();
             // // players.UpdateScore(scoring.GetScore());
             // CurlingMatchPhaseManager._instance.SetPhase(CurlingMatchPhase.FinalResults);

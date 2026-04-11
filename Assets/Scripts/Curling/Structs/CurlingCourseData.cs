@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using CurlingObjects;
 using UnityEngine.Playables;
+using Unity.Cinemachine;
 
 public class CurlingCourseData : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class CurlingCourseData : MonoBehaviour
     [Header("Stone Locations")]
     public List<Transform> stonesSpawnLocationsTeamHome = new List<Transform>();
     public List<Transform> stonesSpawnLocationsTeamAway = new List<Transform>();
+    public Transform stoneBenchTeamHome;
+    public Transform stoneBenchTeamAway;
 
     [Header("Objects to hide")]
     public GameObject objectsToHideIfCurling;
@@ -37,6 +40,13 @@ public class CurlingCourseData : MonoBehaviour
 
     [Header("Post Game Spawn")]
     public Transform afterGameSpawnLocation;
+
+    [Header("Cameras")]
+    public CinemachineCamera ccDollyInTeamHome;
+    public CinemachineCamera ccDollyInTeamAway;
+    public CinemachineCamera ccOverheadCourseCamera;
+    // public CinemachineCamera ccOverheadCourseCamera;
+
 
     [Header("Cinematics")]
     public PlayableDirector courseFullTimeline;

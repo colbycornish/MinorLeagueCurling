@@ -705,7 +705,6 @@ MonoBehaviour:
   - {fileID: 34077097}
   - {fileID: 34077100}
   - {fileID: 34077099}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &34077107
 Transform:
   m_ObjectHideFlags: 0
@@ -3193,6 +3192,21 @@ MonoBehaviour:
   _Eat: {fileID: 197364082}
   _Sweep: {fileID: 197364077}
   _Move: {fileID: 197364085}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 197364073}
+  - {fileID: 197364085}
+  - {fileID: 197364084}
+  - {fileID: 197364083}
+  - {fileID: 197364082}
+  - {fileID: 197364081}
+  - {fileID: 197364080}
+  - {fileID: 197364079}
+  - {fileID: 197364077}
+  - {fileID: 197364076}
+  - {fileID: 197364078}
+  - {fileID: 197364075}
+  - {fileID: 197364074}
+  - {fileID: 197364088}
   _Cook: {fileID: 197364078}
   _Dance: {fileID: 197364075}
   _Forage: {fileID: 197364074}
@@ -4184,6 +4198,21 @@ MonoBehaviour:
   _Eat: {fileID: 216152387}
   _Sweep: {fileID: 216152383}
   _Move: {fileID: 216152390}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 216152377}
+  - {fileID: 216152390}
+  - {fileID: 216152389}
+  - {fileID: 216152388}
+  - {fileID: 216152387}
+  - {fileID: 216152386}
+  - {fileID: 216152385}
+  - {fileID: 216152384}
+  - {fileID: 216152383}
+  - {fileID: 216152382}
+  - {fileID: 216152381}
+  - {fileID: 216152380}
+  - {fileID: 216152379}
+  - {fileID: 216152378}
   _Cook: {fileID: 216152381}
   _Dance: {fileID: 216152380}
   _Forage: {fileID: 216152379}
@@ -5798,7 +5827,6 @@ MonoBehaviour:
   - {fileID: 286908112}
   - {fileID: 286908115}
   - {fileID: 286908114}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &286908122
 Transform:
   m_ObjectHideFlags: 0
@@ -6788,6 +6816,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 1941874105}
     _DefaultState: {fileID: 1941874105}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -6805,6 +6834,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -6822,6 +6853,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -6849,7 +6882,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 201969826}
 --- !u!195 &321753561
 NavMeshAgent:
@@ -8462,6 +8494,21 @@ MonoBehaviour:
   _Eat: {fileID: 397221039}
   _Sweep: {fileID: 397221035}
   _Move: {fileID: 397221042}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 397221029}
+  - {fileID: 397221042}
+  - {fileID: 397221041}
+  - {fileID: 397221040}
+  - {fileID: 397221039}
+  - {fileID: 397221038}
+  - {fileID: 397221037}
+  - {fileID: 397221036}
+  - {fileID: 397221035}
+  - {fileID: 397221034}
+  - {fileID: 397221033}
+  - {fileID: 397221032}
+  - {fileID: 397221031}
+  - {fileID: 397221030}
   _Cook: {fileID: 397221033}
   _Dance: {fileID: 397221032}
   _Forage: {fileID: 397221031}
@@ -11606,6 +11653,21 @@ MonoBehaviour:
   _Eat: {fileID: 471610339}
   _Sweep: {fileID: 471610335}
   _Move: {fileID: 471610342}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 471610329}
+  - {fileID: 471610342}
+  - {fileID: 471610341}
+  - {fileID: 471610340}
+  - {fileID: 471610339}
+  - {fileID: 471610338}
+  - {fileID: 471610337}
+  - {fileID: 471610336}
+  - {fileID: 471610335}
+  - {fileID: 471610334}
+  - {fileID: 471610333}
+  - {fileID: 471610332}
+  - {fileID: 471610331}
+  - {fileID: 471610330}
   _Cook: {fileID: 471610333}
   _Dance: {fileID: 471610332}
   _Forage: {fileID: 471610331}
@@ -17743,6 +17805,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 716452089}
     _DefaultState: {fileID: 716452089}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -17760,6 +17823,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -17777,6 +17842,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -17804,7 +17871,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 168514265}
 --- !u!195 &554435564
 NavMeshAgent:
@@ -19399,7 +19465,6 @@ MonoBehaviour:
   - {fileID: 617916062}
   - {fileID: 617916065}
   - {fileID: 617916064}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &617916072
 Transform:
   m_ObjectHideFlags: 0
@@ -20744,7 +20809,6 @@ MonoBehaviour:
   - {fileID: 716452089}
   - {fileID: 716452092}
   - {fileID: 716452091}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &716452099
 Transform:
   m_ObjectHideFlags: 0
@@ -22733,6 +22797,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 2140904644}
     _DefaultState: {fileID: 2140904644}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -22750,6 +22815,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -22767,6 +22834,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -22794,7 +22863,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 699768151}
 --- !u!195 &773543681
 NavMeshAgent:
@@ -28989,6 +29057,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 1834714884}
     _DefaultState: {fileID: 1834714884}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 1
       _IsOnIce: 1
@@ -29006,6 +29075,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -29023,6 +29094,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -29050,7 +29123,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 1835540034}
 --- !u!195 &1060235769
 NavMeshAgent:
@@ -30490,7 +30562,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 13.40833, y: 13.40833, z: 13.40833}
+  m_LocalScale: {x: 8.652673, y: 8.652673, z: 8.652673}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1305011322}
@@ -31635,6 +31707,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 286908112}
     _DefaultState: {fileID: 286908112}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -31652,6 +31725,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -31669,6 +31744,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -31696,7 +31773,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 204410252}
 --- !u!195 &1215604601
 NavMeshAgent:
@@ -35941,6 +36017,21 @@ MonoBehaviour:
   _Eat: {fileID: 1426717021}
   _Sweep: {fileID: 1426717017}
   _Move: {fileID: 1426717024}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 1426717011}
+  - {fileID: 1426717024}
+  - {fileID: 1426717023}
+  - {fileID: 1426717022}
+  - {fileID: 1426717021}
+  - {fileID: 1426717020}
+  - {fileID: 1426717019}
+  - {fileID: 1426717018}
+  - {fileID: 1426717017}
+  - {fileID: 1426717016}
+  - {fileID: 1426717015}
+  - {fileID: 1426717014}
+  - {fileID: 1426717013}
+  - {fileID: 1426717012}
   _Cook: {fileID: 1426717015}
   _Dance: {fileID: 1426717014}
   _Forage: {fileID: 1426717013}
@@ -37522,6 +37613,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 617916062}
     _DefaultState: {fileID: 617916062}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -37539,6 +37631,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -37556,6 +37650,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -37583,7 +37679,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 1250966523}
 --- !u!195 &1511352101
 NavMeshAgent:
@@ -39314,6 +39409,21 @@ MonoBehaviour:
   _Eat: {fileID: 1561701650}
   _Sweep: {fileID: 1561701646}
   _Move: {fileID: 1561701653}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 1561701640}
+  - {fileID: 1561701653}
+  - {fileID: 1561701652}
+  - {fileID: 1561701651}
+  - {fileID: 1561701650}
+  - {fileID: 1561701649}
+  - {fileID: 1561701648}
+  - {fileID: 1561701647}
+  - {fileID: 1561701646}
+  - {fileID: 1561701645}
+  - {fileID: 1561701644}
+  - {fileID: 1561701643}
+  - {fileID: 1561701642}
+  - {fileID: 1561701641}
   _Cook: {fileID: 1561701644}
   _Dance: {fileID: 1561701643}
   _Forage: {fileID: 1561701642}
@@ -43575,7 +43685,7 @@ Transform:
   m_GameObject: {fileID: 1702002797}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0000000037252899, y: -0, z: -0.0000000074505797, w: 1}
-  m_LocalPosition: {x: 152.85759, y: 4.1382704, z: -12.328691}
+  m_LocalPosition: {x: 159.65758, y: 2.2244143, z: -0.024703309}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45413,6 +45523,21 @@ MonoBehaviour:
   _Eat: {fileID: 1810267415}
   _Sweep: {fileID: 1810267411}
   _Move: {fileID: 1810267418}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 1810267405}
+  - {fileID: 1810267418}
+  - {fileID: 1810267417}
+  - {fileID: 1810267416}
+  - {fileID: 1810267415}
+  - {fileID: 1810267414}
+  - {fileID: 1810267413}
+  - {fileID: 1810267412}
+  - {fileID: 1810267411}
+  - {fileID: 1810267410}
+  - {fileID: 1810267409}
+  - {fileID: 1810267408}
+  - {fileID: 1810267407}
+  - {fileID: 1810267406}
   _Cook: {fileID: 1810267409}
   _Dance: {fileID: 1810267408}
   _Forage: {fileID: 1810267407}
@@ -50853,7 +50978,6 @@ MonoBehaviour:
   - {fileID: 1834714884}
   - {fileID: 1834714887}
   - {fileID: 1834714886}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &1834714894
 Transform:
   m_ObjectHideFlags: 0
@@ -51121,6 +51245,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 34077097}
     _DefaultState: {fileID: 34077097}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -51138,6 +51263,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -51155,6 +51282,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -51182,7 +51311,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 1921654636}
 --- !u!195 &1852799497
 NavMeshAgent:
@@ -53184,7 +53312,6 @@ MonoBehaviour:
   - {fileID: 1910319055}
   - {fileID: 1910319058}
   - {fileID: 1910319057}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &1910319065
 Transform:
   m_ObjectHideFlags: 0
@@ -53984,7 +54111,6 @@ MonoBehaviour:
   - {fileID: 1941874105}
   - {fileID: 1941874108}
   - {fileID: 1941874107}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &1941874115
 Transform:
   m_ObjectHideFlags: 0
@@ -54098,6 +54224,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 1910319055}
     _DefaultState: {fileID: 1910319055}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 2
       _IsOnIce: 1
@@ -54115,6 +54242,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -54132,6 +54261,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -54159,7 +54290,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 810116837}
 --- !u!195 &1948815569
 NavMeshAgent:
@@ -55150,39 +55280,6 @@ Transform:
   - {fileID: 1921528837}
   m_Father: {fileID: 1881851560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1985285760 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4769250225177109581, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-  m_PrefabInstance: {fileID: 1265611252077080397}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d4ccc3710b848aba05676a9cd3debe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.CharacterMovement
---- !u!114 &1985285761 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4626832828696113238, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-  m_PrefabInstance: {fileID: 1265611252077080397}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23189688f51749d6a6b57a137a44bea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.LayeredAnimationManager
---- !u!114 &1985285763 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1432802622698511274, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-  m_PrefabInstance: {fileID: 1265611252077080397}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Kybernetik.Animancer::Animancer.AnimancerComponent
 --- !u!1 &1986069353
 GameObject:
   m_ObjectHideFlags: 0
@@ -61722,6 +61819,21 @@ MonoBehaviour:
   _Eat: {fileID: 2092663960}
   _Sweep: {fileID: 2092663956}
   _Move: {fileID: 2092663963}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 2092663950}
+  - {fileID: 2092663963}
+  - {fileID: 2092663962}
+  - {fileID: 2092663961}
+  - {fileID: 2092663960}
+  - {fileID: 2092663959}
+  - {fileID: 2092663958}
+  - {fileID: 2092663957}
+  - {fileID: 2092663956}
+  - {fileID: 2092663955}
+  - {fileID: 2092663954}
+  - {fileID: 2092663953}
+  - {fileID: 2092663952}
+  - {fileID: 2092663951}
   _Cook: {fileID: 2092663954}
   _Dance: {fileID: 2092663953}
   _Forage: {fileID: 2092663952}
@@ -64221,7 +64333,6 @@ MonoBehaviour:
   - {fileID: 2140904644}
   - {fileID: 2140904652}
   - {fileID: 2140904653}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &2140904651
 Transform:
   m_ObjectHideFlags: 0
@@ -65142,14 +65253,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 4260057109749184088, guid: 522ff53e268944da68874f574483a53b, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 4260057109749184088, guid: 522ff53e268944da68874f574483a53b, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4524504161149629261, guid: 522ff53e268944da68874f574483a53b, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -65229,14 +65332,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 1185073631169867250, guid: eca3960c32bbc48cb829200b50d80cec, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185073631169867250, guid: eca3960c32bbc48cb829200b50d80cec, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1475741481512094285, guid: eca3960c32bbc48cb829200b50d80cec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -65417,14 +65512,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 598874930264056505, guid: 9e042b2355fb44920b05c77b2e9800a0, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 598874930264056505, guid: 9e042b2355fb44920b05c77b2e9800a0, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1805211171061356008, guid: 9e042b2355fb44920b05c77b2e9800a0, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -66162,14 +66249,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 6294645368440670299, guid: 1befdf139cbf14f4db595a45062978fe, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6294645368440670299, guid: 1befdf139cbf14f4db595a45062978fe, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6987942909548046318, guid: 1befdf139cbf14f4db595a45062978fe, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -67008,14 +67087,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Villager
       objectReference: {fileID: 0}
-    - target: {fileID: 4837112041741840342, guid: be2806099bf564681b73d32b8b3f9b3a, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 4837112041741840342, guid: be2806099bf564681b73d32b8b3f9b3a, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7746708540037478025, guid: be2806099bf564681b73d32b8b3f9b3a, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -67237,14 +67308,6 @@ PrefabInstance:
       propertyPath: _Character
       value: 
       objectReference: {fileID: 5364605051885884993}
-    - target: {fileID: 7157609307045561208, guid: 2d186c372b62043a88f1e93edb0d73d9, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7157609307045561208, guid: 2d186c372b62043a88f1e93edb0d73d9, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -67290,14 +67353,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 7226185324760695206, guid: 06619b0c2113148c59d2917c04598e3f, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226185324760695206, guid: 06619b0c2113148c59d2917c04598e3f, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8395339747271608702, guid: 06619b0c2113148c59d2917c04598e3f, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -67454,14 +67509,6 @@ PrefabInstance:
     - target: {fileID: 7619826733432745787, guid: e0c8ffd28d0eb429e9475031d424d315, type: 3}
       propertyPath: m_Name
       value: Character_Vlad_Vladerson
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175394833352732691, guid: e0c8ffd28d0eb429e9475031d424d315, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175394833352732691, guid: e0c8ffd28d0eb429e9475031d424d315, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8478096884678350651, guid: e0c8ffd28d0eb429e9475031d424d315, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
@@ -68820,14 +68867,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 4149365445187562676, guid: 7f5b15fdc3cf646b9b4f03f66230c351, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 4149365445187562676, guid: 7f5b15fdc3cf646b9b4f03f66230c351, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6264807124753282497, guid: 7f5b15fdc3cf646b9b4f03f66230c351, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -69272,14 +69311,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8831655418438479135, guid: ace4426210e5b41079fa125c874f2b34, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8831655418438479135, guid: ace4426210e5b41079fa125c874f2b34, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -69653,26 +69684,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 4707134061546393748, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-      propertyPath: _Movement
-      value: 
-      objectReference: {fileID: 1985285760}
-    - target: {fileID: 4707134061546393748, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-      propertyPath: _Animancer
-      value: 
-      objectReference: {fileID: 1985285763}
-    - target: {fileID: 4707134061546393748, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-      propertyPath: _AnimationManager
-      value: 
-      objectReference: {fileID: 1985285761}
-    - target: {fileID: 6983505314574864492, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6983505314574864492, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7582854647567731853, guid: c167ec19e3d7a4c35ab4a58f8d97f35d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -70612,14 +70623,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_TayKahStab
       objectReference: {fileID: 0}
-    - target: {fileID: 4767084391783842956, guid: c0b6c694ca4bc4b23a43f188ad66a4d9, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 4767084391783842956, guid: c0b6c694ca4bc4b23a43f188ad66a4d9, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -70690,14 +70693,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 2768479565215510174, guid: 178c2d0f016314900b81d4b92b61e782, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 2768479565215510174, guid: 178c2d0f016314900b81d4b92b61e782, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5026751891464731005, guid: 178c2d0f016314900b81d4b92b61e782, type: 3}
       propertyPath: m_Name
       value: Character_RockyRock
@@ -70970,14 +70965,6 @@ PrefabInstance:
     - target: {fileID: 429225963086801081, guid: b1e11d38dcd864ebd95d54225599a957, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2142131062093317761, guid: b1e11d38dcd864ebd95d54225599a957, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 2142131062093317761, guid: b1e11d38dcd864ebd95d54225599a957, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2716388782032308548, guid: b1e11d38dcd864ebd95d54225599a957, type: 3}
       propertyPath: m_Name
@@ -73104,14 +73091,6 @@ PrefabInstance:
       propertyPath: _Character
       value: 
       objectReference: {fileID: 5364605051885884993}
-    - target: {fileID: 8760488251590763291, guid: feae31c035ce545dfb85f29d9e0068a5, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8760488251590763291, guid: feae31c035ce545dfb85f29d9e0068a5, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -73440,14 +73419,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 20292936219075486, guid: 6c13e5e4ec54b48aaa31347680e4edd2, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 20292936219075486, guid: 6c13e5e4ec54b48aaa31347680e4edd2, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1682462622518350281, guid: 6c13e5e4ec54b48aaa31347680e4edd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -73854,14 +73825,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 7532329877502177865, guid: d535a6dbc128e4f64999903bfc5109ad, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7532329877502177865, guid: d535a6dbc128e4f64999903bfc5109ad, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7922956031912051180, guid: d535a6dbc128e4f64999903bfc5109ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -73996,14 +73959,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 406206952137477172, guid: 0088685c822e44a338594a971947a82f, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 406206952137477172, guid: 0088685c822e44a338594a971947a82f, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 437500943570736449, guid: 0088685c822e44a338594a971947a82f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -74519,14 +74474,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 612791413678670967, guid: 1c8668ba8a57e4558aa93dd9192c2330, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 612791413678670967, guid: 1c8668ba8a57e4558aa93dd9192c2330, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2540494439113736376, guid: 1c8668ba8a57e4558aa93dd9192c2330, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -75134,14 +75081,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 2613798973541431460, guid: 4d0afe86e037d4f11a58f83625ffa8c3, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 2613798973541431460, guid: 4d0afe86e037d4f11a58f83625ffa8c3, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7019950084230747745, guid: 4d0afe86e037d4f11a58f83625ffa8c3, type: 3}
       propertyPath: m_Name
       value: Character_RavenRock
@@ -76002,14 +75941,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 7849711388830312409, guid: 43c167dbba1b04440811c9d324c134e8, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849711388830312409, guid: 43c167dbba1b04440811c9d324c134e8, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -76925,14 +76856,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 9109921431109104098, guid: cbc0d6cff813f4bdabdebb1e5f7046a9, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109921431109104098, guid: cbc0d6cff813f4bdabdebb1e5f7046a9, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -77922,6 +77845,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 841045564372078303}
     _DefaultState: {fileID: 841045564372078303}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -77939,6 +77863,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -77956,6 +77882,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 0
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -77983,7 +77911,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 8212220868762595005}
 --- !u!1 &3720676231668163384
 GameObject:
@@ -78177,14 +78104,6 @@ PrefabInstance:
     - target: {fileID: 1312852622207852725, guid: fcb01a8541d5f4fcaaac4d65f7ee40d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1772370688415522187, guid: fcb01a8541d5f4fcaaac4d65f7ee40d2, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 1772370688415522187, guid: fcb01a8541d5f4fcaaac4d65f7ee40d2, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5474271477338522006, guid: fcb01a8541d5f4fcaaac4d65f7ee40d2, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
@@ -78755,6 +78674,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 3126882187076552639}
     _DefaultState: {fileID: 3126882187076552639}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -78772,6 +78692,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -78789,6 +78711,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 0
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -78816,7 +78740,6 @@ MonoBehaviour:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 0}
 --- !u!4 &4009917590089083768
 Transform:
@@ -79012,14 +78935,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 893485092207397586, guid: acd9ea95abf144917af30de5045fe9ab, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 893485092207397586, guid: acd9ea95abf144917af30de5045fe9ab, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2709254644461415611, guid: acd9ea95abf144917af30de5045fe9ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -79526,14 +79441,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 3142375555731786657, guid: 289ec39a79c6549c8a0a7b83c9ea0633, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3142375555731786657, guid: 289ec39a79c6549c8a0a7b83c9ea0633, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5786304818873193402, guid: 289ec39a79c6549c8a0a7b83c9ea0633, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -79898,6 +79805,15 @@ MonoBehaviour:
   _Eat: {fileID: 1825799697134465022}
   _Sweep: {fileID: 0}
   _Move: {fileID: 5687117802513589055}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 4715831885642689416}
+  - {fileID: 5687117802513589055}
+  - {fileID: 4156292117832512847}
+  - {fileID: 4602834519367511731}
+  - {fileID: 1825799697134465022}
+  - {fileID: 509479426521676801}
+  - {fileID: 2008548542959618201}
+  - {fileID: 5687117802513589056}
   _Cook: {fileID: 0}
   _Dance: {fileID: 0}
   _Forage: {fileID: 0}
@@ -80290,14 +80206,6 @@ PrefabInstance:
     - target: {fileID: 4021243426759172570, guid: 472515fcd21d843b782f60f68cb8d06b, type: 3}
       propertyPath: m_Name
       value: Character_Dock_Worker_3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5835796419792821766, guid: 472515fcd21d843b782f60f68cb8d06b, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 5835796419792821766, guid: 472515fcd21d843b782f60f68cb8d06b, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -81831,7 +81739,6 @@ MonoBehaviour:
   - {fileID: 8922826243112691053}
   - {fileID: 3676139095584236360}
   - {fileID: 9154606711863550750}
-  _AttackInputTimeOut: 0.5
 --- !u!4 &4996720186825048822
 Transform:
   m_ObjectHideFlags: 0
@@ -82110,14 +82017,6 @@ PrefabInstance:
     - target: {fileID: 2572830824725490994, guid: 02baeac5fc88b440f8050fb67e86ec6c, type: 3}
       propertyPath: m_Name
       value: Character_Dock_Worker_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3262531923483538597, guid: 02baeac5fc88b440f8050fb67e86ec6c, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3262531923483538597, guid: 02baeac5fc88b440f8050fb67e86ec6c, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8740364472725637239, guid: 02baeac5fc88b440f8050fb67e86ec6c, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
@@ -82489,7 +82388,6 @@ MonoBehaviour:
   _Forage: {fileID: 0}
   _Mailman: {fileID: 0}
   _ListOfJobStates: []
-  _AttackInputTimeOut: 0.5
 --- !u!4 &5212829607059681746
 Transform:
   m_ObjectHideFlags: 0
@@ -83357,14 +83255,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5230098564079533485, guid: 7f125e6b19d984bcf8bfb5d2417e137b, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 5230098564079533485, guid: 7f125e6b19d984bcf8bfb5d2417e137b, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5458144920614062167, guid: 7f125e6b19d984bcf8bfb5d2417e137b, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -83519,14 +83409,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 6238542998053340365, guid: a3b94ecdbc0c2478f95bcff4296eac04, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6238542998053340365, guid: a3b94ecdbc0c2478f95bcff4296eac04, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7341495631488434435, guid: a3b94ecdbc0c2478f95bcff4296eac04, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -84550,14 +84432,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1996181008}
     m_Modifications:
-    - target: {fileID: 1693855253443076198, guid: 2e9b8074050534257a0e77a833be0ab7, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 1693855253443076198, guid: 2e9b8074050534257a0e77a833be0ab7, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3409478826472386928, guid: 2e9b8074050534257a0e77a833be0ab7, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -84915,14 +84789,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Dave_The_Diver
       objectReference: {fileID: 0}
-    - target: {fileID: 6195253871238574047, guid: b4aa945e7c3a84dac89743e6f1091e01, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6195253871238574047, guid: b4aa945e7c3a84dac89743e6f1091e01, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7422468750783221394, guid: b4aa945e7c3a84dac89743e6f1091e01, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -85000,14 +84866,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 1667739983802217464, guid: 7b4147b7f7c804e2bac714d227f3bd41, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 1667739983802217464, guid: 7b4147b7f7c804e2bac714d227f3bd41, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2616813853076630725, guid: 7b4147b7f7c804e2bac714d227f3bd41, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -86201,14 +86059,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 3404127617207316870, guid: fc33ba942de244f86844e3df47cff688, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3404127617207316870, guid: fc33ba942de244f86844e3df47cff688, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8087653127941401729, guid: fc33ba942de244f86844e3df47cff688, type: 3}
       propertyPath: _Character
       value: 
@@ -87529,14 +87379,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 4517465777134330326, guid: 93a44d81a8756417399e4552d39a2f9a, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517465777134330326, guid: 93a44d81a8756417399e4552d39a2f9a, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6155312331647715278, guid: 93a44d81a8756417399e4552d39a2f9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -88059,14 +87901,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
-    - target: {fileID: 8580018336097060119, guid: 59e356f411cba46489acb78384d48858, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8580018336097060119, guid: 59e356f411cba46489acb78384d48858, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8711730413319818012, guid: 59e356f411cba46489acb78384d48858, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -88429,14 +88263,6 @@ PrefabInstance:
       propertyPath: _Character
       value: 
       objectReference: {fileID: 5364605051885884993}
-    - target: {fileID: 3881798712743500491, guid: 5995479f17e1d42dc9e209fe3b7ad689, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3881798712743500491, guid: 5995479f17e1d42dc9e209fe3b7ad689, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3970868132487479349, guid: 5995479f17e1d42dc9e209fe3b7ad689, type: 3}
       propertyPath: m_Name
       value: Character_Bootstrap_Barbie
@@ -89244,14 +89070,6 @@ PrefabInstance:
     - target: {fileID: 3312816008669152808, guid: cbdd93f2d74304e9495ffc3a1f84f51c, type: 3}
       propertyPath: m_Name
       value: Character_Skelestone
-      objectReference: {fileID: 0}
-    - target: {fileID: 6502106244203887285, guid: cbdd93f2d74304e9495ffc3a1f84f51c, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6502106244203887285, guid: cbdd93f2d74304e9495ffc3a1f84f51c, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -91776,14 +91594,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_NPC_Doctor_001
       objectReference: {fileID: 0}
-    - target: {fileID: 6200302463474634026, guid: 8249187eb021b4181a630166b86fc7cf, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6200302463474634026, guid: 8249187eb021b4181a630166b86fc7cf, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7204591063879034793, guid: 8249187eb021b4181a630166b86fc7cf, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -92046,6 +91856,19 @@ MonoBehaviour:
   _Eat: {fileID: 3411684719641251998}
   _Sweep: {fileID: 819732865591625265}
   _Move: {fileID: 5909490166460566597}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 8320881794186420413}
+  - {fileID: 5909490166460566597}
+  - {fileID: 1362065570654286477}
+  - {fileID: 8587658545865603961}
+  - {fileID: 3411684719641251998}
+  - {fileID: 1730203385866436106}
+  - {fileID: 2513244097333361565}
+  - {fileID: 7762434003748736325}
+  - {fileID: 9091312637804787497}
+  - {fileID: 819732865591625265}
+  - {fileID: 2589272489188403704}
+  - {fileID: 8798961859179661634}
   _Cook: {fileID: 9091312637804787497}
   _Dance: {fileID: 8798961859179661634}
   _Forage: {fileID: 0}
@@ -92210,14 +92033,6 @@ PrefabInstance:
     - target: {fileID: 244328748379133958, guid: 12a8af5eb72a040c999054ffeb7d4ffb, type: 3}
       propertyPath: m_Name
       value: Character_Broomy_The_Kid
-      objectReference: {fileID: 0}
-    - target: {fileID: 325090523665306912, guid: 12a8af5eb72a040c999054ffeb7d4ffb, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 325090523665306912, guid: 12a8af5eb72a040c999054ffeb7d4ffb, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1143409131590145968, guid: 12a8af5eb72a040c999054ffeb7d4ffb, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
@@ -92410,14 +92225,6 @@ PrefabInstance:
     - target: {fileID: 7250219293829434835, guid: df4140b8695c9493db80f7f583dae1c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886754901971579362, guid: df4140b8695c9493db80f7f583dae1c5, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886754901971579362, guid: df4140b8695c9493db80f7f583dae1c5, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -93121,14 +92928,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7473569749446936506, guid: 88b738fb1018d49558db923b79b4b3c5, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7473569749446936506, guid: 88b738fb1018d49558db923b79b4b3c5, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8223262879134600256, guid: 88b738fb1018d49558db923b79b4b3c5, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -93391,14 +93190,6 @@ PrefabInstance:
       propertyPath: _Character
       value: 
       objectReference: {fileID: 5364605051885884993}
-    - target: {fileID: 7889014207950594102, guid: 497325b4f345641feadc11a7456b493e, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7889014207950594102, guid: 497325b4f345641feadc11a7456b493e, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8543439631390067544, guid: 497325b4f345641feadc11a7456b493e, type: 3}
       propertyPath: '_PatrolPoints.Array.data[0]'
       value: 
@@ -93656,6 +93447,14 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 271391142}
+    - target: {fileID: 4582991616482917501, guid: 82ea4d35bb2254699a1978f5a89659f8, type: 3}
+      propertyPath: _ListOfAvailableCharacterStates.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582991616482917501, guid: 82ea4d35bb2254699a1978f5a89659f8, type: 3}
+      propertyPath: '_ListOfAvailableCharacterStates.Array.data[12]'
+      value: 
+      objectReference: {fileID: 1701050409}
     - target: {fileID: 7027623047494047758, guid: 82ea4d35bb2254699a1978f5a89659f8, type: 3}
       propertyPath: _Parameters._Jobs._DesiredJob
       value: 0
@@ -94443,14 +94242,6 @@ PrefabInstance:
       propertyPath: '_PatrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 2054072359}
-    - target: {fileID: 7920422849312753948, guid: 66b53fa691f37437891ba77029e3bf80, type: 3}
-      propertyPath: m_Mass
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920422849312753948, guid: 66b53fa691f37437891ba77029e3bf80, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

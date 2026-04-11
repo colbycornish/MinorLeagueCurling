@@ -93,16 +93,16 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""id"": ""4d0a2209-d651-4024-9839-e54bd6cd0363"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""ExMovement"",
                     ""type"": ""Value"",
                     ""id"": ""24fb6cb8-7d47-40a9-908a-27319a3388b9"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Sprint"",
+                    ""name"": ""ExSprint"",
                     ""type"": ""Button"",
                     ""id"": ""c037f7d8-a28e-4721-9ac2-f9752d7dba84"",
                     ""expectedControlType"": """",
@@ -111,16 +111,16 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""ExLooking"",
                     ""type"": ""Value"",
                     ""id"": ""8c7addd6-b1e4-4d51-8ba4-4403360a127e"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""ExInteract"",
                     ""type"": ""Button"",
                     ""id"": ""97990db6-6d8e-4687-9b8e-5a72235c0237"",
                     ""expectedControlType"": """",
@@ -137,7 +137,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""ScaleVector2(x=2,y=2)"",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -148,7 +148,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -159,7 +159,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -170,7 +170,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -181,7 +181,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -192,7 +192,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""ScaleVector2(x=3,y=3)"",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -203,7 +203,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -214,7 +214,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -225,7 +225,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -236,7 +236,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Movement"",
+                    ""action"": ""ExMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -246,8 +246,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Look"",
+                    ""groups"": "";Keyboard & Mouse;Touch;Keyboard&Mouse"",
+                    ""action"": ""ExLooking"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -258,7 +258,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""ExInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -269,7 +269,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": ""Press(behavior=2),Hold"",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Sprint"",
+                    ""action"": ""ExSprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -301,7 +301,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -310,7 +310,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
@@ -337,7 +337,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -355,6 +355,33 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fd51881-f77e-4a1e-9c34-fa2052f37f66"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DevOpenMainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""c288ed52-831e-4eaa-a8eb-12ba5b561652"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DevOpenCompanySplashScreens"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a713cf1-33a7-41d1-8f89-f73aaeae4d73"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -744,6 +771,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90ba2e9b-ec00-44ed-bfb0-645ce5cfe676"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2656b083-5c20-4509-bbaa-c7c0fa91241c"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""DevOpenMainMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""868a77a7-f7f9-461f-acf7-6ec21380371e"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""DevOpenCompanySplashScreens"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1561,10 +1621,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
 }");
         // Exploration
         m_Exploration = asset.FindActionMap("Exploration", throwIfNotFound: true);
-        m_Exploration_Movement = m_Exploration.FindAction("Movement", throwIfNotFound: true);
-        m_Exploration_Sprint = m_Exploration.FindAction("Sprint", throwIfNotFound: true);
-        m_Exploration_Look = m_Exploration.FindAction("Look", throwIfNotFound: true);
-        m_Exploration_Interact = m_Exploration.FindAction("Interact", throwIfNotFound: true);
+        m_Exploration_ExMovement = m_Exploration.FindAction("ExMovement", throwIfNotFound: true);
+        m_Exploration_ExSprint = m_Exploration.FindAction("ExSprint", throwIfNotFound: true);
+        m_Exploration_ExLooking = m_Exploration.FindAction("ExLooking", throwIfNotFound: true);
+        m_Exploration_ExInteract = m_Exploration.FindAction("ExInteract", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
@@ -1576,6 +1636,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_DevOpenMainMenu = m_Player.FindAction("DevOpenMainMenu", throwIfNotFound: true);
+        m_Player_DevOpenCompanySplashScreens = m_Player.FindAction("DevOpenCompanySplashScreens", throwIfNotFound: true);
         // Curling
         m_Curling = asset.FindActionMap("Curling", throwIfNotFound: true);
         m_Curling_AimThrow = m_Curling.FindAction("AimThrow", throwIfNotFound: true);
@@ -1683,10 +1746,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     // Exploration
     private readonly InputActionMap m_Exploration;
     private List<IExplorationActions> m_ExplorationActionsCallbackInterfaces = new List<IExplorationActions>();
-    private readonly InputAction m_Exploration_Movement;
-    private readonly InputAction m_Exploration_Sprint;
-    private readonly InputAction m_Exploration_Look;
-    private readonly InputAction m_Exploration_Interact;
+    private readonly InputAction m_Exploration_ExMovement;
+    private readonly InputAction m_Exploration_ExSprint;
+    private readonly InputAction m_Exploration_ExLooking;
+    private readonly InputAction m_Exploration_ExInteract;
     /// <summary>
     /// Provides access to input actions defined in input action map "Exploration".
     /// </summary>
@@ -1699,21 +1762,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public ExplorationActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Exploration/Movement".
+        /// Provides access to the underlying input action "Exploration/ExMovement".
         /// </summary>
-        public InputAction @Movement => m_Wrapper.m_Exploration_Movement;
+        public InputAction @ExMovement => m_Wrapper.m_Exploration_ExMovement;
         /// <summary>
-        /// Provides access to the underlying input action "Exploration/Sprint".
+        /// Provides access to the underlying input action "Exploration/ExSprint".
         /// </summary>
-        public InputAction @Sprint => m_Wrapper.m_Exploration_Sprint;
+        public InputAction @ExSprint => m_Wrapper.m_Exploration_ExSprint;
         /// <summary>
-        /// Provides access to the underlying input action "Exploration/Look".
+        /// Provides access to the underlying input action "Exploration/ExLooking".
         /// </summary>
-        public InputAction @Look => m_Wrapper.m_Exploration_Look;
+        public InputAction @ExLooking => m_Wrapper.m_Exploration_ExLooking;
         /// <summary>
-        /// Provides access to the underlying input action "Exploration/Interact".
+        /// Provides access to the underlying input action "Exploration/ExInteract".
         /// </summary>
-        public InputAction @Interact => m_Wrapper.m_Exploration_Interact;
+        public InputAction @ExInteract => m_Wrapper.m_Exploration_ExInteract;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1740,18 +1803,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_ExplorationActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_ExplorationActionsCallbackInterfaces.Add(instance);
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
-            @Sprint.started += instance.OnSprint;
-            @Sprint.performed += instance.OnSprint;
-            @Sprint.canceled += instance.OnSprint;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
+            @ExMovement.started += instance.OnExMovement;
+            @ExMovement.performed += instance.OnExMovement;
+            @ExMovement.canceled += instance.OnExMovement;
+            @ExSprint.started += instance.OnExSprint;
+            @ExSprint.performed += instance.OnExSprint;
+            @ExSprint.canceled += instance.OnExSprint;
+            @ExLooking.started += instance.OnExLooking;
+            @ExLooking.performed += instance.OnExLooking;
+            @ExLooking.canceled += instance.OnExLooking;
+            @ExInteract.started += instance.OnExInteract;
+            @ExInteract.performed += instance.OnExInteract;
+            @ExInteract.canceled += instance.OnExInteract;
         }
 
         /// <summary>
@@ -1763,18 +1826,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="ExplorationActions" />
         private void UnregisterCallbacks(IExplorationActions instance)
         {
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
-            @Sprint.started -= instance.OnSprint;
-            @Sprint.performed -= instance.OnSprint;
-            @Sprint.canceled -= instance.OnSprint;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
+            @ExMovement.started -= instance.OnExMovement;
+            @ExMovement.performed -= instance.OnExMovement;
+            @ExMovement.canceled -= instance.OnExMovement;
+            @ExSprint.started -= instance.OnExSprint;
+            @ExSprint.performed -= instance.OnExSprint;
+            @ExSprint.canceled -= instance.OnExSprint;
+            @ExLooking.started -= instance.OnExLooking;
+            @ExLooking.performed -= instance.OnExLooking;
+            @ExLooking.canceled -= instance.OnExLooking;
+            @ExInteract.started -= instance.OnExInteract;
+            @ExInteract.performed -= instance.OnExInteract;
+            @ExInteract.canceled -= instance.OnExInteract;
         }
 
         /// <summary>
@@ -1821,6 +1884,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_DevOpenMainMenu;
+    private readonly InputAction m_Player_DevOpenCompanySplashScreens;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1868,6 +1934,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DevOpenMainMenu".
+        /// </summary>
+        public InputAction @DevOpenMainMenu => m_Wrapper.m_Player_DevOpenMainMenu;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DevOpenCompanySplashScreens".
+        /// </summary>
+        public InputAction @DevOpenCompanySplashScreens => m_Wrapper.m_Player_DevOpenCompanySplashScreens;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1921,6 +1999,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @DevOpenMainMenu.started += instance.OnDevOpenMainMenu;
+            @DevOpenMainMenu.performed += instance.OnDevOpenMainMenu;
+            @DevOpenMainMenu.canceled += instance.OnDevOpenMainMenu;
+            @DevOpenCompanySplashScreens.started += instance.OnDevOpenCompanySplashScreens;
+            @DevOpenCompanySplashScreens.performed += instance.OnDevOpenCompanySplashScreens;
+            @DevOpenCompanySplashScreens.canceled += instance.OnDevOpenCompanySplashScreens;
         }
 
         /// <summary>
@@ -1959,6 +2046,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @DevOpenMainMenu.started -= instance.OnDevOpenMainMenu;
+            @DevOpenMainMenu.performed -= instance.OnDevOpenMainMenu;
+            @DevOpenMainMenu.canceled -= instance.OnDevOpenMainMenu;
+            @DevOpenCompanySplashScreens.started -= instance.OnDevOpenCompanySplashScreens;
+            @DevOpenCompanySplashScreens.performed -= instance.OnDevOpenCompanySplashScreens;
+            @DevOpenCompanySplashScreens.canceled -= instance.OnDevOpenCompanySplashScreens;
         }
 
         /// <summary>
@@ -2455,33 +2551,33 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     public interface IExplorationActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Movement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ExMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMovement(InputAction.CallbackContext context);
+        void OnExMovement(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ExSprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSprint(InputAction.CallbackContext context);
+        void OnExSprint(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Look" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ExLooking" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLook(InputAction.CallbackContext context);
+        void OnExLooking(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ExInteract" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnInteract(InputAction.CallbackContext context);
+        void OnExInteract(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
@@ -2553,6 +2649,27 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DevOpenMainMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDevOpenMainMenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DevOpenCompanySplashScreens" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDevOpenCompanySplashScreens(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Curling" which allows adding and removing callbacks.

@@ -102,43 +102,43 @@ namespace CharacterNPC.v2
             {
 
                 // Crouching
-                case CharacterParametersPosture.CharacterPostureState.Crouching: 
+                case CharacterPostureState.Crouching: 
                     Character.AnimationManager.PlayBase(
                         transition: _AnimationCrouching, 
                         canPlayActionFullBody: false
                     );
                     Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.Crouching;
+                        CharacterPostureState.Crouching;
                     break;
 
                 // Standing
-                case CharacterParametersPosture.CharacterPostureState.Standing: 
+                case CharacterPostureState.Standing: 
                     Character.AnimationManager.PlayBase(
                         transition: _AnimationWalking, 
                         canPlayActionFullBody: false
                     );
                     Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.Standing;
+                        CharacterPostureState.Standing;
                     break;
 
                 // Sitting
-                case CharacterParametersPosture.CharacterPostureState.Sitting: 
+                case CharacterPostureState.Sitting: 
                     Character.AnimationManager.PlayBase(
                         transition: _AnimationWalking, 
                         canPlayActionFullBody: false
                     );
                     Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.Sitting;
+                        CharacterPostureState.Sitting;
                     break;
                 
                 // LayingDown
-                case CharacterParametersPosture.CharacterPostureState.LayingDown: 
+                case CharacterPostureState.LayingDown: 
                     Character.AnimationManager.PlayBase(
                         transition: _AnimationWalking, 
                         canPlayActionFullBody: false
                     );
                     Character.Parameters.Posture.CurrentPosture = 
-                        CharacterParametersPosture.CharacterPostureState.LayingDown;
+                        CharacterPostureState.LayingDown;
                     break;
                 
                 default:

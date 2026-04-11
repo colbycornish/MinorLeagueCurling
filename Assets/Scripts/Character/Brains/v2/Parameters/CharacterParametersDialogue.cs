@@ -29,6 +29,7 @@ namespace CharacterNPC.v2
         private CharacterDialogueState _DesiredState;
         public ref CharacterDialogueState DesiredState => ref _DesiredState;
 
+        /************************************************************************************************************************/
 
         // Talking
         [SerializeField]
@@ -47,6 +48,18 @@ namespace CharacterNPC.v2
         [SerializeField]
         private bool _WantsToShout = false;
         public ref bool WantsToShout => ref _WantsToShout;
+
+        /************************************************************************************************************************/
+
+        [SerializeField]
+        private bool _IsEngagedInDialogueWithPlayer = false;
+        public ref bool IsEngagedInDialogueWithPlayer => ref _IsEngagedInDialogueWithPlayer;
+        
+        [SerializeField]
+        private bool _IsEngagedInDialogueWithOtherCharacters = false;
+        public ref bool IsEngagedInDialogueWithOtherCharacters => ref _IsEngagedInDialogueWithOtherCharacters;
+
+        /************************************************************************************************************************/
 
     }
 }

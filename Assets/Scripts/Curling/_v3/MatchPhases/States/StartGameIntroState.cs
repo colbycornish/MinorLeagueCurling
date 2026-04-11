@@ -21,7 +21,7 @@ namespace CurlingManagersV3.MatchPhaseStates
             
             skipCinematicsAction.performed += OnGoToNextPhase;
             skipCinematicsAction.Enable();
-            
+            MainCurlingManager.Players.RepositionCharactersForEpicTeamPose();
             OnEnter();
 
         }
@@ -33,15 +33,16 @@ namespace CurlingManagersV3.MatchPhaseStates
         }
 
         /************************************************************************************************************************/
+        protected virtual void DisableActions()
+        {
+            skipCinematicsAction.performed -= OnGoToNextPhase;
+            skipCinematicsAction.Disable();
+        }
 
         protected virtual void OnDisable()
         {
-            // Debug.Log("StartGameIntroState OnDisable: Removing SkipCinematicsAction listener and disabling action");
-            skipCinematicsAction.performed -= OnGoToNextPhase;
-            skipCinematicsAction.Disable();
-
+            DisableActions();
             director.stopped -= OnTimelineFinished;
-            
         }
 
         public override void OnExit()
@@ -64,8 +65,8 @@ namespace CurlingManagersV3.MatchPhaseStates
                 if (MainCurlingManager.cameraController.stoneCamera != null){
                     MainCurlingManager.cameraController.stoneCamera.enabled = false;
                 }
-                if (MainCurlingManager.cameraController.ccStoneCamera != null){
-                    MainCurlingManager.cameraController.ccStoneCamera.enabled = false;
+                if (MainCurlingManager.cameraController.ccFollowStoneCamera != null){
+                    MainCurlingManager.cameraController.ccFollowStoneCamera.enabled = false;
                 }
 
                 director.stopped += OnTimelineFinished;
@@ -80,20 +81,25 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         void OnTimelineFinished(PlayableDirector aDirector)
         {
-            // Debug.Log("StartGameIntroState OnTimelineFinished: Course intro timeline has finished playing");
-            aDirector.Pause();
             aDirector.Stop();
             Debug.Log("Timeline has finished!");
-            OnGoToNextPhase(obj: new InputAction.CallbackContext());
+            if (MainCurlingManager.StateMachine.CurrentState.StateMatchPhaseType == CurlingMatchPhase.StartGameIntro)
+            {
+                OnGoToNextPhase(new InputAction.CallbackContext());
+                // MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.TurnSplash);
+            }
+            
         }
 
         private void OnGoToNextPhase(InputAction.CallbackContext obj)
         {
             Debug.Log("Moving to Next Phase: Round Splash");
+            DisableActions();
             director.Stop();
+            // MainCurlingManager.Players.RepositionCharactersForCurling();
             if (MainCurlingManager.StateMachine.CurrentState.StateMatchPhaseType == CurlingMatchPhase.StartGameIntro)
             {
-                MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.RoundSplash);
+                MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.TurnSplash);
             }
         }
 

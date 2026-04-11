@@ -959,6 +959,19 @@ MonoBehaviour:
   _Eat: {fileID: 7989381381270396378}
   _Sweep: {fileID: 3542684462965373396}
   _Move: {fileID: 5994948968131657374}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 4641092469194244027}
+  - {fileID: 5994948968131657374}
+  - {fileID: 8049949552524344797}
+  - {fileID: 8342475248266747361}
+  - {fileID: 7989381381270396378}
+  - {fileID: 2725621436613220751}
+  - {fileID: 6965903153756868288}
+  - {fileID: 6074723392779432602}
+  - {fileID: 3542684462965373396}
+  - {fileID: 8983205205429676007}
+  - {fileID: 7997466354538587988}
+  - {fileID: 5180562212055180966}
   _Cook: {fileID: 7997466354538587988}
   _Dance: {fileID: 5180562212055180966}
   _Forage: {fileID: 0}
@@ -1043,6 +1056,38 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -1164,6 +1209,22 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 2b03cb0fb56e0405d85de199bb3f38f7, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 5753f440daef44333bd8375a20788822, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c56feba77b7414804b1fb0c39508179f, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:
@@ -2112,6 +2173,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 3747936762494490939}
     _DefaultState: {fileID: 3747936762494490939}
   _Parameters:
+    _CharacterDataSO: {fileID: 11400000, guid: 4cb2040dd726f4ed384420fd94d06921, type: 2}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -2129,6 +2191,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -2146,6 +2210,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -2165,15 +2231,14 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 00000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
-      _AvailableActions: 
+      _AvailableActions: 000000002000000024000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 4822360515913936030}
 --- !u!114 &172982422804094782
 MonoBehaviour:
@@ -2971,7 +3036,6 @@ MonoBehaviour:
   _Mailman: {fileID: 0}
   _ListOfJobStates:
   - {fileID: 4768979039774606236}
-  _AttackInputTimeOut: 0.5
 --- !u!114 &3747936762494490939
 MonoBehaviour:
   m_ObjectHideFlags: 0

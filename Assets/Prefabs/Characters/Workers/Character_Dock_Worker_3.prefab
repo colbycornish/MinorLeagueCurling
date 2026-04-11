@@ -795,7 +795,6 @@ MonoBehaviour:
   - {fileID: 3904867949150690755}
   - {fileID: 790365179573523903}
   - {fileID: 4081845756417114348}
-  _AttackInputTimeOut: 0.5
 --- !u!114 &3904867949150690755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1425,6 +1424,7 @@ MonoBehaviour:
     _CurrentState: {fileID: 3904867949150690755}
     _DefaultState: {fileID: 3904867949150690755}
   _Parameters:
+    _CharacterDataSO: {fileID: 0}
     _Curling:
       _CurlingTeamPosition: 0
       _IsOnIce: 0
@@ -1442,6 +1442,8 @@ MonoBehaviour:
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -1459,6 +1461,8 @@ MonoBehaviour:
       _IsIdle: 0
       _IsBaseFromIdleState: 1
       _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -1478,15 +1482,14 @@ MonoBehaviour:
     _Jobs:
       _CurrentJob: 0
       _DesiredJob: 0
-      _AvailableJobStates: 00000000
+      _AvailableJobStates: 0000000005000000
       _CurrentAction: 0
       _DesiredAction: 0
-      _AvailableActions: 00000000
+      _AvailableActions: 000000002000000024000000
     _Surroundings:
       _IsPlayerInView: 0
       _IsPlayerInRange: 0
       _IsPlayerInRangeToInteractWith: 0
-      _IsEngagedInDialogueWithPlayer: 0
   _Equipment: {fileID: 6849265786615681472}
 --- !u!195 &2923259747239704430
 NavMeshAgent:
@@ -1518,7 +1521,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4021243426759172570}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 120
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1533,7 +1536,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2512,6 +2515,21 @@ MonoBehaviour:
   _Eat: {fileID: 2178482053983794581}
   _Sweep: {fileID: 5428229506926157839}
   _Move: {fileID: 3128786342935892619}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 4551134400414358952}
+  - {fileID: 3128786342935892619}
+  - {fileID: 7826592690273770483}
+  - {fileID: 5117967394329011099}
+  - {fileID: 2178482053983794581}
+  - {fileID: 2580972685618615521}
+  - {fileID: 7466406604829898884}
+  - {fileID: 4421110295906518197}
+  - {fileID: 5428229506926157839}
+  - {fileID: 1554742909899297115}
+  - {fileID: 120821108608292554}
+  - {fileID: 8259240846083600587}
+  - {fileID: 2414382104319215687}
+  - {fileID: 7432631991028241581}
   _Cook: {fileID: 120821108608292554}
   _Dance: {fileID: 8259240846083600587}
   _Forage: {fileID: 2414382104319215687}
@@ -2600,6 +2618,38 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
     _NormalizedStartTime: NaN
   _OnStart:
     m_PersistentCalls:

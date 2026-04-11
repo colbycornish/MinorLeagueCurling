@@ -14,11 +14,6 @@ namespace UICanvasManager.v3
             // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
         }
 
-        public override void OnUpdate()
-        {
-            // Handle input or logic while in this state
-        }
-
         public override void OnExit()
         {
             gameObject.SetActive(false); // Hide the canvas
