@@ -386,6 +386,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DevSwitchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""b93b4e0e-51dd-44b2-8a5a-a87af55f0f42"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -804,6 +813,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""DevOpenCompanySplashScreens"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f6d0f4f-1de1-4e93-8ab1-0e23cf588290"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse;Touch"",
+                    ""action"": ""DevSwitchCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1639,6 +1659,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_DevOpenMainMenu = m_Player.FindAction("DevOpenMainMenu", throwIfNotFound: true);
         m_Player_DevOpenCompanySplashScreens = m_Player.FindAction("DevOpenCompanySplashScreens", throwIfNotFound: true);
+        m_Player_DevSwitchCamera = m_Player.FindAction("DevSwitchCamera", throwIfNotFound: true);
         // Curling
         m_Curling = asset.FindActionMap("Curling", throwIfNotFound: true);
         m_Curling_AimThrow = m_Curling.FindAction("AimThrow", throwIfNotFound: true);
@@ -1887,6 +1908,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_DevOpenMainMenu;
     private readonly InputAction m_Player_DevOpenCompanySplashScreens;
+    private readonly InputAction m_Player_DevSwitchCamera;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1946,6 +1968,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/DevOpenCompanySplashScreens".
         /// </summary>
         public InputAction @DevOpenCompanySplashScreens => m_Wrapper.m_Player_DevOpenCompanySplashScreens;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DevSwitchCamera".
+        /// </summary>
+        public InputAction @DevSwitchCamera => m_Wrapper.m_Player_DevSwitchCamera;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2008,6 +2034,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @DevOpenCompanySplashScreens.started += instance.OnDevOpenCompanySplashScreens;
             @DevOpenCompanySplashScreens.performed += instance.OnDevOpenCompanySplashScreens;
             @DevOpenCompanySplashScreens.canceled += instance.OnDevOpenCompanySplashScreens;
+            @DevSwitchCamera.started += instance.OnDevSwitchCamera;
+            @DevSwitchCamera.performed += instance.OnDevSwitchCamera;
+            @DevSwitchCamera.canceled += instance.OnDevSwitchCamera;
         }
 
         /// <summary>
@@ -2055,6 +2084,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @DevOpenCompanySplashScreens.started -= instance.OnDevOpenCompanySplashScreens;
             @DevOpenCompanySplashScreens.performed -= instance.OnDevOpenCompanySplashScreens;
             @DevOpenCompanySplashScreens.canceled -= instance.OnDevOpenCompanySplashScreens;
+            @DevSwitchCamera.started -= instance.OnDevSwitchCamera;
+            @DevSwitchCamera.performed -= instance.OnDevSwitchCamera;
+            @DevSwitchCamera.canceled -= instance.OnDevSwitchCamera;
         }
 
         /// <summary>
@@ -2670,6 +2702,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDevOpenCompanySplashScreens(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DevSwitchCamera" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDevSwitchCamera(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Curling" which allows adding and removing callbacks.

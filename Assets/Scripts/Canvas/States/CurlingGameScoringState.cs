@@ -10,6 +10,17 @@ namespace UICanvasManager.v3
     {
         private GameObject mainMenuCanvas;
         public List<TextMeshProUGUI> turnDisplayTextObjects;
+
+        [Header("Team Name")]
+        public List<TextMeshProUGUI> homeTeamNameDisplayTextObjects;
+        public List<TextMeshProUGUI> awayTeamNameDisplayTextObjects;
+        [Header("Team Score")]
+        public List<TextMeshProUGUI> homeTeamScoreDisplayTextObjects;
+        public List<TextMeshProUGUI> awayTeamScoreDisplayTextObjects;
+
+        
+
+        
         
         /************************************************************************************************************************/
 
@@ -17,6 +28,7 @@ namespace UICanvasManager.v3
         { 
             // UpdateTextDisplays();
             gameObject.SetActive(true); // Show the canvas
+            UpdateTextDisplays();
             // Add listeners to buttons, e.g., PlayButton.onClick.AddListener(() => uiStateMachine.ChangeState(new GamePlayState(...)));
         }
 
@@ -28,20 +40,33 @@ namespace UICanvasManager.v3
 
         private void UpdateTextDisplays()
         {
-            // if (CurlingManagersV3.CurlingManager._instance != null)
-            // {
-            //     CurlingManager cm = CurlingManagersV3.CurlingManager._instance;
-            //     int turnNumber = cm.Parameters.Turn.CurrentTurnCount;
-            //     int turnDisplayNumber = turnNumber + 1; // Assuming you want to display "Turn 1" for the first turn (which is index 0)
-            //     // string teamName = cm.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home ? "Home" : "Away";
-            
-            //     string textToDisplay = $"Turn {turnDisplayNumber}";
+            if (CurlingManagersV3.CurlingManager._instance != null)
+            {
+                CurlingManager cm = CurlingManagersV3.CurlingManager._instance;
+                string homeTeamName = cm.Parameters.Teams.teamHome.name;
+                string awayTeamName = cm.Parameters.Teams.teamAway.name;
 
-            //     foreach (TextMeshProUGUI textObj in turnDisplayTextObjects)
-            //     {
-            //         textObj.text = textToDisplay;
-            //     }
-            // }
+                int homeTeamScore = cm.Parameters.CurrentGameScore.teamHomeScore;
+                int awayTeamScore = cm.Parameters.CurrentGameScore.teamAwayScore;
+
+                UpdateTextObjects(homeTeamNameDisplayTextObjects, homeTeamName);
+                UpdateTextObjects(homeTeamScoreDisplayTextObjects, $"{homeTeamScore}");
+
+                UpdateTextObjects(awayTeamNameDisplayTextObjects, awayTeamName);
+                UpdateTextObjects(awayTeamScoreDisplayTextObjects, $"{awayTeamScore}");
+
+            }
+        }
+
+        private void UpdateTextObjects(
+            List<TextMeshProUGUI> listOfTextObjects,
+            string text
+        )
+        {
+            foreach (TextMeshProUGUI textObj in turnDisplayTextObjects)
+            {
+                textObj.text = text;
+            }
         }
 
         /************************************************************************************************************************/

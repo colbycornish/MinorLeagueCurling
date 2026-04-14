@@ -81,6 +81,19 @@ namespace AnimalControllers.Penguin
         }
 
         
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("stone"))
+            {
+                Debug.Log("Penguin hit by stone! Playing death animation.");
+                isDead = true;
+                agent.enabled = false;
+                animator.SetBool("isWalking", false); 
+                animator.SetBool("isShaking", false); 
+                animator.SetBool("isRunning", false); 
+                animator.SetBool("isDead", true); // Must match the name in the Animator
+            }
+        }
         private void OnCollisionEnter(Collision collision)
         {
             // Check if the colliding object has a specific tag
@@ -88,6 +101,7 @@ namespace AnimalControllers.Penguin
             {
                 Debug.Log("Penguin hit by stone! Playing death animation.");
                 isDead = true;
+                agent.enabled = false;
                 animator.SetBool("isWalking", false); 
                 animator.SetBool("isShaking", false); 
                 animator.SetBool("isRunning", false); 
