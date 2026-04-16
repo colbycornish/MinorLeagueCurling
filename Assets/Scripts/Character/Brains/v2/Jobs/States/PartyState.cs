@@ -56,6 +56,7 @@ namespace CharacterNPCJobs
         /************************************************************************************************************************/
 
 
+        /************************************************************************************************************************/
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
@@ -103,7 +104,7 @@ namespace CharacterNPCJobs
                 ActionType.Idle,
                 ActionType.Eat,
                 ActionType.Drink,
-                ActionType.Talk,
+                ActionType.Talk
             };
             // Character.Parameters.Jobs.AvailableActions = newAvailableActions;
         }

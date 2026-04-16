@@ -43,9 +43,9 @@ namespace CharacterNPCJobs
 
         [SerializeField] private List<JobState> _ListOfJobStates;
 
-        [Header("Settings")]
-        [SerializeField]
-        [Seconds(Rule = Value.IsNotNegative)]
+        // [Header("Settings")]
+        // [SerializeField]
+        // [Seconds(Rule = Value.IsNotNegative)]
         // private float _AttackInputTimeOut = 0.5f;
 
         private StateMachine<JobState>.InputBuffer _InputBuffer;

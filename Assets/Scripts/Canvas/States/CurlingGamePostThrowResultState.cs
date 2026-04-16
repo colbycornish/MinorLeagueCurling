@@ -13,15 +13,12 @@ namespace UICanvasManager.v3
         // Unimplimented
         public GameObject canvasNiceTry;
 
-    
         // Special Canvases for specific reactions
         public GameObject canvasSmashingMachine;
         public GameObject canvasBlockCity;
         public GameObject canvasExplosiveThrow;
-        
-        
+                
         // Unimplimented
-        
         public GameObject canvasBlockedNoNoNo;
         public GameObject canvasBlockedBlockParty;
         public GameObject canvasPenguinKiller;
@@ -47,17 +44,27 @@ namespace UICanvasManager.v3
         public override void OnExit()
         {
             gameObject.SetActive(false); // Hide the canvas
+            DisableAllPostThrowCanvases();
         }
 
-        private void DisableAllCanvases()
+        private void DisableAllPostThrowCanvases()
         {
             Debug.Log("Disabling all post-throw result canvases...");
             if (canvasGoodThrow != null) canvasGoodThrow.SetActive(false);
             if (canvasBadThrow != null) canvasBadThrow.SetActive(false);
             if (canvasOutOfBounds != null) canvasOutOfBounds.SetActive(false);
+            if (canvasNiceTry != null) canvasNiceTry.SetActive(false);
+
             if (canvasSmashingMachine != null) canvasSmashingMachine.SetActive(false);
             if (canvasBlockCity != null) canvasBlockCity.SetActive(false);
             if (canvasExplosiveThrow != null) canvasExplosiveThrow.SetActive(false);
+
+            if (canvasBlockedNoNoNo != null) canvasBlockedNoNoNo.SetActive(false);
+            if (canvasBlockedBlockParty != null) canvasBlockedBlockParty.SetActive(false);
+            if (canvasPenguinKiller != null) canvasPenguinKiller.SetActive(false);
+            if (canvasYouGotNailed != null) canvasYouGotNailed.SetActive(false);
+            if (canvasYetiSmackdown != null) canvasYetiSmackdown.SetActive(false);
+
         }
 
 

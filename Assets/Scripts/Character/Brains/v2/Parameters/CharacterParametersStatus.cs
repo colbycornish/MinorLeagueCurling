@@ -14,6 +14,10 @@ namespace CharacterNPC.v2
     {
         
         [SerializeField]
+        private bool _IsControlledByPlayer = false;
+        public bool IsControlledByPlayer => _IsControlledByPlayer;   
+
+        [SerializeField]
         private bool _IsCurling;
         public ref bool IsCurling => ref _IsCurling;
 

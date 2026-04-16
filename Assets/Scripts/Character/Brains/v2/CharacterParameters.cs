@@ -37,11 +37,7 @@ namespace CharacterNPC.v2
 
         [SerializeField]
         private CharacterParametersSurroundings _Surroundings;
-        public CharacterParametersSurroundings Surroundings => _Surroundings;  
-
-        // [SerializeField]
-        // private CharacterSO _CharacterScripableObject;
-        // public CharacterSO CharacterScripableObject => _CharacterScripableObject;    
+        public CharacterParametersSurroundings Surroundings => _Surroundings;   
 
         /* MOVEMENT ***********************************************************************************************************************/
 
