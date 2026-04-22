@@ -16,13 +16,10 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         protected virtual void OnEnable()
         {
-            // Add listeners
             goToNextPhaseAction.performed += OnGoToNextPhase;
             goToNextPhaseAction.Enable();
 
             UICanvasManager.v3.UICanvasManager.Instance.OpenCurlingFinalResults();
-
-            // OnEnter();
         }
 
         public override void OnEnter()
@@ -54,9 +51,6 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         /************************************************************************************************************************/
 
-        /// <summary>
-        /// Used to help the CurlingManager know which canvas to enable when this state is active
-        /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.FinalResults;
 
     }

@@ -34,7 +34,7 @@ namespace CharacterNPC.v2
 
         [SerializeField] private ClipTransition[] _Animations;
 
-        private int _CurrentAnimationIndex = int.MaxValue;
+        private int _CurrentAnimationIndex = 0;
         private ClipTransition _CurrentAnimation;
 
         [SerializeField] private UnityEvent _OnStart;// See the Read Me.
@@ -49,8 +49,9 @@ namespace CharacterNPC.v2
         /************************************************************************************************************************/
 
         public override bool CanExitState => 
-            _CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime &&
-            Character.Parameters.Status.HungerLevel < 0.4;
+            _CurrentAnimation == null ||
+            (_CurrentAnimation.State.NormalizedTime >= _CurrentAnimation.State.NormalizedEndTime &&
+            Character.Parameters.Status.HungerLevel < 0.4);
 
         /************************************************************************************************************************/
 
@@ -80,9 +81,10 @@ namespace CharacterNPC.v2
 
         private ClipTransition SelectAnimationToPlay()
         {
-            if (_CurrentAnimationIndex >= _Animations.Length - 1 ||
-                _Animations[_CurrentAnimationIndex].State.Weight == 0)
+            if (_CurrentAnimationIndex >= _Animations.Length - 1)
             {
+                // ||
+                // _Animations[_CurrentAnimationIndex].State.Weight == 0
                 _CurrentAnimationIndex = 0;
             }
             else

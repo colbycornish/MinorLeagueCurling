@@ -66,7 +66,7 @@ namespace CharacterNPCJobs
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("PatrolState OnEnable - Setting first patrol location");
+            // Debug.Log("PatrolState OnEnable - Setting first patrol location");
             Character.Parameters.Status.IsFollowing = true;
             Character.Parameters.Jobs.CurrentJob = JobStateType.Follow;
             SetNextPatrolLocation();

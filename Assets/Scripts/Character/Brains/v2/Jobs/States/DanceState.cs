@@ -67,13 +67,13 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("Dance OnDisable");
+            // Debug.Log("Dance OnDisable");
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("Dance OnEnable");
+            // Debug.Log("Dance OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Dance;
             Character.Parameters.Jobs.DesiredAction = ActionType.Dance;
         }

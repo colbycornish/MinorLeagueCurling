@@ -5,6 +5,7 @@
 using System;
 using UnityEngine;
 using Animancer;
+using System.Collections.Generic;
 
 namespace CharacterNPC.v2
 {
@@ -37,6 +38,10 @@ namespace CharacterNPC.v2
         public ref bool IsTalking => ref _IsTalking;
 
         [SerializeField]
+        private bool _IsListening = false;
+        public ref bool IsListening => ref _IsListening;
+
+        [SerializeField]
         private bool _WantsToTalk = false;
         public ref bool WantsToTalk => ref _WantsToTalk;
 
@@ -60,6 +65,10 @@ namespace CharacterNPC.v2
         public ref bool IsEngagedInDialogueWithOtherCharacters => ref _IsEngagedInDialogueWithOtherCharacters;
 
         /************************************************************************************************************************/
+
+        [SerializeField]
+        private List<Character> _ListOfCharactersEngagedInConversationWith;
+        public ref List<Character> ListOfCharactersEngagedInConversationWith => ref _ListOfCharactersEngagedInConversationWith;
 
     }
 }

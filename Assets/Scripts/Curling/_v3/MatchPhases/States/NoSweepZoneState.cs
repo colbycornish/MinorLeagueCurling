@@ -53,7 +53,6 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         private void HandleCurlingNoSweepZonePhaseInput()
         {
-            // Debug.Log("NoSweepZoneState OnUpdate: Checking if stone has stopped moving or is no longer moving forward");
             bool stoneIsMoving = CurlingManager._instance.stoneManager.IsCurrentStoneMoving();
             bool stoneIsMovingForward = CurlingManager._instance.stoneManager.IsCurrentStoneMovingForward();
             if (!stoneIsMoving || !stoneIsMovingForward)

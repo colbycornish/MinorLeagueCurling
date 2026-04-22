@@ -60,13 +60,13 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("Cooking OnDisable");
+            // Debug.Log("Cooking OnDisable");
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("Cooking OnEnable");
+            // Debug.Log("Cooking OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Party;
         }
 

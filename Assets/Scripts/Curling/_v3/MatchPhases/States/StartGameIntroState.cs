@@ -86,7 +86,7 @@ namespace CurlingManagersV3.MatchPhaseStates
             if (MainCurlingManager.StateMachine.CurrentState.StateMatchPhaseType == CurlingMatchPhase.StartGameIntro)
             {
                 OnGoToNextPhase(new InputAction.CallbackContext());
-                // MainCurlingManager.ChangePhase(matchPhaseType: CurlingMatchPhase.TurnSplash);
+                
             }
             
         }
@@ -105,10 +105,6 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         /************************************************************************************************************************/
 
-
-        /// <summary>
-        /// Used to help the CurlingManager know which canvas to enable when this state is active
-        /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.StartGameIntro;
 
     }

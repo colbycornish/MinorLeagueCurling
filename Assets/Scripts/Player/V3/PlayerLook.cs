@@ -1,21 +1,25 @@
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace PlayerControls.v3
 {
     public class PlayerLook : MonoBehaviour
     {
-        public float sensitivity = 100f;
+        public float mouseSensitivity = 100f;
         public Transform playerBody; // The main player GameObject
         public Transform cameraHolder; // An empty GameObject child of the player, holding the camera
         private float xRotation = 0f;
+        private Vector2 lookInput;
 
         // Camera Items
         private CinemachineThirdPersonFollow ccThirdPersonFollow; // An empty GameObject child of the player, holding the camera
         private float cc_tpf_y_start = 0;
         private float cc_tpf_y_cur = 0;
         private CinemachineRotationComposer ccRotationComposer; // An empty GameObject child of the player, holding the camera
+        private CinemachineCamera ccCamera;
         private float cc_rc_yOffset_start = 0;
         private float cc_rc_yOffset_cur = 0;
 
@@ -33,52 +37,61 @@ namespace PlayerControls.v3
             playerBody = this.transform;
             Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen
 
+            ccCamera = cameraHolder.gameObject.GetComponent<CinemachineCamera>();
             ccThirdPersonFollow = cameraHolder.gameObject.GetComponent<CinemachineThirdPersonFollow>();
             ccRotationComposer = cameraHolder.gameObject.GetComponent<CinemachineRotationComposer>();
             cc_rc_yOffset_start = ccRotationComposer.TargetOffset.y;
             cc_rc_yOffset_cur = ccRotationComposer.TargetOffset.y;
             cc_tpf_y_start = ccThirdPersonFollow.ShoulderOffset.y;
             cc_tpf_y_cur = ccThirdPersonFollow.ShoulderOffset.y;
-            // if (cameraHolder != null)
-            // {
-            //     CinemachineCamera virtualCamera = cameraHolder.gameObject.GetComponent<CinemachineCamera>();
-            //     var composer = virtualCamera.GetComponent<CinemachineComposer>();
-            //     // RotationComposer
-            //     if (composer != null)
-            //     {
-            //         Debug.Log("Found The Composer!");
-            //     }
-            // }
+            
         }
-
-        // void OnSprint(InputValue value)
-        // {
-        //     Debug.Log("Sprint Input Detected");
-        // }
 
         protected virtual void OnEnable()
         {
-            // lookAction.performed += OnChangeLookDirection;
-            // lookAction.Enable();
+            Cursor.lockState = CursorLockMode.Locked;
+            lookAction.performed += OnChangeLookDirection;
+            
+            lookAction.Enable();
         }
 
         protected virtual void OnDisable()
         {
-            // lookAction.performed -= OnChangeLookDirection;
-            // lookAction.Disable();
+            Cursor.lockState = CursorLockMode.None;
+            lookAction.performed -= OnChangeLookDirection;
+            lookAction.Disable();
         }
 
         /************************************************************************************************************************/
 
-        // private void OnChangeLookDirection(InputAction.CallbackContext obj)
-        // {
-        //     Debug.Log("Aim Throw action performed");
-        //     StartChangeLookDirection(obj);   
-        // }
+        private void OnChangeLookDirection(InputAction.CallbackContext obj)
+        {
+            
+            lookInput = obj.ReadValue<Vector2>();
+            // xRotation = obj.ReadValue<Vector2>().x;
+            // StartChangeLookDirection(obj);   
+        }
+
+        void LateUpdate()
+        {
+            if (lookAction.inProgress){
+                float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
+                // float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
+
+                // Vertical rotation (clamped to prevent flipping)
+                // xRotation -= mouseY;
+                // xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+                // transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+                
+                // Horizontal rotation (rotates the whole player body)
+                playerBody.Rotate(Vector3.up * mouseX);
+            }
+        }
         
-        // // This method is called when the player performs the AimThrow action. It starts a coroutine that 
-        // // continuously updates the aiming direction based on the input value until the input value returns to zero 
-        // // (i.e., the player stops aiming).
+        // This method is called when the player performs the AimThrow action. It starts a coroutine that 
+        // continuously updates the aiming direction based on the input value until the input value returns to zero 
+        // (i.e., the player stops aiming).
         // public void StartChangeLookDirection(InputAction.CallbackContext callbackContext)
         // {
         //     if (this._lookProcess != null)
@@ -90,58 +103,94 @@ namespace PlayerControls.v3
 
         // private IEnumerator ChangeLookDirectionProcess(InputAction.CallbackContext callbackContext)
         // {
-        //     float direction = callbackContext.ReadValue<float>();
-
-        //     while (direction != 0)
+        //     Vector2 direction = callbackContext.ReadValue<Vector2>();
+            
+        //     while (direction.x != 0 && direction.y != 0)
         //     {
-        //         CurlingManager._instance.Aiming.ChangeDirection(
-        //             input: callbackContext.ReadValue<float>()
-        //         );
+                
+        //         // Look Horizontally
+        //         float mouseX = direction.x * sensitivity * Time.deltaTime;
+        //         playerBody.Rotate(Vector3.up * mouseX);
+
+        //         // Look Vertically
+        //         // float mouseY = direction.y * sensitivity * Time.deltaTime;
+        //         // cameraHolder.gameObject.GetComponent<CinemachineRotationComposer>();
+        //         // Mathf.Clamp(cc_tpf_y_cur, cc_tpf_y_start-2, cc_tpf_y_start+2);
+        //         // playerBody.Rotate(Vector3.up * mouseY);
 
         //         yield return null;
-
-        //         direction = callbackContext.ReadValue<float>();
+        //         direction = callbackContext.ReadValue<Vector2>();
         //     }
         // }
 
         /************************************************************************************************************************/
 
-        void FixedUpdate()
-        {
 
-            LookHoriztonally();
-            LookVertically();
-            // float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        // void FixedUpdate()
+        // {
 
-            // Rotate player body for horizontal look (yaw)
-            // playerBody.Rotate(Vector3.up * mouseX);
+        //     // LookHoriztonally();
+        //     // LookVertically();
 
-            // // Rotate camera holder for vertical look (pitch)
-            // if (cameraHolder != null)
-            // {
-            //     xRotation -= mouseY;
-            //     xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Clamp vertical look angle
-            //     playerBody.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            // }
-        }
+        // }
+
+        // void LookHoriztonally()
+        // {
+        //     float mouseX = xRotation * mouseSensitivity * Time.deltaTime;
+        //     playerBody.Rotate(Vector3.up * mouseX);
+        // }
+
+        
+
+        // void FixedUpdate()
+        // {
+
+        //     LookHoriztonally();
+        //     LookVertically();
+
+        // }
 
 
-        void LookHoriztonally()
-        {
-            float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-            playerBody.Rotate(Vector3.up * mouseX);
-        }
+        // void LookHoriztonally()
+        // {
+        //     float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        //     playerBody.Rotate(Vector3.up * mouseX);
+        // }
 
-        void LookVertically()
-        {
-            float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
-            cameraHolder.gameObject.GetComponent<CinemachineRotationComposer>();
+        // void LookVertically()
+        // {
+        //     float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        //     cameraHolder.gameObject.GetComponent<CinemachineRotationComposer>();
+        //     Mathf.Clamp(cc_tpf_y_cur, cc_tpf_y_start-2, cc_tpf_y_start+2);
+        //     // playerBody.Rotate(Vector3.up * mouseY);
 
-            Mathf.Clamp(cc_tpf_y_cur, cc_tpf_y_start-2, cc_tpf_y_start+2);
-            
-            // playerBody.Rotate(Vector3.up * mouseX);
-            
-        }
+        // }
     }
 }
   
+
+
+
+    // float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+
+    // Rotate player body for horizontal look (yaw)
+    // playerBody.Rotate(Vector3.up * mouseX);
+
+    // // Rotate camera holder for vertical look (pitch)
+    // if (cameraHolder != null)
+    // {
+    //     xRotation -= mouseY;
+    //     xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Clamp vertical look angle
+    //     playerBody.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    // }
+
+    // if (cameraHolder != null)
+    // {
+    //     CinemachineCamera virtualCamera = cameraHolder.gameObject.GetComponent<CinemachineCamera>();
+    //     var composer = virtualCamera.GetComponent<CinemachineComposer>();
+    //     // RotationComposer
+    //     if (composer != null)
+    //     {
+    //         Debug.Log("Found The Composer!");
+    //     }
+    // }

@@ -102,6 +102,12 @@ namespace CharacterNPC.v2
         [SerializeField] 
         private int _CurrentPatrolIndex = 0;
         public ref int CurrentPatrolIndex => ref _CurrentPatrolIndex;
+
+        /************************************************************************************************************************/
+
+        [SerializeField] 
+        private GameObject _FollowTarget = null;
+        public ref GameObject FollowTarget => ref _FollowTarget;
        
     }
 }

@@ -60,7 +60,7 @@ namespace AnimalNPC
 
         protected virtual void OnEnable()
         {
-            Debug.Log("Entering Patrol State.");
+            // Debug.Log("Entering Patrol State.");
             Animal.Animancer.Play(_Animation);
         }
 
@@ -75,7 +75,7 @@ namespace AnimalNPC
                 {
                     if (waitTimer == waitTimeAtWaypoint)
                     {
-                        Debug.Log("Waiting at patrol point...");
+                        // Debug.Log("Waiting at patrol point...");
                     }
 
                     waitTimer -= Time.deltaTime;
@@ -84,7 +84,7 @@ namespace AnimalNPC
                     
                     if (waitTimer <= 0)
                     {
-                        Debug.Log("Finished waiting, resuming patrol.");
+                        // Debug.Log("Finished waiting, resuming patrol.");
                         isWaiting = false;   
                     }
                 }
@@ -121,7 +121,7 @@ namespace AnimalNPC
             {
                 ClearDestinationAndWait();
 
-                Debug.Log("Trying to set default state...");
+                // Debug.Log("Trying to set default state...");
                 Animal.StateMachine.TrySetDefaultState();
                 // Animal.StateMachine.TrySetState(Animal.StateMachine.DefaultState);
             }
@@ -135,7 +135,7 @@ namespace AnimalNPC
 
         void SetNextDestination()
         {
-            Debug.Log("Setting next patrol destination.");
+            // Debug.Log("Setting next patrol destination.");
             /// randomly select a location from the list
             int randomIndex = UnityEngine.Random.Range(0, _patrolPoints.Count);
             Transform chosenPatrolPoint = _patrolPoints[randomIndex];
@@ -155,7 +155,7 @@ namespace AnimalNPC
         void ClearDestinationAndWait()
         {
             // clear destination
-            Debug.Log("Clearing Destination.");
+            // Debug.Log("Clearing Destination.");
             isWaiting = true;
             waitTimer = waitTimeAtWaypoint;
 

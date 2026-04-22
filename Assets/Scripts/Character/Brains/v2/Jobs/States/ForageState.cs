@@ -81,14 +81,14 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("PatrolState OnDisable");
+            // Debug.Log("PatrolState OnDisable");
             StopPatrolling();
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("PatrolState OnEnable");
+            // Debug.Log("PatrolState OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Forage;
             StartPatrolling();
         }
@@ -102,7 +102,7 @@ namespace CharacterNPCJobs
                 Character.StateMachine.CurrentState.StateActionType != ActionType.Forage
             )
             {
-                Debug.Log("Stopping Patrol");
+                // Debug.Log("Stopping Patrol");
                 StopPatrolling();
                 // Character.Parameters.Status.IsPatrolling = false;
                 // Character.NavAgent.ResetPath();
@@ -136,7 +136,7 @@ namespace CharacterNPCJobs
             {
                 Character.NavAgent.isStopped = false;
                 Character.Parameters.Status.IsPatrolling = true;
-                Debug.Log("Starting Patrol");
+                // Debug.Log("Starting Patrol");
             }            
         }
 

@@ -34,6 +34,7 @@ public class CurlingCourseData : MonoBehaviour
 
     [Header("Objects to hide")]
     public GameObject objectsToHideIfCurling;
+    public GameObject objectsToShowIfCurling;
 
     [Header("Announcer Booth")]
     public AnnouncerBooth announcerBooth;

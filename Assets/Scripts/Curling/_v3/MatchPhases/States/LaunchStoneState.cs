@@ -16,8 +16,7 @@ namespace CurlingManagersV3.MatchPhaseStates
         /************************************************************************************************************************/
         protected virtual void OnEnable()
         {
-            // CurlingGui is already tracking state changes, and the launch countdown will start automatically upon
-            // entering this state.
+            // CurlingGui is already tracking state changes, and the launch countdown will start automatically upon entering this state.
             // goToNextPhaseAction.performed += OnGoToNextPhase;
             // goToNextPhaseAction.Enable();
 
@@ -32,7 +31,6 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         private IEnumerator Wait()
         {
-            // Debug.Log("Coroutine started, waiting for 6 seconds...");
             yield return new WaitForSeconds(3.00f);
             OnGoToNextPhase(new InputAction.CallbackContext());
         }
@@ -41,8 +39,9 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         protected virtual void OnDisable()
         {
-            goToNextPhaseAction.performed -= OnGoToNextPhase;
-            goToNextPhaseAction.Disable();
+            // Once the countdown finishes, the stone will cross the yellow line, triggering the "sweeping" phase automatically
+            // goToNextPhaseAction.performed -= OnGoToNextPhase;
+            // goToNextPhaseAction.Disable();
         }
 
         /************************************************************************************************************************/
@@ -62,9 +61,7 @@ namespace CurlingManagersV3.MatchPhaseStates
         } 
 
         /************************************************************************************************************************/
-        /// <summary>
-        /// Used to help the CurlingManager know which canvas to enable when this state is active
-        /// </summary>
+        
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.CurlingLaunchStonePhase;
 
     }

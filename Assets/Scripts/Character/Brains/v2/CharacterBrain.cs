@@ -78,6 +78,8 @@ namespace CharacterNPC.v2
         protected virtual void Awake()
         {
             _InputBuffer = new(_Character.StateMachine);
+            CharacterState[] listedStates = GetComponents<CharacterState>();
+            _ListOfAvailableCharacterStates = new List<CharacterState>(listedStates);
         }
 
         /************************************************************************************************************************/

@@ -316,7 +316,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7055583478125589065}
@@ -435,11 +435,13 @@ MonoBehaviour:
       _CurrentState: 0
       _DesiredState: 0
       _IsTalking: 0
+      _IsListening: 0
       _WantsToTalk: 0
       _IsShouting: 0
       _WantsToShout: 0
       _IsEngagedInDialogueWithPlayer: 0
       _IsEngagedInDialogueWithOtherCharacters: 0
+      _ListOfCharactersEngagedInConversationWith: []
     _Movement:
       _MovementDirection: {x: 0, y: 0, z: 0}
       overrideDesiredSpeed: 0
@@ -459,6 +461,7 @@ MonoBehaviour:
       _IsBaseFromMoveState: 0
       _PatrolPoints: []
       _CurrentPatrolIndex: 0
+      _FollowTarget: {fileID: 0}
     _Posture:
       _CurrentPosture: 0
       _DesiredPosture: 0
@@ -2697,7 +2700,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8182204175017459270}

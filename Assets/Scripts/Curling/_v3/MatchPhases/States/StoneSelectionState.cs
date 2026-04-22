@@ -21,7 +21,6 @@ namespace CurlingManagersV3.MatchPhaseStates
         {
             UICanvasManager.v3.UICanvasManager.Instance.CloseAllModals();
             MainCurlingManager.Players.RepositionCharactersForCurling();
-            // MainCurlingManager.OnStoneSelectionConfirmed();
         }
 
         /************************************************************************************************************************/

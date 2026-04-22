@@ -66,13 +66,13 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("Dialogue Job OnDisable");
+            // Debug.Log("Dialogue Job OnDisable");
         }
 
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("Dialogue Job OnEnable");
+            // Debug.Log("Dialogue Job OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Talk;
             
         }

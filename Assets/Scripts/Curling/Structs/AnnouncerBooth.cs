@@ -69,7 +69,7 @@ namespace CurlingObjects
                 mickTheMooseSliderson, 
                 spawnLocationMick.transform.position, 
                 Quaternion.identity,
-                gameObject.transform
+                boothContainerObject.transform
             );
 
             
@@ -78,7 +78,7 @@ namespace CurlingObjects
                 broomyOChallahan, 
                 spawnLocationBroomy.transform.position, 
                 Quaternion.identity,
-                gameObject.transform
+                boothContainerObject.transform
             );
 
             if (lookAtTargetBroomy != null)

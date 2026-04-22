@@ -49,9 +49,10 @@ namespace CharacterNPCJobs
 
         /************************************************************************************************************************/
 
-        public override bool CanEnterState => 
-            _PatrolPoints.Count > 0 || 
-            Character.Parameters.Movement.PatrolPoints.Count > 0; 
+        public override bool CanEnterState =>
+            (_PatrolPoints != null || Character.Parameters.Movement.PatrolPoints != null) &&  
+            (_PatrolPoints.Count > 0 || 
+            Character.Parameters.Movement.PatrolPoints.Count > 0); 
 
         /************************************************************************************************************************/
 
@@ -62,7 +63,7 @@ namespace CharacterNPCJobs
         protected virtual void OnEnable()
         {
             _OnStart.Invoke();
-            Debug.Log("PatrolState OnEnable");
+            // Debug.Log("PatrolState OnEnable");
             Character.Parameters.Jobs.CurrentJob = JobStateType.Patrol;
             Character.NavAgent.isStopped = false;
             Character.Parameters.Status.IsPatrolling = true;
@@ -78,7 +79,7 @@ namespace CharacterNPCJobs
         protected virtual void OnDisable()
         {
             _OnEnd.Invoke();
-            Debug.Log("PatrolState OnDisable");
+            // Debug.Log("PatrolState OnDisable");
             Character.Parameters.Status.IsPatrolling = false;
             Character.NavAgent.ResetPath();
             Character.NavAgent.isStopped = true;
@@ -111,7 +112,7 @@ namespace CharacterNPCJobs
             }
             else if (Character.NavAgent.remainingDistance <= _stoppingDistance && !Character.NavAgent.pathPending)
             {
-                Debug.Log("PatrolState Reached Destination - Should be going idle");
+                // Debug.Log("PatrolState Reached Destination - Should be going idle");
                 Character.JobStateMachine.TrySetDefaultState();
             }
             else if (_currentDestination != null)
@@ -122,6 +123,12 @@ namespace CharacterNPCJobs
 
         private void SetNextPatrolLocation()
         {
+            if (_PatrolPoints == null || _PatrolPoints.Count == 0)
+            {
+                Character.JobStateMachine.TryResetDefaultState();
+                return;
+            }
+
             _CurrentPatrolIndex++;
             if (_CurrentPatrolIndex >= _PatrolPoints.Count)
                 _CurrentPatrolIndex = 0;

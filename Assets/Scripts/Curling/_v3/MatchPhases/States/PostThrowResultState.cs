@@ -63,9 +63,6 @@ namespace CurlingManagersV3.MatchPhaseStates
 
         /************************************************************************************************************************/
 
-        /// <summary>
-        /// Used to help the CurlingManager know which canvas to enable when this state is active
-        /// </summary>
         public override CurlingMatchPhase StateMatchPhaseType => CurlingMatchPhase.PostThrowResult;
 
     }

@@ -78,7 +78,6 @@ namespace CurlingManagersV3.MatchPhaseStates
                     DisableActions();
                     StoneHasStopped();
                 }
-                // this.StartCoroutine(Wait());
             } else
             {
                 CurlingManager._instance.Parameters.Sweeping.IsSweepingLeft = sweepLeftAction.IsPressed();

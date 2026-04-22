@@ -52,7 +52,7 @@ namespace AnimalNPC
             {
                 _InputBuffer.Buffer(_Dead, _InputTimeOut);
                 _Animal.StateMachine.TrySetState(_Dead);
-                Debug.Log("Animal is dead, switching to Dead State");
+                // Debug.Log("Animal is dead, switching to Dead State");
                 return;
             }
 
@@ -68,7 +68,7 @@ namespace AnimalNPC
                     if (waitTimer <= 0)
                     {
                         isWaiting = false;
-                        Debug.Log("Animal finished waiting.");
+                        // Debug.Log("Animal finished waiting.");
                         return; // Still waiting, do not decide next action yet
                     }
                 }
@@ -208,19 +208,19 @@ namespace AnimalNPC
 
         private void DecideWhatToDoNext()
         {
-            Debug.Log("Animal is deciding what to do next...");
+            // Debug.Log("Animal is deciding what to do next...");
             if (_Animal.Parameters.HungerLevel >= 0.8f)
             {
                 _InputBuffer.Buffer(_Eat, _InputTimeOut);
                 _Animal.StateMachine.TrySetState(_Eat);
-                Debug.Log("Animal is hungry, switching to Eat State");
+                // Debug.Log("Animal is hungry, switching to Eat State");
                 return;
             }
             else if (_Animal.Parameters.SleepinessLevel >= 0.8f)
             {
                 _InputBuffer.Buffer(_Sleep, _InputTimeOut);
                 _Animal.StateMachine.TrySetState(_Sleep);
-                Debug.Log("Animal is sleepy, switching to Sleep State");
+                // Debug.Log("Animal is sleepy, switching to Sleep State");
                 return;
             }
             else if (
@@ -228,7 +228,7 @@ namespace AnimalNPC
                 _Animal.Parameters.CurrentDestination == null
             )
             {
-                Debug.Log("SEND THE ANIMAL ON PATROL!");
+                // Debug.Log("SEND THE ANIMAL ON PATROL!");
                 // ReturnToIdleState();
                 _InputBuffer.Buffer(_Patrol, _InputTimeOut);
                 _Animal.StateMachine.TrySetState(_Patrol);
