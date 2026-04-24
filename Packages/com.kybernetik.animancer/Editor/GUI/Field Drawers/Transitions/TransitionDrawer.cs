@@ -11,9 +11,10 @@ using UnityEngine;
 
 namespace Animancer.Editor
 {
-    /// <summary>[Editor-Only] Draws the Inspector GUI for an <see cref="ITransitionDetailed"/>.</summary>
+    /// <summary>[Editor-Only] Draws the Inspector GUI for an <see cref="ITransition"/>.</summary>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/TransitionDrawer
-    [CustomPropertyDrawer(typeof(ITransitionDetailed), true)]
+    [CustomPropertyDrawer(typeof(ITransition), true)]
+    [CustomPropertyDrawer(typeof(TransitionAssetBase), true)]
     public class TransitionDrawer : PropertyDrawer,
         IPolymorphic
     {
@@ -33,8 +34,8 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         /// <summary>
-        /// If set, the field with this name will be drawn on the header line with the foldout arrow instead of in its
-        /// regular place.
+        /// If set, the field with this name will be drawn on the header line
+        /// with the foldout arrow instead of in its regular place.
         /// </summary>
         protected readonly string MainPropertyName;
 
@@ -573,10 +574,10 @@ namespace Animancer.Editor
             public readonly SerializedProperty Property;
 
             /// <summary>The actual transition object rerieved from the <see cref="Property"/>.</summary>
-            public readonly ITransitionDetailed Transition;
+            public readonly ITransition Transition;
 
-            /// <summary>The cached value of <see cref="ITransitionDetailed.MaximumDuration"/>.</summary>
-            public readonly float MaximumDuration;
+            /// <summary>The cached value of <see cref="ITransition.MaximumLength"/>.</summary>
+            public readonly float MaximumLength;
 
             /************************************************************************************************************************/
 
@@ -586,8 +587,8 @@ namespace Animancer.Editor
                 SerializedProperty transitionProperty)
             {
                 Property = transitionProperty;
-                Transition = transitionProperty.GetValue<ITransitionDetailed>();
-                AnimancerUtilities.TryGetLength(Transition, out MaximumDuration);
+                Transition = transitionProperty.GetValue<ITransition>();
+                AnimancerUtilities.TryGetLength(Transition, out MaximumLength);
 
                 EditorGUI.BeginChangeCheck();
 

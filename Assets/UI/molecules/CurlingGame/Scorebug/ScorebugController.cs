@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CurlingManagersV3;
 
 public class ScorebugController : MonoBehaviour
 {
@@ -22,6 +23,34 @@ public class ScorebugController : MonoBehaviour
     /// </summary>
     public void Start(){
         InitializeDisplay();
+    }
+
+    public void OnEnable()
+    {
+        Debug.Log("Scorebug Enabled");
+        if (CurlingManager._instance == null){
+            Debug.LogWarning("CurlingManager instance is null. Cannot update Scorebug.");
+            return;
+        }
+
+        UpdateScore(
+            homeTeamScore: CurlingManager._instance.Parameters.CurrentGameScore.teamHomeScore,
+            awayTeamScore: CurlingManager._instance.Parameters.CurrentGameScore.teamAwayScore
+        );
+
+        UpdateTurn(
+            isHomeTeamTurn: CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home,
+            isAwayTeamTurn: CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Away
+        );
+
+        UpdateStoneAvailability(
+            numHomeTeamStonesAvailable: CurlingManager._instance.Parameters.Stones.stonesTeamHome.FindAll(s => 
+                s.Parameters.Status.IsInPlay == false
+            ).Count,
+            numAwayTeamStonesAvailable: CurlingManager._instance.Parameters.Stones.stonesTeamAway.FindAll(s => 
+                s.Parameters.Status.IsInPlay == false
+            ).Count
+        );
     }
 
     ///
@@ -113,10 +142,7 @@ public class ScorebugController : MonoBehaviour
             homeTeamScore: homeTeamScore,
             awayTeamScore: awayTeamScore
         );
-        // scoreArea.
-        
     }
-
 
     public void UpdateTimer(){
 
@@ -133,8 +159,6 @@ public class ScorebugController : MonoBehaviour
     ///
     /// Reset
     /// 
-
-
     public void ResetStoneAvailability(){
         ScorebugTeamArea teamAreaHomeController = teamAreaHome.GetComponent<ScorebugTeamArea>();
         ScorebugTeamArea teamAreaAwayController = teamAreaAway.GetComponent<ScorebugTeamArea>();

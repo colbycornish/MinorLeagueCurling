@@ -19,7 +19,7 @@ namespace Animancer
     public static partial class AnimancerUtilities
     {
         /************************************************************************************************************************/
-        #region Misc
+        #region General
         /************************************************************************************************************************/
 
         /// <summary>This is Animancer Pro.</summary>
@@ -29,8 +29,9 @@ namespace Animancer
 
         /// <summary>
         /// If `obj` exists, this method returns <see cref="object.ToString"/>.
-        /// Or if it is <c>null</c>, this method returns <c>"Null"</c>.
-        /// Or if it is an <see cref="Object"/> that has been destroyed, this method returns <c>"Null (ObjectType)"</c>.
+        /// Or if it's <c>null</c>, this method returns <c>"Null"</c>.
+        /// Or if it's an <see cref="Object"/> that has been destroyed,
+        /// this method returns <c>"Null (ObjectType)"</c>.
         /// </summary>
         public static string ToStringOrNull(object obj)
         {
@@ -54,8 +55,12 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>[Animancer Extension] Calls <see cref="ITransition.CreateState"/> and <see cref="ITransition.Apply"/>.</summary>
-        public static AnimancerState CreateStateAndApply(this ITransition transition, AnimancerGraph graph = null)
+        /// <summary>[Animancer Extension]
+        /// Calls <see cref="ITransition.CreateState"/> and <see cref="ITransition.Apply"/>.
+        /// </summary>
+        public static AnimancerState CreateStateAndApply(
+            this ITransition transition,
+            AnimancerGraph graph = null)
         {
             var state = transition.CreateState();
             state.SetGraph(graph);
@@ -85,8 +90,8 @@ namespace Animancer
         }
 
         /// <summary>
-        /// If a state is registered with the `key`, this method gets it and repeats that check then returns the last
-        /// state found.
+        /// If a state is registered with the `key`,
+        /// this method gets it and repeats that check then returns the last state found.
         /// </summary>
         public static object GetLastKey(AnimancerStateDictionary states, object key)
         {
@@ -99,8 +104,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Calls <see cref="PlayableGraph.Connect{U, V}(U, int, V, int)"/> using output 0 from the `child` and
-        /// <see cref="PlayableExtensions.SetInputWeight{U}(U, int, float)"/>.
+        /// Calls <see cref="PlayableGraph.Connect{U, V}(U, int, V, int)"/> using output 0
+        /// from the `child` and <see cref="PlayableExtensions.SetInputWeight{U}(U, int, float)"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Connect<TParent, TChild>(
@@ -171,7 +176,8 @@ namespace Animancer
                 else
                 {
                     Assert(output.GetInputCount() == 1,
-                        $"{nameof(RemovePlayable)} can only be used on playables connected to a playable with 1 input.");
+                        $"{nameof(RemovePlayable)} can only be used on" +
+                        $" playables connected to a playable with exactly 1 input.");
                     graph.Disconnect(output, 0);
                     graph.Disconnect(playable, 0);
                 }
@@ -211,8 +217,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Checks if any <see cref="AnimationClip"/> in the `source` has an animation event with the specified
-        /// `functionName`.
+        /// Checks if any <see cref="AnimationClip"/> in the `source` has
+        /// an animation event with the specified `functionName`.
         /// </summary>
         public static bool HasEvent(IAnimationClipCollection source, string functionName)
         {
@@ -245,11 +251,11 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>[Animancer Extension] [Pro-Only]
-        /// Calculates all thresholds in the `mixer` using the <see cref="AnimancerState.AverageVelocity"/> of each
-        /// state on the X and Z axes.
+        /// Calculates all thresholds in the `mixer` using the
+        /// <see cref="AnimancerState.AverageVelocity"/> of each state on the X and Z axes.
         /// <para></para>
-        /// Note that this method requires the <c>Root Transform Position (XZ) -> Bake Into Pose</c> toggle to be
-        /// disabled in the Import Settings of each <see cref="AnimationClip"/> in the mixer.
+        /// Note that this method requires the <c>Root Transform Position (XZ) -> Bake Into Pose</c>
+        /// toggle to be disabled in the Import Settings of each <see cref="AnimationClip"/> in the mixer.
         /// </summary>
         public static void CalculateThresholdsFromAverageVelocityXZ(this MixerState<Vector2> mixer)
         {
@@ -269,10 +275,14 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Creates a <see cref="NativeArray{T}"/> containing a single element so that it can be used like a reference
-        /// in Unity's C# Job system which does not allow regular reference types.
+        /// Creates a <see cref="NativeArray{T}"/> containing a single element
+        /// so that it can be used like a reference in Unity's C# Job system
+        /// which does not allow regular reference types.
         /// </summary>
-        /// <remarks>Note that you must call <see cref="NativeArray{T}.Dispose()"/> when you're done with the array.</remarks>
+        /// <remarks>
+        /// Note that you must call <see cref="NativeArray{T}.Dispose()"/>
+        /// when you're done with the array.
+        /// </remarks>
         public static NativeArray<T> CreateNativeReference<T>()
             where T : struct
             => new(1, Allocator.Persistent, NativeArrayOptions.ClearMemory);
@@ -280,9 +290,13 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Creates a <see cref="NativeArray{T}"/> of <see cref="TransformStreamHandle"/>s for each of the `transforms`.
+        /// Creates a <see cref="NativeArray{T}"/> of <see cref="TransformStreamHandle"/>s
+        /// for each of the `transforms`.
         /// </summary>
-        /// <remarks>Note that you must call <see cref="NativeArray{T}.Dispose()"/> when you're done with the array.</remarks>
+        /// <remarks>
+        /// Note that you must call <see cref="NativeArray{T}.Dispose()"/>
+        /// when you're done with the array.
+        /// </remarks>
         public static NativeArray<TransformStreamHandle> ConvertToTransformStreamHandles(
             IList<Transform> transforms, Animator animator)
         {
@@ -306,6 +320,68 @@ namespace Animancer
         /// <summary>Returns an exception stating that the `value` is unsupported.</summary>
         public static ArgumentException CreateUnsupportedArgumentException<T>(T value)
             => new(GetUnsupportedMessage(value));
+
+        /************************************************************************************************************************/
+
+        /// <summary>[Animancer Extension] Returns the `url` in a HTML <c>&lt;a&gt;</c> tag.</summary>
+        public static string AsHtmlLink(this string url, string text = null)
+            => $"<a href=\"{url}\">{text ?? url}</a>";
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Attempts to interpret the `name` as a direction
+        /// based on the presence of the characters <c>RLUD</c>
+        /// corresponding to Right, Left, Up, and Down.
+        /// </summary>
+        public static Vector2Int GetDirection(string name) => new(
+            GetDirection(name, 'R', 'L'),
+            GetDirection(name, 'U', 'D'));
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Returns <c>1</c> if the `name` contains the `positive` value
+        /// or <c>-1</c> for `negative`. Otherwise returns <c>0</c>.
+        /// </summary>
+        public static int GetDirection(string name, char positive, char negative)
+        {
+            var isPositive = ContainsCaseInsensitive(name, positive);
+            var isNegative = ContainsCaseInsensitive(name, negative);
+
+            if (isPositive)
+            {
+                if (isNegative)
+                    return 0;
+                else
+                    return 1;
+            }
+            else
+            {
+                if (isNegative)
+                    return -1;
+                else
+                    return 0;
+            }
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>Does the `text` contain the `character` (ignoring case)?</summary>
+        public static bool ContainsCaseInsensitive(string text, char character)
+        {
+            var upper = char.ToUpper(character);
+            var lower = char.ToLower(character);
+
+            for (int i = text.Length - 1; i >= 0; i--)
+            {
+                var c = text[i];
+                if (c == upper || c == lower)
+                    return true;
+            }
+
+            return false;
+        }
 
         /************************************************************************************************************************/
         #endregion
@@ -430,13 +506,14 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// If the `array` is <c>null</c> or its <see cref="Array.Length"/> isn't equal to the specified `length`, this
-        /// method creates a new array with that `length` and returns <c>true</c>. Otherwise, it returns <c>false</c>
-        /// and the array us unchanged.
+        /// If the `array` is <c>null</c> or its <see cref="Array.Length"/>
+        /// isn't equal to the specified `length`, this method creates a new array
+        /// with that `length` and returns <c>true</c>.
+        /// Otherwise, it returns <c>false</c> and the array us unchanged.
         /// </summary>
         /// <remarks>
-        /// Unlike <see cref="Array.Resize{T}(ref T[], int)"/>, this method doesn't copy over the contents of the old
-        /// `array` into the new one.
+        /// Unlike <see cref="Array.Resize{T}(ref T[], int)"/>,
+        /// this method doesn't copy over the contents of the old `array` into the new one.
         /// </remarks>
         public static bool SetLength<T>(ref T[] array, int length)
         {
@@ -449,8 +526,14 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>Resizes the `array` to be at least 1 larger and inserts the `item` at the specified `index`.</summary>
-        /// <remarks>If the `index` is beyond the end of the array, it will be resized large enough to fit.</remarks>
+        /// <summary>
+        /// Resizes the `array` to be at least 1 larger
+        /// and inserts the `item` at the specified `index`.
+        /// </summary>
+        /// <remarks>
+        /// If the `index` is beyond the end of the array,
+        /// it will be resized large enough to fit.
+        /// </remarks>
         public static void InsertAt<T>(ref T[] array, int index, T item)
         {
             if (array == null)
@@ -474,7 +557,10 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>Removes the item at the specified `index` and resizes the `array` to be 1 smaller.</summary>
+        /// <summary>
+        /// Removes the item at the specified `index`
+        /// and resizes the `array` to be 1 smaller.
+        /// </summary>
         public static void RemoveAt<T>(ref T[] array, int index)
         {
             if (array == null ||
@@ -508,7 +594,10 @@ namespace Animancer
                 return DeepToString(collection.GetEnumerator(), separator, toString);
         }
 
-        /// <summary>Returns a string containing the value of each element in `collection` (each on a new line).</summary>
+        /// <summary>
+        /// Returns a string containing the value of each element in the `collection`
+        /// (each on a new line).
+        /// </summary>
         public static string DeepToString(
             this IEnumerable collection,
             Func<object, object> toString = null)
@@ -525,7 +614,10 @@ namespace Animancer
             return text.ReleaseToString();
         }
 
-        /// <summary>Returns a string containing the value of each element in `enumerator` (each on a new line).</summary>
+        /// <summary>
+        /// Returns a string containing the value of each element in the `enumerator`
+        /// (each on a new line).
+        /// </summary>
         public static string DeepToString(
             this IEnumerator enumerator,
             Func<object, object> toString = null)
@@ -575,7 +667,10 @@ namespace Animancer
             return value;
         }
 
-        /// <summary>Registers the `value` in the `dictionary` using the `key`, replacing any previous value.</summary>
+        /// <summary>
+        /// Registers the `value` in the `dictionary` using the `key`,
+        /// replacing any previous value.
+        /// </summary>
         /// <remarks>
         /// This is identical to setting <c>dictionary[key] = value;</c>
         /// except the syntax matches <c>dictionary.Add(key, value);</c>.
@@ -605,10 +700,11 @@ namespace Animancer
         }
 
         /// <summary>
-        /// Creates a new dictionary and returns true if it was null or calls <see cref="RemoveDestroyedObjects"/> and
-        /// returns false if it wasn't.
+        /// Creates a new dictionary and returns true if it was null or calls
+        /// <see cref="RemoveDestroyedObjects"/> and returns false if it wasn't.
         /// </summary>
-        public static bool InitializeCleanDictionary<TKey, TValue>(ref Dictionary<TKey, TValue> dictionary)
+        public static bool InitializeCleanDictionary<TKey, TValue>(
+            ref Dictionary<TKey, TValue> dictionary)
             where TKey : Object
         {
             if (dictionary == null)
@@ -630,7 +726,10 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>Copies the value of the `parameter` from `copyFrom` to `copyTo`.</summary>
-        public static void CopyParameterValue(Animator copyFrom, Animator copyTo, AnimatorControllerParameter parameter)
+        public static void CopyParameterValue(
+            Animator copyFrom,
+            Animator copyTo,
+            AnimatorControllerParameter parameter)
         {
             switch (parameter.type)
             {
@@ -653,7 +752,10 @@ namespace Animancer
         }
 
         /// <summary>Copies the value of the `parameter` from `copyFrom` to `copyTo`.</summary>
-        public static void CopyParameterValue(AnimatorControllerPlayable copyFrom, AnimatorControllerPlayable copyTo, AnimatorControllerParameter parameter)
+        public static void CopyParameterValue(
+            AnimatorControllerPlayable copyFrom,
+            AnimatorControllerPlayable copyTo,
+            AnimatorControllerParameter parameter)
         {
             switch (parameter.type)
             {
@@ -678,7 +780,9 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>Gets the value of the `parameter` in the `animator`.</summary>
-        public static object GetParameterValue(Animator animator, AnimatorControllerParameter parameter)
+        public static object GetParameterValue(
+            Animator animator,
+            AnimatorControllerParameter parameter)
         {
             return parameter.type switch
             {
@@ -691,7 +795,9 @@ namespace Animancer
         }
 
         /// <summary>Gets the value of the `parameter` in the `playable`.</summary>
-        public static object GetParameterValue(AnimatorControllerPlayable playable, AnimatorControllerParameter parameter)
+        public static object GetParameterValue(
+            AnimatorControllerPlayable playable,
+            AnimatorControllerParameter parameter)
         {
             return parameter.type switch
             {
@@ -705,58 +811,94 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>Sets the `value` of the `parameter` in the `animator`.</summary>
-        public static void SetParameterValue(Animator animator, AnimatorControllerParameter parameter, object value)
+        /// <summary>
+        /// Sets the `value` of the `parameter` in the `animator`
+        /// and returns true as long as the `value` is the appropriate type.
+        /// </summary>
+        public static bool TrySetParameterValue(
+            Animator animator,
+            AnimatorControllerParameter parameter,
+            object value)
         {
             switch (parameter.type)
             {
                 case AnimatorControllerParameterType.Float:
-                    animator.SetFloat(parameter.nameHash, (float)value);
-                    break;
+                    if (value is not float floatValue)
+                        return false;
+
+                    animator.SetFloat(parameter.nameHash, floatValue);
+                    return true;
 
                 case AnimatorControllerParameterType.Int:
-                    animator.SetInteger(parameter.nameHash, (int)value);
-                    break;
+                    if (value is not int intValue)
+                        return false;
+
+                    animator.SetInteger(parameter.nameHash, intValue);
+                    return true;
 
                 case AnimatorControllerParameterType.Bool:
-                    animator.SetBool(parameter.nameHash, (bool)value);
-                    break;
+                    if (value is not bool boolValue)
+                        return false;
+
+                    animator.SetBool(parameter.nameHash, boolValue);
+                    return true;
 
                 case AnimatorControllerParameterType.Trigger:
-                    if ((bool)value)
+                    if (value is not bool triggerValue)
+                        return false;
+
+                    if (triggerValue)
                         animator.SetTrigger(parameter.nameHash);
                     else
                         animator.ResetTrigger(parameter.nameHash);
-                    break;
+                    return true;
 
                 default:
                     throw CreateUnsupportedArgumentException(parameter.type);
             }
         }
 
-        /// <summary>Sets the `value` of the `parameter` in the `playable`.</summary>
-        public static void SetParameterValue(AnimatorControllerPlayable playable, AnimatorControllerParameter parameter, object value)
+        /// <summary>
+        /// Sets the `value` of the `parameter` in the `playable`
+        /// and returns true as long as the `value` is the appropriate type.
+        /// </summary>
+        public static bool TrySetParameterValue(
+            AnimatorControllerPlayable playable,
+            AnimatorControllerParameter parameter,
+            object value)
         {
             switch (parameter.type)
             {
                 case AnimatorControllerParameterType.Float:
-                    playable.SetFloat(parameter.nameHash, (float)value);
-                    break;
+                    if (value is not float floatValue)
+                        return false;
+
+                    playable.SetFloat(parameter.nameHash, floatValue);
+                    return true;
 
                 case AnimatorControllerParameterType.Int:
-                    playable.SetInteger(parameter.nameHash, (int)value);
-                    break;
+                    if (value is not int intValue)
+                        return false;
+
+                    playable.SetInteger(parameter.nameHash, intValue);
+                    return true;
 
                 case AnimatorControllerParameterType.Bool:
-                    playable.SetBool(parameter.nameHash, (bool)value);
-                    break;
+                    if (value is not bool boolValue)
+                        return false;
+
+                    playable.SetBool(parameter.nameHash, boolValue);
+                    return true;
 
                 case AnimatorControllerParameterType.Trigger:
-                    if ((bool)value)
+                    if (value is not bool triggerValue)
+                        return false;
+
+                    if (triggerValue)
                         playable.SetTrigger(parameter.nameHash);
                     else
                         playable.ResetTrigger(parameter.nameHash);
-                    break;
+                    return true;
 
                 default:
                     throw CreateUnsupportedArgumentException(parameter.type);
@@ -819,7 +961,10 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>Are the given values equal or both <see cref="float.NaN"/> (which wouldn't normally be equal)?</summary>
+        /// <summary>
+        /// Are the given values equal or both <see cref="float.NaN"/>
+        /// (which wouldn't normally be equal)?
+        /// </summary>
         public static bool IsEqualOrBothNaN(this float a, float b)
             => a == b
             || (float.IsNaN(a) && float.IsNaN(b));
@@ -907,7 +1052,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>[Animancer Extension]
-        /// Adds the specified type of <see cref="IAnimancerComponent"/>, links it to the `animator`, and returns it.
+        /// Adds the specified type of <see cref="IAnimancerComponent"/>,
+        /// links it to the `animator`, and returns it.
         /// </summary>
         public static T AddAnimancerComponent<T>(this Animator animator)
             where T : Component, IAnimancerComponent
@@ -920,8 +1066,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>[Animancer Extension]
-        /// Returns the <see cref="IAnimancerComponent"/> on the same <see cref="GameObject"/> as the `animator` if
-        /// there is one. Otherwise this method adds a new one and returns it.
+        /// Returns the <see cref="IAnimancerComponent"/> on the same <see cref="GameObject"/>
+        /// as the `animator` if there is one. Otherwise this method adds a new one and returns it.
         /// </summary>
         public static T GetOrAddAnimancerComponent<T>(this Animator animator)
             where T : Component, IAnimancerComponent
@@ -935,8 +1081,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Returns the first <typeparamref name="T"/> component on the `gameObject` or its parents or children (in
-        /// that order).
+        /// Returns the first <typeparamref name="T"/> component on the `gameObject`
+        /// or its parents or children (in that order).
         /// </summary>
         public static T GetComponentInParentOrChildren<T>(this GameObject gameObject)
             where T : class
@@ -952,10 +1098,12 @@ namespace Animancer
         }
 
         /// <summary>
-        /// If the `component` is <c>null</c>, this method tries to find one on the `gameObject` or its parents or
-        /// children (in that order).
+        /// If the `component` is <c>null</c>, this method tries to find one on the `gameObject`
+        /// or its parents or children (in that order).
         /// </summary>
-        public static bool GetComponentInParentOrChildren<T>(this GameObject gameObject, ref T component)
+        public static bool GetComponentInParentOrChildren<T>(
+            this GameObject gameObject,
+            ref T component)
             where T : class
         {
             if (gameObject == null)
@@ -1022,6 +1170,117 @@ namespace Animancer
         /************************************************************************************************************************/
         #endregion
         /************************************************************************************************************************/
+        #region Transitions
+        /************************************************************************************************************************/
+
+        /// <summary>Is the `transition` not null and <see cref="ITransition.IsValid"/>?</summary>
+        public static bool IsValid(this ITransition transition)
+            => transition != null
+            && transition.IsValid;
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Returns the <see cref="ITransition.FadeDuration"/>
+        /// or <see cref="float.NaN"/> if it's <c>null</c> or throws an exception.
+        /// </summary>
+        public static float TryGetFadeDuration(this ITransition transition)
+        {
+            if (transition == null)
+                return float.NaN;
+
+            try
+            {
+                return transition.FadeDuration;
+            }
+            catch
+            {
+                return float.NaN;
+            }
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>Outputs the <see cref="Motion.isLooping"/> or <see cref="ITransition.IsLooping"/>.</summary>
+        /// <remarks>Returns false if the `motionOrTransition` is null or an unsupported type.</remarks>
+        public static bool TryGetIsLooping(object motionOrTransition, out bool isLooping)
+        {
+            if (motionOrTransition is Motion motion)
+            {
+                if (motion != null)
+                {
+                    isLooping = motion.isLooping;
+                    return true;
+                }
+            }
+            else if (motionOrTransition is ITransition transition)
+            {
+                isLooping = transition.IsLooping;
+                return true;
+            }
+
+            isLooping = false;
+            return false;
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Outputs the <see cref="AnimationClip.length"/>
+        /// or <see cref="ITransition.MaximumLength"/>.
+        /// </summary>
+        /// <remarks>Returns false if the `clipOrTransition` is null or an unsupported type.</remarks>
+        public static bool TryGetLength(object clipOrTransition, out float length)
+        {
+            if (clipOrTransition is AnimationClip clip)
+            {
+                if (clip != null)
+                {
+                    length = clip.length;
+                    return true;
+                }
+            }
+            else if (clipOrTransition is ITransition transition)
+            {
+                length = transition.MaximumLength;
+                return true;
+            }
+
+            length = 0;
+            return false;
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Tries to calculate the amount of time (in seconds)
+        /// from the <see cref="ITransition.NormalizedStartTime"/>
+        /// too the <see cref="AnimancerEvent.Sequence.NormalizedEndTime"/>,
+        /// including the <see cref="ITransition.Speed"/>
+        /// </summary>
+        public static bool TryCalculateDuration(ITransition transition, out float duration)
+        {
+            var speed = transition.Speed;
+
+            duration = transition.MaximumLength;
+
+            var normalizedStartTime = transition.NormalizedStartTime;
+            if (!float.IsNaN(normalizedStartTime))
+                duration *= 1 - normalizedStartTime;
+
+            var normalizedEndTime = transition.Events.NormalizedEndTime;
+            if (!float.IsNaN(normalizedEndTime))
+                duration *= normalizedEndTime;
+
+            if (speed.IsFinite() && speed != 0)
+                duration /= speed;
+
+            return true;
+        }
+
+        /************************************************************************************************************************/
+        #endregion
+        /************************************************************************************************************************/
         #region Editor
         /************************************************************************************************************************/
 
@@ -1029,8 +1288,8 @@ namespace Animancer
         /// Throws an <see cref="UnityEngine.Assertions.AssertionException"/> if the `condition` is false.
         /// </summary>
         /// <remarks>
-        /// This method is similar to <see cref="Debug.Assert(bool, object)"/>, but it throws an exception instead of
-        /// just logging the `message`.
+        /// This method is similar to <see cref="Debug.Assert(bool, object)"/>,
+        /// but it throws an exception instead of just logging the `message`.
         /// </remarks>
         [System.Diagnostics.Conditional(Strings.Assertions)]
         public static void Assert(bool condition, object message)
@@ -1062,13 +1321,17 @@ namespace Animancer
         /// <remarks>This method is safe to call during <see cref="MonoBehaviour"/><c>.OnValidate</c>.</remarks>
         /// <param name="clip">The animation to apply. If <c>null</c>, this method does nothing.</param>
         /// <param name="component">
-        /// The animation will be applied to an <see cref="Animator"/> or <see cref="Animation"/> component on the same
-        /// object as this or on any of its parents or children. If <c>null</c>, this method does nothing.
+        /// The animation will be applied to an <see cref="Animator"/> or <see cref="Animation"/>
+        /// component on the same object as this or on any of its parents or children.
+        /// If <c>null</c>, this method does nothing.
         /// </param>
         /// <param name="time">Determines which part of the animation to apply (in seconds).</param>
         /// <seealso cref="EditModePlay"/>
         [System.Diagnostics.Conditional(Strings.UnityEditor)]
-        public static void EditModeSampleAnimation(this AnimationClip clip, Component component, float time = 0)
+        public static void EditModeSampleAnimation(
+            this AnimationClip clip,
+            Component component,
+            float time = 0)
         {
 #if UNITY_EDITOR
             if (!ShouldEditModeSample(clip, component))
@@ -1092,7 +1355,9 @@ namespace Animancer
             };
         }
 
-        private static bool ShouldEditModeSample(AnimationClip clip, Component component)
+        private static bool ShouldEditModeSample(
+            AnimationClip clip,
+            Component component)
         {
             return
                 !UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode &&
@@ -1108,12 +1373,15 @@ namespace Animancer
         /// <remarks>This method is safe to call during <see cref="MonoBehaviour"/><c>.OnValidate</c>.</remarks>
         /// <param name="clip">The animation to apply. If <c>null</c>, this method does nothing.</param>
         /// <param name="component">
-        /// The animation will be played on an <see cref="IAnimancerComponent"/> on the same object as this or on any
-        /// of its parents or children. If <c>null</c>, this method does nothing.
+        /// The animation will be played on an <see cref="IAnimancerComponent"/>
+        /// on the same object as this or on any of its parents or children.
+        /// If <c>null</c>, this method does nothing.
         /// </param>
         /// <seealso cref="EditModeSampleAnimation"/>
         [System.Diagnostics.Conditional(Strings.UnityEditor)]
-        public static void EditModePlay(this AnimationClip clip, Component component)
+        public static void EditModePlay(
+            this AnimationClip clip,
+            Component component)
         {
 #if UNITY_EDITOR
             if (!ShouldEditModeSample(clip, component))

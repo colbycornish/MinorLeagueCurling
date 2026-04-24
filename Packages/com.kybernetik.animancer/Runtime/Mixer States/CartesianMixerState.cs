@@ -65,8 +65,6 @@ namespace Animancer
 
             for (int i = 0; i < childCount; i++)
             {
-                var state = ChildStates[i];
-
                 var blendFactors = _BlendFactors[i];
 
                 var threshold = GetThreshold(i);

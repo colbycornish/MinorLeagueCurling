@@ -477,7 +477,7 @@ namespace Animancer.Editor
                 isEndEvent ? Strings.Tooltips.EndTime : Strings.Tooltips.CallbackTime))
             {
                 var length = context.TransitionContext.Transition != null
-                    ? context.TransitionContext.MaximumDuration
+                    ? context.TransitionContext.MaximumLength
                     : float.NaN;
 
                 if (index < context.Times.Count)

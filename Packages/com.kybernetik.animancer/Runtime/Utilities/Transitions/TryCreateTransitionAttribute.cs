@@ -11,7 +11,7 @@ namespace Animancer
     /// <summary>Attribute for static methods which try to create a transition from an object.</summary>
     /// <remarks>
     /// The method signature must be:
-    /// <c>static ITransitionDetailed TryCreateTransition(Object target)</c>
+    /// <c>static ITransition TryCreateTransition(Object target)</c>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/TryCreateTransitionAttribute
     [AttributeUsage(AttributeTargets.Method)]
@@ -34,7 +34,7 @@ namespace Animancer
 #if UNITY_EDITOR
         /************************************************************************************************************************/
 
-        private static List<Func<Object, ITransitionDetailed>> _Methods;
+        private static List<Func<Object, ITransition>> _Methods;
         private static List<Type> _TargetTypes;
 
         /// <summary>[Editor-Only] Ensures that all methods with this attribute have been gathered.</summary>
@@ -58,8 +58,8 @@ namespace Animancer
                             _TargetTypes.Add(attribute.ObjectType);
                     }
 
-                    var func = Delegate.CreateDelegate(typeof(Func<Object, ITransitionDetailed>), method);
-                    _Methods.Add((Func<Object, ITransitionDetailed>)func);
+                    var func = Delegate.CreateDelegate(typeof(Func<Object, ITransition>), method);
+                    _Methods.Add((Func<Object, ITransition>)func);
                 }
                 catch (Exception exception)
                 {

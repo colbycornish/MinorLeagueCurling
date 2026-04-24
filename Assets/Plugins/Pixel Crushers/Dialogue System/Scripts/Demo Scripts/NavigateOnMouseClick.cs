@@ -1,4 +1,3 @@
-// Recompile at 16/06/2025 21:02:36
 // Based on: http://wiki.unity3d.com/index.php/Click_To_Move_C
 // By: Vinicius Rezendrix
 using UnityEngine;

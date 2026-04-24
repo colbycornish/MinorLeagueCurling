@@ -353,14 +353,6 @@ namespace Animancer
                 /// <inheritdoc/>
                 public void CopyFrom(Serializable copyFrom)
                 {
-                    if (copyFrom == null)
-                    {
-                        _NormalizedTimes = default;
-                        _Callbacks = default;
-                        _Names = default;
-                        return;
-                    }
-
                     AnimancerUtilities.CopyExactArray(copyFrom._NormalizedTimes, ref _NormalizedTimes);
                     AnimancerUtilities.CopyExactArray(copyFrom._Callbacks, ref _Callbacks);
                     AnimancerUtilities.CopyExactArray(copyFrom._Names, ref _Names);

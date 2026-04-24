@@ -273,10 +273,10 @@ namespace Animancer
         /// <summary>Called when a child is connected with this node as its <see cref="AnimancerNodeBase.Parent"/>.</summary>
         /// <remarks>When overriding, don't call this base method because it throws an exception.</remarks>
         /// <exception cref="NotSupportedException">This node can't have children.</exception>
-        protected internal virtual void OnAddChild(AnimancerState state)
+        protected internal virtual void OnAddChild(AnimancerState child)
         {
             MarkAsUsed(this);
-            state.SetParentInternal(null);
+            child.SetParentInternal(null);
             throw new NotSupportedException(this + " can't have children.");
         }
 
@@ -470,12 +470,9 @@ namespace Animancer
             }
             else if (fadeDuration > 0)
             {
-
-                var fadeSpeed = Math.Abs(targetWeight - Weight) / fadeDuration;
-
                 var fade = FadeGroup.Pool.Instance.Acquire();
                 fade.SetFadeIn(this);
-                fade.StartFade(targetWeight, fadeSpeed);
+                fade.StartFade(targetWeight, 1 / fadeDuration);
             }
             else
             {

@@ -17,7 +17,7 @@ namespace Animancer
         AnimancerEvent.Sequence Events { get; }
 
         /// <summary>Events which will be triggered as the animation plays.</summary>
-        ref AnimancerEvent.Sequence.Serializable SerializedEvents { get; }
+        AnimancerEvent.Sequence.Serializable SerializedEvents { get; set; }
 
         /************************************************************************************************************************/
     }

@@ -58,7 +58,11 @@ namespace Animancer.Editor
             {
                 try
                 {
-                    return _Data != null && !_Data.Equals(SourceData);
+                    if (_Data == null)
+                        return false;
+
+                    var sourceData = SourceData;
+                    return sourceData != null && !_Data.Equals(sourceData);
                 }
                 catch (Exception exception)
                 {

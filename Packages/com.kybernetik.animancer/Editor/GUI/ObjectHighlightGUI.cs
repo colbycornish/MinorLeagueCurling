@@ -88,7 +88,7 @@ namespace Animancer.Editor
 
                 EditorGUI.DrawRect(area, color);
 
-                InternalEditorUtility.RepaintAllViews();
+                AnimancerGUI.RepaintEverything();
             }
             else
             {

@@ -10,6 +10,34 @@ namespace Animancer
     /// https://kybernetik.com.au/animancer/api/Animancer/AnimancerEvent
     partial struct AnimancerEvent
     {
+        /// <summary>Details about a state which determine how it triggers events.</summary>
+        /// https://kybernetik.com.au/animancer/api/Animancer/DispatchInfo
+        public readonly struct DispatchInfo
+        {
+            /************************************************************************************************************************/
+
+            /// <summary><see cref="AnimancerState.Length"/></summary>
+            public readonly float Length;
+
+            /// <summary><see cref="AnimancerState.NormalizedTime"/></summary>
+            public readonly float NormalizedTime;
+
+            /// <summary><see cref="AnimancerState.IsLooping"/></summary>
+            public readonly bool IsLooping;
+
+            /************************************************************************************************************************/
+
+            /// <summary>Creates a new <see cref="DispatchInfo"/>.</summary>
+            public DispatchInfo(float length, float normalizedTime, bool isLooping)
+            {
+                Length = length;
+                NormalizedTime = normalizedTime;
+                IsLooping = isLooping;
+            }
+
+            /************************************************************************************************************************/
+        }
+
         /// <summary>
         /// A system which triggers events in an <see cref="Sequence"/>
         /// based on a target <see cref="State"/>.
@@ -114,12 +142,12 @@ namespace Animancer
             /// <inheritdoc/>
             public void UpdateEvents(bool raiseEvents)
             {
-                State.GetEventDispatchInfo(out var length, out var normalizedTime, out var isLooping);
+                var info = State.GetEventDispatchInfo();
 
                 // If we aren't raising events or don't have a previous time, just keep track of the time.
                 if (!raiseEvents || float.IsNaN(_PreviousNormalizedTime))
                 {
-                    _PreviousNormalizedTime = normalizedTime;
+                    _PreviousNormalizedTime = info.NormalizedTime;
 
                     // Since we aren't paying attention to the events,
                     // we also aren't paying attention to which index the time corresponds to.
@@ -136,16 +164,16 @@ namespace Animancer
                     _NextEventIndex = RecalculateEventIndex;
                 }
 
-                if (length > 0)
+                if (info.Length > 0)
                 {
-                    if (_PreviousNormalizedTime == normalizedTime)
+                    if (_PreviousNormalizedTime == info.NormalizedTime)
                         return;
 
-                    CheckGeneralEvents(normalizedTime, isLooping);
+                    CheckGeneralEvents(info.NormalizedTime, info.IsLooping);
 
-                    CheckEndEvent(normalizedTime);
+                    CheckEndEvent(info.NormalizedTime);
 
-                    _PreviousNormalizedTime = normalizedTime;
+                    _PreviousNormalizedTime = info.NormalizedTime;
                 }
                 else// Length zero, negative, or NaN.
                 {
@@ -199,7 +227,7 @@ namespace Animancer
 
             /// <summary>General events are triggered on the frame when their time passes.</summary>
             /// <remarks>Looping animations trigger their events every loop.</remarks>
-            private void CheckGeneralEvents(float currentTime, bool isLooping)
+            private void CheckGeneralEvents(float normalizedTime, bool isLooping)
             {
                 var count = Events.Count;
                 if (count == 0)
@@ -210,7 +238,7 @@ namespace Animancer
 
                 ValidateNextEventIndex(
                     isLooping,
-                    ref currentTime,
+                    ref normalizedTime,
                     out var playDirectionFloat,
                     out var playDirectionInt);
 
@@ -219,7 +247,7 @@ namespace Animancer
                     var animancerEvent = Events[_NextEventIndex];
                     var eventTime = animancerEvent.normalizedTime * playDirectionFloat;
 
-                    var loopDelta = GetLoopDelta(_PreviousNormalizedTime, currentTime, eventTime);
+                    var loopDelta = GetLoopDelta(_PreviousNormalizedTime, normalizedTime, eventTime);
                     if (loopDelta == 0)
                         return;
 
@@ -238,7 +266,7 @@ namespace Animancer
 
                     animancerEvent = Events[_NextEventIndex];
                     eventTime = animancerEvent.normalizedTime * playDirectionFloat;
-                    if (loopDelta == GetLoopDelta(_PreviousNormalizedTime, currentTime, eventTime))
+                    if (loopDelta == GetLoopDelta(_PreviousNormalizedTime, normalizedTime, eventTime))
                         goto Invoke;
                 }
                 else// Non-Looping.
@@ -248,7 +276,7 @@ namespace Animancer
                         var animancerEvent = Events[_NextEventIndex];
                         var eventTime = animancerEvent.normalizedTime * playDirectionFloat;
 
-                        if (currentTime <= eventTime)
+                        if (normalizedTime <= eventTime)
                             return;
 
                         animancerEvent.DelayInvoke(Events.GetName(_NextEventIndex), State);
@@ -262,15 +290,15 @@ namespace Animancer
 
             private void ValidateNextEventIndex(
                 bool isLooping,
-                ref float currentTime,
+                ref float normalizedTime,
                 out float playDirectionFloat,
                 out int playDirectionInt)
             {
-                if (currentTime < _PreviousNormalizedTime)// Playing Backwards.
+                if (normalizedTime < _PreviousNormalizedTime)// Playing Backwards.
                 {
                     var previousTime = _PreviousNormalizedTime;
                     _PreviousNormalizedTime = -previousTime;
-                    currentTime = -currentTime;
+                    normalizedTime = -normalizedTime;
                     playDirectionFloat = -1;
                     playDirectionInt = -1;
 
@@ -453,11 +481,55 @@ namespace Animancer
 
             /************************************************************************************************************************/
 
+            /// <summary>
+            /// Sets the <see cref="AnimancerState.NormalizedTime"/>
+            /// to the <see cref="AnimancerState.NormalizedEndTime"/>
+            /// and invokes any remaining <see cref="AnimancerEvent"/>s.
+            /// </summary>
+            public void FinishImmediately()
+            {
+                var index = _NextEventIndex;
+                if (index == RecalculateEventIndex && Events.Count > 0)
+                {
+                    var normalizedTime = State.NormalizedTime;
+                    ValidateNextEventIndex(
+                        State.IsLooping,
+                        ref normalizedTime,
+                        out _,
+                        out _);
+                    index = _NextEventIndex;
+                }
+
+                State.NormalizedTime = State.NormalizedEndTime;
+
+                if (Events.Count > 0)
+                {
+                    if (State.EffectiveSpeed < 0)// Backwards.
+                    {
+                        for (int i = index; i >= 0; i--)
+                            Events[i].DelayInvoke(Events.GetName(i), State);
+                    }
+                    else// Forwards, 0, or NaN.
+                    {
+                        for (int i = index; i < Events.Count; i++)
+                            Events[i].DelayInvoke(Events.GetName(i), State);
+                    }
+                }
+
+                var endEvent = Events.EndEvent;
+                if (endEvent.callback != null)
+                    endEvent.DelayInvoke(EndEventName, State);
+
+                Invoker.InvokeAllAndClear();
+            }
+
+            /************************************************************************************************************************/
+
             /// <summary>Returns "<see cref="Dispatcher"/> (Target State)".</summary>
             public override string ToString()
-                    => State != null
-                    ? $"{nameof(Dispatcher)} ({State})"
-                    : $"{nameof(Dispatcher)} (No Target State)";
+                => State != null
+                ? $"{nameof(Dispatcher)} ({State})"
+                : $"{nameof(Dispatcher)} (No Target State)";
 
             /************************************************************************************************************************/
 

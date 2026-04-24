@@ -1017,5 +1017,4 @@ namespace MoreMountains.Tools
 		
 		#endif
 	}
-	
 }

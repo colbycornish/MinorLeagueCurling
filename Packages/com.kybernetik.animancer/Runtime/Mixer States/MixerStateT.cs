@@ -31,7 +31,7 @@ namespace Animancer
 
         /// <summary>
         /// Has the array of thresholds been initialized with a size at least equal to the
-        /// <see cref="ManualMixerState.ChildCount"/>.
+        /// <see cref="ParentState.ChildCount"/>.
         /// </summary>
         public bool HasThresholds
             => _Thresholds.Length >= ChildCount;
@@ -77,7 +77,7 @@ namespace Animancer
         /// <summary>
         /// If the <see cref="Array.Length"/> of the <see cref="_Thresholds"/> is below the
         /// <see cref="AnimancerNodeBase.ChildCount"/>, this method assigns a new array with size equal to the
-        /// <see cref="ManualMixerState.ChildCapacity"/> and returns true.
+        /// <see cref="ParentState.ChildCapacity"/> and returns true.
         /// </summary>
         public bool ValidateThresholdCount()
         {
@@ -101,9 +101,18 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
+        /// <inheritdoc/>
+        protected internal override void OnAddChild(AnimancerState child)
+        {
+            base.OnAddChild(child);
+            SetWeightsDirty();
+        }
+
+        /************************************************************************************************************************/
+
         /// <summary>
-        /// Calls `calculate` for each of the <see cref="ManualMixerState.ChildStates"/> and stores the returned value
-        /// as the threshold for that state.
+        /// Calls `calculate` for each of the <see cref="ParentState.ChildStates"/>
+        /// and stores the returned value as the threshold for that state.
         /// </summary>
         public void CalculateThresholds(Func<AnimancerState, TParameter> calculate)
         {
@@ -138,7 +147,7 @@ namespace Animancer
         /// <summary>The value used to calculate the weights of the child states.</summary>
         /// <remarks>
         /// Setting this value takes effect immediately (during the next animation update) without any
-        /// <see href="https://kybernetik.com.au/animancer/docs/manual/blending/mixers#smoothing">Smoothing</see>.
+        /// <see href="https://kybernetik.com.au/animancer/docs/manual/parameters/#smoothing">Smoothing</see>.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The value is NaN or Infinity.</exception>
         public TParameter Parameter
@@ -200,7 +209,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// If <see cref="WeightsAreDirty"/> this method recalculates the weights of all child states and returns true.
+        /// If <see cref="WeightsAreDirty"/> this method
+        /// recalculates the weights of all child states and returns true.
         /// </summary>
         public bool RecalculateWeights()
         {
@@ -328,7 +338,7 @@ namespace Animancer
         /// Calls <see cref="AnimancerUtilities.CreateStateAndApply"/> then 
         /// <see cref="Add(AnimancerState, TParameter)"/>.
         /// </summary>
-        public AnimancerState Add(Animancer.ITransition transition, TParameter threshold)
+        public AnimancerState Add(ITransition transition, TParameter threshold)
         {
             var state = Add(transition);
             SetThreshold(state.Index, threshold);

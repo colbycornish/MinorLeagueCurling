@@ -77,18 +77,13 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public override void GetEventDispatchInfo(
-            out float length,
-            out float normalizedTime,
-            out bool isLooping)
+        public override AnimancerEvent.DispatchInfo GetEventDispatchInfo()
         {
-            length = _Length;
-
-            normalizedTime = length != 0
-                ? Time / length
-                : 0;
-
-            isLooping = _IsLooping;
+            var length = _Length;
+            return new(
+                length,
+                length != 0 ? Time / length : 0,
+                _IsLooping);
         }
 
         /************************************************************************************************************************/

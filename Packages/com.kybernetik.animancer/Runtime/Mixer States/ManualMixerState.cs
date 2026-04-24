@@ -8,7 +8,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
-using Object = UnityEngine.Object;
 
 namespace Animancer
 {
@@ -27,7 +26,7 @@ namespace Animancer
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/ManualMixerState
     /// 
-    public partial class ManualMixerState : AnimancerState,
+    public partial class ManualMixerState : ParentState,
         ICopyable<ManualMixerState>,
         IParametizedState,
         IUpdatable
@@ -36,136 +35,13 @@ namespace Animancer
         #region Properties
         /************************************************************************************************************************/
 
-        /// <summary>The states connected to this mixer.</summary>
-        /// <remarks>Only states up to the <see cref="ChildCount"/> should be assigned.</remarks>
-        protected AnimancerState[] ChildStates { get; private set; }
-            = Array.Empty<AnimancerState>();
-
-        /************************************************************************************************************************/
-
-        private int _ChildCount;
-
-        /// <inheritdoc/>
-        public sealed override int ChildCount
-            => _ChildCount;
-
-        /************************************************************************************************************************/
-
-        /// <summary>The size of the internal array of <see cref="ChildStates"/>.</summary>
-        /// <remarks>This value starts at 0 then expands to <see cref="ChildCapacity"/> when the first child is added.</remarks>
-        public int ChildCapacity
-        {
-            get => ChildStates.Length;
-            set
-            {
-                if (value == ChildStates.Length)
-                    return;
-
-#if UNITY_ASSERTIONS
-                if (value <= 1 && OptionalWarning.MixerMinChildren.IsEnabled())
-                    OptionalWarning.MixerMinChildren.Log(
-                        $"The {nameof(ChildCapacity)} of '{this}' is being set to {value}." +
-                        $" The purpose of a mixer is to mix multiple child states so this may be a mistake.",
-                        Graph?.Component);
-#endif
-
-                var newChildStates = new AnimancerState[value];
-                if (value > _ChildCount)// Increase size.
-                {
-                    Array.Copy(ChildStates, newChildStates, _ChildCount);
-                }
-                else// Decrease size.
-                {
-                    for (int i = value; i < _ChildCount; i++)
-                        ChildStates[i].Destroy();
-
-                    Array.Copy(ChildStates, newChildStates, value);
-                    _ChildCount = value;
-                }
-
-                ChildStates = newChildStates;
-
-                if (_Playable.IsValid())
-                {
-                    _Playable.SetInputCount(value);
-                }
-                else if (Graph != null)
-                {
-                    CreatePlayable();
-                }
-
-                OnChildCapacityChanged();
-            }
-        }
-
-        /// <summary>Called when the <see cref="ChildCapacity"/> is changed.</summary>
-        protected virtual void OnChildCapacityChanged() { }
-
-        /// <summary><see cref="ChildCapacity"/> starts at 0 then expands to this value when the first child is added.</summary>
-        /// <remarks>Default 8.</remarks>
-        public static int DefaultChildCapacity { get; set; } = 8;
-
-        /// <summary>
-        /// Ensures that the remaining unused <see cref="ChildCapacity"/>
-        /// is greater than or equal to the specified `minimumCapacity`.
-        /// </summary>
-        public void EnsureRemainingChildCapacity(int minimumCapacity)
-        {
-            minimumCapacity += _ChildCount;
-            if (ChildCapacity < minimumCapacity)
-            {
-                var capacity = Math.Max(ChildCapacity, DefaultChildCapacity);
-                while (capacity < minimumCapacity)
-                    capacity *= 2;
-
-                ChildCapacity = capacity;
-            }
-        }
-
-        /************************************************************************************************************************/
-
-        /// <inheritdoc/>
-        public sealed override AnimancerState GetChild(int index)
-            => ChildStates[index];
-
-        /// <inheritdoc/>
-        public sealed override FastEnumerator<AnimancerState> GetEnumerator()
-            => new(ChildStates, _ChildCount);
-
-        /************************************************************************************************************************/
-
         /// <inheritdoc/>
         protected override void OnSetIsPlaying()
         {
             var isPlaying = IsPlaying;
-            for (int i = _ChildCount - 1; i >= 0; i--)
+            for (int i = ChildCount - 1; i >= 0; i--)
                 ChildStates[i].IsPlaying = isPlaying;
         }
-
-        /************************************************************************************************************************/
-
-        /// <summary>If greater than 0 then <see cref="IsLooping"/> is true.</summary>
-        private int _LoopingChildCount;
-
-        /// <summary>Are any child states looping?</summary>
-        public override bool IsLooping
-            => _LoopingChildCount > 0;
-
-        /// <summary>Sets <see cref="IsLooping"/> and informs the <see cref="AnimancerNodeBase.Parent"/>s.</summary>
-        private void AddIsLooping(int offset)
-        {
-            var wasLooping = IsLooping;
-
-            _LoopingChildCount += offset;
-
-            var isLooping = IsLooping;
-            if (wasLooping != isLooping)
-                OnIsLoopingChangedRecursive(isLooping);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnChildIsLoopingChanged(bool value)
-            => AddIsLooping(value ? 1 : -1);
 
         /************************************************************************************************************************/
 
@@ -178,13 +54,12 @@ namespace Animancer
         {
             get
             {
-                GetTimeDetails(out var totalWeight, out var normalizedTime, out var length);
+                var details = GetTimeDetails();
 
-                if (totalWeight == 0)
+                if (details.TotalWeight == 0)
                     return base.RawTime;
 
-                totalWeight *= totalWeight;
-                return normalizedTime * length / totalWeight;
+                return details.NormalizedTime * details.Length;
             }
             set
             {
@@ -197,14 +72,14 @@ namespace Animancer
 
                 value /= length;// Normalize.
 
-                for (int i = _ChildCount - 1; i >= 0; i--)
+                for (int i = ChildCount - 1; i >= 0; i--)
                     ChildStates[i].NormalizedTimeD = value;
 
                 return;
 
                 // If the value is 0, we can set the child times more efficiently.
                 SetToZero:
-                for (int i = _ChildCount - 1; i >= 0; i--)
+                for (int i = ChildCount - 1; i >= 0; i--)
                     ChildStates[i].TimeD = 0;
             }
         }
@@ -216,20 +91,20 @@ namespace Animancer
         {
             base.MoveTime(time, normalized);
 
-            for (int i = _ChildCount - 1; i >= 0; i--)
+            for (int i = ChildCount - 1; i >= 0; i--)
                 ChildStates[i].MoveTime(time, normalized);
         }
 
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public override void GetEventDispatchInfo(
-            out float length,
-            out float normalizedTime,
-            out bool isLooping)
+        public override AnimancerEvent.DispatchInfo GetEventDispatchInfo()
         {
-            GetTimeDetails(out _, out normalizedTime, out length);
-            isLooping = _LoopingChildCount > 0;
+            var details = GetTimeDetails();
+            return new(
+                details.Length,
+                details.NormalizedTime,
+                LoopingChildCount > 0);
         }
 
         /************************************************************************************************************************/
@@ -238,39 +113,22 @@ namespace Animancer
         /// Gets the time details based on the synchronized child states if any are active,
         /// otherwise recalculates based on all child states.
         /// </summary>
-        private void GetTimeDetails(out float totalWeight, out float normalizedTime, out float length)
+        private TimeDetails GetTimeDetails()
         {
             if (_SynchronizedChildren != null)
             {
-                GetTimeDetails(
-                    _SynchronizedChildren,
-                    _SynchronizedChildren.Count,
-                    out totalWeight,
-                    out normalizedTime,
-                    out length);
-                if (totalWeight > MinimumSynchronizeChildrenWeight)
-                    return;
+                var details = GetTimeDetails(_SynchronizedChildren, _SynchronizedChildren.Count);
+                if (details.TotalWeight > MinimumSynchronizeChildrenWeight)
+                    return details;
             }
 
-            GetTimeDetails(
-                ChildStates,
-                _ChildCount,
-                out totalWeight,
-                out normalizedTime,
-                out length);
+            return GetTimeDetails(ChildStates, ChildCount);
         }
 
         /// <summary>Gets the time details based on the `states`.</summary>
-        private void GetTimeDetails(
-            IList<AnimancerState> states,
-            int count,
-            out float totalWeight,
-            out float normalizedTime,
-            out float length)
+        private TimeDetails GetTimeDetails(IList<AnimancerState> states, int count)
         {
-            totalWeight = 0;
-            normalizedTime = 0;
-            length = 0;
+            var details = default(TimeDetails);
 
             for (int i = count - 1; i >= 0; i--)
             {
@@ -283,10 +141,19 @@ namespace Animancer
                 if (stateLength == 0)
                     continue;
 
-                totalWeight += weight;
-                normalizedTime += state.Time / stateLength * weight;
-                length += stateLength * weight;
+                details.Length += stateLength * weight;
+                details.NormalizedTime += state.Time / stateLength * weight;
+                details.TotalWeight += weight;
             }
+
+            if (details.TotalWeight != 0)
+            {
+                var inverseTotalWeight = 1f / details.TotalWeight;
+                details.Length *= inverseTotalWeight;
+                details.NormalizedTime *= inverseTotalWeight;
+            }
+
+            return details;
         }
 
         /************************************************************************************************************************/
@@ -320,11 +187,11 @@ namespace Animancer
                 if (totalChildWeight > 0)
                     return length / totalChildWeight;
 
-                totalChildWeight = CalculateTotalWeight(ChildStates, _ChildCount);
+                totalChildWeight = CalculateTotalWeight(ChildStates, ChildCount);
                 if (totalChildWeight <= 0)
                     return 0;
 
-                for (int i = _ChildCount - 1; i >= 0; i--)
+                for (int i = ChildCount - 1; i >= 0; i--)
                 {
                     var state = ChildStates[i];
                     length += state.Length * state.Weight;
@@ -335,91 +202,95 @@ namespace Animancer
         }
 
         /************************************************************************************************************************/
+
+        /// <summary>Details used for managing the timing of a mixer.</summary>
+        /// https://kybernetik.com.au/animancer/api/Animancer/TimeDetails
+        public struct TimeDetails
+        {
+            /************************************************************************************************************************/
+
+            /// <summary><see cref="AnimancerState.Length"/></summary>
+            public float Length;
+
+            /// <summary><see cref="AnimancerState.NormalizedTime"/></summary>
+            public float NormalizedTime;
+
+            /// <summary>The total weight of all child states.</summary>
+            public float TotalWeight;
+
+            /************************************************************************************************************************/
+
+            /// <summary>Returns a description of these details.</summary>
+            public override readonly string ToString() =>
+                $"{nameof(TimeDetails)}(" +
+                $"{nameof(Length)}={Length}, " +
+                $"{nameof(NormalizedTime)}={NormalizedTime}, " +
+                $"{nameof(TotalWeight)}={TotalWeight})";
+
+            /************************************************************************************************************************/
+        }
+
+        /************************************************************************************************************************/
         #endregion
         /************************************************************************************************************************/
         #region Initialization
         /************************************************************************************************************************/
 
-        /// <summary>Creates and assigns the <see cref="AnimationMixerPlayable"/> managed by this state.</summary>
-        protected override void CreatePlayable(out Playable playable)
+        /// <summary>Connects the `child` to this mixer at its <see cref="AnimancerNode.Index"/>.</summary>
+        protected internal override void OnAddChild(AnimancerState child)
         {
-            playable = AnimationMixerPlayable.Create(Graph._PlayableGraph, ChildCapacity);
-        }
+            base.OnAddChild(child);
 
-        /************************************************************************************************************************/
-
-        /// <summary>Connects the `state` to this mixer at its <see cref="AnimancerNode.Index"/>.</summary>
-        protected internal override void OnAddChild(AnimancerState state)
-        {
-            Validate.AssertGraph(state, Graph);
-
-            var capacity = ChildCapacity;
-            if (_ChildCount >= capacity)
-                ChildCapacity = Math.Max(DefaultChildCapacity, capacity * 2);
-
-            state.Index = _ChildCount;
-            ChildStates[_ChildCount] = state;
-            _ChildCount++;
-
-            state.IsPlaying = IsPlaying;
-
-            if (Graph != null)
-                ConnectChildUnsafe(state.Index, state);
-
-            if (SynchronizeNewChildren)
-                Synchronize(state);
-
-            if (state.IsLooping)
+            if (child.IsLooping)
                 AddIsLooping(1);
 
-#if UNITY_ASSERTIONS
-            _CachedToString = null;
-#endif
+            if (SynchronizeNewChildren)
+                Synchronize(child);
         }
 
         /************************************************************************************************************************/
 
         /// <summary>Disconnects the `state` from this mixer at its <see cref="AnimancerNode.Index"/>.</summary>
-        protected internal override void OnRemoveChild(AnimancerState state)
+        protected internal override void OnRemoveChild(AnimancerState child)
         {
-            DontSynchronize(state);
+            DontSynchronize(child);
 
-            Validate.AssertCanRemoveChild(state, ChildStates, _ChildCount);
-
-            // Shuffle all subsequent children down one place.
-            if (Graph == null || !Graph._PlayableGraph.IsValid())
-            {
-                Array.Copy(
-                    ChildStates, state.Index + 1,
-                    ChildStates, state.Index,
-                    _ChildCount - state.Index - 1);
-
-                for (int i = state.Index; i < _ChildCount - 1; i++)
-                    ChildStates[i].Index = i;
-            }
-            else
-            {
-                Graph._PlayableGraph.Disconnect(_Playable, state.Index);
-
-                for (int i = state.Index + 1; i < _ChildCount; i++)
-                {
-                    var otherChild = ChildStates[i];
-                    Graph._PlayableGraph.Disconnect(_Playable, otherChild.Index);
-                    otherChild.Index = i - 1;
-                    ChildStates[i - 1] = otherChild;
-                    ConnectChildUnsafe(i - 1, otherChild);
-                }
-            }
-
-            _ChildCount--;
-            ChildStates[_ChildCount] = null;
-
-            if (state.IsLooping)
+            if (child.IsLooping)
                 AddIsLooping(-1);
 
+            base.OnRemoveChild(child);
+        }
+
+        /************************************************************************************************************************/
+
+        /// <inheritdoc/>
+        public override void Set(int index, AnimancerState child, bool destroyPrevious)
+        {
 #if UNITY_ASSERTIONS
-            _CachedToString = null;
+            if ((uint)index >= ChildCount)
+            {
+                MarkAsUsed(this);
+                MarkAsUsed(child);
+                throw new IndexOutOfRangeException(
+                    $"Invalid child index. Must be 0 <= index < {nameof(ChildCount)} ({ChildCount}).");
+            }
 #endif
+
+            var previousChild = ChildStates[index];
+            DontSynchronize(previousChild);
+
+            var loopingOffset = 0;
+            if (previousChild.IsLooping)
+                loopingOffset--;
+            if (child.IsLooping)
+                loopingOffset++;
+            if (loopingOffset != 0)
+                AddIsLooping(loopingOffset);
+
+            base.Set(index, child, destroyPrevious);
+
+            if (SynchronizeNewChildren)
+                Synchronize(child);
         }
 
         /************************************************************************************************************************/
@@ -444,264 +315,55 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public sealed override void CopyFrom(AnimancerState copyFrom, CloneContext context)
-            => this.CopyFromBase(copyFrom, context);
-
-        /// <inheritdoc/>
         public virtual void CopyFrom(ManualMixerState copyFrom, CloneContext context)
         {
+            var synchronizeNewChildren = SynchronizeNewChildren;
+            SynchronizeNewChildren = false;
+
             base.CopyFrom(copyFrom, context);
 
-            DestroyChildren();
-
-            var synchronizeNewChildren = SynchronizeNewChildren;
+            SynchronizeNewChildren = synchronizeNewChildren;
 
             var childCount = copyFrom.ChildCount;
-            EnsureRemainingChildCapacity(childCount);
-
             for (int i = 0; i < childCount; i++)
-            {
-                var child = copyFrom.ChildStates[i];
-                SynchronizeNewChildren = copyFrom.IsSynchronized(child);
-                child = context.Clone(child);
-                Add(child);
-            }
-
-            SynchronizeNewChildren = synchronizeNewChildren;
+                if (copyFrom.IsSynchronized(copyFrom.ChildStates[i]))
+                    Synchronize(ChildStates[i]);
         }
 
         /************************************************************************************************************************/
         #endregion
         /************************************************************************************************************************/
-        #region Child Configuration
+        #region Looping
         /************************************************************************************************************************/
 
-        /// <summary>Assigns the `state` as a child of this mixer.</summary>
-        /// <remarks>This is the same as calling <see cref="AnimancerState.SetParent"/>.</remarks>
-        public void Add(AnimancerState state)
-            => state.SetParent(this);
+        /// <summary>If greater than 0 then <see cref="IsLooping"/> is true.</summary>
+        public int LoopingChildCount { get; private set; }
 
-        /// <summary>Creates and returns a new <see cref="ClipState"/> to play the `clip` as a child of this mixer.</summary>
-        public ClipState Add(AnimationClip clip)
+        /************************************************************************************************************************/
+
+        /// <summary>Are any child states looping?</summary>
+        public override bool IsLooping
+            => LoopingChildCount > 0;
+
+        /************************************************************************************************************************/
+
+        /// <summary>Sets <see cref="IsLooping"/> and informs the <see cref="AnimancerNodeBase.Parent"/>s.</summary>
+        private void AddIsLooping(int offset)
         {
-            var state = new ClipState(clip);
-            Add(state);
-            return state;
-        }
+            var wasLooping = IsLooping;
 
-        /// <summary>Calls <see cref="AnimancerUtilities.CreateStateAndApply"/> then <see cref="Add(AnimancerState)"/>.</summary>
-        public AnimancerState Add(ITransition transition)
-        {
-            var state = transition.CreateStateAndApply(Graph);
-            Add(state);
-            return state;
-        }
+            LoopingChildCount += offset;
 
-        /// <summary>Calls one of the other <see cref="Add(object)"/> overloads as appropriate for the `child`.</summary>
-        public AnimancerState Add(object child)
-        {
-            if (child is AnimationClip clip)
-                return Add(clip);
-
-            if (child is ITransition transition)
-                return Add(transition);
-
-            if (child is AnimancerState state)
-            {
-                Add(state);
-                return state;
-            }
-
-            MarkAsUsed(this);
-            throw new ArgumentException($"Failed to {nameof(Add)} '{AnimancerUtilities.ToStringOrNull(child)}'" +
-                $" as child of '{this}' because it isn't an" +
-                $" {nameof(AnimationClip)}, {nameof(ITransition)}, or {nameof(AnimancerState)}.");
+            var isLooping = IsLooping;
+            if (wasLooping != isLooping)
+                OnIsLoopingChangedRecursive(isLooping);
         }
 
         /************************************************************************************************************************/
 
-        /// <summary>Calls <see cref="Add(AnimationClip)"/> for each of the `clips`.</summary>
-        public void AddRange(IList<AnimationClip> clips)
-        {
-            var count = clips.Count;
-            EnsureRemainingChildCapacity(count);
-
-            for (int i = 0; i < count; i++)
-                Add(clips[i]);
-        }
-
-        /// <summary>Calls <see cref="Add(AnimationClip)"/> for each of the `clips`.</summary>
-        public void AddRange(params AnimationClip[] clips)
-            => AddRange((IList<AnimationClip>)clips);
-
-        /************************************************************************************************************************/
-
-        /// <summary>Calls <see cref="Add(ITransition)"/> for each of the `transitions`.</summary>
-        public void AddRange(IList<ITransition> transitions)
-        {
-            var count = transitions.Count;
-            EnsureRemainingChildCapacity(count);
-
-            for (int i = 0; i < count; i++)
-                Add(transitions[i]);
-        }
-
-        /// <summary>Calls <see cref="Add(ITransition)"/> for each of the `transitions`.</summary>
-        public void AddRange(params ITransition[] transitions)
-            => AddRange((IList<ITransition>)transitions);
-
-        /************************************************************************************************************************/
-
-        /// <summary>Calls <see cref="Add(object)"/> for each of the `children`.</summary>
-        public void AddRange(IList<object> children)
-        {
-            var count = children.Count;
-            EnsureRemainingChildCapacity(count);
-
-            for (int i = 0; i < count; i++)
-                Add(children[i]);
-        }
-
-        /// <summary>Calls <see cref="Add(object)"/> for each of the `children`.</summary>
-        public void AddRange(params object[] children)
-            => AddRange((IList<object>)children);
-
-        /************************************************************************************************************************/
-
-        /// <summary>Removes the child at the specified `index`.</summary>
-        public void Remove(int index, bool destroy)
-            => Remove(ChildStates[index], destroy);
-
-        /// <summary>Removes the specified `child`.</summary>
-        public void Remove(AnimancerState child, bool destroy)
-        {
-#if UNITY_ASSERTIONS
-            if (child.Parent != this)
-                Debug.LogWarning($"Attempting to remove a state which is not a child of this {GetType().Name}." +
-                    $" This will remove the child from its actual parent so you should directly call" +
-                    $" child.{nameof(child.Destroy)} or child.{nameof(child.SetParent)}(null, -1) instead." +
-                    $"\n• Child: {child}" +
-                    $"\n• Removing From: {this}" +
-                    $"\n• Actual Parent: {child.Parent}",
-                    Graph?.Component as Object);
-#endif
-
-            if (destroy)
-                child.Destroy();
-            else
-                child.SetParent(null);
-        }
-
-        /************************************************************************************************************************/
-
-        /// <summary>Replaces the `child` at the specified `index`.</summary>
-        public void Set(int index, AnimancerState child, bool destroyPrevious)
-        {
-#if UNITY_ASSERTIONS
-            if ((uint)index >= _ChildCount)
-            {
-                MarkAsUsed(this);
-                MarkAsUsed(child);
-                throw new IndexOutOfRangeException(
-                    $"Invalid child index. Must be 0 <= index < {nameof(ChildCount)} ({ChildCount}).");
-            }
-#endif
-
-            if (child.Parent != null)
-                child.SetParent(null);
-
-            var previousChild = ChildStates[index];
-            DontSynchronize(previousChild);
-            previousChild.SetParentInternal(null);
-
-            child.SetGraph(Graph);
-            ChildStates[index] = child;
-            child.SetParentInternal(this, index);
-            child.IsPlaying = IsPlaying;
-
-            if (Graph != null)
-            {
-                Graph._PlayableGraph.Disconnect(_Playable, index);
-                ConnectChildUnsafe(index, child);
-            }
-
-            var loopingOffset = 0;
-            if (previousChild.IsLooping)
-                loopingOffset--;
-            if (child.IsLooping)
-                loopingOffset++;
-            if (loopingOffset != 0)
-                AddIsLooping(loopingOffset);
-
-            child.CopyIKFlags(this);
-
-            if (SynchronizeNewChildren)
-                Synchronize(child);
-
-            if (destroyPrevious)
-                previousChild.Destroy();
-
-#if UNITY_ASSERTIONS
-            _CachedToString = null;
-#endif
-        }
-
-        /// <summary>Replaces the child at the specified `index` with a new <see cref="ClipState"/>.</summary>
-        public ClipState Set(int index, AnimationClip clip, bool destroyPrevious)
-        {
-            var state = new ClipState(clip);
-            Set(index, state, destroyPrevious);
-            return state;
-        }
-
-        /// <summary>Replaces the child at the specified `index` with a <see cref="ITransition.CreateState"/>.</summary>
-        public AnimancerState Set(int index, ITransition transition, bool destroyPrevious)
-        {
-            var state = transition.CreateStateAndApply(Graph);
-            Set(index, state, destroyPrevious);
-            return state;
-        }
-
-        /// <summary>Calls one of the other <see cref="Set(int, object, bool)"/> overloads as appropriate for the `child`.</summary>
-        public AnimancerState Set(int index, object child, bool destroyPrevious)
-        {
-            if (child is AnimationClip clip)
-                return Set(index, clip, destroyPrevious);
-
-            if (child is ITransition transition)
-                return Set(index, transition, destroyPrevious);
-
-            if (child is AnimancerState state)
-            {
-                Set(index, state, destroyPrevious);
-                return state;
-            }
-
-            MarkAsUsed(this);
-            throw new ArgumentException($"Failed to {nameof(Set)} '{AnimancerUtilities.ToStringOrNull(child)}'" +
-                $" as child of '{this}' because it isn't an" +
-                $" {nameof(AnimationClip)}, {nameof(ITransition)}, or {nameof(AnimancerState)}.");
-        }
-
-        /************************************************************************************************************************/
-
-        /// <summary>Returns the index of the specified `child` state.</summary>
-        public int IndexOf(AnimancerState child)
-            => Array.IndexOf(ChildStates, child, 0, _ChildCount);
-
-        /************************************************************************************************************************/
-
-        /// <summary>
-        /// Destroys all <see cref="ChildStates"/> connected to this mixer. This operation cannot be undone.
-        /// </summary>
-        public void DestroyChildren()
-        {
-            for (int i = _ChildCount - 1; i >= 0; i--)
-                ChildStates[i].Destroy();
-
-            Array.Clear(ChildStates, 0, _ChildCount);
-            _ChildCount = 0;
-        }
+        /// <inheritdoc/>
+        protected override void OnChildIsLoopingChanged(bool value)
+            => AddIsLooping(value ? 1 : -1);
 
         /************************************************************************************************************************/
         #endregion
@@ -738,12 +400,12 @@ namespace Animancer
             Graph = graph;
             graph.States.Register(this);
 
-            var playable = AnimationScriptPlayable.Create(graph._PlayableGraph, job, _ChildCount);
+            var playable = AnimationScriptPlayable.Create(graph._PlayableGraph, job, ChildCount);
 
             if (!processInputs)
                 playable.SetProcessInputs(false);
 
-            for (int i = _ChildCount - 1; i >= 0; i--)
+            for (int i = ChildCount - 1; i >= 0; i--)
                 ChildStates[i].SetGraph(graph);
 
             return playable;
@@ -841,12 +503,6 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        protected internal override void UpdateEvents()
-            => UpdateEventsRecursive(this);
-
-        /************************************************************************************************************************/
-
-        /// <inheritdoc/>
         public override void SetGraph(AnimancerGraph graph)
         {
             if (Graph == graph)
@@ -855,6 +511,9 @@ namespace Animancer
             Graph?.CancelPreUpdate(this);
 
             base.SetGraph(graph);
+
+            if (SynchronizedChildCount > 0)
+                graph?.RequirePreUpdate(this);
         }
 
         /************************************************************************************************************************/
@@ -1058,7 +717,7 @@ namespace Animancer
             }
             else flagCount = 0;
 
-            for (int i = flagCount; i < _ChildCount; i++)
+            for (int i = flagCount; i < ChildCount; i++)
                 SynchronizeDirect(ChildStates[i]);
         }
 
@@ -1277,32 +936,6 @@ namespace Animancer
         /************************************************************************************************************************/
         #endregion
         /************************************************************************************************************************/
-        #region Inverse Kinematics
-        /************************************************************************************************************************/
-
-        private bool _ApplyAnimatorIK;
-
-        /// <inheritdoc/>
-        public override bool ApplyAnimatorIK
-        {
-            get => _ApplyAnimatorIK;
-            set => base.ApplyAnimatorIK = _ApplyAnimatorIK = value;
-        }
-
-        /************************************************************************************************************************/
-
-        private bool _ApplyFootIK;
-
-        /// <inheritdoc/>
-        public override bool ApplyFootIK
-        {
-            get => _ApplyFootIK;
-            set => base.ApplyFootIK = _ApplyFootIK = value;
-        }
-
-        /************************************************************************************************************************/
-        #endregion
-        /************************************************************************************************************************/
         #region Other Methods
         /************************************************************************************************************************/
 
@@ -1320,11 +953,11 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Sets <see cref="AnimancerState.Time"/> for all <see cref="ChildStates"/>.
+        /// Sets <see cref="AnimancerState.Time"/> for all <see cref="ParentState.ChildStates"/>.
         /// </summary>
         public void SetChildrenTime(float value, bool normalized = false)
         {
-            for (int i = _ChildCount - 1; i >= 0; i--)
+            for (int i = ChildCount - 1; i >= 0; i--)
             {
                 var state = ChildStates[i];
                 if (normalized)
@@ -1339,7 +972,7 @@ namespace Animancer
         /// <summary>Sets the weight of all states after the `previousIndex` to 0.</summary>
         protected void DisableRemainingStates(int previousIndex)
         {
-            for (int i = previousIndex + 1; i < _ChildCount; i++)
+            for (int i = previousIndex + 1; i < ChildCount; i++)
                 Playable.SetChildWeight(ChildStates[i], 0);
         }
 
@@ -1374,7 +1007,7 @@ namespace Animancer
         {
             totalWeight = 1f / totalWeight;
 
-            for (int i = _ChildCount - 1; i >= 0; i--)
+            for (int i = ChildCount - 1; i >= 0; i--)
             {
                 var state = ChildStates[i];
                 var weight = weights[i] * totalWeight;
@@ -1397,7 +1030,7 @@ namespace Animancer
             {
                 var velocity = default(Vector3);
 
-                for (int i = _ChildCount - 1; i >= 0; i--)
+                for (int i = ChildCount - 1; i >= 0; i--)
                 {
                     var state = ChildStates[i];
                     velocity += state.AverageVelocity * state.Weight;
@@ -1418,7 +1051,7 @@ namespace Animancer
             float totalDuration = 0f;
 
             // Count the number of states that exist and their total duration.
-            for (int i = 0; i < _ChildCount; i++)
+            for (int i = 0; i < ChildCount; i++)
             {
                 divideBy++;
                 totalDuration += ChildStates[i].Duration;
@@ -1428,126 +1061,10 @@ namespace Animancer
             totalDuration /= divideBy;
 
             // Set all states to that duration.
-            for (int i = 0; i < _ChildCount; i++)
+            for (int i = 0; i < ChildCount; i++)
             {
                 ChildStates[i].Duration = totalDuration;
             }
-        }
-
-        /************************************************************************************************************************/
-
-#if UNITY_ASSERTIONS
-        /// <summary>[Assert-Only] A string built by <see cref="ToString"/> to describe this mixer.</summary>
-        private string _CachedToString;
-#endif
-
-        /// <summary>
-        /// Returns a string describing the type of this mixer and the name of states connected to it.
-        /// </summary>
-        public override string ToString()
-        {
-#if UNITY_ASSERTIONS
-            if (NameCache.TryToString(DebugName, out var name))
-                return name;
-
-            if (_CachedToString != null)
-                return _CachedToString;
-#endif
-
-            // Gather child names.
-            var childNames = ListPool.Acquire<string>();
-            var allSimple = true;
-            for (int i = 0; i < _ChildCount; i++)
-            {
-                var state = ChildStates[i];
-                if (state == null)
-                    continue;
-
-                if (state.MainObject != null)
-                {
-                    childNames.Add(state.MainObject.name);
-                }
-                else
-                {
-                    childNames.Add(state.ToString());
-                    allSimple = false;
-                }
-            }
-
-            // If they all have a main object, check if they all have the same prefix so it doesn't need to be repeated.
-            int prefixLength = 0;
-            var count = childNames.Count;
-            if (count <= 1 || !allSimple)
-            {
-                prefixLength = 0;
-            }
-            else
-            {
-                var prefix = childNames[0];
-                var shortest = prefixLength = prefix.Length;
-
-                for (int iName = 0; iName < count; iName++)
-                {
-                    var childName = childNames[iName];
-
-                    if (shortest > childName.Length)
-                    {
-                        shortest = prefixLength = childName.Length;
-                    }
-
-                    for (int iCharacter = 0; iCharacter < prefixLength; iCharacter++)
-                    {
-                        if (childName[iCharacter] != prefix[iCharacter])
-                        {
-                            prefixLength = iCharacter;
-                            break;
-                        }
-                    }
-                }
-
-                if (prefixLength < 3 ||// Less than 3 characters probably isn't an intentional prefix.
-                    prefixLength >= shortest)
-                    prefixLength = 0;
-            }
-
-            // Build the mixer name.
-            var mixerName = StringBuilderPool.Instance.Acquire();
-
-            var type = GetType().Name;
-            if (type.EndsWith("State"))
-                mixerName.Append(type, 0, type.Length - 5);
-            else
-                mixerName.Append(type);
-
-            mixerName.Append('(');
-
-            if (count > 0)
-            {
-                if (prefixLength > 0)
-                    mixerName.Append(childNames[0], 0, prefixLength).Append('[');
-
-                for (int i = 0; i < count; i++)
-                {
-                    if (i > 0)
-                        mixerName.Append(", ");
-
-                    var childName = childNames[i];
-                    mixerName.Append(childName, prefixLength, childName.Length - prefixLength);
-                }
-
-                mixerName.Append(']');
-            }
-            ListPool.Release(childNames);
-
-            mixerName.Append(')');
-
-            var result = mixerName.ReleaseToString();
-
-#if UNITY_ASSERTIONS
-            _CachedToString = result;
-#endif
-
-            return result;
         }
 
         /************************************************************************************************************************/
@@ -1575,12 +1092,6 @@ namespace Animancer
                 }
             }
         }
-
-        /************************************************************************************************************************/
-
-        /// <inheritdoc/>
-        public override void GatherAnimationClips(ICollection<AnimationClip> clips)
-            => clips.GatherFromSource(ChildStates);
 
         /************************************************************************************************************************/
 

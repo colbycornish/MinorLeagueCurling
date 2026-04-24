@@ -11,7 +11,7 @@ using UnityEngine.Animations;
 namespace Animancer.Samples.Jobs
 {
     /// <summary>
-    /// An sample component that demonstrates how <see cref="SimpleLean"/>
+    /// A sample component that demonstrates how <see cref="SimpleLean"/>
     /// can be used as a dynamic response to getting hit.
     /// </summary>
     /// 

@@ -66,7 +66,7 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>[<see cref="ITransitionDetailed"/>] Are any of the <see cref="Animations"/> looping?</summary>
+        /// <summary>[<see cref="ITransition"/>] Are any of the <see cref="Animations"/> looping?</summary>
         public override bool IsLooping
         {
             get
@@ -86,7 +86,7 @@ namespace Animancer
         }
 
         /// <inheritdoc/>
-        public override float MaximumDuration
+        public override float MaximumLength
         {
             get
             {
@@ -252,14 +252,6 @@ namespace Animancer
         public virtual void CopyFrom(ManualMixerTransition<TMixer> copyFrom, CloneContext context)
         {
             base.CopyFrom(copyFrom, context);
-
-            if (copyFrom == null)
-            {
-                _Animations = default;
-                _Speeds = default;
-                _SynchronizeChildren = default;
-                return;
-            }
 
             AnimancerUtilities.CopyExactArray(copyFrom._Animations, ref _Animations);
             AnimancerUtilities.CopyExactArray(copyFrom._Speeds, ref _Speeds);

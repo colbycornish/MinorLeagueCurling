@@ -36,6 +36,14 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
+        [SerializeField] private int _LayerCount = 2;
+
+        /// <summary>[<see cref="SerializeField"/>] The number of layers (minimum 2).</summary>
+        public ref int LayerCount
+            => ref _LayerCount;
+
+        /************************************************************************************************************************/
+
         /// <summary>The layer list created at runtime and assigned to <see cref="AnimancerGraph.Layers"/>.</summary>
         public WeightedMaskLayerList Layers { get; protected set; }
 
@@ -50,6 +58,9 @@ namespace Animancer
         protected virtual void OnValidate()
         {
             gameObject.GetComponentInParentOrChildren(ref _Animancer);
+
+            if (LayerCount < 2)
+                LayerCount = 2;
         }
 
         /************************************************************************************************************************/
@@ -64,31 +75,36 @@ namespace Animancer
             if (_Animancer == null)
                 TryGetComponent(out _Animancer);
 
-            Layers = WeightedMaskLayerList.Create(_Animancer.Animator);
+            Layers = WeightedMaskLayerList.Create(_Animancer.Animator, LayerCount);
             _Animancer.InitializeGraph(Layers.Graph);
 
             Indices = Definition.CalculateIndices(Layers);
 
-            SetWeights(0);
+            for (int i = 1; i < LayerCount; i++)// Start at 1.
+                SetWeights(i, 0);
         }
 
         /************************************************************************************************************************/
 
-        /// <summary>Applies the weights of the specified group.</summary>
-        public void SetWeights(int groupIndex)
+        /// <summary>Applies the weights of the specified group to the specified layer.</summary>
+        public void SetWeights(int layerIndex, int groupIndex)
         {
             Definition.AssertGroupIndex(groupIndex);
 
             var boneWeights = Layers.BoneWeights;
             var definitionWeights = Definition.Weights;
 
-            var start = groupIndex * Indices.Length;
+            var layerIndexOffset = (layerIndex - 1) * Indices.Length;
+            var groupDefinitionStart = groupIndex * Indices.Length;
 
             for (int i = 0; i < Indices.Length; i++)
             {
                 var index = Indices[i];
-                var weight = definitionWeights[start + i];
-                boneWeights[index] = weight;
+                if (index < 0)
+                    continue;
+
+                var weight = definitionWeights[groupDefinitionStart + i];
+                boneWeights[layerIndexOffset + index] = weight;
             }
         }
 
@@ -98,6 +114,7 @@ namespace Animancer
 
         /// <summary>Fades the weights towards the specified group.</summary>
         public void FadeWeights(
+            int layerIndex,
             int groupIndex,
             float fadeDuration,
             Func<float, float> easing = null)
@@ -105,11 +122,11 @@ namespace Animancer
             if (fadeDuration > 0)
             {
                 _Fade ??= new();
-                _Fade.Start(this, groupIndex, fadeDuration, easing);
+                _Fade.Start(this, layerIndex, groupIndex, fadeDuration, easing);
             }
             else
             {
-                SetWeights(groupIndex);
+                SetWeights(layerIndex, groupIndex);
             }
         }
 
@@ -124,6 +141,7 @@ namespace Animancer
             private NativeArray<float> _CurrentWeights;
             private float[] _OriginalWeights;
             private WeightedMaskLayers _Layers;
+            private int _LayerIndexOffset;
             private int _TargetWeightIndex;
             private Func<float, float> _Easing;
 
@@ -138,6 +156,7 @@ namespace Animancer
             /// <summary>Initializes this fade and registers it to receive updates.</summary>
             public void Start(
                 WeightedMaskLayers layers,
+                int layerIndex,
                 int groupIndex,
                 float duration,
                 Func<float, float> easing = null)
@@ -150,11 +169,13 @@ namespace Animancer
                 _TargetWeightIndex = layers.Definition.IndexOf(groupIndex, 0);
                 Duration = duration;
 
+                _LayerIndexOffset = (layerIndex - 1) * layers.Layers.BoneCount;
+
                 var indices = _Layers.Indices;
                 AnimancerUtilities.SetLength(ref _OriginalWeights, indices.Length);
-                for (int i = 0; i < _OriginalWeights.Length; i++)
+                for (int i = 0; i < indices.Length; i++)
                 {
-                    var index = indices[i];
+                    var index = _LayerIndexOffset + indices[i];
                     _OriginalWeights[i] = _CurrentWeights[index];
                 }
 
@@ -195,7 +216,7 @@ namespace Animancer
 
                 for (int i = 0; i < indices.Length; i++)
                 {
-                    var index = indices[i];
+                    var index = _LayerIndexOffset + indices[i];
                     var from = _OriginalWeights[i];
                     var to = targetWeights[_TargetWeightIndex + i];
                     boneWeights[index] = Mathf.LerpUnclamped(from, to, t);
@@ -211,7 +232,7 @@ namespace Animancer
 
                 for (int i = 0; i < indices.Length; i++)
                 {
-                    var index = indices[i];
+                    var index = _LayerIndexOffset + indices[i];
                     var to = targetWeights[_TargetWeightIndex + i];
                     boneWeights[index] = to;
                 }

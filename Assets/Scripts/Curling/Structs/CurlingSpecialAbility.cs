@@ -14,8 +14,6 @@ public struct CurlingSpecialAbility
 
     // [Header("Model")]
 
-
-
     public void BuildRandomStats()
     {
 

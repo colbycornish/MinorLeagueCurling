@@ -2,6 +2,10 @@
 
 #if UNITY_EDITOR
 
+#if UNITY_6000_2_OR_NEWER
+#pragma warning disable CS0618 // Type or member is obsolete - Tree View stuff was made generic in Unity 6.2.
+#endif
+
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -25,7 +29,13 @@ namespace Animancer.Editor
         /// <inheritdoc/>
         public override WeightedMaskLayersDefinition SourceData
         {
-            get => SourceObject.Definition;
+            get
+            {
+                var sourceObject = SourceObject;
+                return sourceObject != null
+                    ? sourceObject.Definition
+                    : null;
+            }
             set => SourceObject.Definition = value;
         }
 

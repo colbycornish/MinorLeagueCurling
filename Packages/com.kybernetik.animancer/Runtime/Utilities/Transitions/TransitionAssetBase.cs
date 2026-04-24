@@ -19,7 +19,6 @@ namespace Animancer
     [AnimancerHelpUrl(typeof(TransitionAssetBase))]
     public abstract partial class TransitionAssetBase : ScriptableObject,
         ITransition,
-        ITransitionDetailed,
         IWrapper,
         IAnimationClipSource
     {
@@ -30,8 +29,8 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>Returns the <see cref="ITransitionDetailed"/> wrapped by this <see cref="ScriptableObject"/>.</summary>
-        public abstract ITransitionDetailed GetTransition();
+        /// <summary>Returns the <see cref="ITransition"/> wrapped by this <see cref="ScriptableObject"/>.</summary>
+        public abstract ITransition GetTransition();
 
         /// <inheritdoc/>
         object IWrapper.WrappedObject
@@ -87,8 +86,8 @@ namespace Animancer
         }
 
         /// <inheritdoc/>
-        public float MaximumDuration
-            => GetTransition().MaximumDuration;
+        public float MaximumLength
+            => GetTransition().MaximumLength;
 
         /// <inheritdoc/>
         public float Speed
@@ -117,8 +116,11 @@ namespace Animancer
 
         /// <inheritdoc/>
         [Obsolete(ObsoleteEventsMessage)]
-        public ref AnimancerEvent.Sequence.Serializable SerializedEvents
-            => ref GetTransition().SerializedEvents;
+        public AnimancerEvent.Sequence.Serializable SerializedEvents
+        {
+            get => GetTransition().SerializedEvents;
+            set => GetTransition().SerializedEvents = value;
+        }
 
         /************************************************************************************************************************/
 
@@ -134,7 +136,7 @@ namespace Animancer
 
         /// <summary>[Editor-Only] Creates an instance of the main non-abstract inheritor of this class.</summary>
         /// <remarks><c>TransitionAsset</c> sets this to use itself by default.</remarks>
-        public static new Func<ITransitionDetailed, TransitionAssetBase> CreateInstance { get; set; }
+        public static new Func<ITransition, TransitionAssetBase> CreateInstance { get; set; }
 
         /************************************************************************************************************************/
 

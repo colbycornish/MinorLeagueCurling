@@ -77,10 +77,10 @@ namespace Animancer
         /// <summary>[Internal] Called when a child's <see cref="Parent"/> is changed from this node.</summary>
         /// <remarks>When overriding, don't call this base method because it throws an exception.</remarks>
         /// <exception cref="NotSupportedException">This node can't have children.</exception>
-        protected internal virtual void OnRemoveChild(AnimancerState state)
+        protected internal virtual void OnRemoveChild(AnimancerState child)
         {
             MarkAsUsed(this);
-            state.SetParentInternal(null);
+            child.SetParentInternal(null);
             throw new NotSupportedException(this + " can't have children.");
         }
 

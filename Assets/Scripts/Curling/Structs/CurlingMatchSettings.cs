@@ -27,7 +27,6 @@ Match Structure
                 - Int: Team 1 Score
                 - Int: Team 2 Score
                 - bool: isFinal
-
 */
 
 public struct CurlingMatchSettings

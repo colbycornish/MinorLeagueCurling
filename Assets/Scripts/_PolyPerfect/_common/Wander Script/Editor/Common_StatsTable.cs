@@ -31,7 +31,7 @@ namespace Polyperfect.Common
 
 
         // Add menu named "My Window" to the Window menu
-        [MenuItem("Window/PolyPerfect/Stats Table")]
+        [MenuItem("PolyPerfect/Stats Table")]
         static void Init()
         {
             // Get existing open window or if none, make a new one:
@@ -96,7 +96,10 @@ namespace Polyperfect.Common
 
             //Main Image    
             GUILayout.BeginHorizontal();
-            
+            if (GUILayout.Button(mainTexture))
+            {
+                Application.OpenURL("https://assetstore.unity.com/?q=Polyperfect&orderBy=0");
+            }
             GUILayout.EndHorizontal();
 
 
@@ -113,7 +116,6 @@ namespace Polyperfect.Common
             filters.Add("Stealthy");
             filters.Add("Toughness");
             filters.Add("territorial");
-
 
             var buttonSize = (position.width / 9.5f);
             GUILayout.Space(20f);

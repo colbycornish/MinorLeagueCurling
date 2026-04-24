@@ -64,19 +64,21 @@ namespace Animancer
         }
 
         /// <summary>
-        /// If this transition will set the <see cref="AnimancerState.Time"/>, then it needs to use
-        /// <see cref="FadeMode.FromStart"/>.
+        /// If this transition will set the <see cref="AnimancerState.Time"/>,
+        /// then it needs to use <see cref="FadeMode.FromStart"/>.
         /// </summary>
         public override FadeMode FadeMode
             => float.IsNaN(_NormalizedStartTime)
-            ? FadeMode.FixedSpeed
+            ? default
             : FadeMode.FromStart;
 
         /************************************************************************************************************************/
 
         /// <summary>
-        /// The length of the <see cref="Clip"/> (in seconds), accounting for the <see cref="NormalizedStartTime"/> and
-        /// <see cref="AnimancerEvent.Sequence.NormalizedEndTime"/> (but not <see cref="Speed"/>).
+        /// The length of the <see cref="Clip"/> (in seconds),
+        /// accounting for the <see cref="NormalizedStartTime"/>
+        /// and <see cref="AnimancerEvent.Sequence.NormalizedEndTime"/>
+        /// (but not <see cref="Speed"/>).
         /// </summary>
         public virtual float Length
         {
@@ -85,14 +87,11 @@ namespace Animancer
                 if (!IsValid)
                     return 0;
 
-                var normalizedEndTime = Events.NormalizedEndTime;
-                normalizedEndTime = !float.IsNaN(normalizedEndTime)
-                    ? normalizedEndTime
-                    : AnimancerEvent.Sequence.GetDefaultNormalizedEndTime(Speed);
+                var normalizedStartTime = AnimancerEvent.Sequence.GetNormalizedStartTime(
+                    _NormalizedStartTime,
+                    Speed);
 
-                var normalizedStartTime = !float.IsNaN(_NormalizedStartTime)
-                    ? _NormalizedStartTime
-                    : AnimancerEvent.Sequence.GetDefaultNormalizedStartTime(Speed);
+                var normalizedEndTime = Events.GetRealNormalizedEndTime(Speed);
 
                 return _Clip.length * (normalizedEndTime - normalizedStartTime);
             }
@@ -103,11 +102,11 @@ namespace Animancer
         /// <inheritdoc/>
         public override bool IsValid => _Clip != null && !_Clip.legacy;
 
-        /// <summary>[<see cref="ITransitionDetailed"/>] Is the <see cref="Clip"/> looping?</summary>
+        /// <summary>[<see cref="ITransition"/>] Is the <see cref="Clip"/> looping?</summary>
         public override bool IsLooping => _Clip != null && _Clip.isLooping;
 
         /// <inheritdoc/>
-        public override float MaximumDuration => _Clip != null ? _Clip.length : 0;
+        public override float MaximumLength => _Clip != null ? _Clip.length : 0;
 
         /// <inheritdoc/>
         public virtual float AverageAngularSpeed => _Clip != null ? _Clip.averageAngularSpeed : default;
@@ -135,13 +134,15 @@ namespace Animancer
         /// <inheritdoc/>
         public override void Apply(AnimancerState state)
         {
-            ApplyNormalizedStartTime(state, _NormalizedStartTime);
             base.Apply(state);
+            ApplyNormalizedStartTime(state, _NormalizedStartTime);
         }
 
         /************************************************************************************************************************/
 
-        /// <summary>[<see cref="IAnimationClipCollection"/>] Adds the <see cref="Clip"/> to the collection.</summary>
+        /// <summary>[<see cref="IAnimationClipCollection"/>]
+        /// Adds the <see cref="Clip"/> to the collection.
+        /// </summary>
         public virtual void GatherAnimationClips(ICollection<AnimationClip> clips)
             => clips.Gather(_Clip);
 
@@ -160,13 +161,6 @@ namespace Animancer
         {
             base.CopyFrom(copyFrom, context);
 
-            if (copyFrom == null)
-            {
-                _Clip = default;
-                _NormalizedStartTime = float.NaN;
-                return;
-            }
-
             _Clip = copyFrom._Clip;
             _NormalizedStartTime = copyFrom._NormalizedStartTime;
         }
@@ -178,7 +172,7 @@ namespace Animancer
         /// if the `target` is an <see cref="AnimationClip"/>.
         /// </summary>
         [TryCreateTransition(typeof(AnimationClip))]
-        public static ITransitionDetailed TryCreateTransition(Object target)
+        public static ITransition TryCreateTransition(Object target)
             => target is not AnimationClip clip
             ? null
             : new ClipTransition()

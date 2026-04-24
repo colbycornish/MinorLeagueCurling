@@ -7,10 +7,11 @@ using UnityEngine.Playables;
 
 namespace Animancer
 {
-    /// <summary>A scripted animation for an <see cref="AnimationJobState{T}"/>.</summary>
+    /// <summary>[Pro-Only] A scripted animation for an <see cref="AnimationJobState{T}"/>.</summary>
     /// <remarks>
-    /// If <see cref="IDisposable.Dispose"/> is implemented,
-    /// it will be called when the state is destroyed or disposed.
+    /// <strong>Sample:</strong>
+    /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/job-states">
+    /// Job States</see>
     /// </remarks>
     public interface IAnimancerStateJob : IDisposable
     {
@@ -19,12 +20,15 @@ namespace Animancer
         /// <summary>The total time this job would take to play in seconds at normal speed.</summary>
         float Length { get; }
 
+        /// <summary>Does this job loop back to the start when its time passes its <see cref="Length"/>?</summary>
+        bool IsLooping { get; }
+
         /// <summary>Defines what do to when processing the root motion.</summary>
         /// <remarks>
         /// This is called by <see cref="IAnimationJob.ProcessRootMotion"/>
         /// and receives the <see cref="AnimancerState.TimeD"/>.
         /// </remarks>
-        void ProcessRootMotion(AnimationStream stream, double time) { }
+        void ProcessRootMotion(AnimationStream stream, double time);
 
         /// <summary>Defines what do to when processing the animation.</summary>
         /// <remarks>
@@ -33,17 +37,14 @@ namespace Animancer
         /// </remarks>
         void ProcessAnimation(AnimationStream stream, double time);
 
-        /// <summary>Disposes of any resources used by this job.</summary>
-        void IDisposable.Dispose() { }
-
         /************************************************************************************************************************/
     }
 
-    /// <summary>An <see cref="AnimancerState"/> which plays an <see cref="IAnimancerStateJob"/>.</summary>
+    /// <summary>[Pro-Only] An <see cref="AnimancerState"/> which plays an <see cref="IAnimancerStateJob"/>.</summary>
     /// <remarks>
-    /// <strong>Documentation:</strong>
-    /// <see href="https://kybernetik.com.au/animancer/docs/manual/playing/states">
-    /// States</see>
+    /// <strong>Sample:</strong>
+    /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/job-states">
+    /// Job States</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/AnimationJobState_1
     /// 
@@ -53,10 +54,10 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// An <see cref="IAnimancerStateJob"/> which wraps an <see cref="IAnimancerStateJob"/>
-        /// in order to manage a <see cref="Time"/> array which can feed the <see cref="AnimancerState.TimeD"/>
-        /// into the job.
+        /// An <see cref="IAnimationJob"/> which wraps an <see cref="IAnimancerStateJob"/>
+        /// to provide its <see cref="Time"/> value.
         /// </summary>
+        /// https://kybernetik.com.au/animancer/api/Animancer/TimedJob
         public struct TimedJob : IAnimationJob, IDisposable
         {
             /// <summary>The <see cref="IAnimancerStateJob"/> data.</summary>
@@ -111,6 +112,10 @@ namespace Animancer
         public override float Length
             => _Job.Job.Length;
 
+        /// <inheritdoc/>
+        public override bool IsLooping
+            => _Job.Job.IsLooping;
+
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
@@ -142,7 +147,7 @@ namespace Animancer
             if (!_Job.Time.IsCreated)
                 _Job.Time = AnimancerUtilities.CreateNativeReference<double>();
 
-            playable = _Playable = AnimationScriptPlayable.Create(Graph._PlayableGraph, _Job);
+            playable = _Playable = AnimationScriptPlayable.Create(Graph.PlayableGraph, _Job);
         }
 
         /************************************************************************************************************************/

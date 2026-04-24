@@ -1,4 +1,3 @@
-// Recompile at 16/06/2025 21:02:36
 // Copyright (c) Pixel Crushers. All rights reserved.
 
 using UnityEngine;

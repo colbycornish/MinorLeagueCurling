@@ -12,11 +12,6 @@ namespace Animancer
     /// <see cref="BoneWeights"/> for each individual bone instead of just using an <see cref="AvatarMask"/>
     /// to include or exclude them entirely.
     /// </summary>
-    /// <remarks>
-    /// This system currently only supports 2 layers (Base + 1). Adding support for more would require additional
-    /// <see cref="BoneWeights"/> for each additional layer and modifications to <see cref="WeightedMaskMixerJob"/>
-    /// to iterate through each layer instead of just using the first two.
-    /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/WeightedMaskLayerList
     public class WeightedMaskLayerList : AnimancerLayerList, IDisposable
     {
@@ -27,6 +22,12 @@ namespace Animancer
 
         /// <summary>The job data.</summary>
         private readonly WeightedMaskMixerJob _Job;
+
+        /************************************************************************************************************************/
+
+        /// <summary>The number of objects being masked (excluding the root bone).</summary>
+        public int BoneCount
+            => Bones.Length - 1;
 
         /************************************************************************************************************************/
 
@@ -47,28 +48,34 @@ namespace Animancer
         /// This method can't be a constructor because it would need to
         /// assign itself to the graph before being fully constructed.
         /// </remarks>
-        public static WeightedMaskLayerList Create(Animator animator)
+        public static WeightedMaskLayerList Create(Animator animator, int layerCount)
         {
             var graph = new AnimancerGraph();
-            var layers = new WeightedMaskLayerList(graph, animator);
+            var layers = new WeightedMaskLayerList(graph, animator, layerCount);
             graph.Layers = layers;
             return layers;
         }
 
         /// <summary>Creates a new <see cref="WeightedMaskLayerList"/>.</summary>
-        public WeightedMaskLayerList(AnimancerGraph graph, Animator animator)
-            : base(graph)
+        public WeightedMaskLayerList(AnimancerGraph graph, Animator animator, int layerCount)
+            : base(graph, layerCount)
         {
+            if (layerCount < 2)
+                throw new ArgumentOutOfRangeException(
+                    nameof(layerCount),
+                    "Layer count must be at least 2 (Base + 1).");
+
             graph.Layers = this;
 
-            Bones = animator.GetComponentsInChildren<Transform>();
+            Bones = animator.GetComponentsInChildren<Transform>(true);
 
-            var boneCount = Bones.Length - 1;// Ignore the root bone.
+            var boneCount = BoneCount;
 
             _Job = new WeightedMaskMixerJob()
             {
                 boneTransforms = new(boneCount, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
-                boneWeights = new(boneCount, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
+                boneWeights = new(boneCount * (layerCount - 1), Allocator.Persistent, NativeArrayOptions.ClearMemory),
+                layerCount = layerCount,
             };
 
             graph.Disposables.Add(this);
@@ -91,6 +98,18 @@ namespace Animancer
         {
             _Job.boneTransforms.Dispose();
             _Job.boneWeights.Dispose();
+        }
+
+        /************************************************************************************************************************/
+
+        /// <inheritdoc/>
+        public override AnimancerLayer Add()
+        {
+            if (Count >= Capacity)
+                throw new InvalidOperationException(
+                    $"{nameof(WeightedMaskLayerList)} doesn't support dynamically changing its layer count.");
+
+            return base.Add();
         }
 
         /************************************************************************************************************************/

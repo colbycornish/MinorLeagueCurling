@@ -394,7 +394,7 @@ namespace Animancer.Editor
                             .Append("' Rig is ")
                             .Append(objectType)
                             .Append(". See the documentation for more information about Animation Types:" +
-                                $" {Strings.DocsURLs.Inspector}#animation-types");
+                                $" {Strings.DocsURLs.Inspector.AsHtmlLink()}#animation-types");
                     }
 
                     switch (clipType)

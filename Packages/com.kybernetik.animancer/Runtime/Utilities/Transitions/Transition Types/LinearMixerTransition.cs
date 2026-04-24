@@ -155,12 +155,6 @@ namespace Animancer
         {
             base.CopyFrom(copyFrom, context);
 
-            if (copyFrom == null)
-            {
-                _ExtrapolateSpeed = true;
-                return;
-            }
-
             _ExtrapolateSpeed = copyFrom._ExtrapolateSpeed;
             _ParameterName = copyFrom._ParameterName;
         }

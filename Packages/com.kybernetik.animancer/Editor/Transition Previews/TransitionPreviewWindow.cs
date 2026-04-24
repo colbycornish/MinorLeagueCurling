@@ -305,8 +305,8 @@ namespace Animancer.Editor.Previews
 
         /************************************************************************************************************************/
 
-        /// <summary>The <see cref="ITransitionDetailed"/> currently being previewed.</summary>
-        public static ITransitionDetailed Transition
+        /// <summary>The <see cref="ITransition"/> currently being previewed.</summary>
+        public static ITransition Transition
         {
             get
             {
@@ -314,7 +314,7 @@ namespace Animancer.Editor.Previews
                 if (!property.IsValid())
                     return null;
 
-                return property.Property.GetValue<ITransitionDetailed>();
+                return property.Property.GetValue<ITransition>();
             }
         }
 
@@ -328,13 +328,13 @@ namespace Animancer.Editor.Previews
                 return false;
 
             var type = accessor.GetFieldElementType(property);
-            if (typeof(ITransitionDetailed).IsAssignableFrom(type))
+            if (typeof(ITransition).IsAssignableFrom(type))
                 return true;
 
             var value = accessor.GetValue(property);
             return
                 value != null &&
-                typeof(ITransitionDetailed).IsAssignableFrom(value.GetType());
+                typeof(ITransition).IsAssignableFrom(value.GetType());
         }
 
         /************************************************************************************************************************/
@@ -350,7 +350,7 @@ namespace Animancer.Editor.Previews
             if (!CanBePreviewed(property))
             {
                 Close();
-                throw new ArgumentException($"The specified property does not implement {nameof(ITransitionDetailed)}.");
+                throw new ArgumentException($"The specified property does not implement {nameof(ITransition)}.");
             }
 
             if (!_TransitionProperty.IsValid())

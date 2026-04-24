@@ -420,11 +420,12 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// The index of this state in its parent <see cref="AnimancerLayer.ActiveStates"/> (or -1 if inactive).
+        /// The index of this state in its parent <see cref="AnimancerLayer.ActiveStates"/>
+        /// (or -1 if inactive).
         /// </summary>
         /// <remarks>
-        /// If this state's direct parent isn't a layer (such as a child of a mixer), this value simply uses 0 to
-        /// indicate active.
+        /// If this state's direct parent isn't a layer (such as a child of a mixer),
+        /// this value simply uses 0 to indicate active.
         /// </remarks>
         internal int _ActiveIndex = ActiveList.NotInList;
 
@@ -432,13 +433,17 @@ namespace Animancer
 
         /// <summary>Is this state currently updating or affecting the animation output?</summary>
         /// <remarks>
-        /// This property is true when <see cref="IsPlaying"/> or the <see cref="AnimancerNode.Weight"/> or
-        /// <see cref="AnimancerNode.TargetWeight"/> are above 0.
+        /// This property is true when <see cref="IsPlaying"/>
+        /// or the <see cref="AnimancerNode.Weight"/>
+        /// or <see cref="AnimancerNode.TargetWeight"/> are above 0.
         /// </remarks>
         public bool IsActive
             => _ActiveIndex >= 0;
 
-        /// <summary>[Internal] Should <see cref="IsActive"/> be true based on the current details of this state?</summary>
+        /// <summary>[Internal]
+        /// Should <see cref="IsActive"/> be true
+        /// based on the current details of this state?
+        /// </summary>
         internal bool ShouldBeActive
         {
             get => IsPlaying
@@ -474,7 +479,7 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public sealed override void SetWeight(float value)
+        public override void SetWeight(float value)
         {
             base.SetWeight(value);
             UpdateIsActive();
@@ -944,22 +949,15 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>
-        /// Gets the details used to trigger <see cref="AnimancerEvent"/>s on this state:
-        /// <see cref="Length"/>, <see cref="NormalizedTime"/>, and <see cref="IsLooping"/>.
-        /// </summary>
-        public virtual void GetEventDispatchInfo(
-            out float length,
-            out float normalizedTime,
-            out bool isLooping)
+        /// <summary>Gets the details used to trigger <see cref="AnimancerEvent"/>s on this state.</summary>
+        /// <remarks>Gathering all these details at once is often faster than getting them individually.</remarks>
+        public virtual AnimancerEvent.DispatchInfo GetEventDispatchInfo()
         {
-            length = Length;
-
-            normalizedTime = length != 0
-                ? Time / length
-                : 0;
-
-            isLooping = IsLooping;
+            var length = Length;
+            return new(
+                length,
+                length != 0 ? Time / length : 0,
+                IsLooping);
         }
 
         /************************************************************************************************************************/

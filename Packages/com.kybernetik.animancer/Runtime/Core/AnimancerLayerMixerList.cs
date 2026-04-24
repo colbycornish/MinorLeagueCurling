@@ -18,7 +18,7 @@ namespace Animancer
 
         /// <summary>Creates a new <see cref="AnimancerLayerMixerList"/>.</summary>
         public AnimancerLayerMixerList(AnimancerGraph graph)
-            : base(graph)
+            : base(graph, DefaultCapacity)
         {
             LayerMixer = AnimationLayerMixerPlayable.Create(graph._PlayableGraph, 1);
             Playable = LayerMixer;

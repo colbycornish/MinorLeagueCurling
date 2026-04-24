@@ -16,6 +16,12 @@ public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
         LoadData();
     }
 
+    void OnEnable()
+    {
+        UpdateUI();
+        DisplayActiveListOfStones();
+    }
+
     public void Update()
     {
         // Switch item selection right
@@ -50,13 +56,17 @@ public class SectionCurlingGameTeamStoneSelection : MonoBehaviour
         CurlingManagersV3.CurlingManager cm = CurlingManagersV3.CurlingManager._instance;
         if(cm == null) return;
 
-        List<CurlingStone> stones = cm.stoneManager.GetStonesForCurrentTeam();
+        List<CurlingStone> stones = cm.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home 
+            ? cm.Parameters.Stones.stonesTeamHome
+            : cm.Parameters.Stones.stonesTeamAway;
+        
+        
         if(stones == null) return;
 
         listOfCurlingStones.ClearList();
-        // listOfCurlingStones.BuildList(
-        //     stones.ConvertAll(s => s.id).ToArray()
-        // );
+        listOfCurlingStones.BuildList(
+            stones.ToArray()
+        );
         listOfCurlingStones.UpdateUI();
     }
 

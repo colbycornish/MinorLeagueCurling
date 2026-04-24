@@ -41,15 +41,26 @@ namespace Animancer
         public float TargetWeight { get; set; }
 
         /// <summary>The speed at which the <see cref="NormalizedTime"/> increases.</summary>
-        public float FadeSpeed { get; set; }
+        public float NormalizedFadeSpeed { get; set; }
+
+        /// <summary>The speed at which the <see cref="AnimancerNode.Weight"/>s change.</summary>
+        public float FadeSpeed
+        {
+            get => FadeDistance * NormalizedFadeSpeed;
+            set => NormalizedFadeSpeed = value / FadeDistance;
+        }
+
+        /// <summary>The distance from the starting weight to the <see cref="TargetWeight"/>.</summary>
+        public float FadeDistance
+            => Math.Abs(TargetWeight - FadeIn.StartingWeight);
 
         /// <summary>The total amount of time this fade will take to complete (in seconds).</summary>
         public float FadeDuration
         {
-            get => FadeSpeed != 0
-                ? 1 / FadeSpeed
+            get => NormalizedFadeSpeed != 0
+                ? 1 / NormalizedFadeSpeed
                 : float.PositiveInfinity;
-            set => FadeSpeed = value != 0
+            set => NormalizedFadeSpeed = value != 0
                 ? 1 / value
                 : float.PositiveInfinity;
         }
@@ -57,10 +68,10 @@ namespace Animancer
         /// <summary>The remaining amount of time this fade will take to complete (in seconds).</summary>
         public float RemainingFadeDuration
         {
-            get => FadeSpeed != 0
-                ? (1 - NormalizedTime) / FadeSpeed
+            get => NormalizedFadeSpeed != 0
+                ? (1 - NormalizedTime) / NormalizedFadeSpeed
                 : float.PositiveInfinity;
-            set => FadeSpeed = value != 0
+            set => NormalizedFadeSpeed = value != 0
                 ? (1 - NormalizedTime) / value
                 : float.PositiveInfinity;
         }
@@ -192,11 +203,11 @@ namespace Animancer
         /// <summary>Sets the starting values and registers this fade to be updated.</summary>
         public void StartFade(
             float targetWeight,
-            float fadeSpeed)
+            float normalizedFadeSpeed)
         {
             NormalizedTime = 0;
             TargetWeight = targetWeight;
-            FadeSpeed = fadeSpeed;
+            NormalizedFadeSpeed = normalizedFadeSpeed;
 
             StartFade();
         }
@@ -219,7 +230,7 @@ namespace Animancer
 
         /// <summary>Should this fade continue?</summary>
         public bool IsValid
-            => FadeSpeed > 0;
+            => NormalizedFadeSpeed > 0;
 
         /************************************************************************************************************************/
 
@@ -266,7 +277,7 @@ namespace Animancer
 
             AssertGraph();
 
-            NormalizedTime += Math.Abs(AnimancerGraph.DeltaTime * Parent.EffectiveSpeed * FadeSpeed);
+            NormalizedTime += Math.Abs(AnimancerGraph.DeltaTime * Parent.EffectiveSpeed * NormalizedFadeSpeed);
 
             if (NormalizedTime < 1)// Fade.
             {
@@ -280,7 +291,8 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        private void Finish()
+        /// <summary>Immediately finishes this fade.</summary>
+        public void Finish()
         {
             NormalizedTime = 1;
 
@@ -292,7 +304,7 @@ namespace Animancer
                     FadeOutInternal[i].Node.StopWithoutWeight();
 
                 if (TargetWeight == 0)
-                    FadeIn.Node.StopWithoutWeight();
+                    FadeIn.Node?.StopWithoutWeight();
             }
             else// Disconnect all faded out nodes and only apply the faded in weight.
             {
@@ -301,10 +313,13 @@ namespace Animancer
 
                 FadeOutInternal.Clear();
 
-                if (TargetWeight > 0)
-                    ApplyWeight(FadeIn.Node, TargetWeight);
-                else
-                    StopAndDisconnect(FadeIn.Node);
+                if (FadeIn.Node != null)
+                {
+                    if (TargetWeight > 0)
+                        FadeIn.Node.SetWeight(TargetWeight);
+                    else
+                        StopAndDisconnect(FadeIn.Node);
+                }
             }
 
             Cancel();
@@ -335,7 +350,7 @@ namespace Animancer
         {
             // Move FadeIn towards target (usually 1 or 0).
 
-            ApplyWeight(FadeIn.Node, Mathf.LerpUnclamped(FadeIn.StartingWeight, TargetWeight, progress));
+            FadeIn.Node?.SetWeight(Mathf.LerpUnclamped(FadeIn.StartingWeight, TargetWeight, progress));
 
             // Move FadeOut towards 0.
 
@@ -344,14 +359,8 @@ namespace Animancer
             for (int i = FadeOutInternal.Count - 1; i >= 0; i--)
             {
                 var node = FadeOutInternal[i];
-                ApplyWeight(node.Node, node.StartingWeight * progress);
+                node.Node.SetWeight(node.StartingWeight * progress);
             }
-        }
-
-        private void ApplyWeight(AnimancerNode node, float weight)
-        {
-            node._Weight = weight;
-            ParentPlayable.ApplyChildWeight(node);
         }
 
         private void StopAndDisconnect(AnimancerNode node)
@@ -365,7 +374,7 @@ namespace Animancer
 
         private void Release()
         {
-            FadeSpeed = 0;
+            NormalizedFadeSpeed = 0;
             _Easing = null;
             Graph = null;
             Parent = null;
@@ -388,7 +397,7 @@ namespace Animancer
         /// <summary>Interrupts this fade and releases it to the <see cref="ObjectPool{T}"/>.</summary>
         public void Cancel()
         {
-            Graph.CancelPreUpdate(this);
+            Graph?.CancelPreUpdate(this);
             Release();
         }
 
@@ -399,10 +408,10 @@ namespace Animancer
         {
             if (FadeIn.Node == node)
             {
-                FadeIn = default;
+                FadeIn = new(null, FadeIn.StartingWeight);
 
                 if (FadeOutInternal.Count == 0)
-                    FadeSpeed = 0;
+                    Cancel();
 
                 node.InternalClearFade();
 
@@ -416,7 +425,7 @@ namespace Animancer
                     FadeOutInternal.RemoveAt(i);
 
                     if (FadeIn.Node == null && FadeOutInternal.Count == 0)
-                        FadeSpeed = 0;
+                        Cancel();
 
                     node.InternalClearFade();
 
@@ -444,7 +453,7 @@ namespace Animancer
                 separator = "\n" + separator;
 
             text.AppendField(separator, nameof(NormalizedTime), NormalizedTime);
-            text.AppendField(separator, nameof(FadeSpeed), FadeSpeed);
+            text.AppendField(separator, nameof(NormalizedFadeSpeed), NormalizedFadeSpeed);
             text.AppendField(separator, nameof(Easing), _Easing?.ToStringDetailed());
 
             text.Append(separator).Append($"{nameof(FadeIn)}: ");
@@ -624,7 +633,7 @@ namespace Animancer
         private void CopyDetailsFrom(FadeGroup copyFrom)
         {
             NormalizedTime = copyFrom.NormalizedTime;
-            FadeSpeed = copyFrom.FadeSpeed;
+            NormalizedFadeSpeed = copyFrom.NormalizedFadeSpeed;
             TargetWeight = copyFrom.TargetWeight;
             _Easing = copyFrom._Easing;
         }

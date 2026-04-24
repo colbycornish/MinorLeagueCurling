@@ -1,0 +1,139 @@
+
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
+
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
+
+using Animancer.FSM;
+using Animancer.Units;
+using Animancer;
+using System;
+using UnityEngine;
+using Animancer.Samples;
+using Unity.Entities.UniversalDelegates;
+using static Animancer.Validate;
+using Unity.VisualScripting;
+
+
+namespace CharacterNPC.v2
+{
+
+    [AddComponentMenu(Strings.SamplesMenuPrefix + "Character - Brain")]
+    // [AnimancerHelpUrl(typeof(WeaponsCharacterBrain))]
+    public class CharacterBrainNpcBar : MonoBehaviour
+    {
+        /************************************************************************************************************************/
+
+        [SerializeField] private Character _Character;
+        [SerializeField] private CharacterState _Idle;
+        [SerializeField] private CharacterState _Talk;
+        [SerializeField] private CharacterState _Pose;
+        [SerializeField] private CharacterState _Wave;
+        [SerializeField] private CharacterState _Drink;
+        [SerializeField] private CharacterState _Eat;
+        [SerializeField] private CharacterState _Move;
+
+        [SerializeField]
+        [Seconds(Rule = Value.IsNotNegative)]
+        private float _AttackInputTimeOut = 0.5f;
+
+        private StateMachine<CharacterState>.InputBuffer _InputBuffer;
+
+        /************************************************************************************************************************/
+
+        protected virtual void Awake()
+        {
+            _InputBuffer = new(_Character.StateMachine);
+        }
+
+        /************************************************************************************************************************/
+
+        protected virtual void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                UpdatePosture();
+            }
+            // if (Input.GetKeyDown(KeyCode.R))
+            // {
+            //     _Character.Parameters.Movement.WantsToRun = !_Character.Parameters.Movement.WantsToRun;
+            // }
+            if (_Character.StateMachine.CurrentState.FullMovementControl != true || 
+                _Character.StateMachine.CurrentState == _Move)
+            {
+                UpdateMovement();    
+            }
+            UpdateActions();
+
+            
+            
+        }
+
+        /************************************************************************************************************************/
+
+        private void UpdateMovement()
+        {
+            _Character.Movement.UpdateMovementDirection();
+            _Character.Movement.UpdateDistanceFromDestination();
+            _Character.Movement.UpdateSpeed();
+            // _Character.Movement.UpdateDirectionalMovement();
+            _Character.Movement.UpdateTurning();
+            if (_Character.Parameters.Movement.MovementDirection == Vector3.zero || 
+                _Character.Parameters.Movement.IsMoving == false
+            )
+            {
+                _Character.StateMachine.TrySetState(_Idle);
+                return;
+            } else
+            {
+                _Character.StateMachine.TrySetState(_Move);
+            }
+        }
+
+        /************************************************************************************************************************/
+
+        private void UpdateActions()
+        {
+            // Jump gets priority for better platforming.
+            // Character Wants To Pose && is not posing
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _InputBuffer.Buffer(_Idle, _AttackInputTimeOut);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _InputBuffer.Buffer(_Pose, _AttackInputTimeOut);
+            }
+            // Character Wants To Talk && is not Talking
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                _InputBuffer.Buffer(_Talk, _AttackInputTimeOut);
+            }
+            // Character Wants To Wave && is not Waving
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                _InputBuffer.Buffer(_Wave, _AttackInputTimeOut);
+            }
+            // Character Wants To Eat && is not Eating
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                _InputBuffer.Buffer(_Eat, _AttackInputTimeOut);
+            }
+            // Character Wants To Drink && is not Drinking
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                _InputBuffer.Buffer(_Drink, _AttackInputTimeOut);
+            }
+            // Character Wants To Idle && is not Idling
+            
+            
+            _InputBuffer.Update();
+        }
+
+        private void UpdatePosture()
+        {
+
+        }
+    }
+}
+
+

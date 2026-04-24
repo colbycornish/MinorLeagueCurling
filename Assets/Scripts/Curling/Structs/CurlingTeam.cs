@@ -22,14 +22,14 @@ public class CurlingTeam : MonoBehaviour
     public GameObject defaultStone;
     public List<GameObject> stones;
 
-    public void PopulateListOfStones()
-    {
+    // public void PopulateListOfStones()
+    // {
         
-    }
+    // }
 
     public void SetData()
     {
-        data.teamName = teamName;
+        data.teamName = teamName; 
         data.teamId = teamId;
         // data.avatarImage = avatarImage;
 
@@ -44,7 +44,7 @@ public class CurlingTeam : MonoBehaviour
             stones.Add(defaultStone);
         }
 
-        CurlingPlayer cp_thrower = new CurlingPlayer
+        data.thrower = new CurlingPlayer
         {
             name = "Thrower A",
             characterId = "char_a",
@@ -55,7 +55,7 @@ public class CurlingTeam : MonoBehaviour
             visual = thrower
         };
 
-        CurlingPlayer cp_sweeperLeft = new CurlingPlayer
+        data.sweeperLeft = new CurlingPlayer
         {
             name = "Thrower A",
             characterId = "char_a",
@@ -68,7 +68,7 @@ public class CurlingTeam : MonoBehaviour
             visual = sweeperLeft,
         };
 
-        CurlingPlayer cp_sweeperRight = new CurlingPlayer
+        data.sweeperRight = new CurlingPlayer
         {
             name = "Thrower A",
             characterId = "char_a",
@@ -82,8 +82,8 @@ public class CurlingTeam : MonoBehaviour
         };
 
 
-        data.thrower = cp_thrower;
-        data.sweeperLeft = cp_sweeperLeft;
-        data.sweeperRight = cp_sweeperRight;
+        // data.thrower = cp_thrower;
+        // data.sweeperLeft = cp_sweeperLeft;
+        // data.sweeperRight = cp_sweeperRight;
     }    
 }

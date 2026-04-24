@@ -305,8 +305,8 @@ namespace Animancer
         /// </remarks>
         public static bool RaiseEventsDuringFadeOut { get; set; }
 
-        /// <summary>[Internal] Should this state check for events to invoke?</summary>
-        internal bool ShouldRaiseEvents
+        /// <summary>Should this state check for events to invoke?</summary>
+        private bool ShouldRaiseEvents
             => TargetWeight > 0
             || RaiseEventsDuringFadeOut;
 
@@ -334,7 +334,24 @@ namespace Animancer
             parent._EventDispatcher?.UpdateEvents(raiseEvents);
 
             for (int i = parent.ChildCount - 1; i >= 0; i--)
-                UpdateEventsRecursive(parent.GetChild(i), raiseEvents);
+            {
+                var child = parent.GetChild(i);
+                UpdateEventsRecursive(child, raiseEvents && child.Weight > 0);
+            }
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Sets the <see cref="NormalizedTime"/> to the <see cref="NormalizedEndTime"/>
+        /// and invokes any remaining <see cref="AnimancerEvent"/>s.
+        /// </summary>
+        public void FinishImmediately()
+        {
+            if (_EventDispatcher != null)
+                _EventDispatcher.FinishImmediately();
+            else
+                NormalizedTime = AnimancerEvent.Sequence.GetDefaultNormalizedEndTime(EffectiveSpeed);
         }
 
         /************************************************************************************************************************/

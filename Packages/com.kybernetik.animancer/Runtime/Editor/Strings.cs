@@ -103,7 +103,6 @@ namespace Animancer
             public const string AnimancerEvents = Docs + "manual/events/animancer";
             public const string EndEvents = Docs + "manual/events/end";
             public const string AnimancerEventParameters = AnimancerEvents + "/parameters";
-            public const string SharedEventSequences = AnimancerEvents + "/shared";
             public const string AnimatorControllers = Docs + "manual/animator-controllers";
             public const string AnimatorControllersNative = AnimatorControllers + "#native";
             public const string Fading = Docs + "manual/blending/fading";
@@ -139,9 +138,9 @@ namespace Animancer
 
             public const string UpdateModes = Docs + "bugs/update-modes";
 
-            public const string VersionName = "v8.1.1";
+            public const string VersionName = "v8.2.3";
 
-            public const string ChangeLogURL = Docs + "changes/animancer-v8-0";
+            public const string ChangeLogURL = Docs + "changes/animancer-v8-2";
 
             public const string UpgradeGuideURL = ChangeLogURL + "/upgrade-guide";
 

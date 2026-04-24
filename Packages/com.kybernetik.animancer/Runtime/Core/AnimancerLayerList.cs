@@ -42,10 +42,10 @@ namespace Animancer
 
         /// <summary>Creates a new <see cref="AnimancerLayerList"/>.</summary>
         /// <remarks>The <see cref="Playable"/> must be assigned by the end of the derived constructor.</remarks>
-        protected AnimancerLayerList(AnimancerGraph graph)
+        protected AnimancerLayerList(AnimancerGraph graph, int capacity)
         {
             Graph = graph;
-            _Layers = new AnimancerLayer[DefaultCapacity];
+            _Layers = new AnimancerLayer[capacity];
         }
 
         /************************************************************************************************************************/
@@ -176,7 +176,7 @@ namespace Animancer
 
         /// <summary>[Pro-Only] Creates and returns a new <see cref="AnimancerLayer"/> at the end of this list.</summary>
         /// <remarks>If the <see cref="Capacity"/> would be exceeded, it will be doubled.</remarks>
-        public AnimancerLayer Add()
+        public virtual AnimancerLayer Add()
         {
             var index = _Count;
 

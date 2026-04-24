@@ -142,12 +142,16 @@ namespace Animancer
         EventPlayMismatch = 1 << 6,
 
         /// <summary>
-        /// An <see cref="AnimancerEvent"/> that does nothing was invoked.
-        /// Most likely it was not configured correctly.
+        /// An <see cref="AnimancerEvent"/> called <see cref="AnimancerEvent.InvokeBoundCallback"/>
+        /// but there was no callback bound to its name. This may mean the event is useless and therefore
+        /// should be removed to avoid wasting performance checking and invoking it.
         /// </summary>
         /// 
         /// <remarks>
-        /// Unused events should be removed to avoid wasting performance checking and invoking them.
+        /// Events in Transitions automatically call <see cref="AnimancerEvent.InvokeBoundCallback"/>
+        /// by default so this warning is triggered if you don't bind a callback to the event's name
+        /// in the <see cref="AnimancerComponent.Events"/>
+        /// or use <see cref="AnimancerEvent.Sequence.SetCallback(int, Action)"/> on the Transition's events.
         /// </remarks>
         UselessEvent = 1 << 7,
 
@@ -404,11 +408,12 @@ namespace Animancer
             if (message == null || type.IsDisabled())
                 return;
 
-            Debug.LogWarning($"Possible Issue Detected: {message}" +
+            Debug.LogWarning(
+                $"{nameof(OptionalWarning)}.{type} - Possible Issue Detected: {message}" +
                 $"\n\nThis warning can be disabled via '{Strings.AnimancerSettingsPath}'" +
                 $" or by calling {nameof(Animancer)}.{nameof(OptionalWarning)}.{type}.{nameof(Disable)}()" +
                 " and it will automatically be compiled out of Runtime Builds (except for Development Builds)." +
-                $" More information can be found at {Strings.DocsURLs.OptionalWarning}\n",
+                $" More information can be found at {Strings.DocsURLs.OptionalWarning.AsHtmlLink()}\n",
                 context as Object);
 #endif
         }

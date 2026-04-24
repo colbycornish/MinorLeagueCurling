@@ -273,8 +273,6 @@ namespace Animancer
                 $"\n\nThis most commonly happens when a Transition is shared by multiple characters" +
                 $" and they all register their own callbacks to its events which leads to" +
                 $" those events being triggered by the wrong character." +
-                $" See the Shared Events page for more information: " +
-                Strings.DocsURLs.SharedEventSequences +
                 $"\n\n{Current}",
                 playing.Component);
 #endif

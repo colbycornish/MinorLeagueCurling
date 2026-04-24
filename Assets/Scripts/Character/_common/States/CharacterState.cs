@@ -1,75 +1,75 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
+// // Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
-// #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
+// // #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
-using Animancer;
-using Animancer.FSM;
-using UnityEngine;
+// using Animancer;
+// using Animancer.FSM;
+// using UnityEngine;
 
 
-public abstract class CharacterState : StateBehaviour, IOwnedState<CharacterState>
-{
-    /************************************************************************************************************************/
+// public abstract class CharacterState : StateBehaviour, IOwnedState<CharacterState>
+// {
+//     /************************************************************************************************************************/
 
-    [System.Serializable]
-    public class StateMachine : StateMachine<CharacterState>.WithDefault
-    {
-        /************************************************************************************************************************/
+//     [System.Serializable]
+//     public class StateMachine : StateMachine<CharacterState>.WithDefault
+//     {
+//         /************************************************************************************************************************/
 
-        [SerializeField]
-        private CharacterState _Locomotion;
-        public CharacterState Locomotion => _Locomotion;
+//         [SerializeField]
+//         private CharacterState _Locomotion;
+//         public CharacterState Locomotion => _Locomotion;
 
-        [SerializeField]
-        private CharacterState _Airborne;
-        public CharacterState Airborne => _Airborne;
+//         [SerializeField]
+//         private CharacterState _Airborne;
+//         public CharacterState Airborne => _Airborne;
 
-        /************************************************************************************************************************/
-    }
+//         /************************************************************************************************************************/
+//     }
 
-    /************************************************************************************************************************/
+//     /************************************************************************************************************************/
 
-    [SerializeField]
-    private AnimancerCharacter _Character;
-    public AnimancerCharacter Character => _Character;
+//     [SerializeField]
+//     private AnimancerCharacter _Character;
+//     public AnimancerCharacter Character => _Character;
 
-    /************************************************************************************************************************/
+//     /************************************************************************************************************************/
 
-#if UNITY_EDITOR
-    protected override void OnValidate()
-    {
-        base.OnValidate();
+// #if UNITY_EDITOR
+//     protected override void OnValidate()
+//     {
+//         base.OnValidate();
 
-        gameObject.GetComponentInParentOrChildren(ref _Character);
-    }
-#endif
+//         gameObject.GetComponentInParentOrChildren(ref _Character);
+//     }
+// #endif
 
-    /************************************************************************************************************************/
+//     /************************************************************************************************************************/
 
-    public StateMachine<CharacterState> OwnerStateMachine => _Character.StateMachine;
+//     public StateMachine<CharacterState> OwnerStateMachine => _Character.StateMachine;
 
-    /************************************************************************************************************************/
+//     /************************************************************************************************************************/
 
-    /// <summary>
-    /// Jumping enters the <see cref="AirborneState"/>, but <see cref="CharacterController.isGrounded"/> doesn't
-    /// become false until after the first update, so we want to make sure the <see cref="Character"/> won't stick
-    /// to the ground during that update.
-    /// </summary>
-    public virtual bool StickToGround => true;
+//     /// <summary>
+//     /// Jumping enters the <see cref="AirborneState"/>, but <see cref="CharacterController.isGrounded"/> doesn't
+//     /// become false until after the first update, so we want to make sure the <see cref="Character"/> won't stick
+//     /// to the ground during that update.
+//     /// </summary>
+//     public virtual bool StickToGround => true;
 
-    /// <summary>
-    /// Some states (such as <see cref="AirborneState"/>) will want to apply their own source of root motion, but
-    /// most will just use the root motion from the animations.
-    /// </summary>
-    public virtual Vector3 RootMotion => _Character.Animancer.Animator.deltaPosition;
+//     /// <summary>
+//     /// Some states (such as <see cref="AirborneState"/>) will want to apply their own source of root motion, but
+//     /// most will just use the root motion from the animations.
+//     /// </summary>
+//     public virtual Vector3 RootMotion => _Character.Animancer.Animator.deltaPosition;
 
-    /// <summary>
-    /// Indicates whether the root motion applied each frame while this state is active should be constrained to
-    /// only move in the specified <see cref="CharacterBrain.Movement"/>. Otherwise the root motion can
-    /// move the <see cref="Character"/> in any direction. Default is true.
-    /// </summary>
-    public virtual bool FullMovementControl => true;
+//     /// <summary>
+//     /// Indicates whether the root motion applied each frame while this state is active should be constrained to
+//     /// only move in the specified <see cref="CharacterBrain.Movement"/>. Otherwise the root motion can
+//     /// move the <see cref="Character"/> in any direction. Default is true.
+//     /// </summary>
+//     public virtual bool FullMovementControl => true;
 
-    /************************************************************************************************************************/
-}
+//     /************************************************************************************************************************/
+// }
 

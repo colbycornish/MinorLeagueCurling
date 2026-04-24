@@ -21,7 +21,7 @@ namespace PlayerControls.v1
         private bool useSnapRotation = true;
         public float mouseSensitivity = 3f;
         public Transform playerBody;
-        float xRotation = 0f;
+        // float xRotation = 0f;
 
         // Start is called before the first frame update
         void Start()

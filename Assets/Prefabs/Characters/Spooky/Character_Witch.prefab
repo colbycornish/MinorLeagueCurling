@@ -1,0 +1,1455 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2141767069122797097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48152430199834794}
+  - component: {fileID: 351395387680943709}
+  - component: {fileID: 1337223206278850760}
+  - component: {fileID: 6093030664476548049}
+  - component: {fileID: 1004001528456198607}
+  - component: {fileID: 4278560336984300059}
+  - component: {fileID: 6224748704344325685}
+  - component: {fileID: 5918709881458337178}
+  - component: {fileID: 1132012056624186530}
+  - component: {fileID: 953608872582039039}
+  - component: {fileID: 4236156734637946804}
+  m_Layer: 0
+  m_Name: Jobs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &48152430199834794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -65.7, y: -3.6017804, z: 67.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7341495631488434435}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &351395387680943709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5cdca6b4f964d4da1e2166046e27e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.JobBrain
+  _Character: {fileID: 3525273163255091410}
+  _Curling: {fileID: 1004001528456198607}
+  _Dialogue: {fileID: 4236156734637946804}
+  _GetPlayerAttention: {fileID: 0}
+  _Follow: {fileID: 0}
+  _Idle: {fileID: 1337223206278850760}
+  _Patrol: {fileID: 6093030664476548049}
+  _Wander: {fileID: 0}
+  _Dance: {fileID: 6224748704344325685}
+  _Cooking: {fileID: 4278560336984300059}
+  _Party: {fileID: 5918709881458337178}
+  _Forage: {fileID: 0}
+  _Mailman: {fileID: 0}
+  _ListOfJobStates:
+  - {fileID: 6224748704344325685}
+  - {fileID: 5918709881458337178}
+  - {fileID: 4278560336984300059}
+  - {fileID: 1004001528456198607}
+  - {fileID: 6093030664476548049}
+  - {fileID: 1337223206278850760}
+  - {fileID: 1132012056624186530}
+  - {fileID: 953608872582039039}
+--- !u!114 &1337223206278850760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b93b0dd5e6f407d8a522a5de4e2734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.IdleState
+  _Character: {fileID: 3525273163255091410}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6093030664476548049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04ad849cb1b0479d8dee23044d9869c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.PatrolState
+  _Character: {fileID: 3525273163255091410}
+  _PatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _stoppingDistance: 5
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1004001528456198607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f2d4c0e00bc4411eaeeadf32dcc9cb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CurlingState
+  _Character: {fileID: 3525273163255091410}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4278560336984300059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adcdd1c0c3f4d49c1833fd8426391d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.CookingState
+  _Character: {fileID: 3525273163255091410}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6224748704344325685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3454517bf670241558048bd01ab8080a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DanceState
+  _Character: {fileID: 3525273163255091410}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5918709881458337178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cde915fb5fdd4c34b4d85d86c403a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.PartyState
+  _Character: {fileID: 3525273163255091410}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1132012056624186530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72551f4b21ca44aa48df56a264640314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.ForageState
+  _Character: {fileID: 3525273163255091410}
+  _PatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _stoppingDistance: 5
+  _TimeToSpendForaging: 0.08
+  _TimeSpentForaging: 0
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &953608872582039039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ba6f966cd484481bc56b40b967a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.MailmanState
+  _Character: {fileID: 3525273163255091410}
+  _PatrolPoints: []
+  _stoppingDistance: 5
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4236156734637946804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141767069122797097}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27ec1cf509db41dc8b732a791ec6a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPCJobs.DialogueState
+  _Character: {fileID: 3525273163255091410}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &5027975912552714798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7341495631488434435}
+  - component: {fileID: 3525273163255091410}
+  - component: {fileID: 6648596734193120851}
+  - component: {fileID: 6238542998053340365}
+  - component: {fileID: 5348285779423567662}
+  m_Layer: 0
+  m_Name: Character_Witch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7341495631488434435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5027975912552714798}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6440368696925967454}
+  - {fileID: 4194366154219094434}
+  - {fileID: 48152430199834794}
+  - {fileID: 6078906614330770675}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3525273163255091410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5027975912552714798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21241965fef464f078f1af3170c282c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.Character
+  _Animancer: {fileID: 7390195717247268244}
+  _AnimationManager: {fileID: 4804755665835206726}
+  _Movement: {fileID: 1166720035537166500}
+  _NavAgent: {fileID: 6648596734193120851}
+  _StateMachine:
+    _CurrentState: {fileID: 8846080809333174987}
+    _DefaultState: {fileID: 8846080809333174987}
+  _JobStateMachine:
+    _CurrentState: {fileID: 1337223206278850760}
+    _DefaultState: {fileID: 1337223206278850760}
+  _Parameters:
+    _CharacterDataSO: {fileID: 11400000, guid: 2183a3b3dc05346a3aa91519c11fc90b, type: 2}
+    _Curling:
+      _CurlingTeamPosition: 0
+      _IsOnIce: 0
+      _ActiveStone: {fileID: 0}
+      _TempTargetObject: {fileID: 0}
+      _TargetPosition: {fileID: 0}
+      forwardDistance: 2.5
+      lateralSpacing: 3.6
+      followSmoothing: 8
+      _IsAbleToSweep: 0
+    _Dialogue:
+      _CurrentState: 0
+      _DesiredState: 0
+      _IsTalking: 0
+      _WantsToTalk: 0
+      _IsShouting: 0
+      _WantsToShout: 0
+      _IsEngagedInDialogueWithPlayer: 0
+      _IsEngagedInDialogueWithOtherCharacters: 0
+    _Movement:
+      _MovementDirection: {x: 0, y: 0, z: 0}
+      overrideDesiredSpeed: 0
+      useDirectionalMovementAnimations: 0
+      _CurrentDestination: {fileID: 0}
+      _DistanceFromDestination: 0
+      _WalkSpeed: 3.5
+      _RunSpeed: 7
+      _SprintSpeed: 12
+      _Acceleration: 8
+      _Decceleration: 8
+      _WantsToRun: 0
+      _IsStopped: 0
+      _IsMoving: 0
+      _IsIdle: 0
+      _IsBaseFromIdleState: 1
+      _IsBaseFromMoveState: 0
+      _PatrolPoints: []
+      _CurrentPatrolIndex: 0
+    _Posture:
+      _CurrentPosture: 0
+      _DesiredPosture: 0
+      _IsHoldingPose: 0
+    _Status:
+      _IsControlledByPlayer: 0
+      _IsCurling: 0
+      _IsPatrolling: 0
+      _IsWandering: 0
+      _IsFollowing: 0
+      _IsDead: 0
+      _HungerLevel: 0
+      _ThirstynessLevel: 0
+      _SleepinessLevel: 0
+      _WantsToTalkLevel: 0
+      _WantsToPatrolLevel: 0
+      _WantsToWanderLevel: 0
+    _Jobs:
+      _CurrentJob: 0
+      _DesiredJob: 0
+      _AvailableJobStates: 0000000005000000
+      _CurrentAction: 0
+      _DesiredAction: 0
+      _AvailableActions: 000000002000000024000000
+    _Surroundings:
+      _IsPlayerInView: 0
+      _IsPlayerInRange: 0
+      _IsPlayerInRangeToInteractWith: 0
+  _Equipment: {fileID: 4905475494903592476}
+--- !u!195 &6648596734193120851
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5027975912552714798}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!54 &6238542998053340365
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5027975912552714798}
+  serializedVersion: 5
+  m_Mass: 120
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &5348285779423567662
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5027975912552714798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &6348483387323014445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1328218641116643286}
+  - component: {fileID: 1558164648446698453}
+  m_Layer: 0
+  m_Name: Unarmed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1328218641116643286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6348483387323014445}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6078906614330770675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1558164648446698453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6348483387323014445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e5c604841074b11870af69e69af9de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.Weapon
+  _AttackAnimations: []
+  _EquipAnimation: {fileID: 0}
+  _UnequipAnimation: {fileID: 0}
+  _IsTwoHanded: 0
+--- !u!1 &8004907822936691279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4194366154219094434}
+  - component: {fileID: 4489407972755736623}
+  - component: {fileID: 8846080809333174987}
+  - component: {fileID: 8362411904932644620}
+  - component: {fileID: 3862650712915688009}
+  - component: {fileID: 3181365003380793970}
+  - component: {fileID: 974374002923877877}
+  - component: {fileID: 6722288399124834503}
+  - component: {fileID: 7740051757284833301}
+  - component: {fileID: 2283642313884923188}
+  - component: {fileID: 7744280069488374235}
+  - component: {fileID: 2332523868872547315}
+  - component: {fileID: 1743708583135591491}
+  - component: {fileID: 1675524241199805043}
+  - component: {fileID: 492407147148853132}
+  - component: {fileID: 1205359699592753804}
+  m_Layer: 0
+  m_Name: Brains & Actions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4194366154219094434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -65.7, y: -3.6017804, z: 67.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7341495631488434435}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4489407972755736623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a59d57e46334a0d93bf918ddafb896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.CharacterBrain
+  _Character: {fileID: 3525273163255091410}
+  _Idle: {fileID: 8846080809333174987}
+  _Talk: {fileID: 3181365003380793970}
+  _Pose: {fileID: 3862650712915688009}
+  _Wave: {fileID: 7740051757284833301}
+  _Drink: {fileID: 6722288399124834503}
+  _Eat: {fileID: 974374002923877877}
+  _Sweep: {fileID: 7744280069488374235}
+  _Move: {fileID: 8362411904932644620}
+  _ListOfAvailableCharacterStates:
+  - {fileID: 8846080809333174987}
+  - {fileID: 8362411904932644620}
+  - {fileID: 3862650712915688009}
+  - {fileID: 3181365003380793970}
+  - {fileID: 974374002923877877}
+  - {fileID: 6722288399124834503}
+  - {fileID: 7740051757284833301}
+  - {fileID: 2283642313884923188}
+  - {fileID: 7744280069488374235}
+  - {fileID: 2332523868872547315}
+  - {fileID: 1743708583135591491}
+  - {fileID: 1675524241199805043}
+  - {fileID: 492407147148853132}
+  - {fileID: 1205359699592753804}
+  _Cook: {fileID: 1743708583135591491}
+  _Dance: {fileID: 1675524241199805043}
+  _Forage: {fileID: 492407147148853132}
+  _DeliverMail: {fileID: 0}
+  _UseComputer: {fileID: 0}
+  _ListOfCharacterStates:
+  - {fileID: 1743708583135591491}
+  - {fileID: 1675524241199805043}
+  - {fileID: 492407147148853132}
+  - {fileID: 0}
+  _Equip: {fileID: 2332523868872547315}
+  _Weapons:
+  - {fileID: 1558164648446698453}
+  - {fileID: 0}
+  - {fileID: 0}
+  _AttackInputTimeOut: 0.5
+--- !u!114 &8846080809333174987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8b4bc3e0840414f97eb37ed63b3326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.IdleState
+  _Character: {fileID: 3525273163255091410}
+  _Animation: {fileID: 11400000, guid: 73f127885083543c7bf86d42202c6452, type: 2}
+  _AnimationStanding: {fileID: 11400000, guid: 73f127885083543c7bf86d42202c6452, type: 2}
+  _AnimationSitting: {fileID: 11400000, guid: dc66b8de424a1494d9c700e21f2642fc, type: 2}
+  _AnimationCrouching: {fileID: 11400000, guid: 466e111e9c53a439da0c61c33b0eb140, type: 2}
+  _AnimationSweeperIdle: {fileID: 11400000, guid: dc66cb7dcf0c54bf68e2560e3623480d, type: 2}
+--- !u!114 &8362411904932644620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8f9795abe62476da6d76a4e91362de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.MoveState
+  _Character: {fileID: 3525273163255091410}
+  _Animation: {fileID: 11400000, guid: ce82e9b0809704ee48de0c849852ab06, type: 2}
+  _AnimationWalking: {fileID: 11400000, guid: ce82e9b0809704ee48de0c849852ab06, type: 2}
+  _AnimationCrouching: {fileID: 11400000, guid: 29c3cb79143984d1a9d238b7a6f668aa, type: 2}
+  _DirectionalMovementTransition: {fileID: 11400000, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
+--- !u!114 &3862650712915688009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf48214dbb2b4956a9cd2bdca3ae548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.PoseState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 3a086ab947bbb4305b7282b2675711c6, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 9b3951eac341442bd8cb0c2dce7056dd, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 8edbfe821b468463694acbc5c50c8669, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d19c111ad0eaf4b758653b6cfd04e473, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f661713752cc34445964018506b6a255, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f62daa8f493e4ce88d3c4d91364417f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 17871916838b84909aeaf791388c1ed3, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &3181365003380793970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4078b221fcb04f89bd37cb872737069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.TalkState
+  _Character: {fileID: 3525273163255091410}
+  _Animation: {fileID: 6107283139679930406, guid: 32aa88b19e6184c2db246c926c6630ca, type: 2}
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &974374002923877877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab6e3559c396453a98473ef2168d6ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.EatState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 183017b0fc8f0467ea345866936fb94f, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 1ff9e258c07304389837a2e5bede8d03, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &6722288399124834503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835a134fe138c4b54a9439efca29523c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.DrinkState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6a18dd470b09949889b62e799719b173, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &7740051757284833301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb955f5d22e249d594231fba6290840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.WaveState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 2b03cb0fb56e0405d85de199bb3f38f7, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 5753f440daef44333bd8375a20788822, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c56feba77b7414804b1fb0c39508179f, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &2283642313884923188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18c5c67a73594b07b2a105dd3d9420e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.ThrowStoneState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6a18dd470b09949889b62e799719b173, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6a18dd470b09949889b62e799719b173, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6a18dd470b09949889b62e799719b173, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6a18dd470b09949889b62e799719b173, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &7744280069488374235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1822860c4d3849adac653407db67893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.SweepState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6e68ab32d3ea64635b196b7920d15059, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &2332523868872547315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7892a438112448a58f5ad860642cfa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.EquipState
+  _Character: {fileID: 3525273163255091410}
+--- !u!114 &1743708583135591491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096fdd897a27348fbac2b24abee5ceb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.CookState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: ecb39f9081ace4cd08440b1a819e1a52, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 45dae54482075400aaca177f1fe9dd86, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: deaa154af7a8440a7b34e5357f3a39d7, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f3964b1b5cf7e494e8b3783e9c78681a, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c31cbe4db0565475896952366f933942, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: a6a8f4623b3a1435f9f6a054dbeaef13, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 12417e0e113e347b695cf664f007ba47, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: e68453f3dfcd3461891265c51706ee70, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: a9aa748395fb748bb9a7896934efd06a, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &1675524241199805043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3b48d8a83664647969255c9b78ce02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.DanceState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 23392b1b262334221b1e5306193ada7c, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: d3bb47ad8e4e347fd99cd148aca8bef2, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 92e5db0508ca84038af6688918f7e74b, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: ca750a63fbb0d405582898d55ff81128, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 272ffdffe7e964c52b7c968ab4927c3e, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 2ddab7fc5fe4b43ad873a8ba545efca3, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 23ba0ff81170b48959a2a65867a6748c, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &492407147148853132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e23207ab0b444c0f938c80add1f0205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.ForageState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 7609b2f1bfb7b4c53b406ed7e42d67c8, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 579dec84e06f8443fa5931d8d24ce846, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 182c4a5ea5ed74d5e8635777038afb51, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 063b33dd8f34240d99deb379a88870eb, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 7e28c9bce1c5644e8968a9c69f55d936, type: 2}
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 8d6f2221c283243419cfae5ce55cd02d, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &1205359699592753804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004907822936691279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0d1fa54449aa40279d3a9700f446f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.UseComputerState
+  _Character: {fileID: 3525273163255091410}
+  _Animations:
+  - _FadeDuration: 0.25
+    _Speed: 1
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 7264845eba17540a1a2912006ec9afb6, type: 2}
+    _NormalizedStartTime: NaN
+  _OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!1 &8548227103587406420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6078906614330770675}
+  - component: {fileID: 4905475494903592476}
+  m_Layer: 0
+  m_Name: Equipment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6078906614330770675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8548227103587406420}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -65.7, y: -3.6017804, z: 67.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1328218641116643286}
+  m_Father: {fileID: 7341495631488434435}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4905475494903592476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8548227103587406420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecde0f9c69dc4d0ca60d2c512abde89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.Equipment
+  _WeaponHolder: {fileID: 0}
+  _LeftHandContainer: {fileID: 0}
+  _RightHandContainer: {fileID: 0}
+  _Weapon: {fileID: 1558164648446698453}
+--- !u!1001 &8217490949789514833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7341495631488434435}
+    m_Modifications:
+    - target: {fileID: 2315270095331521205, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_Name
+      value: Woman_Witch_Halloween
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2315270095331521205, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7390195717247268244}
+    - targetCorrespondingSourceObject: {fileID: 2315270095331521205, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2319034708631189060}
+    - targetCorrespondingSourceObject: {fileID: 2315270095331521205, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4804755665835206726}
+    - targetCorrespondingSourceObject: {fileID: 2315270095331521205, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1166720035537166500}
+  m_SourcePrefab: {fileID: 100100000, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+--- !u!95 &1117145464662953508 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9046185302512398965, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+  m_PrefabInstance: {fileID: 8217490949789514833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5920854282317401828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2315270095331521205, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+  m_PrefabInstance: {fileID: 8217490949789514833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7390195717247268244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920854282317401828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Kybernetik.Animancer::Animancer.AnimancerComponent
+  _Animator: {fileID: 1117145464662953508}
+  _Transitions: {fileID: 0}
+  _ActionOnDisable: 0
+--- !u!114 &2319034708631189060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920854282317401828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb9852087f39824f9647d710481937e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Kybernetik.Animancer::Animancer.RedirectRootMotionToRigidbody
+  _Animator: {fileID: 1117145464662953508}
+  _Target: {fileID: 6238542998053340365}
+--- !u!114 &4804755665835206726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920854282317401828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23189688f51749d6a6b57a137a44bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.LayeredAnimationManager
+  _Animancer: {fileID: 7390195717247268244}
+  _ActionMask: {fileID: 31900000, guid: f43a9d3bd821b4dffb16ae1872c3fd8e, type: 2}
+  _ActionFadeDuration: 0.25
+--- !u!114 &1166720035537166500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920854282317401828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d4ccc3710b848aba05676a9cd3debe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterNPC.v2.CharacterMovement
+  _Character: {fileID: 3525273163255091410}
+  _NavAgent: {fileID: 6648596734193120851}
+  _SpeedParameter: {fileID: 11400000, guid: 2481f0600400c4813992f92063940907, type: 2}
+  _WalkParameterValue: 0.5
+  _RunParameterValue: 1
+  _SprintParameterValue: 1.5
+  _ParameterSmoothTime: 0.15
+  _TurnSpeed: 120
+  _DirectionalParameterX: {fileID: -3442960885333037491, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
+  _DirectionalParameterY: {fileID: 1693177215263410148, guid: 2f9dc339237af44c58756a4bec65a18b, type: 2}
+  _DirectionalParameterSmoothTime: 0.15
+  _DirectionalStopProximity: 0.0001
+  _FullMovementControl: 1
+--- !u!4 &6440368696925967454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3128503442182613007, guid: c23f25962d63d0742b95fe5d2122caa1, type: 3}
+  m_PrefabInstance: {fileID: 8217490949789514833}
+  m_PrefabAsset: {fileID: 0}

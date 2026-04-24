@@ -149,7 +149,7 @@ namespace Animancer.Editor
             if (float.IsNaN(_Speed))
                 _Speed = 1;
 
-            _Duration = context.TransitionContext.MaximumDuration;
+            _Duration = context.TransitionContext.MaximumLength;
             if (_Duration <= 0)
                 _Duration = 1;
 

@@ -1,52 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
+using CurlingStones;
+using MoreMountains.Feedbacks;
 
 public class CurlingStone : MonoBehaviour
 {
+
     [Header("Basic Data")]
+    public CurlingStoneSO stoneDataSO;
     public string title = "Basic Stone";
     public string description = "Just your basic curling stone.";
     public string id = "";
-    public Image avatarImage;
+    public Texture avatarImage;
+    // private RawImage faceRenderTexture;
 
     [Header("Ids")]
     [HideInInspector] public int teamId_i;
     [HideInInspector] public string teamId;
     [HideInInspector] public int stoneIndex;
-
-    [Header("Status")]
-    [HideInInspector] public bool isThrown = false;
-    [HideInInspector] public bool isInPlay = false;
-    [HideInInspector] public bool isSliding = false;
-    [HideInInspector] public bool isInScoringZone = false;
-    
-    [Header("Stats")]
-    public float distanceFromTarget = 1000f;
-
-    [Header("Spin")]
-    /// <summary>
-    /// spin can go in either the left (negative) or right (positive) direction
-    /// </summary>
-    public float spinSpeedInitial = 0f;
-    public float spinSpeedCurrent = 0f;
-    public float spinSpeedTarget = 0f;
-    public float spinSpeedStep = 0.25f;
-    public float spinSpeedDecay = 0.05f;
-    public float spinSpeedTargetMax = 1f;
-    public float maxTorque = 1f;
-    /// <summary>
-    /// Todo: remove?
-    /// </summary>
-    [HideInInspector] public float curlAmountCurrent = 0f;
-    [HideInInspector] public float curlAmountInitial = 0f;
-    [HideInInspector] public float spinAmountInitial = 0f;
-    [HideInInspector] public float spinAmountCurrent = 0f;
-    
-    
-    [Header("Speed")]
-    [HideInInspector] public float speedCurrent = 0f;
 
 
     [Header("Model")]
@@ -56,12 +28,28 @@ public class CurlingStone : MonoBehaviour
     [Header("Special Abilities")]
     [HideInInspector] public bool hasSpecialAbility = false;
 
+    [SerializeField]
+    private CurlingStoneParameters _Parameters;
+    public CurlingStoneParameters Parameters => _Parameters;
+
+    [Header("FX")]
+    public GameObject fxArea;
+    public MMF_Player slidingSoundFx;
+    public GameObject sweepLeftFx;
+    public GameObject sweepRightFx;
+    public GameObject movementFx;
+
     
     private void Awake()
     {
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
+        }
+        if (stoneDataSO != null)
+        {
+            title = stoneDataSO.Name;
+            description = stoneDataSO.Description;
         }
     }
 
@@ -72,6 +60,8 @@ public class CurlingStone : MonoBehaviour
         transform.position = position;
         transform.rotation = rotation;
     }
+
+    /************************************************************************************************************************/
 
     /// <summary>
     /// Launch Functions
@@ -86,7 +76,10 @@ public class CurlingStone : MonoBehaviour
     )
     {        
         // Fire the stone
-        rb.AddForce(launchDirection * launchForce * launchForceMultiplier, ForceMode.Impulse);
+        rb.AddForce(
+            launchDirection * launchForce * launchForceMultiplier, 
+            ForceMode.Impulse
+        );
         Debug.Log("[Stone Throw] 🚀 Stone launched with power: " + launchForceMultiplier);
 
         // Add initial spin to the stone
@@ -95,11 +88,19 @@ public class CurlingStone : MonoBehaviour
             rb.angularVelocity = Vector3.up * initialSpinDirection * initialSpinStrength; // Add angular velocity for curling effect (purely visual spin)
             Debug.Log($"[Stone Throw] 🌀 Initial spin applied: angularVelocity = {rb.angularVelocity}");
         }
-
-        isThrown = true;
-        isInPlay = true;
-        isSliding = true;
+        if (movementFx != null) movementFx.SetActive(true);
+        if (slidingSoundFx != null) {
+            slidingSoundFx.gameObject.SetActive(true);
+            slidingSoundFx.PlayFeedbacks();
+        }
+    
+        Parameters.Status.IsThrown = true;
+        Parameters.Status.IsInPlay = true;
+        Parameters.Status.IsSliding = true;
+        
     }
+
+    /************************************************************************************************************************/
 
     /// <summary>
     /// Spin functions
@@ -121,27 +122,37 @@ public class CurlingStone : MonoBehaviour
     
     public void HandleLeftSweepSpin()
     {
-        spinSpeedTarget -= spinSpeedStep;
-        spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
+        Parameters.Movement.SpinSpeedTarget -= Parameters.Movement.SpinSpeedStep;
+        Parameters.Movement.SpinSpeedTarget = Mathf.Clamp(
+            Parameters.Movement.SpinSpeedTarget, 
+            -Parameters.Movement.SpinSpeedTargetMax, 
+            Parameters.Movement.SpinSpeedTargetMax
+        );
         HandleSpinStop();
     }
 
     public void HandleRightSweepSpin()
     {
-        spinSpeedTarget = spinSpeedTarget + spinSpeedStep;
-        spinSpeedTarget = Mathf.Clamp(spinSpeedTarget, -spinSpeedTargetMax, spinSpeedTargetMax);
+        Parameters.Movement.SpinSpeedTarget +=  Parameters.Movement.SpinSpeedStep;
+        Parameters.Movement.SpinSpeedTarget = Mathf.Clamp(
+            Parameters.Movement.SpinSpeedTarget, 
+            -Parameters.Movement.SpinSpeedTargetMax, 
+            Parameters.Movement.SpinSpeedTargetMax
+        );
         HandleSpinStop();
     }
 
     public void HandleSpinStop()
     {
-        if (spinSpeedTarget > 0f && spinSpeedTarget < spinSpeedStep)
+        if (Parameters.Movement.SpinSpeedTarget > 0f && 
+            Parameters.Movement.SpinSpeedTarget < Parameters.Movement.SpinSpeedStep)
         {
-            spinSpeedTarget = 0f; // Prevent negative spin speed
+            Parameters.Movement.SpinSpeedTarget = 0f; // Prevent negative spin speed
         }
-        if (spinSpeedTarget < 0f && spinSpeedTarget > -spinSpeedStep)
+        if (Parameters.Movement.SpinSpeedTarget < 0f && 
+            Parameters.Movement.SpinSpeedTarget > -Parameters.Movement.SpinSpeedStep)
         {
-            spinSpeedTarget = 0f; // Prevent negative spin speed
+            Parameters.Movement.SpinSpeedTarget = 0f; // Prevent negative spin speed
         }
     }
 
@@ -149,13 +160,12 @@ public class CurlingStone : MonoBehaviour
     // it was intended to provide better visual feedback only.
     public void HandleVisualSpin()
     {
-        // Rigidbody rb = currentStone.GetComponent<Rigidbody>();
-        float appliedSpinSpeed = spinSpeedTarget;
-        if (spinSpeedCurrent > maxTorque)
+        float appliedSpinSpeed = Parameters.Movement.SpinSpeedTarget;
+        if (Parameters.Movement.SpinSpeedCurrent > Parameters.Movement.MaxTorque)
         {
             // float spinDiff = spinSpeedCurrent - maxTorque;
             appliedSpinSpeed = 0;// - spinDiff;
-            Debug.Log($"[Stone Spin] 🌀 Spin speed clamped: {spinSpeedCurrent} -> {appliedSpinSpeed}");
+            Debug.Log($"[Stone Spin] 🌀 Spin speed clamped: {Parameters.Movement.SpinSpeedCurrent} -> {appliedSpinSpeed}");
         }
         float torqueMagnitude = 1f * appliedSpinSpeed; // Adjust this value to control the strength of the spin
         rb.AddRelativeTorque(transform.up * torqueMagnitude, ForceMode.Acceleration);
@@ -165,9 +175,11 @@ public class CurlingStone : MonoBehaviour
 
     private void LogCurrentSpinForce()
     {
-        spinSpeedCurrent = rb.angularVelocity.magnitude;
-        Mathf.Clamp(spinSpeedCurrent, -10f, 10f); // Clamp the spin speed to a reasonable rang
+        Parameters.Movement.SpinSpeedCurrent = rb.angularVelocity.magnitude;
+        Mathf.Clamp(Parameters.Movement.SpinSpeedCurrent, -10f, 10f); // Clamp the spin speed to a reasonable rang
     }
+
+    /************************************************************************************************************************/
 
     /// <summary>
     /// Sweeping Functions
@@ -187,23 +199,103 @@ public class CurlingStone : MonoBehaviour
         Vector3 side = Vector3.Cross(Vector3.up, forward).normalized;
         sweepBoostFactor = Mathf.Clamp01(sweepBoostFactor + Time.fixedDeltaTime * sweepDecayRate);
         // applies a standard amount of force in the forward direction
-        rb.AddForce(forward * sweepBoostFactor * sweepBoostAmount, ForceMode.Acceleration);
-
+        rb.AddForce(
+            forward * sweepBoostFactor * sweepBoostAmount, 
+            ForceMode.Acceleration
+        );
+        
         // ** Modify curl direction slightly based on sweeping ** NEW SWEPER CODE
         if (isSweepingLeft && !isSweepingRight)
         {
-            Debug.Log("Left Sweep Only Applied");
+            // Debug.Log("Left Sweep Only Applied");
             // applies reduced force in the left direction
-            rb.AddForce(-side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
+            if (sweepLeftFx != null) sweepLeftFx.SetActive(true);
+            if (sweepRightFx != null) sweepRightFx.SetActive(false);
+            rb.AddForce(
+                -side * sweepStrength * 0.75f, 
+                ForceMode.Acceleration
+            ); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
 
         else if (!isSweepingLeft && isSweepingRight)
         {
-            Debug.Log("Right Sweep Only Applied");
+            if (sweepLeftFx != null) sweepLeftFx.SetActive(false);
+            if (sweepRightFx != null) sweepRightFx.SetActive(true);
+            // Debug.Log("Right Sweep Only Applied");
             // applies reduced force in the right direction
-            rb.AddForce(side * sweepStrength * 0.75f, ForceMode.Acceleration); // changed scaling from 0.2 to 0.75 to increase sweeping impact
+            rb.AddForce(
+                side * sweepStrength * 0.75f, 
+                ForceMode.Acceleration
+            ); // changed scaling from 0.2 to 0.75 to increase sweeping impact
         }
     }
 
+    /************************************************************************************************************************/
+
+    public void UpdateDistanceFromTarget(GameObject targetZone)
+    {
+        Parameters.Movement.DistanceFromTarget = Vector3.Distance(
+            transform.position, 
+            targetZone.transform.position
+        );
+    }
+
+    /************************************************************************************************************************/
+
+    public void UpdateMovementStatus()
+    {
+        
+    }
+
+    public bool IsStoneMoving()
+    {
+        float threshold = 0.2f;
+
+        // Debug.Log($"[Stone Velocity] {rb.linearVelocity.magnitude}");
+        if (rb.linearVelocity == Vector3.zero)
+        {
+            Debug.Log("Velocity is zero (direct comparison)");
+            return false;
+            // Do something when velocity is zero
+        }
+
+        // Method 2: Checking the magnitude
+        if (rb.linearVelocity.magnitude < threshold)
+        {
+            Debug.Log("Velocity is near zero (magnitude)");
+            return false;
+            // Do something when velocity is near zero
+        }
+
+        // Method 3: Checking the square of the magnitude (slightly faster than magnitude)
+        if (rb.linearVelocity.sqrMagnitude < threshold * threshold)
+        {
+            Debug.Log("Velocity is near zero (squared magnitude)");
+            return false;
+            // Do something when velocity is near zero
+        }
+
+        // Method 4: Using IsSleeping() (for more reliable check if object is at rest)
+        if (rb.IsSleeping())
+        {
+            Debug.Log("Rigidbody is sleeping (at rest)");
+            return false;
+            // Do something when the rigidbody is sleeping
+        }
+
+        return true;
+    }
+
+    public bool IsStoneMovingTowardsTarget(GameObject targetZone)
+    {
+        Vector3 toTarget = (targetZone.transform.position - transform.position).normalized;
+        float approachDot = Vector3.Dot(rb.linearVelocity.normalized, toTarget);
+
+        return approachDot > 0.5f; // Adjust threshold as needed
+    }
+
     public bool IsStationary => rb != null && rb.linearVelocity.sqrMagnitude < 0.01f && rb.angularVelocity.sqrMagnitude < 0.01f;
+
+    
+    
 }

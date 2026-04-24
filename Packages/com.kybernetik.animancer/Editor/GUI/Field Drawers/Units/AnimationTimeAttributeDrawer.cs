@@ -71,7 +71,7 @@ namespace Animancer.Units.Editor
                 goto Return;
             }
 
-            var length = context.MaximumDuration;
+            var length = context.MaximumLength;
             if (length <= 0)
                 length = float.NaN;
 

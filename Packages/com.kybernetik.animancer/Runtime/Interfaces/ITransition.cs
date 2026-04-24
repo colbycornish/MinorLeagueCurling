@@ -1,5 +1,7 @@
 // Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
+using UnityEngine;
+
 namespace Animancer
 {
     /// <summary>An object which can create an <see cref="AnimancerState"/> and set its details.</summary>
@@ -11,8 +13,13 @@ namespace Animancer
     /// Transitions</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/ITransition
-    public interface ITransition : IHasKey, IPolymorphic
+    public interface ITransition :
+        IHasEvents,
+        IHasKey,
+        IPolymorphic
     {
+        /************************************************************************************************************************/
+        // Core Members - The main features required for a transition to be usable.
         /************************************************************************************************************************/
 
         /// <summary>The amount of time this transition should take (in seconds).</summary>
@@ -39,6 +46,34 @@ namespace Animancer
         /// <summary>Applies the details of this transition to the `state`.</summary>
         /// <remarks>This method is called by every <see cref="AnimancerLayer.Play(ITransition)"/>.</remarks>
         void Apply(AnimancerState state);
+
+        /************************************************************************************************************************/
+        // Extra Members - Additional features for convenience.
+        /************************************************************************************************************************/
+
+        /// <summary>Can this transition create a valid <see cref="AnimancerState"/>?</summary>
+        /// <remarks>
+        /// Use <see cref="AnimancerUtilities.IsValid(ITransition)"/> to check for <c>null</c> as well.
+        /// </remarks>
+        bool IsValid { get; }
+
+        /// <summary>What will the value of <see cref="AnimancerState.IsLooping"/> be for the created state?</summary>
+        bool IsLooping { get; }
+
+        /// <summary>The <see cref="AnimancerState.NormalizedTime"/> to start the animation at.</summary>
+        /// <remarks><see cref="float.NaN"/> allows the animation to continue from its current time.</remarks>
+        float NormalizedStartTime { get; set; }
+
+        /// <summary>The maximum expected value of the <see cref="AnimancerState.Length"/>.</summary>
+        /// <remarks>
+        /// In a <see cref="ClipState"/> this is equal to the <see cref="AnimationClip.length"/>
+        /// but the actual length can vary depending on the current parameters in states like 
+        /// <see cref="LinearMixerState"/> and <see cref="ControllerState"/>.
+        /// </remarks>
+        float MaximumLength { get; }
+
+        /// <summary>The <see cref="AnimancerNodeBase.Speed"/> to play the animation at.</summary>
+        float Speed { get; set; }
 
         /************************************************************************************************************************/
     }

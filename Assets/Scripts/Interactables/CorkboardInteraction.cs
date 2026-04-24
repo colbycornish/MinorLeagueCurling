@@ -1,7 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// Teleports the player to a target scene and spawn ID, using a validated dropdown from a spawn database.
+/// Should trigger a single UI update where the user can view various 
+/// items that are available to them. 
+/// 
+/// this like:
+/// - Available Quests
+/// - Points of Interest
+/// - Team Standings
+/// - Quest Breadcrumbs
 /// </summary>
 public class CorkboardInteraction : MonoBehaviour
 {

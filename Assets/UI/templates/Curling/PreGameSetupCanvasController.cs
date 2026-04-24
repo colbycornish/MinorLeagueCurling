@@ -67,12 +67,12 @@ public class CanvasPreGameSetupCanvasController : MonoBehaviour
 
     public void DemoSelectRules(){
         CurlingRules rules = new CurlingRules();
-        rules.gameMode.SetGameMode(isPractice: true);
-        rules.opponent.SetOpponentType(isLocal: true);
-        rules.difficulty.SetDifficulty(isEasy: true);
-        rules.scoring.SetScoringMode(isClassic: true);
-        rules.obstacles.SetFrequency(isLow: true);
-        rules.throwClock.DisableThrowClock();
+        // rules.gameMode.SetGameMode(isPractice: true);
+        // rules.opponent.SetOpponentType(isLocal: true);
+        // rules.difficulty.SetDifficulty(isEasy: true);
+        // rules.scoring.SetScoringMode(isClassic: true);
+        // rules.obstacles.SetFrequency(isLow: true);
+        // rules.throwClock.DisableThrowClock();
 
         CurlingPreGameSetupManager._instance.OnSelectRules(
             rules: rules

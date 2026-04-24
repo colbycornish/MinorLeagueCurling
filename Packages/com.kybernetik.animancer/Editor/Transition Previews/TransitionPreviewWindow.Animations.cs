@@ -384,7 +384,7 @@ namespace Animancer.Editor.Previews
             /************************************************************************************************************************/
 
             private bool TryShowTransitionPaused(
-                out AnimancerGraph animancer, out ITransitionDetailed transition, out AnimancerState state)
+                out AnimancerGraph animancer, out ITransition transition, out AnimancerState state)
             {
                 animancer = PreviewObject.Graph;
                 transition = Transition;

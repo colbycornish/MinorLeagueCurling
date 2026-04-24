@@ -978,6 +978,10 @@ namespace Animancer
         /// <summary>
         /// Resumes playing the <see cref="UnityEngine.Playables.PlayableGraph"/>.
         /// </summary>
+        /// <remarks>
+        /// If you're using the <see cref="Animator.runtimeAnimatorController"/>,
+        /// you can also unpause it by calling <c>animancerComponent.Animator.playableGraph.Play();</c>.
+        /// </remarks>
         public void UnpauseGraph()
         {
             _PlayableGraph.Play();
@@ -994,6 +998,9 @@ namespace Animancer
         /// </summary>
         /// <remarks>
         /// If you call this method, you are responsible for calling <see cref="UnpauseGraph"/> to resume playing.
+        /// <para></para>
+        /// If you're using the <see cref="Animator.runtimeAnimatorController"/>,
+        /// you can also pause it by calling <c>animancerComponent.Animator.playableGraph.Stop();</c>.
         /// </remarks>
         public void PauseGraph()
             => _PlayableGraph.Stop();
@@ -1010,9 +1017,13 @@ namespace Animancer
         }
 
         /// <summary>
-        /// Advances all currently playing animations by the specified amount of time (in seconds) and evaluates the
-        /// graph to apply their states to the animated objects.
+        /// Advances all currently playing animations by the specified amount of time (in seconds)
+        /// and evaluates the graph to apply their states to the animated objects.
         /// </summary>
+        /// <remarks>
+        /// This method doesn't update the <see cref="Animator.runtimeAnimatorController"/>.
+        /// If you also want to do that, you can call <see cref="Animator.Update(float)"/> beforehand.
+        /// </remarks>
         public void Evaluate(float deltaTime)
         {
             _PlayableGraph.Evaluate(deltaTime);

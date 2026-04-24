@@ -17,6 +17,19 @@ public class FlatKitPixelation : ScriptableRendererFeature {
     private const string ShaderName = "Hidden/FlatKit/PixelationWrap";
     private static int pixelSizeProperty => Shader.PropertyToID("_PixelSize");
 
+    /// <summary>
+    /// Access the runtime effect material to override pixelation parameters at runtime
+    /// without mutating the Settings asset.
+    ///
+    /// Shader: "Hidden/FlatKit/PixelationWrap"
+    ///
+    /// Common shader properties:
+    /// - Floats: _PixelSize (computed as 1 / resolution by default)
+    ///
+    /// Note: Inspector changes on the Settings asset may overwrite your values if applied later.
+    /// </summary>
+    public Material EffectMaterial => _effectMaterial;
+
     public override void Create() {
         // Settings.
         {

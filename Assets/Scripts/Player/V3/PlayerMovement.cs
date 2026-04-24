@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 namespace PlayerControls.v3
 {
@@ -19,9 +21,23 @@ namespace PlayerControls.v3
         public Animator animator;
         public float walkAnimationSpeed = 2.2f;
         public float runAnimatonSpeed = 1f;
+        private bool isSprinting = false;
 
         private float horizontalInput;
         private float verticalInput;
+
+        [Header("Movement Inputs")]
+        private InputAction movementAction;
+        private InputAction sprintAction;
+        // private InputAction interactAction;
+        
+        private Coroutine _movementProcess;
+
+        void Awake()
+        {
+            sprintAction = InputSystem.actions.FindAction("Sprint", true);
+            movementAction = InputSystem.actions.FindAction("Move", true);
+        }
 
         void Start()
         {
@@ -30,18 +46,76 @@ namespace PlayerControls.v3
             orientation = this.transform;
         }
 
-        void Update()
+        protected virtual void OnEnable()
         {
-            // Get input
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
+            movementAction.performed += MovePlayerAction;
+            movementAction.Enable();
+
+            
+
+            sprintAction.performed += ToggleSprintAction;
+            sprintAction.Enable();
         }
+
+        protected virtual void OnDisable()
+        {
+            movementAction.performed -= MovePlayerAction;
+            movementAction.Disable();
+
+            sprintAction.performed -= ToggleSprintAction;
+            sprintAction.Disable();
+            
+        }
+
+        /************************************************************************************************************************/
+
 
         void FixedUpdate()
         {
-            MoveCharacter();
+            MoveCharacter();   
         }
 
+        /************************************************************************************************************************/
+
+        private void ToggleSprintAction(InputAction.CallbackContext obj)
+        {
+            isSprinting = !isSprinting;
+        }
+
+        private void MovePlayerAction(InputAction.CallbackContext obj)
+        {
+            StartMovement(obj);
+        }
+
+        public void StartMovement(InputAction.CallbackContext callbackContext)
+        {
+            if (this._movementProcess != null)
+                this.StopCoroutine(this._movementProcess);
+
+            this._movementProcess = this.StartCoroutine(this.MovementProcess(callbackContext));
+        }
+
+
+        private IEnumerator MovementProcess(InputAction.CallbackContext callbackContext)
+        {
+            Vector2 direction = callbackContext.ReadValue<Vector2>();
+
+            while (direction.x != 0 || direction.y != 0)
+            {
+                horizontalInput = direction.x; //Input.GetAxisRaw("Horizontal");
+                verticalInput = direction.y; //Input.GetAxisRaw("Vertical");
+
+                yield return null;
+
+                direction = callbackContext.ReadValue<Vector2>();
+            }
+
+            horizontalInput = 0; //Input.GetAxisRaw("Horizontal");
+            verticalInput = 0;
+        }
+
+
+        /************************************************************************************************************************/
 
         void MoveCharacter()
         {
@@ -49,10 +123,10 @@ namespace PlayerControls.v3
             float vertical = verticalInput;
             float animSpeed = walkAnimationSpeed;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (isSprinting)
             {
                 vertical *= 2f;
-                speed *= 2f; // runSpeed
+                speed *= 2f; 
                 animSpeed = runAnimatonSpeed;
             }
 
@@ -74,7 +148,6 @@ namespace PlayerControls.v3
             // For example:
             return Physics.Raycast(transform.position, Vector3.down, 1.1f);
         }
-
     }
 }
 

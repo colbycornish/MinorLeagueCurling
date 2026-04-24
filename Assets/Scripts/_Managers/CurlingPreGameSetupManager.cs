@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Curling.Rules;
 
 public class CurlingPreGameSetupManager : MonoBehaviour
 {
@@ -110,6 +111,8 @@ public class CurlingPreGameSetupManager : MonoBehaviour
 
     }
 
+    /************************************************************************************************************************/
+
     /// <summary>
     /// When an item is selected...
     /// </summary>
@@ -151,6 +154,8 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         );
     }
 
+    /************************************************************************************************************************/
+
     public void OnSelectCourse(string courseId)
     {
         Debug.Log("Course Selected: {courseId}");
@@ -158,6 +163,16 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         selectedCourse = obj;
     }
 
+
+    public void OnSelectBroomSOForLeftSweeper(CurlingBroomSO broom)
+    {
+        
+    }
+
+    public void OnSelectBroomSOForRightSweeper(CurlingBroomSO broom)
+    {
+        
+    }
 
     public void OnSelectBroom(
         string broomId, 
@@ -185,6 +200,8 @@ public class CurlingPreGameSetupManager : MonoBehaviour
         
 
     }
+
+    /************************************************************************************************************************/
 
     public void OnSelectRules(
         CurlingRules rules
@@ -250,9 +267,6 @@ public class CurlingPreGameSetupManager : MonoBehaviour
     public bool IsCurlingRulesSet()
     {
         bool isCurlingRulesCompleted = true;
-        // if (curlingRules != null){
-        //     isCurlingRulesCompleted = true;
-        // } 
         return isCurlingRulesCompleted;
     }
 

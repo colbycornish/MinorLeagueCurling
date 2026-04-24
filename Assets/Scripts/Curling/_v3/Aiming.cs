@@ -1,60 +1,50 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This is the high-level game manager for a curling game.
-/// It orchestrates the flow of the game, including starting new ends,
-/// managing player turns, and handling the end of the game.
 /// </summary>
 
 namespace CurlingManagersV3
 {
+    [Serializable]
     public class Aiming : MonoBehaviour
     {
         [Header("Aim Settings")]
-        public float curlStrength = 5f;     // Tweak for how much spin affects trajectory (side force applied during slide)
-        public float curlAmountInitial = 0f;       // -1 = left curl, 0 = no curl, 1 = right curl
-                                                // State
-        public GameObject directionPivotObject;
-        public Transform directionPivot; // assign this in Inspector
+        [SerializeField]
         public float rotationSpeed = 100f;
-        public float directionalLimit = 30f;
-        public bool isActive = false;
 
         /// <summary>
         /// Setup / Reset
         /// </summary>
-        /// 
-        public void Setup(CurlingCourseData courseData)
-        {
-            directionPivotObject = courseData.directionalPivot;
-            directionPivot = directionPivotObject.transform;
-        }
-
-
         public void Enable()
         {
-            if (directionPivotObject == null) return;
-            directionPivotObject.SetActive(true);
-            ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
+            if (CurlingManager._instance.Parameters.Course.directionPivotObject == null) return;
+            CurlingManager._instance.Parameters.Course.directionPivotObject.SetActive(true);
+            ThrowDirectionIndicator tdi = CurlingManager._instance.Parameters.Course.directionPivotObject.GetComponent<ThrowDirectionIndicator>();
         }
 
         public void Disable()
         {
-            if (directionPivotObject == null) return;
-            directionPivotObject.SetActive(false);
-            ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
+            if (CurlingManager._instance.Parameters.Course.directionPivotObject == null) return;
+            CurlingManager._instance.Parameters.Course.directionPivotObject.SetActive(true);
+            ThrowDirectionIndicator tdi = CurlingManager._instance.Parameters.Course.directionPivotObject.GetComponent<ThrowDirectionIndicator>();
             tdi.DeactivateSpin();
         }
 
         public void Reset()
         {
-            if (directionPivot != null && directionPivotObject != null)
+
+            if (
+                CurlingManager._instance.Parameters.Course.directionPivot != null &&
+                CurlingManager._instance.Parameters.Course.directionPivotObject != null
+            )
             {
-                directionPivotObject.transform.rotation = Quaternion.identity;//Quaternion.Euler(0, 0, 0);
-                directionPivot.rotation = Quaternion.identity; //Quaternion.Euler(0, 0, 0);
+                CurlingManager._instance.Parameters.Course.directionPivotObject.transform.rotation =  Quaternion.identity; //Quaternion.Euler(0, 0, 0);
+                CurlingManager._instance.Parameters.Course.directionPivot.rotation = Quaternion.identity; //Quaternion.Euler(0, 0, 0);
             }
-            curlAmountInitial = 0f;
+
+            CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = 0f;
         }
 
         /// <summary>
@@ -63,27 +53,35 @@ namespace CurlingManagersV3
 
 
         public void IncreaseRightCurlAmount(){
-            float newInitialCurlAmount = curlAmountInitial + 1f;
-            curlAmountInitial = Mathf.Clamp(newInitialCurlAmount, -1f, 1f);
+            CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = 
+                Mathf.Clamp(
+                    CurlingManager._instance.Parameters.Aiming.CurlAmountInitial + 1f, 
+                    -1f, 
+                    1f
+                ); 
 
             ApplyIntialCurlAmount(
-                stone: CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone,
-                amount: curlAmountInitial
+                stone: CurlingManager._instance.Parameters.Stones.currentStone, //CurlingManager._instance.stoneManager.currentStone,
+                amount: CurlingManager._instance.Parameters.Aiming.CurlAmountInitial //curlAmountInitial
             );
         }
 
         public void IncreaseLeftCurlAmount(){
-            float newInitialCurlAmount = curlAmountInitial - 1f;
-            curlAmountInitial = Mathf.Clamp(newInitialCurlAmount, -1f, 1f);
+            CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = 
+                Mathf.Clamp(
+                    CurlingManager._instance.Parameters.Aiming.CurlAmountInitial - 1f, 
+                    -1f, 
+                    1f
+                ); 
 
             ApplyIntialCurlAmount(
-                stone: CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone,
-                amount: curlAmountInitial
+                stone: CurlingManager._instance.Parameters.Stones.currentStone, //CurlingManager._instance.stoneManager.currentStone,
+                amount: CurlingManager._instance.Parameters.Aiming.CurlAmountInitial //curlAmountInitial
             );
         }
 
         public void SetCurlAmountToZero(){
-            curlAmountInitial = 0f;
+            CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = 0f;
         }
 
         /// <summary>
@@ -96,24 +94,28 @@ namespace CurlingManagersV3
             // A/D or Left/Right arrows
             if (input != 0)
             {
-                float rotationAmount = input * rotationSpeed * Time.deltaTime;
+                float rotationAmount = 
+                    input * 
+                    rotationSpeed * 
+                    Time.deltaTime;
+
                 bool canRotate = CanUpdateDirection(rotationAmount);
                 if (canRotate)
                 {
-                    directionPivot.Rotate(0f, rotationAmount, 0f);
+                    CurlingManager._instance.Parameters.Course.directionPivot.Rotate(0f, rotationAmount, 0f);
                 }
             }
         }
 
         public bool CanUpdateDirection(float rotationAmount)
         {
-            float currentY = directionPivot.eulerAngles.y;
+            float currentY = CurlingManager._instance.Parameters.Course.directionPivot.eulerAngles.y;
             float nextY = currentY + rotationAmount;
 
             // Rotation is 360 degrees. The arrow starts at zero. 
             // We're allowing for 30 degrees to the left, and 30 degrees to the right.
-            float leftLimit = 360f - directionalLimit;
-            float rightLimit = 0 + directionalLimit;
+            float leftLimit = 360f - CurlingManager._instance.Parameters.Aiming.DirectionalLimit;
+            float rightLimit = 0 + CurlingManager._instance.Parameters.Aiming.DirectionalLimit;
 
             // Test that the next position is within the range
             // [leftBound....359, 360/0, 1....rightBound]
@@ -132,103 +134,18 @@ namespace CurlingManagersV3
 
             CurlingStone currentStone = stone;
             if (currentStone == null){
-                currentStone = CurlingManagersV3.CurlingManager._instance.stoneManager.currentStone;
+                currentStone = CurlingManager._instance.Parameters.Stones.currentStone;
             }
             if (currentStone == null || currentStone.rb == null) return;
 
 
-            curlAmountInitial = amount; // TODO: phase out
-            currentStone.curlAmountInitial = amount; // TODO: Phase out
+            CurlingManager._instance.Parameters.Aiming.CurlAmountInitial = amount; // TODO: phase out
+            currentStone.Parameters.Movement.CurlAmountInitial = amount; // TODO: Phase out
+            currentStone.Parameters.Movement.SpinSpeedInitial = amount;
+            currentStone.Parameters.Movement.SpinAmountInitial = amount;
 
-            currentStone.spinSpeedInitial = amount;
-            currentStone.spinAmountInitial = amount;
-            ThrowDirectionIndicator tdi = directionPivotObject.GetComponent<ThrowDirectionIndicator>();
+            ThrowDirectionIndicator tdi = CurlingManager._instance.Parameters.Course.directionPivotObject.GetComponent<ThrowDirectionIndicator>();
             tdi.SetCurlAmount(amount);
         }
     }
 }
-
-
-
-
-// [Header("Input Keys")]
-        // public KeyCode resetKey = KeyCode.R;
-        // public KeyCode rightCurlKey = KeyCode.E;
-        // public KeyCode leftCurlKey = KeyCode.Q;
-        // public KeyCode rightAimKey = KeyCode.A;
-        // public KeyCode leftAimKey = KeyCode.D;
-
-    // /// <summary>
-    // /// Listen for curling phase changes
-    // /// </summary>
-    // private void OnEnable()
-    // {
-    //     if (CurlingMatchPhaseManager.Instance == null) return;
-    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged += HandlePhase;
-    // }
-
-    // private void OnDisable()
-    // {
-    //     if (CurlingMatchPhaseManager.Instance == null) return;
-    //     CurlingMatchPhaseManager.Instance.OnPhaseChanged -= HandlePhase;
-    // }
-
-    // // ⚠️ This doesn't seem to be working properly, and I'm not sure why.
-    // // The debug message does not show up in the logs at all. 
-    // // The reseting functionality has been moved to the CurlingGameManager
-    // public void HandlePhase(CurlingMatchPhase phase)
-    // {
-    //     CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-    //     Debug.Log($"[aim controller] Handling new phase {currentPhase}");
-    //     if (currentPhase == CurlingMatchPhase.StoneSelectionConfirm)
-    //     {
-    //         Reset();
-    //     }
-    //     else if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
-    //     {
-    //         Enable();
-    //     }
-    //     else
-    //     {
-    //         Disable();
-    //     }
-    // }
-
-    /// <summary>
-    /// Update!
-    /// </summary>
-
-
-    // void Update()
-    // {
-    //     CurlingMatchPhase currentPhase = CurlingMatchPhaseManager.Instance.CurrentPhase;
-    //     // Handle spin input before charging
-
-    //     if (currentPhase == CurlingMatchPhase.CurlingAimControlsPhase)
-    //     {
-    //         if (Input.GetKeyDown(leftCurlKey))
-    //         {
-    //             ApplyIntialCurlAmount(-1f);
-    //         }
-
-    //         if (Input.GetKeyDown(rightCurlKey))
-    //         {
-    //             ApplyIntialCurlAmount(1f);
-    //         }
-
-    //         if (Input.GetAxis("Horizontal") != 0f)
-    //         {
-    //             ChangeDirection();
-    //         }
-    //         if (Input.GetKeyDown(KeyCode.R))
-    //         {
-    //             Reset();
-    //         }
-
-    //         // if (Input.GetKeyDown(confirmKey))
-    //         // {
-    //         //     CurlingMatchPhaseManager.Instance.SetPhase(CurlingMatchPhase.CurlingPowerMeterPhase);
-    //         // }
-    //     }
-        
-    // }

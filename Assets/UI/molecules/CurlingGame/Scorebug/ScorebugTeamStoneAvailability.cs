@@ -51,12 +51,12 @@ public class ScorebugTeamStoneAvailability : MonoBehaviour
     public void UpdateStoneAvailability(
         int numAvailableStones
     ){
-
+        int numUnavailableStone = numberOfStones - numAvailableStones;
         int i = 0;
 
         foreach (Transform child in this.transform)
         {
-            if (i <= numAvailableStones){
+            if (i <= numUnavailableStone){
                 ScorebugTeamStoneAvailabilityItem controller = child.GetComponent<ScorebugTeamStoneAvailabilityItem>();
                 controller.SetAvailability(false);
             }

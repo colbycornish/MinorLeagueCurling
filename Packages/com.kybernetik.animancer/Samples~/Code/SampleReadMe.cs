@@ -65,6 +65,9 @@ namespace Animancer.Samples
                     {
                         EditorApplication.delayCall += () =>
                         {
+                            if (instance == null)
+                                return;
+
                             Selection.activeObject = instance.gameObject;
                             InternalEditorUtility.SetIsInspectorExpanded(instance, true);
                         };
@@ -263,7 +266,7 @@ namespace Animancer.Samples
 
             /************************************************************************************************************************/
         }
-        
+
         /************************************************************************************************************************/
 #endif
         /************************************************************************************************************************/

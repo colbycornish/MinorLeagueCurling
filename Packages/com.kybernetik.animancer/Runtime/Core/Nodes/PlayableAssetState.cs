@@ -73,18 +73,13 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public override void GetEventDispatchInfo(
-            out float length,
-            out float normalizedTime,
-            out bool isLooping)
+        public override AnimancerEvent.DispatchInfo GetEventDispatchInfo()
         {
-            length = _Length;
-
-            normalizedTime = length != 0
-                ? Time / length
-                : 0;
-
-            isLooping = false;
+            var length = _Length;
+            return new(
+                length,
+                length != 0 ? Time / length : 0,
+                false);
         }
 
         /************************************************************************************************************************/
@@ -192,6 +187,7 @@ namespace Animancer
             get => _Bindings;
             set
             {
+                DestroyBoundOutputs(false);
                 _Bindings = value;
                 InitializeBindings();
             }
@@ -337,34 +333,56 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
+        public override void SetWeight(float value)
+        {
+            base.SetWeight(value);
+
+            for (int i = Outputs.Count - 1; i >= 0; i--)
+                Outputs[i].SetWeight(value);
+        }
+
+        /************************************************************************************************************************/
+
+        /// <inheritdoc/>
         public override void Destroy()
         {
             _Asset = null;
 
-            if (Graph != null)
-            {
-                var graph = Graph._PlayableGraph;
-                if (graph.IsValid())
-                {
-                    for (int i = Outputs.Count - 1; i >= 0; i--)
-                    {
-                        var output = Outputs[i];
-
-                        var playable = output.GetSourcePlayable();
-                        if (playable.IsValid())
-                            graph.DestroySubgraph(playable);
-
-                        graph.DestroyOutput(output);
-                    }
-
-                    Outputs.Clear();
-
-                    if (_Playable.IsValid())
-                        graph.DestroySubgraph(_Playable);
-                }
-            }
+            DestroyBoundOutputs(true);
 
             base.Destroy();
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// Destroys all of the outputs created for the <see cref="Bindings"/>
+        /// and optionally the state playable itself.
+        /// </summary>
+        public void DestroyBoundOutputs(bool destroyStatePlayable)
+        {
+            if (Graph == null)
+                return;
+
+            var graph = Graph._PlayableGraph;
+            if (!graph.IsValid())
+                return;
+
+            for (int i = Outputs.Count - 1; i >= 0; i--)
+            {
+                var output = Outputs[i];
+
+                var playable = output.GetSourcePlayable();
+                if (playable.IsValid())
+                    graph.DestroySubgraph(playable);
+
+                graph.DestroyOutput(output);
+            }
+
+            Outputs.Clear();
+
+            if (destroyStatePlayable && _Playable.IsValid())
+                graph.DestroySubgraph(_Playable);
         }
 
         /************************************************************************************************************************/

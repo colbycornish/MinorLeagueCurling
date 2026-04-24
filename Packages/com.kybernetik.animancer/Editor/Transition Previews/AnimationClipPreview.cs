@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Animancer.Editor.Previews
 {
-    /// <summary>[Editor-Only] A minimal <see cref="ITransitionDetailed"/> to preview an <see cref="AnimationClip"/>.</summary>
+    /// <summary>[Editor-Only] A minimal <see cref="ITransition"/> to preview an <see cref="AnimationClip"/>.</summary>
     /// <remarks>
     /// <strong>Documentation:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/manual/transitions#previews">
@@ -31,7 +31,7 @@ namespace Animancer.Editor.Previews
 
         [Serializable]
         [Obsolete("Only intended for internal use.")]// Prevent this type from showing up in [SerializeReference] fields.
-        private class Transition : ITransitionDetailed, IAnimationClipCollection
+        private class Transition : ITransition, IAnimationClipCollection
         {
             /************************************************************************************************************************/
 
@@ -50,11 +50,15 @@ namespace Animancer.Editor.Previews
             public bool IsValid => _Clip != null;
             public bool IsLooping => _Clip.isLooping;
             public float NormalizedStartTime { get => float.NaN; set => throw new NotSupportedException(); }
-            public float MaximumDuration => _Clip.length;
+            public float MaximumLength => _Clip.length;
             public float Speed { get => 1; set => throw new NotSupportedException(); }
 
             AnimancerEvent.Sequence IHasEvents.Events => null;
-            ref AnimancerEvent.Sequence.Serializable IHasEvents.SerializedEvents => throw new NotSupportedException();
+            AnimancerEvent.Sequence.Serializable IHasEvents.SerializedEvents
+            {
+                get => throw new NotSupportedException();
+                set => throw new NotSupportedException();
+            }
 
             /************************************************************************************************************************/
 

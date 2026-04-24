@@ -224,10 +224,13 @@ namespace Animancer
                     ? Graph.Component.GetType()
                     : GetType();
 
-                OptionalWarning.NativeControllerState.Log($"An Animator Controller is assigned to the" +
-                    $" {nameof(Animator)} component while also using a {usingType.Name}." +
+                OptionalWarning.NativeControllerState.Log(
+                    $"An Animator Controller is assigned to the {nameof(Animator)} component" +
+                    $" while also using a {usingType.Name}." +
                     $" Most likely only one of them is being used so the other should be removed." +
-                    $" See the documentation for more information: {Strings.DocsURLs.AnimatorControllers}", this);
+                    $" See the documentation for more information:" +
+                    $" {Strings.DocsURLs.AnimatorControllers.AsHtmlLink()}",
+                    this);
             }
 #endif
         }
@@ -246,19 +249,27 @@ namespace Animancer
                 return;
             }
 
+            var parameterNameToValue = DictionaryPool.Acquire<string, object>();
+
             var parameterCount = _Playable.GetParameterCount();
-            var values = new object[parameterCount];
             for (int i = 0; i < parameterCount; i++)
             {
-                values[i] = AnimancerUtilities.GetParameterValue(_Playable, _Playable.GetParameter(i));
+                var parameter = _Playable.GetParameter(i);
+                var value = AnimancerUtilities.GetParameterValue(_Playable, parameter);
+                parameterNameToValue[parameter.name] = value;
             }
 
             base.RecreatePlayable();
 
+            parameterCount = _Playable.GetParameterCount();
             for (int i = 0; i < parameterCount; i++)
             {
-                AnimancerUtilities.SetParameterValue(_Playable, _Playable.GetParameter(i), values[i]);
+                var parameter = _Playable.GetParameter(i);
+                if (parameterNameToValue.TryGetValue(parameter.name, out var value))
+                    AnimancerUtilities.TrySetParameterValue(_Playable, parameter, value);
             }
+
+            DictionaryPool.Release(parameterNameToValue);
         }
 
         /************************************************************************************************************************/
@@ -347,15 +358,13 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public override void GetEventDispatchInfo(
-            out float length,
-            out float normalizedTime,
-            out bool isLooping)
+        public override AnimancerEvent.DispatchInfo GetEventDispatchInfo()
         {
             var state = GetStateInfo(0);
-            length = state.length;
-            normalizedTime = state.normalizedTime;
-            isLooping = state.loop;
+            return new(
+                state.length,
+                state.normalizedTime,
+                state.loop);
         }
 
         /************************************************************************************************************************/

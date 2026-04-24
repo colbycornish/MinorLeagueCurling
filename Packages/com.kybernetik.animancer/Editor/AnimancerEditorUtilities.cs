@@ -278,8 +278,9 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         /// <summary>
-        /// Adds a menu function to open a web page. If the `linkSuffix` starts with a '/' then it will be relative to
-        /// the <see cref="Strings.DocsURLs.Documentation"/>.
+        /// Adds a menu function to open a web page.
+        /// If the `linkSuffix` starts with a '/' then it will be
+        /// relative to the <see cref="Strings.DocsURLs.Documentation"/>.
         /// </summary>
         public static void AddDocumentationLink(GenericMenu menu, string label, string linkSuffix)
         {

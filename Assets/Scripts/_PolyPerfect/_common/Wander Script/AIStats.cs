@@ -30,8 +30,5 @@ namespace Polyperfect.Common
 
         [SerializeField, Tooltip("Stealthy can't be detected by others.")]
         public bool stealthy = false;
-
-        [SerializeField, Tooltip("If true, this character will not move")]
-        public bool disableMovement = false;
     }
 }

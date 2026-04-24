@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Animancer.Samples.Jobs
 {
     /// <summary>
-    /// An sample component that calls <see cref="HitReceiver.Hit"/>
+    /// A sample component that calls <see cref="HitReceiver.Hit"/>
     /// when the user clicks on the ground.
     /// </summary>
     /// 

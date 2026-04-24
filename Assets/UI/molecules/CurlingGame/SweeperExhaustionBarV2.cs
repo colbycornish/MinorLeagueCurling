@@ -22,8 +22,8 @@ public class SweeperExhaustionBarV2 : MonoBehaviour
     public bool controlsLeftSweeper = false;
     public bool controlsRightSweeper = false;
 
-    [Header("Current Levels")]
-    private float currentValue = 0.0f;
+    // [Header("Current Levels")]
+    // private float currentValue = 0.0f;
 
     [Header("Settings/Stats")]
     private float exhaustionLevel = 0.0f; // The current exhaustion level

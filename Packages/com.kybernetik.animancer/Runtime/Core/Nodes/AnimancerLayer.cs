@@ -87,8 +87,8 @@ namespace Animancer
         /// <remarks>
         /// This value only affects newly created layers.
         /// <para></para>
-        /// This value should be set high enough to include all states a layer is likely to have. It's generally not
-        /// particularly important though since expanding the capacity is fairly fast.
+        /// This value should be set high enough to include all states a layer is likely to have.
+        /// It's generally not particularly important though since expanding the capacity is fairly fast.
         /// </remarks>
         public static int DefaultCapacity = 8;
 
@@ -653,15 +653,20 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
-        /// The maximum <see cref="AnimancerNode.Weight"/> that <see cref="GetOrCreateWeightlessState"/>
+        /// The maximum <see cref="AnimancerNode.Weight"/>
+        /// that <see cref="GetOrCreateWeightlessState"/>
         /// will treat as being weightless. Default = 0.1.
         /// </summary>
-        /// <remarks>This allows states with very small weights to be reused instead of needing to create new ones.</remarks>
+        /// <remarks>
+        /// This allows states with very small weights to be reused
+        /// instead of needing to create new ones.
+        /// </remarks>
         public static float WeightlessThreshold { get; set; } = 0.1f;
 
         /// <summary>
-        /// The maximum number of duplicate states that can be created for a single clip when trying to get a
-        /// weightless state. Exceeding this limit will cause it to just use the state with the lowest weight.
+        /// The maximum number of duplicate states that can be created for a single state
+        /// in <see cref="GetOrCreateWeightlessState"/>. Exceeding this limit will cause it to
+        /// just use the state with the lowest weight.
         /// Default = 3.
         /// </summary>
         public static int MaxCloneCount { get; set; } = 3;
@@ -672,12 +677,13 @@ namespace Animancer
         /// The returned <see cref="AnimancerState.Time"/> is also set to 0.
         /// </summary>
         /// <remarks>
-        /// If this method would exceed the <see cref="MaxCloneCount"/>, it returns the clone with the lowest weight.
+        /// If this method would exceed the <see cref="MaxCloneCount"/>,
+        /// it returns the clone with the lowest weight.
         /// <para></para>
         /// "Low" weight is defined as less than or equal to the <see cref="WeightlessThreshold"/>.
         /// <para></para>
-        /// The <see href="https://kybernetik.com.au/animancer/docs/manual/blending/fading/modes">Fade Modes</see> page
-        /// explains why clones are created.
+        /// The <see href="https://kybernetik.com.au/animancer/docs/manual/blending/fading/modes">Fade Modes</see>
+        /// page explains why clones are created.
         /// </remarks>
         public AnimancerState GetOrCreateWeightlessState(AnimancerState state)
         {
@@ -768,12 +774,13 @@ namespace Animancer
                         {
                             var milliseconds = cloneTimer.TotalTimeSeconds * 1000;
                             OptionalWarning.CloneComplexState.Log(
-                                $"A {keyState.GetType().Name} was cloned in {milliseconds} milliseconds." +
-                                $" This performance cost may be notable and complex states generally have parameters" +
-                                $" that need to be controlled which may result in undesired behaviour if your scripts" +
-                                $" are only expecting to have one state to control so you may wish to avoid cloning." +
+                                $"Using {Strings.DocsURLs.FadeModes.AsHtmlLink($"{nameof(FadeMode)}.{nameof(FadeMode.FromStart)}")}" +
+                                $" took {milliseconds} milliseconds to clone a {keyState.GetType().Name}." +
+                                $" This performance cost may be notable and may result in undesired behaviour" +
+                                $" if your scripts are only expecting to have one state to control" +
+                                $" so you may wish to avoid cloning." +
                                 $"\n\nThe Fade Modes page explains why these clones are created:" +
-                                $" {Strings.DocsURLs.FadeModes}",
+                                $" {Strings.DocsURLs.FadeModes.AsHtmlLink()}",
                                 Graph?.Component);
                         }
 #endif
@@ -830,6 +837,15 @@ namespace Animancer
         #region Play Management
         /************************************************************************************************************************/
 
+        /// <summary>
+        /// If this layer's <see cref="AnimancerNode.Weight"/> is 0 and an animation is played,
+        /// should it be automatically set or faded to 1?
+        /// </summary>
+        /// <remarks>Default = true.</remarks>
+        public bool SetLayerWeightOnPlay = true;
+
+        /************************************************************************************************************************/
+
         /// <inheritdoc/>
         protected internal override void OnStartFade()
         {
@@ -845,6 +861,10 @@ namespace Animancer
         /// The animation will continue playing from its current <see cref="AnimancerState.Time"/>.
         /// To restart it from the beginning you can use <c>...Play(clip).Time = 0;</c>.
         /// <para></para>
+        /// If the layer currently has 0 <see cref="AnimancerNode.Weight"/>,
+        /// this method will automatically set it to 1.
+        /// This can be disabled by setting <see cref="SetLayerWeightOnPlay"/> to false.
+        /// <para></para>
         /// This method is safe to call repeatedly without checking whether the `clip` was already playing.
         /// </remarks>
         public AnimancerState Play(
@@ -855,6 +875,10 @@ namespace Animancer
         /// <remarks>
         /// The animation will continue playing from its current <see cref="AnimancerState.Time"/>.
         /// To restart it from the beginning you can use <c>...Play(state).Time = 0;</c>.
+        /// <para></para>
+        /// If the layer currently has 0 <see cref="AnimancerNode.Weight"/>,
+        /// this method will automatically set it to 1.
+        /// This can be disabled by setting <see cref="SetLayerWeightOnPlay"/> to false.
         /// <para></para>
         /// This method is safe to call repeatedly without checking whether the `state` was already playing.
         /// </remarks>
@@ -878,7 +902,7 @@ namespace Animancer
 #endif
 
             // If the layer is at 0 weight and not fading, set it to 1.
-            if (Weight == 0 && FadeGroup == null)
+            if (SetLayerWeightOnPlay && Weight == 0 && FadeGroup == null)
                 Weight = 1;
 
             CurrentState?.FadeGroup?.Cancel();
@@ -918,6 +942,7 @@ namespace Animancer
         /// <para></para>
         /// If the layer currently has 0 <see cref="AnimancerNode.Weight"/>,
         /// this method will fade in the layer itself and simply <see cref="AnimancerState.Play"/> the `state`.
+        /// This can be disabled by setting <see cref="SetLayerWeightOnPlay"/> to false.
         /// <para></para>
         /// This method is safe to call repeatedly without checking whether the `state` was already playing.
         /// <para></para>
@@ -945,8 +970,9 @@ namespace Animancer
         /// If the `state` was already playing and fading in with less time remaining than the `fadeDuration`, this
         /// method will allow it to complete the existing fade rather than starting a slower one.
         /// <para></para>
-        /// If the layer currently has 0 <see cref="AnimancerNode.Weight"/>, this method will fade in the layer itself
-        /// and simply <see cref="AnimancerState.Play"/> the `state`.
+        /// If the layer currently has 0 <see cref="AnimancerNode.Weight"/>, this method will
+        /// fade in the layer itself and simply <see cref="AnimancerState.Play"/> the `state`.
+        /// This can be disabled by setting <see cref="SetLayerWeightOnPlay"/> to false.
         /// <para></para>
         /// This method is safe to call repeatedly without checking whether the `state` was already playing.
         /// <para></para>
@@ -975,15 +1001,23 @@ namespace Animancer
 
             AnimancerEvent.AssertEventPlayMismatch(Graph);
 
-            EvaluateFadeMode(mode, ref state, fadeDuration, out var stateFadeSpeed, out var layerFadeDuration);
+            EvaluateFadeMode(
+                mode,
+                ref state,
+                fadeDuration,
+                out var stateNormalizedFadeSpeed,
+                out var layerFadeDuration);
 
             // If the layer is at or fading towards 0 weight, fade it in.
             // Otherwise it's probably at 1 weight or has been explicitly set or faded to some other weight.
             if (TargetWeight == 0)
             {
-                StartFade(1, layerFadeDuration);
+                if (SetLayerWeightOnPlay)
+                    StartFade(1, layerFadeDuration);
 
                 // If the layer has to fade in, play the state immediately.
+                // Even if we didn't start the fade in, do this anyway because having the
+                // state weights on a layer not add up to 1 gives bad results.
                 if (Weight == 0)
                 {
                     AnimancerState.SkipNextExpectFade();
@@ -1007,7 +1041,7 @@ namespace Animancer
 
                 var fade = GetFade();
                 fade.SetNodes(this, state, ActiveStatesInternal, Graph.KeepChildrenConnected);
-                fade.StartFade(1, stateFadeSpeed);
+                fade.StartFade(1, stateNormalizedFadeSpeed);
             }
 
             return state;
@@ -1199,7 +1233,7 @@ namespace Animancer
             FadeMode mode,
             ref AnimancerState state,
             float fadeDuration,
-            out float stateFadeSpeed,
+            out float stateNormalizedFadeSpeed,
             out float layerFadeDuration)
         {
             layerFadeDuration = fadeDuration;
@@ -1255,7 +1289,7 @@ namespace Animancer
                     throw AnimancerUtilities.CreateUnsupportedArgumentException(mode);
             }
 
-            stateFadeSpeed = fadeDistance / fadeDuration;
+            stateNormalizedFadeSpeed = fadeDistance / fadeDuration;
         }
 
         /************************************************************************************************************************/

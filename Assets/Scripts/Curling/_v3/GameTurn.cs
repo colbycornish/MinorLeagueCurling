@@ -2,33 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This is the high-level game manager for a curling game.
-/// It orchestrates the flow of the game, including starting new ends,
-/// managing player turns, and handling the end of the game.
 /// </summary>
 
 namespace CurlingManagersV3
 {
     public class GameTurn : MonoBehaviour
     {
-        [Header("Turn Settings")]
-        public bool isTeamHomeTurn = false;
-        public bool isTeamAwayTurn = false;
-
-        public enum CurlingGameTurnType
-        {
-            Home, // scores cumulate every turn
-            Away,
-            None
-        }
-
-        public CurlingGameTurnType currentTurn;
-
-        [Header("Helpful References")]
-        public int numberOfHomeTeamTurnsCompleted = 0;
-        public int numberOfAwayTeamTurnsCompleted = 0;
-        public int currentTurnCount = 0;
-        public int maxTurnCount = 10;
 
         /// <summary>
         /// Set Game Turn
@@ -39,57 +18,63 @@ namespace CurlingManagersV3
         ){
 
             if (isHome){
-                this.currentTurn = CurlingGameTurnType.Home;
+                CurlingManager._instance.Parameters.Turn.CurrentTurn = CurlingGameTurnType.Home;
+                Debug.LogWarning("GameTurn: Home Team Turn");
             } 
             else if (isAway){
-                this.currentTurn = CurlingGameTurnType.Away;
+                CurlingManager._instance.Parameters.Turn.CurrentTurn = CurlingGameTurnType.Away;
+                Debug.LogWarning("GameTurn: Away Team Turn");
             }
             else {
                 Debug.LogWarning("GameTurn: NextTurn() - currentTurn is None, defaulting to Home");
-                this.currentTurn = CurlingGameTurnType.None;
+                CurlingManager._instance.Parameters.Turn.CurrentTurn = CurlingGameTurnType.None;
             }
         }
 
         public void NextTurn(){
-            currentTurnCount++;
-            if (currentTurn == CurlingGameTurnType.Home){
-                numberOfHomeTeamTurnsCompleted++;
-                SetGameTurn(isAway: true);
-                Debug.LogWarning("GameTurn: Away Team Turn");
+            CurlingManager._instance.Parameters.Turn.CurrentTurnCount++; // Reset current stone at the beginning of the next turn
+
+            // currentTurnCount++;
+            if (CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home){
+
+                // numberOfHomeTeamTurnsCompleted++;
+                CurlingManager._instance.Parameters.Turn.NumberOfHomeTeamTurnsCompleted++;
+                
+                SetGameTurn(isHome: false, isAway: true);
+                
             } 
-            else if (currentTurn == CurlingGameTurnType.Away){
-                numberOfAwayTeamTurnsCompleted++;
-                SetGameTurn(isHome: true);
-                Debug.LogWarning("GameTurn: Home Team Turn");
+            else if (CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Away){
+                
+                CurlingManager._instance.Parameters.Turn.NumberOfAwayTeamTurnsCompleted++;
+                SetGameTurn(isHome: true, isAway: false);
+                
             }
             else {
                 Debug.LogWarning("GameTurn: NextTurn() - currentTurn is None, defaulting to Home");
-                SetGameTurn(isHome: true);
+                SetGameTurn(isHome: true, isAway: false);
             }
         }
+
+        public void UpdateCurrentTeam(){
+            CurlingManager._instance.Parameters.Teams.currentTeam = 
+                CurlingManager._instance.Parameters.Turn.CurrentTurn == CurlingGameTurnType.Home
+                    ? CurlingManager._instance.Parameters.Teams.teamHome
+                    : CurlingManager._instance.Parameters.Teams.teamAway;
+        }
+
 
 
         /// <summary>
         /// Inquire About Current Turn
         /// </summary>
         public bool IsCurrentTurnTheLastTurn(){
-            return currentTurnCount == maxTurnCount;
+            return CurlingManager._instance.Parameters.Turn.CurrentTurnCount + 1 == 
+                CurlingManager._instance.Parameters.Turn.MaxTurnCount;
         }
 
         public bool IsThereAnotherTurnAfterThisOne(){
-            return currentTurnCount + 1 <= maxTurnCount;
-        }
-        
-        public CurlingGameTurnType GetCurrentTurn(){
-            return this.currentTurn;
-        }
-
-        public bool IsItTheHomeTeamsTurn(){
-            return this.currentTurn == CurlingGameTurnType.Home;
-        }
-
-        public bool IsItTheAwayTeamsTurn(){
-            return this.currentTurn == CurlingGameTurnType.Away;
+            return CurlingManager._instance.Parameters.Turn.CurrentTurnCount + 1 < 
+            CurlingManager._instance.Parameters.Turn.MaxTurnCount;
         }
 
         /// <summary>
@@ -97,14 +82,11 @@ namespace CurlingManagersV3
         /// </summary>
         public void Reset(){
             SetGameTurn(isHome: true);
-            numberOfHomeTeamTurnsCompleted = 0;
-            numberOfAwayTeamTurnsCompleted = 0;
+            CurlingManager._instance.Parameters.Turn.CurrentTurnCount = 0;
+            CurlingManager._instance.Parameters.Turn.NumberOfHomeTeamTurnsCompleted = 0;
+            CurlingManager._instance.Parameters.Turn.NumberOfAwayTeamTurnsCompleted = 0;
+            CurlingManager._instance.Parameters.Turn.MaxTurnCount = 10;
         }
-
-
-        
-        
-
 
     }
 }

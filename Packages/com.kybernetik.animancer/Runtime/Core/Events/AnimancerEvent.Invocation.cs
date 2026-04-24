@@ -109,7 +109,8 @@ namespace Animancer
             /************************************************************************************************************************/
 
             /// <summary>
-            /// Invokes the callback bound to the <see cref="Name"/> in the <see cref="AnimancerGraph.Events"/>.
+            /// Invokes the callback bound to the <see cref="Name"/>
+            /// in the <see cref="AnimancerGraph.Events"/>.
             /// </summary>
             /// <remarks>
             /// Logs <see cref="OptionalWarning.UselessEvent"/> if no callback is bound.
@@ -123,13 +124,14 @@ namespace Animancer
                     callback();
                 }
 #if UNITY_ASSERTIONS
-                else if (OptionalWarning.UselessEvent.IsEnabled())
+                // If the callback doesn't do anything else, then this is a useless event.
+                else if (Event.callback == AnimancerEvent.InvokeBoundCallback &&
+                    OptionalWarning.UselessEvent.IsEnabled())
                 {
                     OptionalWarning.UselessEvent.Log(
-                        $"An {nameof(AnimancerEvent)} which does nothing was invoked." +
-                        $" Most likely it wasn't configured correctly." +
-                        $" Unused events should be removed to avoid wasting performance checking them." +
-                        $"\n• Name: {AnimancerUtilities.ToStringOrNull(Name)}" +
+                        $"An {nameof(AnimancerEvent)} attempted to invoke the callback bound to the name" +
+                        $" '{AnimancerUtilities.ToStringOrNull(Name)}' but there is no callback" +
+                        $" bound to that name so the event may not be configured correctly." +
                         $"\n• Normalized Time: {Event.normalizedTime}" +
                         $"\n• State: {State}" +
                         $"\n• Object: {AnimancerUtilities.ToStringOrNull(State.Graph?.Component)}",
@@ -156,8 +158,10 @@ namespace Animancer
                         $" often by playing a different one." +
                         $"\n• State: {State}" +
                         $"\n• Callback: {Event.callback.ToStringDetailed()}" +
-                        $"\n• End Events are triggered every frame after their time has passed: {Strings.DocsURLs.EndEvents}" +
-                        $"\n• To avoid this behaviour, use a regular Animancer Event instead: {Strings.DocsURLs.AnimancerEvents}",
+                        $"\n• End Events are triggered every frame after their time has passed:" +
+                        $" {Strings.DocsURLs.EndEvents.AsHtmlLink()}" +
+                        $"\n• To avoid this behaviour, use a regular Animancer Event instead:" +
+                        $" {Strings.DocsURLs.AnimancerEvents.AsHtmlLink()}",
                         State.Graph?.Component);
 
                     OptionalWarning.EndEventInterrupt.Disable();

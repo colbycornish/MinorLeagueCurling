@@ -210,6 +210,20 @@ namespace Animancer
             /************************************************************************************************************************/
 
             /// <summary>
+            /// Returns the `normalizedStartTime` if it isn't <see cref="float.NaN"/>,
+            /// otherwise calls <see cref="GetDefaultNormalizedStartTime"/>.
+            /// </summary>
+            /// <remarks>
+            /// This method has nothing to do with events, so it is only here to be near
+            /// <see cref="GetDefaultNormalizedEndTime"/>.
+            /// </remarks>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static float GetNormalizedStartTime(float normalizedStartTime, float speed)
+                => !float.IsNaN(normalizedStartTime)
+                ? normalizedStartTime
+                : GetDefaultNormalizedStartTime(speed);
+
+            /// <summary>
             /// The default <see cref="AnimancerState.NormalizedTime"/> for an animation to start
             /// at when playing forwards is 0 (the start of the animation)
             /// and when playing backwards is 1 (the end of the animation).
@@ -217,7 +231,7 @@ namespace Animancer
             /// `speed` 0 or <see cref="float.NaN"/> will also return 0.
             /// </summary>
             /// <remarks>
-            /// This method has nothing to do with events, so it is only here because of
+            /// This method has nothing to do with events, so it is only here to be near
             /// <see cref="GetDefaultNormalizedEndTime"/>.
             /// </remarks>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1183,16 +1197,6 @@ namespace Animancer
             /// <inheritdoc/>
             public void CopyFrom(Sequence copyFrom)
             {
-                if (copyFrom == null)
-                {
-                    Array.Clear(_Names, 0, _Names.Length);
-                    Array.Clear(_Events, 0, Count);
-                    Count = 0;
-                    Capacity = 0;
-                    _EndEvent = default;
-                    return;
-                }
-
                 CopyNamesFrom(copyFrom._Names, copyFrom.Count);
 
                 var sourceCount = copyFrom.Count;
@@ -1251,14 +1255,17 @@ namespace Animancer
 
             /************************************************************************************************************************/
 
-            /// <summary>[Pro-Only] Copies the <see cref="AnimationClip.events"/> into this <see cref="Sequence"/>.</summary>
+            /// <summary>[Pro-Only]
+            /// Copies the <see cref="AnimationClip.events"/> into this <see cref="Sequence"/>.
+            /// </summary>
             /// <remarks>
             /// The <see cref="callback"/> of the new events will be empty and can be set by
             /// <see cref="SetCallback(StringReference, Action)"/>.
             /// <para></para>
             /// If you're going to play the `animation`, consider disabling <see cref="Animator.fireEvents"/>
             /// so the events copied by this method are not triggered as <see cref="AnimationEvent"/>s.
-            /// Otherwise they would still trigger in addition to the <see cref="AnimancerEvent"/>s copied here.
+            /// Otherwise they would still trigger in addition to the <see cref="AnimancerEvent"/>s
+            /// copied here.
             /// </remarks>
             public void AddAllEvents(AnimationClip animation)
             {
@@ -1327,10 +1334,13 @@ namespace Animancer
             /// if any event is outside the range of <c>0 &lt;= normalizedTime &lt; 1</c>.
             /// </summary>
             /// <remarks>
+            /// If you want an event at the very end of a looping animation,
+            /// you can use <see cref="AlmostOne"/>.
+            /// <para></para>
             /// This excludes the <see cref="EndEvent"/> since it works differently to other events.
             /// </remarks>
             [System.Diagnostics.Conditional(Strings.Assertions)]
-            public void AssertNormalizedTimes(AnimancerState state)
+            public void AssertNormalizedTimesForLooping(AnimancerState state)
             {
                 if (Count == 0 ||
                     (_Events[0].normalizedTime >= 0 && _Events[Count - 1].normalizedTime < 1))
@@ -1338,19 +1348,23 @@ namespace Animancer
 
                 throw new ArgumentOutOfRangeException(nameof(normalizedTime),
                     "Events on looping animations are triggered every loop and must be" +
-                    $" within the range of 0 <= {nameof(normalizedTime)} < 1.\n{state}\n{DeepToString()}");
+                    $" within the range of 0 <= {nameof(normalizedTime)} < 1." +
+                    $" If you want an event at the very end of a looping animation," +
+                    $" you can use {nameof(AnimancerEvent)}.{nameof(AlmostOne)}" +
+                    $"\n• State: {state}" +
+                    $"\n• Events: {DeepToString()}");
             }
 
             /************************************************************************************************************************/
 
             /// <summary>[Assert-Conditional]
-            /// Calls <see cref="AssertNormalizedTimes(AnimancerState)"/> if `isLooping` is true.
+            /// Calls <see cref="AssertNormalizedTimesForLooping(AnimancerState)"/> if `isLooping` is true.
             /// </summary>
             [System.Diagnostics.Conditional(Strings.Assertions)]
             public void AssertNormalizedTimes(AnimancerState state, bool isLooping)
             {
                 if (isLooping)
-                    AssertNormalizedTimes(state);
+                    AssertNormalizedTimesForLooping(state);
             }
 
             /************************************************************************************************************************/
