@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 namespace FlatKit.Editor {
     internal static class MaterialPropertyExtensions {
         public static ShaderPropertyType GetShaderPropertyType(this MaterialProperty property) {
-#if UNITY_6000_0_OR_NEWER
+#if UNITY_6000_2_OR_NEWER
             return property.propertyType;
 #else
             return property.type switch {
@@ -19,7 +19,7 @@ namespace FlatKit.Editor {
         }
 
         public static ShaderPropertyFlags GetShaderPropertyFlags(this MaterialProperty property) {
-#if UNITY_6000_0_OR_NEWER
+#if UNITY_6000_2_OR_NEWER
             return property.propertyFlags;
 #else
             var flags = ShaderPropertyFlags.None;
