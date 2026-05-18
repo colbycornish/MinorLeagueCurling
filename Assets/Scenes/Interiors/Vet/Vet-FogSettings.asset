@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6f656ab8114e939b71b289ffd9d7b2, type: 3}
   m_Name: Vet-FogSettings
   m_EditorClassIdentifier: 
-  useDistance: 1
+  useDistance: 0
   distanceGradient:
     serializedVersion: 2
     key0: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   near: 1
   far: 44.9
   distanceFogIntensity: 0.055
-  useHeight: 1
+  useHeight: 0
   heightGradient:
     serializedVersion: 2
     key0: {r: 0.022114396, g: 1, b: 0, a: 1}
@@ -83,7 +83,7 @@ MonoBehaviour:
   cameraRelativePosition: 1
   distanceHeightBlend: 0.791
   renderEvent: 550
-  applyInSceneView: 1
+  applyInSceneView: 0
   effectMaterial: {fileID: 5808233346548453400}
 --- !u!21 &5808233346548453400
 Material:
@@ -98,8 +98,6 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - FOG_CAMERA_RELATIVE
-  - USE_DISTANCE_FOG
-  - USE_HEIGHT_FOG
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
